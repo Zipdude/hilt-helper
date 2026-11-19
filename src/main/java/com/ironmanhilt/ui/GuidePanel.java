@@ -147,7 +147,7 @@ public final class GuidePanel extends PluginPanel
 	private final ReadinessEngine readiness;
 	private final Planner planner;
 	private final Actions actions;
-	private final JPanel footer;
+	private final JPanel footerNavigation;
 	private final JButton accountButton, checklistButton;
 	private static final Color BORDER = new Color(79, 87, 99);
 	private static final Color SELECTED_CARD = new Color(55, 51, 43);
@@ -171,6 +171,9 @@ public final class GuidePanel extends PluginPanel
 	private static final String SUGGESTED = "Suggested tasks", SELECTED = "Selected tasks", RESERVES = "Reserve tasks",
 								ALL = "All guide tasks";
 	private static final String ALL_MISSING_ITEMS = "Show all missing items";
+	private static final String REPOSITORY_URL = "https://github.com/Zipdude/hilt-helper";
+	private static final String README_URL = REPOSITORY_URL + "#readme";
+	private static final String BUG_REPORT_URL = REPOSITORY_URL + "/issues/new?template=bug-report.md";
 	private static final Set<String> LINK_HOSTS = Collections.unmodifiableSet(new HashSet<>(Arrays.asList(
 		"oldschool.runescape.wiki", "www.youtube.com", "youtube.com", "youtu.be", "creativecommons.org")));
 	private int shownTotal, skippedOffset, focusedIndex;
@@ -227,10 +230,12 @@ public final class GuidePanel extends PluginPanel
 		setBorder(new EmptyBorder(10, 8, 10, 8));
 		getScrollPane().getViewport().getView().setBackground(BACKGROUND);
 		getScrollPane().getVerticalScrollBar().setFocusable(false);
-		footer = new JPanel(new BorderLayout());
+		JPanel footer = new JPanel(new BorderLayout(0, 4));
 		footer.setBackground(BACKGROUND);
 		footer.setBorder(BorderFactory.createCompoundBorder(BorderFactory.createMatteBorder(1, 0, 0, 0, BORDER),
 			new EmptyBorder(5, 7, 5, 7)));
+		footerNavigation = new JPanel(new BorderLayout());
+		footerNavigation.setOpaque(false);
 		accountButton = button("Account & backups", this::toggleSettings);
 		accountButton.setName("account");
 		checklistButton = button("Checklist", () ->
@@ -241,8 +246,14 @@ public final class GuidePanel extends PluginPanel
 			focusTarget = "search";
 			redraw();
 		});
-		footer.add(checklistButton, BorderLayout.WEST);
-		footer.add(accountButton, BorderLayout.EAST);
+		footerNavigation.add(checklistButton, BorderLayout.WEST);
+		footerNavigation.add(accountButton, BorderLayout.EAST);
+		footer.add(footerNavigation, BorderLayout.NORTH);
+		JPanel helpLinks = new JPanel(new GridLayout(1, 2, 5, 0));
+		helpLinks.setOpaque(false);
+		helpLinks.add(link("Read Me", README_URL));
+		helpLinks.add(link("Report a Bug", BUG_REPORT_URL));
+		footer.add(helpLinks, BorderLayout.CENTER);
 		getWrappedPanel().add(footer, BorderLayout.SOUTH);
 		getScrollPane().getViewport().addComponentListener(new ComponentAdapter()
 		{
@@ -371,7 +382,7 @@ public final class GuidePanel extends PluginPanel
 		this.available = available;
 		searchField = null;
 		removeAll();
-		footer.setVisible(!available || focusedTasks.isEmpty());
+		footerNavigation.setVisible(!available || focusedTasks.isEmpty());
 		checklistButton.setVisible(available && state.routeChoice() != null && !settingsOpen);
 		accountButton.setText(settingsOpen ? "Back to guide" : "Account & backups");
 		if (available && !focusedTasks.isEmpty())
@@ -2880,6 +2891,10 @@ public final class GuidePanel extends PluginPanel
 	}
 	public static boolean safeLink(String url)
 	{
+		if (README_URL.equals(url) || BUG_REPORT_URL.equals(url))
+		{
+			return true;
+		}
 		try
 		{
 			java.net.URI uri = java.net.URI.create(url);
