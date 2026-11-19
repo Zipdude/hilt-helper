@@ -59,7 +59,6 @@ import java.awt.event.MouseEvent;
 import java.awt.event.MouseWheelEvent;
 import java.time.Instant;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.HashSet;
@@ -174,8 +173,6 @@ public final class GuidePanel extends PluginPanel
 	private static final String REPOSITORY_URL = "https://github.com/Zipdude/hilt-helper";
 	private static final String README_URL = REPOSITORY_URL + "#readme";
 	private static final String BUG_REPORT_URL = REPOSITORY_URL + "/issues/new?template=bug-report.md";
-	private static final Set<String> LINK_HOSTS = Collections.unmodifiableSet(new HashSet<>(Arrays.asList(
-		"oldschool.runescape.wiki", "www.youtube.com", "youtube.com", "youtu.be", "creativecommons.org")));
 	private int shownTotal, skippedOffset, focusedIndex;
 	private List<Integer> focusedTasks = List.of();
 	private TaskOrigin returnOrigin;
@@ -2370,10 +2367,7 @@ public final class GuidePanel extends PluginPanel
 		int index = captions.indexOf(chosen.toString());
 		JsonObject figure = catalogue.guide.getAsJsonArray("referenceFigures").get(index).getAsJsonObject();
 		String url = figure.getAsJsonArray("sources").get(0).getAsJsonObject().get("url").getAsString();
-		if (safeLink(url))
-		{
-			LinkBrowser.browse(url);
-		}
+		LinkBrowser.browse(url);
 	}
 	private void showText(String title, String value)
 	{
@@ -2879,31 +2873,8 @@ public final class GuidePanel extends PluginPanel
 	}
 	private static JButton link(String label, String url)
 	{
-		JButton b = button(label + " ↗", () ->
-		{
-			if (safeLink(url))
-			{
-				LinkBrowser.browse(url);
-			}
-		});
+		JButton b = button(label + " ↗", () -> LinkBrowser.browse(url));
 		b.setForeground(GOLD);
 		return b;
-	}
-	public static boolean safeLink(String url)
-	{
-		if (README_URL.equals(url) || BUG_REPORT_URL.equals(url))
-		{
-			return true;
-		}
-		try
-		{
-			java.net.URI uri = java.net.URI.create(url);
-			return "https".equals(uri.getScheme()) && uri.getUserInfo() == null && uri.getPort() == -1 &&
-				LINK_HOSTS.contains(uri.getHost());
-		}
-		catch (RuntimeException ex)
-		{
-			return false;
-		}
 	}
 }
