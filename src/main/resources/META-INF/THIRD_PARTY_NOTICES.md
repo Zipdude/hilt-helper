@@ -7,7 +7,7 @@ The BSD-2-Clause licence covers the plugin code. The guide and linked reference 
 - **Combat Achievement Exporter**, Copyright (c) 2025 cdfisher, informed the Combat Achievement catalogue and bit mapping. Its BSD notice is bundled in `META-INF/licenses/ca-export-LICENSE`. [Exporter source](https://github.com/cdfisher/ca-export)
 - **Old School RuneScape Wiki contributors** supplied reference text and gameplay research. The source URLs on tasks, activities and items credit those contributors. The plugin adapts the material into short task descriptions, structured fields, Ironman preparation and route guidance under CC BY-NC-SA 3.0. [Content licence](https://creativecommons.org/licenses/by-nc-sa/3.0/) · [Wiki licensing](https://meta.weirdgloop.org/w/Licensing)
 - **Hilt Helper contributors** authored the project’s Medium task rules and preparation guidance. The bundled content licence records the treatment of adapted Wiki text.
-- **Jagex** owns Old School RuneScape game content and trademarks. The guide links to source figures and videos.
+- **Jagex Limited** owns the Ghommal’s hilt 2 artwork used for the Plugin Hub and sidebar icons. The icon copies are resized from the project maintainer’s supplied item image and are covered by Jagex’s Fan Content Policy. [Item reference](https://oldschool.runescape.wiki/w/Ghommal%27s_hilt_2) · [Fan Content Policy](https://legal.jagex.com/docs/policies/fan-content-policy)
 - **Quest Helper** informed sidebar usability. [Quest Helper](https://github.com/Quest-Helper/quest-helper)
 
 Hilt Helper is an independent project.

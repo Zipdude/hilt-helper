@@ -41,8 +41,6 @@ import com.ironmanhilt.storage.ProgressStore;
 import com.ironmanhilt.storage.SerialExecutor;
 import com.ironmanhilt.ui.GuidePanel;
 import com.ironmanhilt.ui.TaskOverlay;
-import java.awt.Font;
-import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.io.Reader;
@@ -75,6 +73,7 @@ import net.runelite.client.ui.ClientToolbar;
 import net.runelite.client.ui.NavigationButton;
 import net.runelite.client.ui.overlay.OverlayManager;
 import net.runelite.client.util.Filepath;
+import net.runelite.client.util.ImageUtil;
 
 @PluginDescriptor(name = "Hilt Helper", internalName = "ironman-hilt-guide",
 					description = "Combat Achievement routes for all account types with Ironman-friendly preparation",
@@ -118,6 +117,7 @@ public final class IronmanHiltPlugin extends Plugin implements GuidePanel.Action
 
 	@Override protected void startUp() throws Exception
 	{
+		BufferedImage icon = ImageUtil.loadImageResource(IronmanHiltPlugin.class, "hilt-icon.png");
 		catalogue = new GuideCatalog(gson);
 		progress = new ProgressEngine(catalogue);
 		readiness = new ReadinessEngine(catalogue);
@@ -135,7 +135,7 @@ public final class IronmanHiltPlugin extends Plugin implements GuidePanel.Action
 		taskOverlay = new TaskOverlay(this);
 		overlayManager.add(taskOverlay);
 		navigation =
-			NavigationButton.builder().tooltip("Hilt Helper").icon(icon()).priority(7).panel(panel).build();
+			NavigationButton.builder().tooltip("Hilt Helper").icon(icon).priority(7).panel(panel).build();
 		toolbar.addNavigation(navigation);
 		clientThread.invokeLater(() ->
 		{
@@ -168,19 +168,6 @@ public final class IronmanHiltPlugin extends Plugin implements GuidePanel.Action
 			store = new ProgressStore(gson, files);
 			resetSession();
 		});
-	}
-
-	private static BufferedImage icon()
-	{
-		BufferedImage icon = new BufferedImage(24, 24, BufferedImage.TYPE_INT_ARGB);
-		Graphics2D graphics = icon.createGraphics();
-		graphics.setColor(GuidePanel.GOLD);
-		graphics.fillRoundRect(3, 2, 18, 20, 7, 7);
-		graphics.setColor(GuidePanel.BACKGROUND);
-		graphics.setFont(new Font(Font.SANS_SERIF, Font.BOLD, 15));
-		graphics.drawString("H", 6, 18);
-		graphics.dispose();
-		return icon;
 	}
 
 	@Override protected void shutDown()

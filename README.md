@@ -4,7 +4,7 @@ A Combat Achievement guide to **Ghommal’s hilt 2** for all standard-world acco
 
 ## Install
 
-Once listed, search for **Hilt Helper** in RuneLite’s Plugin Hub and select **Install**. Log in on a standard world and open the **H** sidebar.
+Open **Plugin Hub** in RuneLite, search for **Hilt Helper**, and select **Install**. Log in on a standard world and open **Hilt Helper** from the sidebar.
 
 ## Use the guide
 
@@ -35,3 +35,5 @@ Use **Report a Bug** in the sidebar or open the [GitHub bug report template](htt
 ## Licence
 
 The plugin code uses BSD-2-Clause. The bundled notices credit RuneLite, the OSRS Wiki and other upstream work. [Licence](LICENSE) · [Third-party and content notices](src/main/resources/META-INF/THIRD_PARTY_NOTICES.md)
+
+Created using intellectual property belonging to Jagex Limited under the terms of Jagex's Fan Content Policy. This content is not endorsed by or affiliated with Jagex.
