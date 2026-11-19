@@ -27,7 +27,6 @@ import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonPrimitive;
-import com.ironmanhilt.core.AccountMode;
 import com.ironmanhilt.core.GuideCatalog;
 import com.ironmanhilt.core.GuideState;
 import com.ironmanhilt.core.HesporiPatch;
@@ -584,18 +583,14 @@ public final class GuidePanel extends PluginPanel
 		JPanel box = card();
 		box.putClientProperty("guideAnchor", "route-picker");
 		box.add(text("Choose a route", TEXT, 16, true));
-		box.add(text("Switch routes any time.", MUTED, 12, false));
+		box.add(text("Both routes work for every account type. Switch any time.", MUTED, 12, false));
 		box.add(gap(5));
-		box.add(primaryButton(routeLabel(RouteStyle.SOLO) + " · recommended",
+		box.add(primaryButton(RouteStyle.SOLO.label + " · recommended",
 			savedAction(() -> chooseRoute(RouteStyle.SOLO))));
 		box.add(text("Start with skilling bosses and solo combat.", TEXT, 12, false));
 		box.add(gap(4));
-		box.add(button("With a group", savedAction(() -> chooseRoute(RouteStyle.GROUP))));
+		box.add(button(RouteStyle.GROUP.label, savedAction(() -> chooseRoute(RouteStyle.GROUP))));
 		box.add(text("Start with the same early tasks. Add group bosses and raid tasks when you’re ready.", TEXT, 12, false));
-		if (shownLive != null && shownLive.mode == AccountMode.NORMAL)
-		{
-			box.add(text("You can use either Ironman-friendly route on a main.", MUTED, 12, false));
-		}
 		if (shownState.routeChoice() != null)
 		{
 			box.add(button("Back to guide", () ->
@@ -606,11 +601,6 @@ public final class GuidePanel extends PluginPanel
 		}
 		add(gap(8));
 		add(box);
-	}
-
-	private String routeLabel(RouteStyle style)
-	{
-		return style == RouteStyle.SOLO && shownLive != null && shownLive.mode == AccountMode.NORMAL ? "Solo" : style.label;
 	}
 
 	private void chooseRoute(RouteStyle style)
@@ -639,7 +629,7 @@ public final class GuidePanel extends PluginPanel
 	{
 		Planner.Next next = shownNext;
 		JPanel box = card();
-		box.add(text("Next up · " + routeLabel(state.routeChoice()), GOLD, 12, true));
+		box.add(text("Next up · " + state.routeChoice().label, GOLD, 12, true));
 		if (!next.ids.isEmpty())
 		{
 			int id = next.ids.get(0);
@@ -721,21 +711,21 @@ public final class GuidePanel extends PluginPanel
 			for (RouteStyle style : RouteStyle.values())
 			{
 				PointTally points = pointTally(style == current ? shownRoute : alternateRoute);
-				box.add(text(routeLabel(style), style == current ? GOLD : TEXT, 12, true));
+				box.add(text(style.label, style == current ? GOLD : TEXT, 12, true));
 				box.add(text(points.unlocked + " unlocked pts · " + points.locked + " locked pts", TEXT, 12, false));
 			}
 			box.add(button("Change route", () ->
 			{
 				choosingRoute = true;
 				revealAnchor = "route-picker";
-				focusTarget = routeLabel(RouteStyle.SOLO) + " · recommended";
+				focusTarget = RouteStyle.SOLO.label + " · recommended";
 				redraw();
 			}));
 			box.add(gap(6));
 			routeItems(box);
 			box.add(gap(6));
 			box.add(text("Quests & levels to work on", GOLD, 13, true));
-			box.add(text("Across unfinished tasks on " + routeLabel(current) + ".", MUTED, 12, false));
+			box.add(text("Across unfinished tasks on your selected route.", MUTED, 12, false));
 			if (missingUnlocks == null)
 			{
 				missingUnlocks = planner.missingUnlocks(shownRoute, shownState, shownLive);

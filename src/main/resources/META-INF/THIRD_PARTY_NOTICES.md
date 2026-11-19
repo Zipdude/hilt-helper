@@ -6,8 +6,8 @@ The BSD-2-Clause licence covers the plugin code. The guide and linked reference 
 - **RuneLite farming reference**, Copyright (c) 2018 NotFoxtrot and Copyright (c) 2018–2019 Abex, informed the Hespori patch state and timing. Its BSD notice is bundled in `META-INF/licenses/runelite-farming-LICENSE`. [Farming source](https://github.com/runelite/runelite/tree/runelite-parent-1.13.6/runelite-client/src/main/java/net/runelite/client/plugins/timetracking/farming)
 - **Combat Achievement Exporter**, Copyright (c) 2025 cdfisher, informed the Combat Achievement catalogue and bit mapping. Its BSD notice is bundled in `META-INF/licenses/ca-export-LICENSE`. [Exporter source](https://github.com/cdfisher/ca-export)
 - **Old School RuneScape Wiki contributors** supplied reference text and gameplay research. The source URLs on tasks, activities and items credit those contributors. The plugin adapts the material into short task descriptions, structured fields, Ironman preparation and route guidance under CC BY-NC-SA 3.0. [Content licence](https://creativecommons.org/licenses/by-nc-sa/3.0/) · [Wiki licensing](https://meta.weirdgloop.org/w/Licensing)
-- **Ironman Hilt Guide contributors** authored the project’s Medium task rules and preparation guidance. The bundled content licence records the treatment of adapted Wiki text.
+- **Hilt Helper contributors** authored the project’s Medium task rules and preparation guidance. The bundled content licence records the treatment of adapted Wiki text.
 - **Jagex** owns Old School RuneScape game content and trademarks. The guide links to source figures and videos.
 - **Quest Helper** informed sidebar usability. [Quest Helper](https://github.com/Quest-Helper/quest-helper)
 
-Ironman Hilt Guide is an independent project.
+Hilt Helper is an independent project.

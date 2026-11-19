@@ -76,8 +76,8 @@ import net.runelite.client.ui.NavigationButton;
 import net.runelite.client.ui.overlay.OverlayManager;
 import net.runelite.client.util.Filepath;
 
-@PluginDescriptor(name = "Ironman Hilt Guide", internalName = "ironman-hilt-guide",
-					description = "Ironman-first route and Combat Achievement checklist for standard-world accounts",
+@PluginDescriptor(name = "Hilt Helper", internalName = "ironman-hilt-guide",
+					description = "Combat Achievement routes for all account types with Ironman-friendly preparation",
 					tags = {"ironman", "combat", "achievements", "guide"})
 public final class IronmanHiltPlugin extends Plugin implements GuidePanel.Actions
 {
@@ -135,7 +135,7 @@ public final class IronmanHiltPlugin extends Plugin implements GuidePanel.Action
 		taskOverlay = new TaskOverlay(this);
 		overlayManager.add(taskOverlay);
 		navigation =
-			NavigationButton.builder().tooltip("Ironman Hilt Guide").icon(icon()).priority(7).panel(panel).build();
+			NavigationButton.builder().tooltip("Hilt Helper").icon(icon()).priority(7).panel(panel).build();
 		toolbar.addNavigation(navigation);
 		clientThread.invokeLater(() ->
 		{
@@ -463,7 +463,7 @@ public final class IronmanHiltPlugin extends Plugin implements GuidePanel.Action
 		{
 			state.data.addProperty("hesporiNotice", patch.name());
 			changed = true;
-			notifier.notify("Ironman Hilt Guide · Hespori: " + patch.detail);
+			notifier.notify("Hilt Helper · Hespori: " + patch.detail);
 		}
 		if (changed)
 		{

@@ -25,7 +25,7 @@ package com.ironmanhilt.core;
 
 public enum RouteStyle
 {
-	SOLO("solo", "Solo Ironman"),
+	SOLO("solo", "Solo"),
 	GROUP("group", "With a group");
 
 	public final String key, label;
