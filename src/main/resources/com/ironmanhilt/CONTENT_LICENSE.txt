@@ -1,0 +1,7 @@
+Guide text and adapted Wiki reference data: CC BY-NC-SA 3.0.
+Attribution: Old School RuneScape Wiki contributors; source URLs are attached to each task, activity and item.
+Adapted into structured Ironman guidance and local readiness data; checked 17 November 2026.
+Licence: https://creativecommons.org/licenses/by-nc-sa/3.0/
+Licensing policy: https://meta.weirdgloop.org/w/Licensing
+Jagex owns game content and trademarks. No third-party game images are bundled.
+Plugin code is separately licensed under BSD-2-Clause.

@@ -1,0 +1,111 @@
+/*
+	* Copyright (c) 2026, OSRS Ironman Combat Achievement Progression Guide contributors
+	* All rights reserved.
+	*
+	* Redistribution and use in source and binary forms, with or without
+	* modification, are permitted provided that the following conditions are met:
+	* 1. Redistributions of source code must retain the above copyright notice,
+	*    this list of conditions and the following disclaimer.
+	* 2. Redistributions in binary form must reproduce the above copyright notice,
+	*    this list of conditions and the following disclaimer in the documentation
+	*    and/or other materials provided with the distribution.
+	*
+	* THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS"
+	* AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
+	* IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE
+	* ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE
+	* LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL
+	* DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR
+	* SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER
+	* CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY,
+	* OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
+	* OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+	*/
+package com.ironmanhilt.core;
+
+import java.util.Collections;
+import java.util.LinkedHashSet;
+import java.util.List;
+import java.util.Set;
+
+/** Cache IDs come from struct parameter 1306, never from display or list order. */
+public final class CaDecoder
+{
+	private final GuideCatalog catalogue;
+	public CaDecoder(GuideCatalog catalogue)
+	{
+		this.catalogue = catalogue;
+	}
+	public Result decode(List<GuideCatalog.Task> liveTasks, int[] words, int mediumThreshold, int hardThreshold, int gamePoints)
+	{
+		if (mediumThreshold <= 0 || hardThreshold <= 0)
+		{
+			return Result.unavailable("Waiting for server achievement variables");
+		}
+		if (mediumThreshold != catalogue.threshold || hardThreshold != catalogue.hardThreshold)
+		{
+			return Result.unavailable(
+				"The game's reward threshold changed. Catalogue update required; saved progress retained.");
+		}
+		if (words == null || words.length != 21)
+		{
+			return Result.unavailable("Achievement bit blocks are unavailable");
+		}
+		if (liveTasks == null || liveTasks.size() != catalogue.tasks.size())
+		{
+			return Result.unavailable("Live task catalogue changed or is unavailable; saved progress retained.");
+		}
+		Set<Integer> observed = new LinkedHashSet<>(), positive = new LinkedHashSet<>();
+		for (GuideCatalog.Task task : liveTasks)
+		{
+			if (task == null || task.name == null || task.tier == null)
+			{
+				return Result.unavailable("Invalid task metadata; saved progress retained.");
+			}
+			GuideCatalog.Task expected = catalogue.tasks.get(task.id);
+			if (expected == null || !observed.add(task.id) || !expected.tier.equals(task.tier) ||
+				!normal(expected.name).equals(normal(task.name)) || expected.points != task.points)
+			{
+				return Result.unavailable("Live task ID/name/tier validation failed; saved progress retained.");
+			}
+			if ((words[task.id / 32] & (1 << (task.id % 32))) != 0)
+			{
+				positive.add(task.id);
+			}
+		}
+		if (!observed.equals(catalogue.tasks.keySet()))
+		{
+			return Result.unavailable("Incomplete task-ID coverage");
+		}
+		int decodedPoints = catalogue.points(positive);
+		if (gamePoints < 0 || gamePoints != decodedPoints)
+		{
+			return Result.unavailable(
+				"Waiting for matching server points and completion flags; saved progress retained.");
+		}
+		return new Result(true, positive, observed, decodedPoints, "655 / 655 task IDs validated");
+	}
+	private static String normal(String s)
+	{
+		return s.replace('\u2019', '\'').replace('\u00a0', ' ').trim().replaceAll("\\s+", " ");
+	}
+	public static final class Result
+	{
+		public final boolean valid;
+		public final Set<Integer> completed, observed;
+		public final int gamePoints;
+		public final String message;
+		private Result(boolean valid, Set<Integer> completed, Set<Integer> observed, int points, String message)
+		{
+			this.valid = valid;
+			this.completed = Collections.unmodifiableSet(new LinkedHashSet<>(completed));
+			this.observed = Collections.unmodifiableSet(new LinkedHashSet<>(observed));
+			this.gamePoints = points;
+			this.message = message;
+		}
+		public static Result unavailable(String reason)
+		{
+			return new Result(false, Collections.emptySet(), Collections.emptySet(), -1, reason);
+		}
+	}
+}

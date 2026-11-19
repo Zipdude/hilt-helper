@@ -1,0 +1,3937 @@
+{
+  "verified_date": "2026-11-15",
+  "medium_threshold": 169,
+  "tasks": [
+    {
+      "id": 0,
+      "name": "Noxious Foe",
+      "tier": "Easy",
+      "points": 1
+    },
+    {
+      "id": 28,
+      "name": "Defence? What Defence?",
+      "tier": "Easy",
+      "points": 1
+    },
+    {
+      "id": 24,
+      "name": "Barrows Novice",
+      "tier": "Easy",
+      "points": 1
+    },
+    {
+      "id": 32,
+      "name": "Big, Black and Fiery",
+      "tier": "Easy",
+      "points": 1
+    },
+    {
+      "id": 33,
+      "name": "The Demonic Punching Bag",
+      "tier": "Easy",
+      "points": 1
+    },
+    {
+      "id": 632,
+      "name": "Brutus Novice",
+      "tier": "Easy",
+      "points": 1
+    },
+    {
+      "id": 40,
+      "name": "A Slow Death",
+      "tier": "Easy",
+      "points": 1
+    },
+    {
+      "id": 37,
+      "name": "Protection from Moss",
+      "tier": "Easy",
+      "points": 1
+    },
+    {
+      "id": 39,
+      "name": "Preparation Is Key",
+      "tier": "Easy",
+      "points": 1
+    },
+    {
+      "id": 35,
+      "name": "Bryophyta Novice",
+      "tier": "Easy",
+      "points": 1
+    },
+    {
+      "id": 41,
+      "name": "Fighting as Intended II",
+      "tier": "Easy",
+      "points": 1
+    },
+    {
+      "id": 76,
+      "name": "Deranged Archaeologist Novice",
+      "tier": "Easy",
+      "points": 1
+    },
+    {
+      "id": 80,
+      "name": "The Walking Volcano",
+      "tier": "Easy",
+      "points": 1
+    },
+    {
+      "id": 177,
+      "name": "Giant Mole Novice",
+      "tier": "Easy",
+      "points": 1
+    },
+    {
+      "id": 398,
+      "name": "Into the Den of Giants",
+      "tier": "Easy",
+      "points": 1
+    },
+    {
+      "id": 121,
+      "name": "Not So Great After All",
+      "tier": "Easy",
+      "points": 1
+    },
+    {
+      "id": 120,
+      "name": "A Greater Foe",
+      "tier": "Easy",
+      "points": 1
+    },
+    {
+      "id": 122,
+      "name": "A Demon's Best Friend",
+      "tier": "Easy",
+      "points": 1
+    },
+    {
+      "id": 162,
+      "name": "King Black Dragon Novice",
+      "tier": "Easy",
+      "points": 1
+    },
+    {
+      "id": 174,
+      "name": "A Scaley Encounter",
+      "tier": "Easy",
+      "points": 1
+    },
+    {
+      "id": 175,
+      "name": "Shayzien Protector",
+      "tier": "Easy",
+      "points": 1
+    },
+    {
+      "id": 134,
+      "name": "Fighting as Intended",
+      "tier": "Easy",
+      "points": 1
+    },
+    {
+      "id": 129,
+      "name": "Obor Novice",
+      "tier": "Easy",
+      "points": 1
+    },
+    {
+      "id": 131,
+      "name": "Sleeping Giant",
+      "tier": "Easy",
+      "points": 1
+    },
+    {
+      "id": 597,
+      "name": "Let them fight",
+      "tier": "Easy",
+      "points": 1
+    },
+    {
+      "id": 591,
+      "name": "One by one",
+      "tier": "Easy",
+      "points": 1
+    },
+    {
+      "id": 594,
+      "name": "Elemental Company",
+      "tier": "Easy",
+      "points": 1
+    },
+    {
+      "id": 206,
+      "name": "Sarachnis Novice",
+      "tier": "Easy",
+      "points": 1
+    },
+    {
+      "id": 523,
+      "name": "Sit Rat",
+      "tier": "Easy",
+      "points": 1
+    },
+    {
+      "id": 521,
+      "name": "Scurrius Novice",
+      "tier": "Easy",
+      "points": 1
+    },
+    {
+      "id": 630,
+      "name": "Dry Cleaning",
+      "tier": "Easy",
+      "points": 1
+    },
+    {
+      "id": 625,
+      "name": "Shellbane Adept",
+      "tier": "Easy",
+      "points": 1
+    },
+    {
+      "id": 356,
+      "name": "Master of Buckets",
+      "tier": "Easy",
+      "points": 1
+    },
+    {
+      "id": 360,
+      "name": "Fire in the Hole!",
+      "tier": "Easy",
+      "points": 1
+    },
+    {
+      "id": 357,
+      "name": "Calm Before the Storm",
+      "tier": "Easy",
+      "points": 1
+    },
+    {
+      "id": 353,
+      "name": "Tempoross Novice",
+      "tier": "Easy",
+      "points": 1
+    },
+    {
+      "id": 285,
+      "name": "Cosy",
+      "tier": "Easy",
+      "points": 1
+    },
+    {
+      "id": 281,
+      "name": "Mummy!",
+      "tier": "Easy",
+      "points": 1
+    },
+    {
+      "id": 279,
+      "name": "Wintertodt Novice",
+      "tier": "Easy",
+      "points": 1
+    },
+    {
+      "id": 282,
+      "name": "Handyman",
+      "tier": "Easy",
+      "points": 1
+    },
+    {
+      "id": 287,
+      "name": "A Slithery Encounter",
+      "tier": "Easy",
+      "points": 1
+    },
+    {
+      "id": 584,
+      "name": "Temotli Triumph",
+      "tier": "Medium",
+      "points": 2
+    },
+    {
+      "id": 579,
+      "name": "Amoxliatl Champion",
+      "tier": "Medium",
+      "points": 2
+    },
+    {
+      "id": 27,
+      "name": "Pray for Success",
+      "tier": "Medium",
+      "points": 2
+    },
+    {
+      "id": 26,
+      "name": "Can't Touch Me",
+      "tier": "Medium",
+      "points": 2
+    },
+    {
+      "id": 25,
+      "name": "Barrows Champion",
+      "tier": "Medium",
+      "points": 2
+    },
+    {
+      "id": 34,
+      "name": "Brutal, Big, Black and Firey",
+      "tier": "Medium",
+      "points": 2
+    },
+    {
+      "id": 633,
+      "name": "Brutus Champion",
+      "tier": "Medium",
+      "points": 2
+    },
+    {
+      "id": 635,
+      "name": "Beef vs Beef",
+      "tier": "Medium",
+      "points": 2
+    },
+    {
+      "id": 36,
+      "name": "Bryophyta Champion",
+      "tier": "Medium",
+      "points": 2
+    },
+    {
+      "id": 38,
+      "name": "Quick Cutter",
+      "tier": "Medium",
+      "points": 2
+    },
+    {
+      "id": 63,
+      "name": "Sorry, What Was That?",
+      "tier": "Medium",
+      "points": 2
+    },
+    {
+      "id": 61,
+      "name": "Chaos Fanatic Champion",
+      "tier": "Medium",
+      "points": 2
+    },
+    {
+      "id": 72,
+      "name": "Mage of the Ruins",
+      "tier": "Medium",
+      "points": 2
+    },
+    {
+      "id": 73,
+      "name": "I'd Rather Not Learn",
+      "tier": "Medium",
+      "points": 2
+    },
+    {
+      "id": 70,
+      "name": "Crazy Archaeologist Champion",
+      "tier": "Medium",
+      "points": 2
+    },
+    {
+      "id": 197,
+      "name": "Dagannoth Prime Champion",
+      "tier": "Medium",
+      "points": 2
+    },
+    {
+      "id": 201,
+      "name": "Dagannoth Rex Champion",
+      "tier": "Medium",
+      "points": 2
+    },
+    {
+      "id": 204,
+      "name": "A Frozen King",
+      "tier": "Medium",
+      "points": 2
+    },
+    {
+      "id": 233,
+      "name": "Dagannoth Supreme Champion",
+      "tier": "Medium",
+      "points": 2
+    },
+    {
+      "id": 77,
+      "name": "Deranged Archaeologist Champion",
+      "tier": "Medium",
+      "points": 2
+    },
+    {
+      "id": 78,
+      "name": "Mage of the Swamp",
+      "tier": "Medium",
+      "points": 2
+    },
+    {
+      "id": 79,
+      "name": "I'd Rather Be Illiterate",
+      "tier": "Medium",
+      "points": 2
+    },
+    {
+      "id": 97,
+      "name": "A Smashing Time",
+      "tier": "Medium",
+      "points": 2
+    },
+    {
+      "id": 178,
+      "name": "Giant Mole Champion",
+      "tier": "Medium",
+      "points": 2
+    },
+    {
+      "id": 182,
+      "name": "Avoiding Those Little Arms",
+      "tier": "Medium",
+      "points": 2
+    },
+    {
+      "id": 165,
+      "name": "Hide Penetration",
+      "tier": "Medium",
+      "points": 2
+    },
+    {
+      "id": 164,
+      "name": "Claw Clipper",
+      "tier": "Medium",
+      "points": 2
+    },
+    {
+      "id": 163,
+      "name": "King Black Dragon Champion",
+      "tier": "Medium",
+      "points": 2
+    },
+    {
+      "id": 166,
+      "name": "Antifire Protection",
+      "tier": "Medium",
+      "points": 2
+    },
+    {
+      "id": 173,
+      "name": "Master of Broad Weaponry",
+      "tier": "Medium",
+      "points": 2
+    },
+    {
+      "id": 651,
+      "name": "Dancing Queen",
+      "tier": "Medium",
+      "points": 2
+    },
+    {
+      "id": 653,
+      "name": "Juggling Act",
+      "tier": "Medium",
+      "points": 2
+    },
+    {
+      "id": 652,
+      "name": "Smite Fight",
+      "tier": "Medium",
+      "points": 2
+    },
+    {
+      "id": 646,
+      "name": "Mad Angel Adept",
+      "tier": "Medium",
+      "points": 2
+    },
+    {
+      "id": 528,
+      "name": "Lunar Triplet",
+      "tier": "Medium",
+      "points": 2
+    },
+    {
+      "id": 529,
+      "name": "Perilous Novice",
+      "tier": "Medium",
+      "points": 2
+    },
+    {
+      "id": 534,
+      "name": "Back to Our Roots",
+      "tier": "Medium",
+      "points": 2
+    },
+    {
+      "id": 535,
+      "name": "Moons of Peril Speed-Trialist",
+      "tier": "Medium",
+      "points": 2
+    },
+    {
+      "id": 399,
+      "name": "Sit Back and Relax",
+      "tier": "Medium",
+      "points": 2
+    },
+    {
+      "id": 130,
+      "name": "Obor Champion",
+      "tier": "Medium",
+      "points": 2
+    },
+    {
+      "id": 132,
+      "name": "Back to the Wall",
+      "tier": "Medium",
+      "points": 2
+    },
+    {
+      "id": 133,
+      "name": "Squashing the Giant",
+      "tier": "Medium",
+      "points": 2
+    },
+    {
+      "id": 598,
+      "name": "It takes too long",
+      "tier": "Medium",
+      "points": 2
+    },
+    {
+      "id": 590,
+      "name": "Royal Titan Adept",
+      "tier": "Medium",
+      "points": 2
+    },
+    {
+      "id": 589,
+      "name": "Royal Titan Champion",
+      "tier": "Medium",
+      "points": 2
+    },
+    {
+      "id": 207,
+      "name": "Sarachnis Champion",
+      "tier": "Medium",
+      "points": 2
+    },
+    {
+      "id": 210,
+      "name": "Newspaper Enthusiast",
+      "tier": "Medium",
+      "points": 2
+    },
+    {
+      "id": 524,
+      "name": "Perfect Scurrius",
+      "tier": "Medium",
+      "points": 2
+    },
+    {
+      "id": 525,
+      "name": "Efficient Pest Control",
+      "tier": "Medium",
+      "points": 2
+    },
+    {
+      "id": 522,
+      "name": "Scurrius Champion",
+      "tier": "Medium",
+      "points": 2
+    },
+    {
+      "id": 628,
+      "name": "Shellbane Speedrunner",
+      "tier": "Medium",
+      "points": 2
+    },
+    {
+      "id": 627,
+      "name": "Perfect Shellbane",
+      "tier": "Medium",
+      "points": 2
+    },
+    {
+      "id": 626,
+      "name": "Shellbane Veteran",
+      "tier": "Medium",
+      "points": 2
+    },
+    {
+      "id": 223,
+      "name": "A Frozen Foe from the Past",
+      "tier": "Medium",
+      "points": 2
+    },
+    {
+      "id": 44,
+      "name": "Skotizo Champion",
+      "tier": "Medium",
+      "points": 2
+    },
+    {
+      "id": 46,
+      "name": "Demonic Weakening",
+      "tier": "Medium",
+      "points": 2
+    },
+    {
+      "id": 48,
+      "name": "Demonbane Weaponry",
+      "tier": "Medium",
+      "points": 2
+    },
+    {
+      "id": 354,
+      "name": "Tempoross Champion",
+      "tier": "Medium",
+      "points": 2
+    },
+    {
+      "id": 359,
+      "name": "The Lone Angler",
+      "tier": "Medium",
+      "points": 2
+    },
+    {
+      "id": 574,
+      "name": "You're a wizard",
+      "tier": "Medium",
+      "points": 2
+    },
+    {
+      "id": 568,
+      "name": "Hueycoatl Champion",
+      "tier": "Medium",
+      "points": 2
+    },
+    {
+      "id": 283,
+      "name": "Can We Fix It?",
+      "tier": "Medium",
+      "points": 2
+    },
+    {
+      "id": 280,
+      "name": "Wintertodt Champion",
+      "tier": "Medium",
+      "points": 2
+    },
+    {
+      "id": 284,
+      "name": "Leaving No One Behind",
+      "tier": "Medium",
+      "points": 2
+    },
+    {
+      "id": 5,
+      "name": "Don't Whip Me",
+      "tier": "Hard",
+      "points": 3
+    },
+    {
+      "id": 7,
+      "name": "Don't Stop Moving",
+      "tier": "Hard",
+      "points": 3
+    },
+    {
+      "id": 3,
+      "name": "They Grow Up Too Fast",
+      "tier": "Hard",
+      "points": 3
+    },
+    {
+      "id": 1,
+      "name": "Abyssal Adept",
+      "tier": "Hard",
+      "points": 3
+    },
+    {
+      "id": 580,
+      "name": "Amoxliatl Adept",
+      "tier": "Hard",
+      "points": 3
+    },
+    {
+      "id": 587,
+      "name": "Totally Shattered",
+      "tier": "Hard",
+      "points": 3
+    },
+    {
+      "id": 583,
+      "name": "Nagua Negation",
+      "tier": "Hard",
+      "points": 3
+    },
+    {
+      "id": 586,
+      "name": "Kemo Makti",
+      "tier": "Hard",
+      "points": 3
+    },
+    {
+      "id": 581,
+      "name": "Amoxliatl Speed-Trialist",
+      "tier": "Hard",
+      "points": 3
+    },
+    {
+      "id": 29,
+      "name": "Just Like That",
+      "tier": "Hard",
+      "points": 3
+    },
+    {
+      "id": 30,
+      "name": "Faithless Crypt Run",
+      "tier": "Hard",
+      "points": 3
+    },
+    {
+      "id": 636,
+      "name": "Smarter than a Cow",
+      "tier": "Hard",
+      "points": 3
+    },
+    {
+      "id": 42,
+      "name": "Callisto Adept",
+      "tier": "Hard",
+      "points": 3
+    },
+    {
+      "id": 59,
+      "name": "Hoarder",
+      "tier": "Hard",
+      "points": 3
+    },
+    {
+      "id": 60,
+      "name": "The Flincher",
+      "tier": "Hard",
+      "points": 3
+    },
+    {
+      "id": 57,
+      "name": "Chaos Elemental Adept",
+      "tier": "Hard",
+      "points": 3
+    },
+    {
+      "id": 62,
+      "name": "Chaos Fanatic Adept",
+      "tier": "Hard",
+      "points": 3
+    },
+    {
+      "id": 64,
+      "name": "Praying to the Gods",
+      "tier": "Hard",
+      "points": 3
+    },
+    {
+      "id": 211,
+      "name": "Commander Zilyana Adept",
+      "tier": "Hard",
+      "points": 3
+    },
+    {
+      "id": 213,
+      "name": "Commander Showdown",
+      "tier": "Hard",
+      "points": 3
+    },
+    {
+      "id": 71,
+      "name": "Crazy Archaeologist Adept",
+      "tier": "Hard",
+      "points": 3
+    },
+    {
+      "id": 198,
+      "name": "Dagannoth Prime Adept",
+      "tier": "Hard",
+      "points": 3
+    },
+    {
+      "id": 202,
+      "name": "Dagannoth Rex Adept",
+      "tier": "Hard",
+      "points": 3
+    },
+    {
+      "id": 234,
+      "name": "Dagannoth Supreme Adept",
+      "tier": "Hard",
+      "points": 3
+    },
+    {
+      "id": 16,
+      "name": "General Graardor Adept",
+      "tier": "Hard",
+      "points": 3
+    },
+    {
+      "id": 20,
+      "name": "General Showdown",
+      "tier": "Hard",
+      "points": 3
+    },
+    {
+      "id": 18,
+      "name": "Ourg Freezer",
+      "tier": "Hard",
+      "points": 3
+    },
+    {
+      "id": 181,
+      "name": "Whack-a-Mole",
+      "tier": "Hard",
+      "points": 3
+    },
+    {
+      "id": 179,
+      "name": "Why Are You Running?",
+      "tier": "Hard",
+      "points": 3
+    },
+    {
+      "id": 87,
+      "name": "Heal No More",
+      "tier": "Hard",
+      "points": 3
+    },
+    {
+      "id": 84,
+      "name": "Don't Look at the Eclipse",
+      "tier": "Hard",
+      "points": 3
+    },
+    {
+      "id": 88,
+      "name": "Static Awareness",
+      "tier": "Hard",
+      "points": 3
+    },
+    {
+      "id": 82,
+      "name": "Grotesque Guardians Adept",
+      "tier": "Hard",
+      "points": 3
+    },
+    {
+      "id": 85,
+      "name": "Prison Break",
+      "tier": "Hard",
+      "points": 3
+    },
+    {
+      "id": 86,
+      "name": "Granite Footwork",
+      "tier": "Hard",
+      "points": 3
+    },
+    {
+      "id": 125,
+      "name": "Weed Whacker",
+      "tier": "Hard",
+      "points": 3
+    },
+    {
+      "id": 123,
+      "name": "Hespori Adept",
+      "tier": "Hard",
+      "points": 3
+    },
+    {
+      "id": 124,
+      "name": "Hesporisn't",
+      "tier": "Hard",
+      "points": 3
+    },
+    {
+      "id": 332,
+      "name": "K'ril Tsutsaroth Adept",
+      "tier": "Hard",
+      "points": 3
+    },
+    {
+      "id": 335,
+      "name": "Demonic Showdown",
+      "tier": "Hard",
+      "points": 3
+    },
+    {
+      "id": 339,
+      "name": "Demonbane Weaponry II",
+      "tier": "Hard",
+      "points": 3
+    },
+    {
+      "id": 334,
+      "name": "Yarr No More",
+      "tier": "Hard",
+      "points": 3
+    },
+    {
+      "id": 159,
+      "name": "Chitin Penetrator",
+      "tier": "Hard",
+      "points": 3
+    },
+    {
+      "id": 157,
+      "name": "Kalphite Queen Adept",
+      "tier": "Hard",
+      "points": 3
+    },
+    {
+      "id": 167,
+      "name": "Who Is the King Now?",
+      "tier": "Hard",
+      "points": 3
+    },
+    {
+      "id": 168,
+      "name": "Kraken Adept",
+      "tier": "Hard",
+      "points": 3
+    },
+    {
+      "id": 170,
+      "name": "Krakan't Hurt Me",
+      "tier": "Hard",
+      "points": 3
+    },
+    {
+      "id": 169,
+      "name": "Unnecessary Optimisation",
+      "tier": "Hard",
+      "points": 3
+    },
+    {
+      "id": 9,
+      "name": "Kree'arra Adept",
+      "tier": "Hard",
+      "points": 3
+    },
+    {
+      "id": 12,
+      "name": "Airborne Showdown",
+      "tier": "Hard",
+      "points": 3
+    },
+    {
+      "id": 650,
+      "name": "Mad Angel Speed-Runner",
+      "tier": "Hard",
+      "points": 3
+    },
+    {
+      "id": 647,
+      "name": "Mad Angel Veteran",
+      "tier": "Hard",
+      "points": 3
+    },
+    {
+      "id": 648,
+      "name": "Perfect Mad Angel",
+      "tier": "Hard",
+      "points": 3
+    },
+    {
+      "id": 637,
+      "name": "Maggot Squasher",
+      "tier": "Hard",
+      "points": 3
+    },
+    {
+      "id": 530,
+      "name": "Perilous Champion",
+      "tier": "Hard",
+      "points": 3
+    },
+    {
+      "id": 537,
+      "name": "Fat of the Land",
+      "tier": "Hard",
+      "points": 3
+    },
+    {
+      "id": 533,
+      "name": "Betrayal",
+      "tier": "Hard",
+      "points": 3
+    },
+    {
+      "id": 526,
+      "name": "The Clone Zone",
+      "tier": "Hard",
+      "points": 3
+    },
+    {
+      "id": 532,
+      "name": "Fortified",
+      "tier": "Hard",
+      "points": 3
+    },
+    {
+      "id": 531,
+      "name": "Perilous Dancer",
+      "tier": "Hard",
+      "points": 3
+    },
+    {
+      "id": 536,
+      "name": "Moons of Peril Speed-Chaser",
+      "tier": "Hard",
+      "points": 3
+    },
+    {
+      "id": 478,
+      "name": "Phantom Muspah Adept",
+      "tier": "Hard",
+      "points": 3
+    },
+    {
+      "id": 593,
+      "name": "Titan Killer",
+      "tier": "Hard",
+      "points": 3
+    },
+    {
+      "id": 595,
+      "name": "I need room",
+      "tier": "Hard",
+      "points": 3
+    },
+    {
+      "id": 588,
+      "name": "Perfect Royal Titans",
+      "tier": "Hard",
+      "points": 3
+    },
+    {
+      "id": 592,
+      "name": "Royal Titan Speed-Runner",
+      "tier": "Hard",
+      "points": 3
+    },
+    {
+      "id": 209,
+      "name": "Inspect Repellent",
+      "tier": "Hard",
+      "points": 3
+    },
+    {
+      "id": 208,
+      "name": "Ready to Pounce",
+      "tier": "Hard",
+      "points": 3
+    },
+    {
+      "id": 220,
+      "name": "I Can't Reach That",
+      "tier": "Hard",
+      "points": 3
+    },
+    {
+      "id": 221,
+      "name": "Guardians No More",
+      "tier": "Hard",
+      "points": 3
+    },
+    {
+      "id": 218,
+      "name": "Scorpia Adept",
+      "tier": "Hard",
+      "points": 3
+    },
+    {
+      "id": 631,
+      "name": "Featherweight Fighter",
+      "tier": "Hard",
+      "points": 3
+    },
+    {
+      "id": 629,
+      "name": "Shellbane Survivor",
+      "tier": "Hard",
+      "points": 3
+    },
+    {
+      "id": 45,
+      "name": "Skotizo Adept",
+      "tier": "Hard",
+      "points": 3
+    },
+    {
+      "id": 358,
+      "name": "Why Cook?",
+      "tier": "Hard",
+      "points": 3
+    },
+    {
+      "id": 355,
+      "name": "Dress Like You Mean It",
+      "tier": "Hard",
+      "points": 3
+    },
+    {
+      "id": 575,
+      "name": "I'm your son",
+      "tier": "Hard",
+      "points": 3
+    },
+    {
+      "id": 572,
+      "name": "Pillar Lover",
+      "tier": "Hard",
+      "points": 3
+    },
+    {
+      "id": 569,
+      "name": "Hueycoatl Adept",
+      "tier": "Hard",
+      "points": 3
+    },
+    {
+      "id": 183,
+      "name": "Nightmare Adept",
+      "tier": "Hard",
+      "points": 3
+    },
+    {
+      "id": 397,
+      "name": "Theatre of Blood: SM Adept",
+      "tier": "Hard",
+      "points": 3
+    },
+    {
+      "id": 464,
+      "name": "Movin' on up",
+      "tier": "Hard",
+      "points": 3
+    },
+    {
+      "id": 461,
+      "name": "Novice Tomb Explorer",
+      "tier": "Hard",
+      "points": 3
+    },
+    {
+      "id": 465,
+      "name": "Confident Raider",
+      "tier": "Hard",
+      "points": 3
+    },
+    {
+      "id": 462,
+      "name": "Novice Tomb Looter",
+      "tier": "Hard",
+      "points": 3
+    },
+    {
+      "id": 264,
+      "name": "Venenatis Adept",
+      "tier": "Hard",
+      "points": 3
+    },
+    {
+      "id": 266,
+      "name": "Vet'ion Adept",
+      "tier": "Hard",
+      "points": 3
+    },
+    {
+      "id": 286,
+      "name": "Why Fletch?",
+      "tier": "Hard",
+      "points": 3
+    },
+    {
+      "id": 224,
+      "name": "Zulrah Adept",
+      "tier": "Hard",
+      "points": 3
+    },
+    {
+      "id": 4,
+      "name": "Respiratory Runner",
+      "tier": "Elite",
+      "points": 4
+    },
+    {
+      "id": 2,
+      "name": "Abyssal Veteran",
+      "tier": "Elite",
+      "points": 4
+    },
+    {
+      "id": 8,
+      "name": "Perfect Sire",
+      "tier": "Elite",
+      "points": 4
+    },
+    {
+      "id": 6,
+      "name": "Demonic Rebound",
+      "tier": "Elite",
+      "points": 4
+    },
+    {
+      "id": 135,
+      "name": "Alchemical Veteran",
+      "tier": "Elite",
+      "points": 4
+    },
+    {
+      "id": 585,
+      "name": "Without Ralos' Light",
+      "tier": "Elite",
+      "points": 4
+    },
+    {
+      "id": 582,
+      "name": "Amoxliatl Speed-Chaser",
+      "tier": "Elite",
+      "points": 4
+    },
+    {
+      "id": 558,
+      "name": "Araxxor Speed-Trialist",
+      "tier": "Elite",
+      "points": 4
+    },
+    {
+      "id": 556,
+      "name": "Araxxor Veteran",
+      "tier": "Elite",
+      "points": 4
+    },
+    {
+      "id": 564,
+      "name": "Relaxxor",
+      "tier": "Elite",
+      "points": 4
+    },
+    {
+      "id": 31,
+      "name": "Reflecting on This Encounter",
+      "tier": "Elite",
+      "points": 4
+    },
+    {
+      "id": 634,
+      "name": "Brutus Speed-Trialist",
+      "tier": "Elite",
+      "points": 4
+    },
+    {
+      "id": 43,
+      "name": "Callisto Veteran",
+      "tier": "Elite",
+      "points": 4
+    },
+    {
+      "id": 51,
+      "name": "Cerberus Veteran",
+      "tier": "Elite",
+      "points": 4
+    },
+    {
+      "id": 55,
+      "name": "Unrequired Antifire",
+      "tier": "Elite",
+      "points": 4
+    },
+    {
+      "id": 54,
+      "name": "Ghost Buster",
+      "tier": "Elite",
+      "points": 4
+    },
+    {
+      "id": 56,
+      "name": "Anti-Bite Mechanics",
+      "tier": "Elite",
+      "points": 4
+    },
+    {
+      "id": 299,
+      "name": "Chambers of Xeric Veteran",
+      "tier": "Elite",
+      "points": 4
+    },
+    {
+      "id": 320,
+      "name": "Blizzard Dodger",
+      "tier": "Elite",
+      "points": 4
+    },
+    {
+      "id": 314,
+      "name": "Shayzien Specialist",
+      "tier": "Elite",
+      "points": 4
+    },
+    {
+      "id": 307,
+      "name": "Mutta-diet",
+      "tier": "Elite",
+      "points": 4
+    },
+    {
+      "id": 312,
+      "name": "Undying Raid Team",
+      "tier": "Elite",
+      "points": 4
+    },
+    {
+      "id": 321,
+      "name": "Kill It with Fire",
+      "tier": "Elite",
+      "points": 4
+    },
+    {
+      "id": 316,
+      "name": "Cryo No More",
+      "tier": "Elite",
+      "points": 4
+    },
+    {
+      "id": 308,
+      "name": "Redemption Enthusiast",
+      "tier": "Elite",
+      "points": 4
+    },
+    {
+      "id": 311,
+      "name": "Dancing with Statues",
+      "tier": "Elite",
+      "points": 4
+    },
+    {
+      "id": 303,
+      "name": "Together We'll Fall",
+      "tier": "Elite",
+      "points": 4
+    },
+    {
+      "id": 302,
+      "name": "Perfectly Balanced",
+      "tier": "Elite",
+      "points": 4
+    },
+    {
+      "id": 292,
+      "name": "Dust Seeker",
+      "tier": "Elite",
+      "points": 4
+    },
+    {
+      "id": 58,
+      "name": "Chaos Elemental Veteran",
+      "tier": "Elite",
+      "points": 4
+    },
+    {
+      "id": 216,
+      "name": "Reminisce",
+      "tier": "Elite",
+      "points": 4
+    },
+    {
+      "id": 212,
+      "name": "Commander Zilyana Veteran",
+      "tier": "Elite",
+      "points": 4
+    },
+    {
+      "id": 68,
+      "name": "Finding the Weak Spot",
+      "tier": "Elite",
+      "points": 4
+    },
+    {
+      "id": 69,
+      "name": "Chicken Killer",
+      "tier": "Elite",
+      "points": 4
+    },
+    {
+      "id": 67,
+      "name": "Hot on Your Feet",
+      "tier": "Elite",
+      "points": 4
+    },
+    {
+      "id": 65,
+      "name": "Corporeal Beast Veteran",
+      "tier": "Elite",
+      "points": 4
+    },
+    {
+      "id": 101,
+      "name": "3, 2, 1 - Mage",
+      "tier": "Elite",
+      "points": 4
+    },
+    {
+      "id": 98,
+      "name": "Corrupted Gauntlet Veteran",
+      "tier": "Elite",
+      "points": 4
+    },
+    {
+      "id": 115,
+      "name": "Crystalline Warrior",
+      "tier": "Elite",
+      "points": 4
+    },
+    {
+      "id": 114,
+      "name": "Egniol Diet",
+      "tier": "Elite",
+      "points": 4
+    },
+    {
+      "id": 116,
+      "name": "Wolf Puncher",
+      "tier": "Elite",
+      "points": 4
+    },
+    {
+      "id": 111,
+      "name": "3, 2, 1 - Range",
+      "tier": "Elite",
+      "points": 4
+    },
+    {
+      "id": 109,
+      "name": "Gauntlet Veteran",
+      "tier": "Elite",
+      "points": 4
+    },
+    {
+      "id": 200,
+      "name": "From One King to Another",
+      "tier": "Elite",
+      "points": 4
+    },
+    {
+      "id": 199,
+      "name": "Death to the Seer King",
+      "tier": "Elite",
+      "points": 4
+    },
+    {
+      "id": 203,
+      "name": "Death to the Warrior King",
+      "tier": "Elite",
+      "points": 4
+    },
+    {
+      "id": 205,
+      "name": "Toppling the Diarchy",
+      "tier": "Elite",
+      "points": 4
+    },
+    {
+      "id": 236,
+      "name": "Rapid Succession",
+      "tier": "Elite",
+      "points": 4
+    },
+    {
+      "id": 235,
+      "name": "Death to the Archer King",
+      "tier": "Elite",
+      "points": 4
+    },
+    {
+      "id": 74,
+      "name": "If Gorillas Could Fly",
+      "tier": "Elite",
+      "points": 4
+    },
+    {
+      "id": 75,
+      "name": "Hitting Them Where It Hurts",
+      "tier": "Elite",
+      "points": 4
+    },
+    {
+      "id": 613,
+      "name": "Exposed Doom",
+      "tier": "Elite",
+      "points": 4
+    },
+    {
+      "id": 610,
+      "name": "Doom Adept",
+      "tier": "Elite",
+      "points": 4
+    },
+    {
+      "id": 621,
+      "name": "Doom Crawler",
+      "tier": "Elite",
+      "points": 4
+    },
+    {
+      "id": 515,
+      "name": "Duke Sucellus Adept",
+      "tier": "Elite",
+      "points": 4
+    },
+    {
+      "id": 512,
+      "name": "Duke Sucellus Speed-Trialist",
+      "tier": "Elite",
+      "points": 4
+    },
+    {
+      "id": 542,
+      "name": "Furball",
+      "tier": "Elite",
+      "points": 4
+    },
+    {
+      "id": 545,
+      "name": "Denied",
+      "tier": "Elite",
+      "points": 4
+    },
+    {
+      "id": 548,
+      "name": "I was here first!",
+      "tier": "Elite",
+      "points": 4
+    },
+    {
+      "id": 222,
+      "name": "Fragment of Seren Speed-Trialist",
+      "tier": "Elite",
+      "points": 4
+    },
+    {
+      "id": 81,
+      "name": "Galvek Speed-Trialist",
+      "tier": "Elite",
+      "points": 4
+    },
+    {
+      "id": 19,
+      "name": "Ourg Freezer II",
+      "tier": "Elite",
+      "points": 4
+    },
+    {
+      "id": 17,
+      "name": "General Graardor Veteran",
+      "tier": "Elite",
+      "points": 4
+    },
+    {
+      "id": 180,
+      "name": "Hard Hitter",
+      "tier": "Elite",
+      "points": 4
+    },
+    {
+      "id": 119,
+      "name": "Glough Speed-Trialist",
+      "tier": "Elite",
+      "points": 4
+    },
+    {
+      "id": 89,
+      "name": "Done before Dusk",
+      "tier": "Elite",
+      "points": 4
+    },
+    {
+      "id": 90,
+      "name": "Perfect Grotesque Guardians",
+      "tier": "Elite",
+      "points": 4
+    },
+    {
+      "id": 83,
+      "name": "Grotesque Guardians Veteran",
+      "tier": "Elite",
+      "points": 4
+    },
+    {
+      "id": 92,
+      "name": "Grotesque Guardians Speed-Trialist",
+      "tier": "Elite",
+      "points": 4
+    },
+    {
+      "id": 95,
+      "name": "From Dusk...",
+      "tier": "Elite",
+      "points": 4
+    },
+    {
+      "id": 127,
+      "name": "Hespori Speed-Trialist",
+      "tier": "Elite",
+      "points": 4
+    },
+    {
+      "id": 126,
+      "name": "Plant-Based Diet",
+      "tier": "Elite",
+      "points": 4
+    },
+    {
+      "id": 336,
+      "name": "The Bane of Demons",
+      "tier": "Elite",
+      "points": 4
+    },
+    {
+      "id": 333,
+      "name": "K'ril Tsutsaroth Veteran",
+      "tier": "Elite",
+      "points": 4
+    },
+    {
+      "id": 337,
+      "name": "Demonic Defence",
+      "tier": "Elite",
+      "points": 4
+    },
+    {
+      "id": 158,
+      "name": "Kalphite Queen Veteran",
+      "tier": "Elite",
+      "points": 4
+    },
+    {
+      "id": 160,
+      "name": "Insect Deflection",
+      "tier": "Elite",
+      "points": 4
+    },
+    {
+      "id": 161,
+      "name": "Prayer Smasher",
+      "tier": "Elite",
+      "points": 4
+    },
+    {
+      "id": 171,
+      "name": "Ten-tacles",
+      "tier": "Elite",
+      "points": 4
+    },
+    {
+      "id": 10,
+      "name": "Kree'arra Veteran",
+      "tier": "Elite",
+      "points": 4
+    },
+    {
+      "id": 503,
+      "name": "Leviathan Speed-Trialist",
+      "tier": "Elite",
+      "points": 4
+    },
+    {
+      "id": 506,
+      "name": "Leviathan Adept",
+      "tier": "Elite",
+      "points": 4
+    },
+    {
+      "id": 649,
+      "name": "This Is Madness",
+      "tier": "Elite",
+      "points": 4
+    },
+    {
+      "id": 654,
+      "name": "The Pen Is Mightier",
+      "tier": "Elite",
+      "points": 4
+    },
+    {
+      "id": 638,
+      "name": "Maggot Exterminator",
+      "tier": "Elite",
+      "points": 4
+    },
+    {
+      "id": 641,
+      "name": "Trying to fit in",
+      "tier": "Elite",
+      "points": 4
+    },
+    {
+      "id": 527,
+      "name": "High Hitter",
+      "tier": "Elite",
+      "points": 4
+    },
+    {
+      "id": 412,
+      "name": "Nex Survivors",
+      "tier": "Elite",
+      "points": 4
+    },
+    {
+      "id": 410,
+      "name": "Nex Veteran",
+      "tier": "Elite",
+      "points": 4
+    },
+    {
+      "id": 473,
+      "name": "Can't Escape",
+      "tier": "Elite",
+      "points": 4
+    },
+    {
+      "id": 479,
+      "name": "Phantom Muspah Veteran",
+      "tier": "Elite",
+      "points": 4
+    },
+    {
+      "id": 482,
+      "name": "Versatile Drainer",
+      "tier": "Elite",
+      "points": 4
+    },
+    {
+      "id": 475,
+      "name": "Phantom Muspah Speed-Trialist",
+      "tier": "Elite",
+      "points": 4
+    },
+    {
+      "id": 400,
+      "name": "Phosani's Veteran",
+      "tier": "Elite",
+      "points": 4
+    },
+    {
+      "id": 596,
+      "name": "No time to pray",
+      "tier": "Elite",
+      "points": 4
+    },
+    {
+      "id": 219,
+      "name": "Scorpia Veteran",
+      "tier": "Elite",
+      "points": 4
+    },
+    {
+      "id": 47,
+      "name": "Demon Evasion",
+      "tier": "Elite",
+      "points": 4
+    },
+    {
+      "id": 49,
+      "name": "Up for the Challenge",
+      "tier": "Elite",
+      "points": 4
+    },
+    {
+      "id": 570,
+      "name": "Hueycoatl Veteran",
+      "tier": "Elite",
+      "points": 4
+    },
+    {
+      "id": 571,
+      "name": "Perfect Hueycoatl",
+      "tier": "Elite",
+      "points": 4
+    },
+    {
+      "id": 576,
+      "name": "Hueycoatl Speed-Trialist",
+      "tier": "Elite",
+      "points": 4
+    },
+    {
+      "id": 176,
+      "name": "Mimic Veteran",
+      "tier": "Elite",
+      "points": 4
+    },
+    {
+      "id": 194,
+      "name": "Nightmare (5-Scale) Speed-Trialist",
+      "tier": "Elite",
+      "points": 4
+    },
+    {
+      "id": 184,
+      "name": "Nightmare Veteran",
+      "tier": "Elite",
+      "points": 4
+    },
+    {
+      "id": 187,
+      "name": "Explosion!",
+      "tier": "Elite",
+      "points": 4
+    },
+    {
+      "id": 191,
+      "name": "Nightmare (Solo) Speed-Trialist",
+      "tier": "Elite",
+      "points": 4
+    },
+    {
+      "id": 189,
+      "name": "Sleep Tight",
+      "tier": "Elite",
+      "points": 4
+    },
+    {
+      "id": 237,
+      "name": "Theatre of Blood Veteran",
+      "tier": "Elite",
+      "points": 4
+    },
+    {
+      "id": 392,
+      "name": "Don't Look at Me!",
+      "tier": "Elite",
+      "points": 4
+    },
+    {
+      "id": 391,
+      "name": "Just To Be Safe",
+      "tier": "Elite",
+      "points": 4
+    },
+    {
+      "id": 388,
+      "name": "They Won't Expect This",
+      "tier": "Elite",
+      "points": 4
+    },
+    {
+      "id": 389,
+      "name": "Chally Time",
+      "tier": "Elite",
+      "points": 4
+    },
+    {
+      "id": 386,
+      "name": "Anticoagulants",
+      "tier": "Elite",
+      "points": 4
+    },
+    {
+      "id": 393,
+      "name": "No-Pillar",
+      "tier": "Elite",
+      "points": 4
+    },
+    {
+      "id": 394,
+      "name": "Attack, Step, Wait",
+      "tier": "Elite",
+      "points": 4
+    },
+    {
+      "id": 395,
+      "name": "Pass It On",
+      "tier": "Elite",
+      "points": 4
+    },
+    {
+      "id": 387,
+      "name": "Appropriate Tools",
+      "tier": "Elite",
+      "points": 4
+    },
+    {
+      "id": 390,
+      "name": "Nylocas, On the Rocks",
+      "tier": "Elite",
+      "points": 4
+    },
+    {
+      "id": 263,
+      "name": "Spec'd Out",
+      "tier": "Elite",
+      "points": 4
+    },
+    {
+      "id": 261,
+      "name": "Thermonuclear Veteran",
+      "tier": "Elite",
+      "points": 4
+    },
+    {
+      "id": 262,
+      "name": "Hazard Prevention",
+      "tier": "Elite",
+      "points": 4
+    },
+    {
+      "id": 451,
+      "name": "No skipping allowed",
+      "tier": "Elite",
+      "points": 4
+    },
+    {
+      "id": 458,
+      "name": "Down Do Specs",
+      "tier": "Elite",
+      "points": 4
+    },
+    {
+      "id": 449,
+      "name": "Dropped the ball",
+      "tier": "Elite",
+      "points": 4
+    },
+    {
+      "id": 425,
+      "name": "Helpful spirit who?",
+      "tier": "Elite",
+      "points": 4
+    },
+    {
+      "id": 430,
+      "name": "Hardcore Raiders",
+      "tier": "Elite",
+      "points": 4
+    },
+    {
+      "id": 438,
+      "name": "Perfect Crondis",
+      "tier": "Elite",
+      "points": 4
+    },
+    {
+      "id": 431,
+      "name": "Hardcore Tombs",
+      "tier": "Elite",
+      "points": 4
+    },
+    {
+      "id": 435,
+      "name": "Perfect Apmeken",
+      "tier": "Elite",
+      "points": 4
+    },
+    {
+      "id": 452,
+      "name": "I'm in a rush",
+      "tier": "Elite",
+      "points": 4
+    },
+    {
+      "id": 432,
+      "name": "Perfect Het",
+      "tier": "Elite",
+      "points": 4
+    },
+    {
+      "id": 468,
+      "name": "Tomb Explorer",
+      "tier": "Elite",
+      "points": 4
+    },
+    {
+      "id": 463,
+      "name": "Novice Tomb Raider",
+      "tier": "Elite",
+      "points": 4
+    },
+    {
+      "id": 469,
+      "name": "Expert Tomb Explorer",
+      "tier": "Elite",
+      "points": 4
+    },
+    {
+      "id": 551,
+      "name": "Unending Torment",
+      "tier": "Elite",
+      "points": 4
+    },
+    {
+      "id": 553,
+      "name": "Two Times the Torment",
+      "tier": "Elite",
+      "points": 4
+    },
+    {
+      "id": 555,
+      "name": "Rapid Reload",
+      "tier": "Elite",
+      "points": 4
+    },
+    {
+      "id": 552,
+      "name": "Through Fire and Flames",
+      "tier": "Elite",
+      "points": 4
+    },
+    {
+      "id": 367,
+      "name": "Facing Jad Head-on III",
+      "tier": "Elite",
+      "points": 4
+    },
+    {
+      "id": 361,
+      "name": "The II Jad Challenge",
+      "tier": "Elite",
+      "points": 4
+    },
+    {
+      "id": 364,
+      "name": "TzHaar-Ket-Rak's Speed-Trialist",
+      "tier": "Elite",
+      "points": 4
+    },
+    {
+      "id": 341,
+      "name": "Half-Way There",
+      "tier": "Elite",
+      "points": 4
+    },
+    {
+      "id": 147,
+      "name": "Fight Caves Veteran",
+      "tier": "Elite",
+      "points": 4
+    },
+    {
+      "id": 153,
+      "name": "Facing Jad Head-on",
+      "tier": "Elite",
+      "points": 4
+    },
+    {
+      "id": 149,
+      "name": "A Near Miss!",
+      "tier": "Elite",
+      "points": 4
+    },
+    {
+      "id": 488,
+      "name": "Vardorvis Adept",
+      "tier": "Elite",
+      "points": 4
+    },
+    {
+      "id": 485,
+      "name": "Vardorvis Speed-Trialist",
+      "tier": "Elite",
+      "points": 4
+    },
+    {
+      "id": 265,
+      "name": "Venenatis Veteran",
+      "tier": "Elite",
+      "points": 4
+    },
+    {
+      "id": 267,
+      "name": "Vet'eran",
+      "tier": "Elite",
+      "points": 4
+    },
+    {
+      "id": 273,
+      "name": "Stick 'em With the Pointy End",
+      "tier": "Elite",
+      "points": 4
+    },
+    {
+      "id": 268,
+      "name": "Vorkath Veteran",
+      "tier": "Elite",
+      "points": 4
+    },
+    {
+      "id": 271,
+      "name": "Zombie Destroyer",
+      "tier": "Elite",
+      "points": 4
+    },
+    {
+      "id": 494,
+      "name": "Whisperer Speed-Trialist",
+      "tier": "Elite",
+      "points": 4
+    },
+    {
+      "id": 501,
+      "name": "Tentacular",
+      "tier": "Elite",
+      "points": 4
+    },
+    {
+      "id": 497,
+      "name": "Whisperer Adept",
+      "tier": "Elite",
+      "points": 4
+    },
+    {
+      "id": 607,
+      "name": "Back so soon?",
+      "tier": "Elite",
+      "points": 4
+    },
+    {
+      "id": 599,
+      "name": "Yama Adept",
+      "tier": "Elite",
+      "points": 4
+    },
+    {
+      "id": 601,
+      "name": "Yama Speed-Trialist",
+      "tier": "Elite",
+      "points": 4
+    },
+    {
+      "id": 329,
+      "name": "Perfect Zalcano",
+      "tier": "Elite",
+      "points": 4
+    },
+    {
+      "id": 330,
+      "name": "Team Player",
+      "tier": "Elite",
+      "points": 4
+    },
+    {
+      "id": 328,
+      "name": "Zalcano Veteran",
+      "tier": "Elite",
+      "points": 4
+    },
+    {
+      "id": 331,
+      "name": "The Spurned Hero",
+      "tier": "Elite",
+      "points": 4
+    },
+    {
+      "id": 230,
+      "name": "Zulrah Speed-Trialist",
+      "tier": "Elite",
+      "points": 4
+    },
+    {
+      "id": 227,
+      "name": "Snake Rebound",
+      "tier": "Elite",
+      "points": 4
+    },
+    {
+      "id": 228,
+      "name": "Snake. Snake!? Snaaaaaake!",
+      "tier": "Elite",
+      "points": 4
+    },
+    {
+      "id": 225,
+      "name": "Zulrah Veteran",
+      "tier": "Elite",
+      "points": 4
+    },
+    {
+      "id": 141,
+      "name": "The Flame Skipper",
+      "tier": "Master",
+      "points": 5
+    },
+    {
+      "id": 137,
+      "name": "Unrequired Antipoisons",
+      "tier": "Master",
+      "points": 5
+    },
+    {
+      "id": 146,
+      "name": "Working Overtime",
+      "tier": "Master",
+      "points": 5
+    },
+    {
+      "id": 139,
+      "name": "Don't Flame Me",
+      "tier": "Master",
+      "points": 5
+    },
+    {
+      "id": 138,
+      "name": "Lightning Lure",
+      "tier": "Master",
+      "points": 5
+    },
+    {
+      "id": 136,
+      "name": "Alchemical Master",
+      "tier": "Master",
+      "points": 5
+    },
+    {
+      "id": 140,
+      "name": "Mixing Correctly",
+      "tier": "Master",
+      "points": 5
+    },
+    {
+      "id": 142,
+      "name": "Alcleanical Hydra",
+      "tier": "Master",
+      "points": 5
+    },
+    {
+      "id": 144,
+      "name": "Alchemical Speed-Chaser",
+      "tier": "Master",
+      "points": 5
+    },
+    {
+      "id": 557,
+      "name": "Araxxor Master",
+      "tier": "Master",
+      "points": 5
+    },
+    {
+      "id": 567,
+      "name": "Arachnid Lover",
+      "tier": "Master",
+      "points": 5
+    },
+    {
+      "id": 559,
+      "name": "Araxxor Speed-Chaser",
+      "tier": "Master",
+      "points": 5
+    },
+    {
+      "id": 561,
+      "name": "Perfect Araxxor",
+      "tier": "Master",
+      "points": 5
+    },
+    {
+      "id": 566,
+      "name": "Araxyte Betrayal",
+      "tier": "Master",
+      "points": 5
+    },
+    {
+      "id": 563,
+      "name": "Let it seep in",
+      "tier": "Master",
+      "points": 5
+    },
+    {
+      "id": 53,
+      "name": "Arooo No More",
+      "tier": "Master",
+      "points": 5
+    },
+    {
+      "id": 52,
+      "name": "Cerberus Master",
+      "tier": "Master",
+      "points": 5
+    },
+    {
+      "id": 313,
+      "name": "Undying Raider",
+      "tier": "Master",
+      "points": 5
+    },
+    {
+      "id": 315,
+      "name": "Playing with Lasers",
+      "tier": "Master",
+      "points": 5
+    },
+    {
+      "id": 326,
+      "name": "Chambers of Xeric (Trio) Speed-Chaser",
+      "tier": "Master",
+      "points": 5
+    },
+    {
+      "id": 310,
+      "name": "Anvil No More",
+      "tier": "Master",
+      "points": 5
+    },
+    {
+      "id": 319,
+      "name": "Blind Spot",
+      "tier": "Master",
+      "points": 5
+    },
+    {
+      "id": 322,
+      "name": "Chambers of Xeric (Solo) Speed-Chaser",
+      "tier": "Master",
+      "points": 5
+    },
+    {
+      "id": 317,
+      "name": "Perfect Olm (Solo)",
+      "tier": "Master",
+      "points": 5
+    },
+    {
+      "id": 309,
+      "name": "Stop Drop and Roll",
+      "tier": "Master",
+      "points": 5
+    },
+    {
+      "id": 318,
+      "name": "Perfect Olm (Trio)",
+      "tier": "Master",
+      "points": 5
+    },
+    {
+      "id": 305,
+      "name": "Putting It Olm on the Line",
+      "tier": "Master",
+      "points": 5
+    },
+    {
+      "id": 300,
+      "name": "Chambers of Xeric Master",
+      "tier": "Master",
+      "points": 5
+    },
+    {
+      "id": 306,
+      "name": "A Not So Special Lizard",
+      "tier": "Master",
+      "points": 5
+    },
+    {
+      "id": 324,
+      "name": "Chambers of Xeric (5-Scale) Speed-Chaser",
+      "tier": "Master",
+      "points": 5
+    },
+    {
+      "id": 304,
+      "name": "No Time for Death",
+      "tier": "Master",
+      "points": 5
+    },
+    {
+      "id": 297,
+      "name": "Chambers of Xeric: CM (Trio) Speed-Chaser",
+      "tier": "Master",
+      "points": 5
+    },
+    {
+      "id": 291,
+      "name": "Immortal Raider",
+      "tier": "Master",
+      "points": 5
+    },
+    {
+      "id": 288,
+      "name": "Chambers of Xeric: CM Master",
+      "tier": "Master",
+      "points": 5
+    },
+    {
+      "id": 293,
+      "name": "Chambers of Xeric: CM (Solo) Speed-Chaser",
+      "tier": "Master",
+      "points": 5
+    },
+    {
+      "id": 295,
+      "name": "Chambers of Xeric: CM (5-Scale) Speed-Chaser",
+      "tier": "Master",
+      "points": 5
+    },
+    {
+      "id": 290,
+      "name": "Immortal Raid Team",
+      "tier": "Master",
+      "points": 5
+    },
+    {
+      "id": 215,
+      "name": "Moving Collateral",
+      "tier": "Master",
+      "points": 5
+    },
+    {
+      "id": 66,
+      "name": "Corporeal Beast Master",
+      "tier": "Master",
+      "points": 5
+    },
+    {
+      "id": 105,
+      "name": "Corrupted Warrior",
+      "tier": "Master",
+      "points": 5
+    },
+    {
+      "id": 107,
+      "name": "Corrupted Gauntlet Speed-Chaser",
+      "tier": "Master",
+      "points": 5
+    },
+    {
+      "id": 102,
+      "name": "Perfect Corrupted Hunllef",
+      "tier": "Master",
+      "points": 5
+    },
+    {
+      "id": 103,
+      "name": "Defence Doesn't Matter II",
+      "tier": "Master",
+      "points": 5
+    },
+    {
+      "id": 99,
+      "name": "Corrupted Gauntlet Master",
+      "tier": "Master",
+      "points": 5
+    },
+    {
+      "id": 112,
+      "name": "Perfect Crystalline Hunllef",
+      "tier": "Master",
+      "points": 5
+    },
+    {
+      "id": 117,
+      "name": "Gauntlet Speed-Chaser",
+      "tier": "Master",
+      "points": 5
+    },
+    {
+      "id": 110,
+      "name": "Gauntlet Master",
+      "tier": "Master",
+      "points": 5
+    },
+    {
+      "id": 113,
+      "name": "Defence Doesn't Matter",
+      "tier": "Master",
+      "points": 5
+    },
+    {
+      "id": 611,
+      "name": "Doom Veteran",
+      "tier": "Master",
+      "points": 5
+    },
+    {
+      "id": 620,
+      "name": "Mine's Better",
+      "tier": "Master",
+      "points": 5
+    },
+    {
+      "id": 622,
+      "name": "Doom Chaser",
+      "tier": "Master",
+      "points": 5
+    },
+    {
+      "id": 615,
+      "name": "Grub Patrol",
+      "tier": "Master",
+      "points": 5
+    },
+    {
+      "id": 614,
+      "name": "Mokhaiotl Drift",
+      "tier": "Master",
+      "points": 5
+    },
+    {
+      "id": 516,
+      "name": "Duke Sucellus Master",
+      "tier": "Master",
+      "points": 5
+    },
+    {
+      "id": 513,
+      "name": "Duke Sucellus Speed-Chaser",
+      "tier": "Master",
+      "points": 5
+    },
+    {
+      "id": 519,
+      "name": "Cold Feet",
+      "tier": "Master",
+      "points": 5
+    },
+    {
+      "id": 518,
+      "name": "Perfect Duke Sucellus",
+      "tier": "Master",
+      "points": 5
+    },
+    {
+      "id": 540,
+      "name": "I Brought Mine Too",
+      "tier": "Master",
+      "points": 5
+    },
+    {
+      "id": 544,
+      "name": "Showboating",
+      "tier": "Master",
+      "points": 5
+    },
+    {
+      "id": 538,
+      "name": "Sportsmanship",
+      "tier": "Master",
+      "points": 5
+    },
+    {
+      "id": 549,
+      "name": "Colosseum Speed-Chaser",
+      "tier": "Master",
+      "points": 5
+    },
+    {
+      "id": 546,
+      "name": "One-off",
+      "tier": "Master",
+      "points": 5
+    },
+    {
+      "id": 93,
+      "name": "Grotesque Guardians Speed-Chaser",
+      "tier": "Master",
+      "points": 5
+    },
+    {
+      "id": 91,
+      "name": "Perfect Grotesque Guardians II",
+      "tier": "Master",
+      "points": 5
+    },
+    {
+      "id": 96,
+      "name": "... 'til Dawn",
+      "tier": "Master",
+      "points": 5
+    },
+    {
+      "id": 128,
+      "name": "Hespori Speed-Chaser",
+      "tier": "Master",
+      "points": 5
+    },
+    {
+      "id": 172,
+      "name": "One Hundred Tentacles",
+      "tier": "Master",
+      "points": 5
+    },
+    {
+      "id": 11,
+      "name": "Collateral Damage",
+      "tier": "Master",
+      "points": 5
+    },
+    {
+      "id": 13,
+      "name": "Swoop No More",
+      "tier": "Master",
+      "points": 5
+    },
+    {
+      "id": 510,
+      "name": "Serpentine Solo",
+      "tier": "Master",
+      "points": 5
+    },
+    {
+      "id": 507,
+      "name": "Leviathan Master",
+      "tier": "Master",
+      "points": 5
+    },
+    {
+      "id": 509,
+      "name": "Perfect Leviathan",
+      "tier": "Master",
+      "points": 5
+    },
+    {
+      "id": 504,
+      "name": "Leviathan Speed-Chaser",
+      "tier": "Master",
+      "points": 5
+    },
+    {
+      "id": 643,
+      "name": "Digging in",
+      "tier": "Master",
+      "points": 5
+    },
+    {
+      "id": 639,
+      "name": "Camping the King",
+      "tier": "Master",
+      "points": 5
+    },
+    {
+      "id": 644,
+      "name": "Cordoned Off",
+      "tier": "Master",
+      "points": 5
+    },
+    {
+      "id": 645,
+      "name": "Perfect Maggot King",
+      "tier": "Master",
+      "points": 5
+    },
+    {
+      "id": 642,
+      "name": "King-sized clobbering",
+      "tier": "Master",
+      "points": 5
+    },
+    {
+      "id": 414,
+      "name": "Contain this!",
+      "tier": "Master",
+      "points": 5
+    },
+    {
+      "id": 413,
+      "name": "A siphon will solve this",
+      "tier": "Master",
+      "points": 5
+    },
+    {
+      "id": 415,
+      "name": "There is no escape!",
+      "tier": "Master",
+      "points": 5
+    },
+    {
+      "id": 411,
+      "name": "Nex Master",
+      "tier": "Master",
+      "points": 5
+    },
+    {
+      "id": 420,
+      "name": "Shadows Move...",
+      "tier": "Master",
+      "points": 5
+    },
+    {
+      "id": 416,
+      "name": "Nex Trio",
+      "tier": "Master",
+      "points": 5
+    },
+    {
+      "id": 481,
+      "name": "Space is Tight",
+      "tier": "Master",
+      "points": 5
+    },
+    {
+      "id": 476,
+      "name": "Phantom Muspah Speed-Chaser",
+      "tier": "Master",
+      "points": 5
+    },
+    {
+      "id": 474,
+      "name": "Essence Farmer",
+      "tier": "Master",
+      "points": 5
+    },
+    {
+      "id": 483,
+      "name": "Walk Straight Pray True",
+      "tier": "Master",
+      "points": 5
+    },
+    {
+      "id": 480,
+      "name": "Phantom Muspah Master",
+      "tier": "Master",
+      "points": 5
+    },
+    {
+      "id": 472,
+      "name": "More than just a ranged weapon",
+      "tier": "Master",
+      "points": 5
+    },
+    {
+      "id": 406,
+      "name": "Crush Hour",
+      "tier": "Master",
+      "points": 5
+    },
+    {
+      "id": 404,
+      "name": "Phosani's Speedchaser",
+      "tier": "Master",
+      "points": 5
+    },
+    {
+      "id": 401,
+      "name": "Phosani's Master",
+      "tier": "Master",
+      "points": 5
+    },
+    {
+      "id": 407,
+      "name": "I Would Simply React",
+      "tier": "Master",
+      "points": 5
+    },
+    {
+      "id": 408,
+      "name": "Dreamland Express",
+      "tier": "Master",
+      "points": 5
+    },
+    {
+      "id": 50,
+      "name": "Precise Positioning",
+      "tier": "Master",
+      "points": 5
+    },
+    {
+      "id": 573,
+      "name": "Is it a bird?",
+      "tier": "Master",
+      "points": 5
+    },
+    {
+      "id": 577,
+      "name": "Hueycoatl Speed-Chaser",
+      "tier": "Master",
+      "points": 5
+    },
+    {
+      "id": 195,
+      "name": "Nightmare (5-Scale) Speed-Chaser",
+      "tier": "Master",
+      "points": 5
+    },
+    {
+      "id": 185,
+      "name": "Nightmare Master",
+      "tier": "Master",
+      "points": 5
+    },
+    {
+      "id": 188,
+      "name": "Perfect Nightmare",
+      "tier": "Master",
+      "points": 5
+    },
+    {
+      "id": 192,
+      "name": "Nightmare (Solo) Speed-Chaser",
+      "tier": "Master",
+      "points": 5
+    },
+    {
+      "id": 246,
+      "name": "Perfect Nylocas",
+      "tier": "Master",
+      "points": 5
+    },
+    {
+      "id": 245,
+      "name": "Perfect Bloat",
+      "tier": "Master",
+      "points": 5
+    },
+    {
+      "id": 241,
+      "name": "Pop It",
+      "tier": "Master",
+      "points": 5
+    },
+    {
+      "id": 247,
+      "name": "Perfect Sotetseg",
+      "tier": "Master",
+      "points": 5
+    },
+    {
+      "id": 257,
+      "name": "Theatre (4-Scale) Speed-Chaser",
+      "tier": "Master",
+      "points": 5
+    },
+    {
+      "id": 255,
+      "name": "Theatre (Trio) Speed-Chaser",
+      "tier": "Master",
+      "points": 5
+    },
+    {
+      "id": 259,
+      "name": "Theatre (5-Scale) Speed-Chaser",
+      "tier": "Master",
+      "points": 5
+    },
+    {
+      "id": 253,
+      "name": "Back in My Day...",
+      "tier": "Master",
+      "points": 5
+    },
+    {
+      "id": 242,
+      "name": "A Timely Snack",
+      "tier": "Master",
+      "points": 5
+    },
+    {
+      "id": 251,
+      "name": "Can You Dance?",
+      "tier": "Master",
+      "points": 5
+    },
+    {
+      "id": 240,
+      "name": "Two-Down",
+      "tier": "Master",
+      "points": 5
+    },
+    {
+      "id": 238,
+      "name": "Theatre of Blood Master",
+      "tier": "Master",
+      "points": 5
+    },
+    {
+      "id": 250,
+      "name": "Can't Drain This",
+      "tier": "Master",
+      "points": 5
+    },
+    {
+      "id": 244,
+      "name": "Perfect Maiden",
+      "tier": "Master",
+      "points": 5
+    },
+    {
+      "id": 248,
+      "name": "Perfect Xarpus",
+      "tier": "Master",
+      "points": 5
+    },
+    {
+      "id": 249,
+      "name": "Perfect Verzik",
+      "tier": "Master",
+      "points": 5
+    },
+    {
+      "id": 396,
+      "name": "Theatre of Blood: SM Speed-Chaser",
+      "tier": "Master",
+      "points": 5
+    },
+    {
+      "id": 381,
+      "name": "Hard Mode? Completed It",
+      "tier": "Master",
+      "points": 5
+    },
+    {
+      "id": 444,
+      "name": "Perfect Wardens",
+      "tier": "Master",
+      "points": 5
+    },
+    {
+      "id": 424,
+      "name": "You are not prepared",
+      "tier": "Master",
+      "points": 5
+    },
+    {
+      "id": 466,
+      "name": "Tomb Looter",
+      "tier": "Master",
+      "points": 5
+    },
+    {
+      "id": 421,
+      "name": "Tombs Speed Runner",
+      "tier": "Master",
+      "points": 5
+    },
+    {
+      "id": 459,
+      "name": "Better get movin'",
+      "tier": "Master",
+      "points": 5
+    },
+    {
+      "id": 428,
+      "name": "Chompington",
+      "tier": "Master",
+      "points": 5
+    },
+    {
+      "id": 442,
+      "name": "Perfect Kephri",
+      "tier": "Master",
+      "points": 5
+    },
+    {
+      "id": 467,
+      "name": "Tomb Raider",
+      "tier": "Master",
+      "points": 5
+    },
+    {
+      "id": 441,
+      "name": "Perfect Scabaras",
+      "tier": "Master",
+      "points": 5
+    },
+    {
+      "id": 436,
+      "name": "Perfect Ba-Ba",
+      "tier": "Master",
+      "points": 5
+    },
+    {
+      "id": 439,
+      "name": "Perfect Zebak",
+      "tier": "Master",
+      "points": 5
+    },
+    {
+      "id": 433,
+      "name": "Perfect Akkha",
+      "tier": "Master",
+      "points": 5
+    },
+    {
+      "id": 470,
+      "name": "Expert Tomb Looter",
+      "tier": "Master",
+      "points": 5
+    },
+    {
+      "id": 457,
+      "name": "All out of medics",
+      "tier": "Master",
+      "points": 5
+    },
+    {
+      "id": 426,
+      "name": "Resourceful Raider",
+      "tier": "Master",
+      "points": 5
+    },
+    {
+      "id": 460,
+      "name": "Warden't you believe it",
+      "tier": "Master",
+      "points": 5
+    },
+    {
+      "id": 429,
+      "name": "Fancy feet",
+      "tier": "Master",
+      "points": 5
+    },
+    {
+      "id": 456,
+      "name": "Doesn't bug me",
+      "tier": "Master",
+      "points": 5
+    },
+    {
+      "id": 427,
+      "name": "But... Damage",
+      "tier": "Master",
+      "points": 5
+    },
+    {
+      "id": 447,
+      "name": "Something of an expert myself",
+      "tier": "Master",
+      "points": 5
+    },
+    {
+      "id": 453,
+      "name": "Ba-Bananza",
+      "tier": "Master",
+      "points": 5
+    },
+    {
+      "id": 455,
+      "name": "Rockin' around the croc",
+      "tier": "Master",
+      "points": 5
+    },
+    {
+      "id": 554,
+      "name": "Three Times the Thrashing",
+      "tier": "Master",
+      "points": 5
+    },
+    {
+      "id": 362,
+      "name": "The IV Jad Challenge",
+      "tier": "Master",
+      "points": 5
+    },
+    {
+      "id": 369,
+      "name": "Supplies? Who Needs 'em?",
+      "tier": "Master",
+      "points": 5
+    },
+    {
+      "id": 371,
+      "name": "Multi-Style Specialist",
+      "tier": "Master",
+      "points": 5
+    },
+    {
+      "id": 368,
+      "name": "Facing Jad Head-on IV",
+      "tier": "Master",
+      "points": 5
+    },
+    {
+      "id": 365,
+      "name": "TzHaar-Ket-Rak's Speed-Chaser",
+      "tier": "Master",
+      "points": 5
+    },
+    {
+      "id": 346,
+      "name": "Nibblers, Begone!",
+      "tier": "Master",
+      "points": 5
+    },
+    {
+      "id": 155,
+      "name": "Fight Caves Speed-Chaser",
+      "tier": "Master",
+      "points": 5
+    },
+    {
+      "id": 152,
+      "name": "You Didn't Say Anything About a Bat",
+      "tier": "Master",
+      "points": 5
+    },
+    {
+      "id": 150,
+      "name": "Denying the Healers",
+      "tier": "Master",
+      "points": 5
+    },
+    {
+      "id": 148,
+      "name": "Fight Caves Master",
+      "tier": "Master",
+      "points": 5
+    },
+    {
+      "id": 491,
+      "name": "Perfect Vardorvis",
+      "tier": "Master",
+      "points": 5
+    },
+    {
+      "id": 493,
+      "name": "Budget Cutter",
+      "tier": "Master",
+      "points": 5
+    },
+    {
+      "id": 489,
+      "name": "Vardorvis Master",
+      "tier": "Master",
+      "points": 5
+    },
+    {
+      "id": 486,
+      "name": "Vardorvis Speed-Chaser",
+      "tier": "Master",
+      "points": 5
+    },
+    {
+      "id": 278,
+      "name": "Extended Encounter",
+      "tier": "Master",
+      "points": 5
+    },
+    {
+      "id": 269,
+      "name": "Vorkath Master",
+      "tier": "Master",
+      "points": 5
+    },
+    {
+      "id": 276,
+      "name": "Vorkath Speed-Chaser",
+      "tier": "Master",
+      "points": 5
+    },
+    {
+      "id": 272,
+      "name": "Dodging the Dragon",
+      "tier": "Master",
+      "points": 5
+    },
+    {
+      "id": 270,
+      "name": "The Walk",
+      "tier": "Master",
+      "points": 5
+    },
+    {
+      "id": 498,
+      "name": "Whisperer Master",
+      "tier": "Master",
+      "points": 5
+    },
+    {
+      "id": 500,
+      "name": "Perfect Whisperer",
+      "tier": "Master",
+      "points": 5
+    },
+    {
+      "id": 495,
+      "name": "Whisperer Speed-Chaser",
+      "tier": "Master",
+      "points": 5
+    },
+    {
+      "id": 602,
+      "name": "Yama Speed-Chaser",
+      "tier": "Master",
+      "points": 5
+    },
+    {
+      "id": 600,
+      "name": "Yama Veteran",
+      "tier": "Master",
+      "points": 5
+    },
+    {
+      "id": 606,
+      "name": "Fire fighter",
+      "tier": "Master",
+      "points": 5
+    },
+    {
+      "id": 604,
+      "name": "No toppings, no drinks, thanks",
+      "tier": "Master",
+      "points": 5
+    },
+    {
+      "id": 605,
+      "name": "Shadow dancer",
+      "tier": "Master",
+      "points": 5
+    },
+    {
+      "id": 226,
+      "name": "Zulrah Master",
+      "tier": "Master",
+      "points": 5
+    },
+    {
+      "id": 229,
+      "name": "Perfect Zulrah",
+      "tier": "Master",
+      "points": 5
+    },
+    {
+      "id": 231,
+      "name": "Zulrah Speed-Chaser",
+      "tier": "Master",
+      "points": 5
+    },
+    {
+      "id": 143,
+      "name": "No Pressure",
+      "tier": "Grandmaster",
+      "points": 6
+    },
+    {
+      "id": 145,
+      "name": "Alchemical Speed-Runner",
+      "tier": "Grandmaster",
+      "points": 6
+    },
+    {
+      "id": 565,
+      "name": "Swimming in Venom",
+      "tier": "Grandmaster",
+      "points": 6
+    },
+    {
+      "id": 562,
+      "name": "Perfect Araxxor 2",
+      "tier": "Grandmaster",
+      "points": 6
+    },
+    {
+      "id": 560,
+      "name": "Araxxor Speed-Runner",
+      "tier": "Grandmaster",
+      "points": 6
+    },
+    {
+      "id": 327,
+      "name": "Chambers of Xeric (Trio) Speed-Runner",
+      "tier": "Grandmaster",
+      "points": 6
+    },
+    {
+      "id": 301,
+      "name": "Chambers of Xeric Grandmaster",
+      "tier": "Grandmaster",
+      "points": 6
+    },
+    {
+      "id": 323,
+      "name": "Chambers of Xeric (Solo) Speed-Runner",
+      "tier": "Grandmaster",
+      "points": 6
+    },
+    {
+      "id": 325,
+      "name": "Chambers of Xeric (5-Scale) Speed-Runner",
+      "tier": "Grandmaster",
+      "points": 6
+    },
+    {
+      "id": 298,
+      "name": "Chambers of Xeric: CM (Trio) Speed-Runner",
+      "tier": "Grandmaster",
+      "points": 6
+    },
+    {
+      "id": 294,
+      "name": "Chambers of Xeric: CM (Solo) Speed-Runner",
+      "tier": "Grandmaster",
+      "points": 6
+    },
+    {
+      "id": 296,
+      "name": "Chambers of Xeric: CM (5-Scale) Speed-Runner",
+      "tier": "Grandmaster",
+      "points": 6
+    },
+    {
+      "id": 289,
+      "name": "Chambers of Xeric: CM Grandmaster",
+      "tier": "Grandmaster",
+      "points": 6
+    },
+    {
+      "id": 217,
+      "name": "Peach Conjurer",
+      "tier": "Grandmaster",
+      "points": 6
+    },
+    {
+      "id": 214,
+      "name": "Animal Whisperer",
+      "tier": "Grandmaster",
+      "points": 6
+    },
+    {
+      "id": 108,
+      "name": "Corrupted Gauntlet Speed-Runner",
+      "tier": "Grandmaster",
+      "points": 6
+    },
+    {
+      "id": 104,
+      "name": "Egniol Diet II",
+      "tier": "Grandmaster",
+      "points": 6
+    },
+    {
+      "id": 100,
+      "name": "Corrupted Gauntlet Grandmaster",
+      "tier": "Grandmaster",
+      "points": 6
+    },
+    {
+      "id": 106,
+      "name": "Wolf Puncher II",
+      "tier": "Grandmaster",
+      "points": 6
+    },
+    {
+      "id": 118,
+      "name": "Gauntlet Speed-Runner",
+      "tier": "Grandmaster",
+      "points": 6
+    },
+    {
+      "id": 617,
+      "name": "The Praying Mantis",
+      "tier": "Grandmaster",
+      "points": 6
+    },
+    {
+      "id": 624,
+      "name": "Mopping up",
+      "tier": "Grandmaster",
+      "points": 6
+    },
+    {
+      "id": 612,
+      "name": "It's Dark Down Here",
+      "tier": "Grandmaster",
+      "points": 6
+    },
+    {
+      "id": 623,
+      "name": "Doom Racer",
+      "tier": "Grandmaster",
+      "points": 6
+    },
+    {
+      "id": 619,
+      "name": "Darkness Is Your Ally?",
+      "tier": "Grandmaster",
+      "points": 6
+    },
+    {
+      "id": 618,
+      "name": "Duel of Mokhaiotl",
+      "tier": "Grandmaster",
+      "points": 6
+    },
+    {
+      "id": 616,
+      "name": "Perfect Doom",
+      "tier": "Grandmaster",
+      "points": 6
+    },
+    {
+      "id": 520,
+      "name": "Mirror Image",
+      "tier": "Grandmaster",
+      "points": 6
+    },
+    {
+      "id": 517,
+      "name": "Duke Sucellus Sleeper",
+      "tier": "Grandmaster",
+      "points": 6
+    },
+    {
+      "id": 514,
+      "name": "Duke Sucellus Speed-Runner",
+      "tier": "Grandmaster",
+      "points": 6
+    },
+    {
+      "id": 539,
+      "name": "Colosseum Grand Champion",
+      "tier": "Grandmaster",
+      "points": 6
+    },
+    {
+      "id": 541,
+      "name": "Slow Dancing in the Sand",
+      "tier": "Grandmaster",
+      "points": 6
+    },
+    {
+      "id": 547,
+      "name": "Reinforcements",
+      "tier": "Grandmaster",
+      "points": 6
+    },
+    {
+      "id": 550,
+      "name": "Colosseum Speed-Runner",
+      "tier": "Grandmaster",
+      "points": 6
+    },
+    {
+      "id": 543,
+      "name": "Perfect Footwork",
+      "tier": "Grandmaster",
+      "points": 6
+    },
+    {
+      "id": 23,
+      "name": "Ourg Killer",
+      "tier": "Grandmaster",
+      "points": 6
+    },
+    {
+      "id": 22,
+      "name": "Keep Away",
+      "tier": "Grandmaster",
+      "points": 6
+    },
+    {
+      "id": 21,
+      "name": "Defence Matters",
+      "tier": "Grandmaster",
+      "points": 6
+    },
+    {
+      "id": 94,
+      "name": "Grotesque Guardians Speed-Runner",
+      "tier": "Grandmaster",
+      "points": 6
+    },
+    {
+      "id": 340,
+      "name": "Ash Collector",
+      "tier": "Grandmaster",
+      "points": 6
+    },
+    {
+      "id": 338,
+      "name": "Demon Whisperer",
+      "tier": "Grandmaster",
+      "points": 6
+    },
+    {
+      "id": 15,
+      "name": "Feather Hunter",
+      "tier": "Grandmaster",
+      "points": 6
+    },
+    {
+      "id": 14,
+      "name": "The Worst Ranged Weapon",
+      "tier": "Grandmaster",
+      "points": 6
+    },
+    {
+      "id": 508,
+      "name": "Leviathan Sleeper",
+      "tier": "Grandmaster",
+      "points": 6
+    },
+    {
+      "id": 511,
+      "name": "Unconventional",
+      "tier": "Grandmaster",
+      "points": 6
+    },
+    {
+      "id": 505,
+      "name": "Leviathan Speed-Runner",
+      "tier": "Grandmaster",
+      "points": 6
+    },
+    {
+      "id": 640,
+      "name": "Maggot King Speed Chaser",
+      "tier": "Grandmaster",
+      "points": 6
+    },
+    {
+      "id": 418,
+      "name": "I should see a doctor",
+      "tier": "Grandmaster",
+      "points": 6
+    },
+    {
+      "id": 417,
+      "name": "Nex Duo",
+      "tier": "Grandmaster",
+      "points": 6
+    },
+    {
+      "id": 419,
+      "name": "Perfect Nex",
+      "tier": "Grandmaster",
+      "points": 6
+    },
+    {
+      "id": 484,
+      "name": "Phantom Muspah Manipulator",
+      "tier": "Grandmaster",
+      "points": 6
+    },
+    {
+      "id": 477,
+      "name": "Phantom Muspah Speed-Runner",
+      "tier": "Grandmaster",
+      "points": 6
+    },
+    {
+      "id": 403,
+      "name": "Perfect Phosani's Nightmare",
+      "tier": "Grandmaster",
+      "points": 6
+    },
+    {
+      "id": 409,
+      "name": "Can't Wake Up",
+      "tier": "Grandmaster",
+      "points": 6
+    },
+    {
+      "id": 402,
+      "name": "Phosani's Grandmaster",
+      "tier": "Grandmaster",
+      "points": 6
+    },
+    {
+      "id": 405,
+      "name": "Phosani's Speedrunner",
+      "tier": "Grandmaster",
+      "points": 6
+    },
+    {
+      "id": 578,
+      "name": "Hueycoatl Speed-Runner",
+      "tier": "Grandmaster",
+      "points": 6
+    },
+    {
+      "id": 186,
+      "name": "Terrible Parent",
+      "tier": "Grandmaster",
+      "points": 6
+    },
+    {
+      "id": 196,
+      "name": "Nightmare (5-Scale) Speed-Runner",
+      "tier": "Grandmaster",
+      "points": 6
+    },
+    {
+      "id": 190,
+      "name": "A Long Trip",
+      "tier": "Grandmaster",
+      "points": 6
+    },
+    {
+      "id": 193,
+      "name": "Nightmare (Solo) Speed-Runner",
+      "tier": "Grandmaster",
+      "points": 6
+    },
+    {
+      "id": 243,
+      "name": "Perfect Theatre",
+      "tier": "Grandmaster",
+      "points": 6
+    },
+    {
+      "id": 256,
+      "name": "Theatre (Trio) Speed-Runner",
+      "tier": "Grandmaster",
+      "points": 6
+    },
+    {
+      "id": 239,
+      "name": "Theatre of Blood Grandmaster",
+      "tier": "Grandmaster",
+      "points": 6
+    },
+    {
+      "id": 260,
+      "name": "Theatre (5-Scale) Speed-Runner",
+      "tier": "Grandmaster",
+      "points": 6
+    },
+    {
+      "id": 258,
+      "name": "Theatre (4-Scale) Speed-Runner",
+      "tier": "Grandmaster",
+      "points": 6
+    },
+    {
+      "id": 254,
+      "name": "Theatre (Duo) Speed-Runner",
+      "tier": "Grandmaster",
+      "points": 6
+    },
+    {
+      "id": 252,
+      "name": "Morytania Only",
+      "tier": "Grandmaster",
+      "points": 6
+    },
+    {
+      "id": 385,
+      "name": "Theatre of Blood: HM Grandmaster",
+      "tier": "Grandmaster",
+      "points": 6
+    },
+    {
+      "id": 377,
+      "name": "Nylo Sniper",
+      "tier": "Grandmaster",
+      "points": 6
+    },
+    {
+      "id": 384,
+      "name": "Theatre: HM (5-Scale) Speed-Runner",
+      "tier": "Grandmaster",
+      "points": 6
+    },
+    {
+      "id": 375,
+      "name": "Harder Mode I",
+      "tier": "Grandmaster",
+      "points": 6
+    },
+    {
+      "id": 380,
+      "name": "Pack Like a Yak",
+      "tier": "Grandmaster",
+      "points": 6
+    },
+    {
+      "id": 383,
+      "name": "Theatre: HM (4-Scale) Speed-Runner",
+      "tier": "Grandmaster",
+      "points": 6
+    },
+    {
+      "id": 372,
+      "name": "Stop Right There!",
+      "tier": "Grandmaster",
+      "points": 6
+    },
+    {
+      "id": 378,
+      "name": "Team Work Makes the Dream Work",
+      "tier": "Grandmaster",
+      "points": 6
+    },
+    {
+      "id": 373,
+      "name": "Personal Space",
+      "tier": "Grandmaster",
+      "points": 6
+    },
+    {
+      "id": 376,
+      "name": "Harder Mode II",
+      "tier": "Grandmaster",
+      "points": 6
+    },
+    {
+      "id": 382,
+      "name": "Theatre: HM (Trio) Speed-Runner",
+      "tier": "Grandmaster",
+      "points": 6
+    },
+    {
+      "id": 374,
+      "name": "Royal Affairs",
+      "tier": "Grandmaster",
+      "points": 6
+    },
+    {
+      "id": 379,
+      "name": "Harder Mode III",
+      "tier": "Grandmaster",
+      "points": 6
+    },
+    {
+      "id": 443,
+      "name": "Perfection of Scabaras",
+      "tier": "Grandmaster",
+      "points": 6
+    },
+    {
+      "id": 471,
+      "name": "Expert Tomb Raider",
+      "tier": "Grandmaster",
+      "points": 6
+    },
+    {
+      "id": 422,
+      "name": "Tombs Speed Runner II",
+      "tier": "Grandmaster",
+      "points": 6
+    },
+    {
+      "id": 445,
+      "name": "Insanity",
+      "tier": "Grandmaster",
+      "points": 6
+    },
+    {
+      "id": 450,
+      "name": "Akkhan't Do it",
+      "tier": "Grandmaster",
+      "points": 6
+    },
+    {
+      "id": 454,
+      "name": "All Praise Zebak",
+      "tier": "Grandmaster",
+      "points": 6
+    },
+    {
+      "id": 446,
+      "name": "Amascut's Remnant",
+      "tier": "Grandmaster",
+      "points": 6
+    },
+    {
+      "id": 423,
+      "name": "Tombs Speed Runner III",
+      "tier": "Grandmaster",
+      "points": 6
+    },
+    {
+      "id": 437,
+      "name": "Perfection of Apmeken",
+      "tier": "Grandmaster",
+      "points": 6
+    },
+    {
+      "id": 434,
+      "name": "Perfection of Het",
+      "tier": "Grandmaster",
+      "points": 6
+    },
+    {
+      "id": 440,
+      "name": "Perfection of Crondis",
+      "tier": "Grandmaster",
+      "points": 6
+    },
+    {
+      "id": 448,
+      "name": "Maybe I'm the boss.",
+      "tier": "Grandmaster",
+      "points": 6
+    },
+    {
+      "id": 363,
+      "name": "The VI Jad Challenge",
+      "tier": "Grandmaster",
+      "points": 6
+    },
+    {
+      "id": 370,
+      "name": "It Wasn't a Fluke",
+      "tier": "Grandmaster",
+      "points": 6
+    },
+    {
+      "id": 366,
+      "name": "TzHaar-Ket-Rak's Speed-Runner",
+      "tier": "Grandmaster",
+      "points": 6
+    },
+    {
+      "id": 349,
+      "name": "Nibbler Chaser",
+      "tier": "Grandmaster",
+      "points": 6
+    },
+    {
+      "id": 351,
+      "name": "Jad? What Are You Doing Here?",
+      "tier": "Grandmaster",
+      "points": 6
+    },
+    {
+      "id": 344,
+      "name": "Playing with Jads",
+      "tier": "Grandmaster",
+      "points": 6
+    },
+    {
+      "id": 345,
+      "name": "No Luck Required",
+      "tier": "Grandmaster",
+      "points": 6
+    },
+    {
+      "id": 350,
+      "name": "Facing Jad Head-on II",
+      "tier": "Grandmaster",
+      "points": 6
+    },
+    {
+      "id": 347,
+      "name": "Wasn't Even Close",
+      "tier": "Grandmaster",
+      "points": 6
+    },
+    {
+      "id": 352,
+      "name": "Inferno Speed-Runner",
+      "tier": "Grandmaster",
+      "points": 6
+    },
+    {
+      "id": 342,
+      "name": "Inferno Grandmaster",
+      "tier": "Grandmaster",
+      "points": 6
+    },
+    {
+      "id": 348,
+      "name": "Budget Setup",
+      "tier": "Grandmaster",
+      "points": 6
+    },
+    {
+      "id": 343,
+      "name": "The Floor Is Lava",
+      "tier": "Grandmaster",
+      "points": 6
+    },
+    {
+      "id": 154,
+      "name": "No Time for a Drink",
+      "tier": "Grandmaster",
+      "points": 6
+    },
+    {
+      "id": 151,
+      "name": "Denying the Healers II",
+      "tier": "Grandmaster",
+      "points": 6
+    },
+    {
+      "id": 156,
+      "name": "Fight Caves Speed-Runner",
+      "tier": "Grandmaster",
+      "points": 6
+    },
+    {
+      "id": 492,
+      "name": "Axe Enthusiast",
+      "tier": "Grandmaster",
+      "points": 6
+    },
+    {
+      "id": 490,
+      "name": "Vardorvis Sleeper",
+      "tier": "Grandmaster",
+      "points": 6
+    },
+    {
+      "id": 487,
+      "name": "Vardorvis Speed-Runner",
+      "tier": "Grandmaster",
+      "points": 6
+    },
+    {
+      "id": 277,
+      "name": "Vorkath Speed-Runner",
+      "tier": "Grandmaster",
+      "points": 6
+    },
+    {
+      "id": 274,
+      "name": "Faithless Encounter",
+      "tier": "Grandmaster",
+      "points": 6
+    },
+    {
+      "id": 275,
+      "name": "The Fremennik Way",
+      "tier": "Grandmaster",
+      "points": 6
+    },
+    {
+      "id": 496,
+      "name": "Whisperer Speed-Runner",
+      "tier": "Grandmaster",
+      "points": 6
+    },
+    {
+      "id": 499,
+      "name": "Whispered",
+      "tier": "Grandmaster",
+      "points": 6
+    },
+    {
+      "id": 502,
+      "name": "Dark Memories",
+      "tier": "Grandmaster",
+      "points": 6
+    },
+    {
+      "id": 603,
+      "name": "Yama Speed-Runner",
+      "tier": "Grandmaster",
+      "points": 6
+    },
+    {
+      "id": 608,
+      "name": "Contract Choreographer",
+      "tier": "Grandmaster",
+      "points": 6
+    },
+    {
+      "id": 609,
+      "name": "Contractually Unbound",
+      "tier": "Grandmaster",
+      "points": 6
+    },
+    {
+      "id": 232,
+      "name": "Zulrah Speed-Runner",
+      "tier": "Grandmaster",
+      "points": 6
+    }
+  ],
+  "hard_threshold": 436
+}
