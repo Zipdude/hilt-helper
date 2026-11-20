@@ -1,0 +1,65 @@
+name: Publish Plugin Hub release
+
+on:
+  schedule:
+    - cron: '23 * * * *'
+    - cron: '43 6 * * 1'
+  push:
+    branches: [main]
+    paths:
+      - runelite-plugin.properties
+      - .github/scripts/publish_hub_release.py
+      - .github/workflows/publish-hub-release.yml
+  workflow_dispatch:
+    inputs:
+      check_only:
+        description: Check release readiness without publishing
+        type: boolean
+        default: false
+
+permissions: {}
+
+concurrency:
+  group: publish-hub-release
+  cancel-in-progress: false
+
+jobs:
+  publish:
+    if: >-
+      github.repository == 'Zipdude/hilt-helper' &&
+      github.ref == format('refs/heads/{0}', github.event.repository.default_branch) &&
+      github.event.schedule != '43 6 * * 1'
+    runs-on: ubuntu-24.04
+    timeout-minutes: 5
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
+        with:
+          fetch-depth: 0
+          persist-credentials: false
+      - name: Check the live Plugin Hub and publish the verified release
+        env:
+          GH_TOKEN: ${{ github.token }}
+          CHECK_ONLY: ${{ inputs.check_only }}
+        run: |
+          if [ "$CHECK_ONLY" = true ]; then
+            python3 .github/scripts/publish_hub_release.py
+          else
+            python3 .github/scripts/publish_hub_release.py --publish
+          fi
+
+  keep-schedule-active:
+    # Refresh the workflow before GitHub's public-repository inactivity limit.
+    if: >-
+      github.repository == 'Zipdude/hilt-helper' &&
+      github.event.schedule == '43 6 * * 1'
+    runs-on: ubuntu-24.04
+    timeout-minutes: 2
+    permissions:
+      actions: write
+    steps:
+      - name: Renew the schedule
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: gh api --method PUT "repos/${GITHUB_REPOSITORY}/actions/workflows/publish-hub-release.yml/enable"
