@@ -29,7 +29,7 @@ Open the **Hespori checklist** to see your last observed patch status, seed supp
 
 Open **Filters** to change the activity or task type and to hide completed tasks. **Route & requirements** compares route points, and **Blocked tasks** shows the quest, level, or kit holding up a task.
 
-## Using the guide
+## Extended Guide Description
 
 **Solo** starts with easier independent activities and keeps raid and party reserves out of its suggestions. **With a group** shares the early start and can add Chambers, Theatre Entry and Hueycoatl reserves after their prep checks. Theatre Entry asks for **A Night at the Theatre** as a route readiness check. The separate room tasks can award before a full clear. Open **Route & requirements** to review the point plan, preparation or change routes. Both routes use the same saved points and progress.
 
