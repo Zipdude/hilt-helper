@@ -78,6 +78,7 @@ import javax.swing.BoxLayout;
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
 import javax.swing.JComboBox;
+import javax.swing.ImageIcon;
 import javax.swing.JComponent;
 import javax.swing.JLabel;
 import javax.swing.JList;
@@ -97,7 +98,10 @@ import javax.swing.border.Border;
 import javax.swing.border.EmptyBorder;
 import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
+import net.runelite.client.ui.ColorScheme;
+import net.runelite.client.ui.FontManager;
 import net.runelite.client.ui.PluginPanel;
+import net.runelite.client.ui.components.IconTextField;
 import net.runelite.client.util.Filepath;
 import net.runelite.client.util.LinkBrowser;
 
@@ -141,19 +145,24 @@ public final class GuidePanel extends PluginPanel
 		{
 		}
 	}
-	public static final Color BACKGROUND = new Color(28, 30, 34), CARD = new Color(40, 43, 49),
-								TEXT = new Color(234, 236, 240), MUTED = new Color(176, 186, 200),
-								GOLD = new Color(244, 203, 111), GREEN = new Color(130, 216, 157);
+	public static final Color TEXT = new Color(234, 234, 234), MUTED = ColorScheme.LIGHT_GRAY_COLOR,
+		GOLD = new Color(244, 203, 111);
 	public static final String SIGN_IN = "Log in on a standard world to start.";
+	private static final Color BACKGROUND = ColorScheme.DARK_GRAY_COLOR;
+	private static final Color CARD = ColorScheme.CONTROL_COLOR;
+	private static final Color BORDER = ColorScheme.BORDER_COLOR;
+	private static final Color ACCENT = ColorScheme.BRAND_ORANGE;
+	private static final Color GREEN = new Color(130, 216, 157);
+	private static final Color NEEDS_PREPARATION = new Color(237, 164, 125);
+	private static final String FOCUS_STYLE = "focusedBorderColor: #dc8a00; focusColor: #dc8a00";
+	private static final ImageIcon SEARCH_ICON = new ImageIcon(
+		IconTextField.class.getResource(IconTextField.Icon.SEARCH.getFile()));
 	private final GuideCatalog catalogue;
 	private final ProgressEngine progress;
 	private final ReadinessEngine readiness;
 	private final Planner planner;
 	private final Actions actions;
-	private final JPanel footerNavigation;
 	private final JButton accountButton, checklistButton;
-	private static final Color BORDER = new Color(79, 87, 99);
-	private static final Color SELECTED_CARD = new Color(55, 51, 43);
 	private static final FocusAdapter KEEP_FOCUS_VISIBLE = new FocusAdapter()
 	{
 		@Override public void focusGained(FocusEvent event)
@@ -187,6 +196,7 @@ public final class GuidePanel extends PluginPanel
 	private TaskListArea checklistArea, blockedArea;
 	private ListPosition checklistPosition = ListPosition.TOP, blockedPosition = ListPosition.TOP;
 	private JTextField searchField;
+	private int searchDot, searchMark;
 	private Component restoredFocus;
 	private String searchDraft = "";
 	private boolean forceRender;
@@ -229,28 +239,20 @@ public final class GuidePanel extends PluginPanel
 		this.actions = actions;
 		setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
 		setBackground(BACKGROUND);
-		setBorder(new EmptyBorder(10, 8, 10, 8));
+		setBorder(new EmptyBorder(7, 7, 7, 7));
 		getScrollPane().getViewport().getView().setBackground(BACKGROUND);
 		getScrollPane().getVerticalScrollBar().setFocusable(false);
 		JPanel footer = new JPanel(new BorderLayout(0, 4));
 		footer.setBackground(BACKGROUND);
 		footer.setBorder(BorderFactory.createCompoundBorder(BorderFactory.createMatteBorder(1, 0, 0, 0, BORDER),
-			new EmptyBorder(5, 7, 5, 7)));
-		footerNavigation = new JPanel(new BorderLayout());
+			new EmptyBorder(4, 7, 4, 7)));
+		JPanel footerNavigation = new JPanel(new BorderLayout(5, 0));
 		footerNavigation.setOpaque(false);
 		accountButton = button("Account & backups", this::toggleSettings);
 		accountButton.setName("account");
-		checklistButton = button("Checklist", () ->
-		{
-			showingSkipped = false;
-			choosingRoute = false;
-			choosingGuide = false;
-			revealAnchor = "checklist";
-			focusTarget = "search";
-			redraw();
-		});
+		checklistButton = button("Checklist", this::openChecklist);
 		footerNavigation.add(checklistButton, BorderLayout.WEST);
-		footerNavigation.add(accountButton, BorderLayout.EAST);
+		footerNavigation.add(accountButton, BorderLayout.CENTER);
 		footer.add(footerNavigation, BorderLayout.NORTH);
 		JPanel helpLinks = new JPanel(new GridLayout(1, 2, 5, 0));
 		helpLinks.setOpaque(false);
@@ -269,6 +271,23 @@ public final class GuidePanel extends PluginPanel
 		render(shownState, null, status, "", false);
 	}
 
+	private void openChecklist()
+	{
+		settingsOpen = false;
+		settingsReturnAnchor = null;
+		if (!focusedTasks.isEmpty())
+		{
+			backToChecklist();
+			return;
+		}
+		showingSkipped = false;
+		choosingRoute = false;
+		choosingGuide = false;
+		revealAnchor = "checklist";
+		focusTarget = "search";
+		redraw();
+	}
+
 	private void toggleSettings()
 	{
 		settingsOpen = !settingsOpen;
@@ -281,7 +300,7 @@ public final class GuidePanel extends PluginPanel
 		else
 		{
 			returnAnchor = settingsReturnAnchor;
-			revealAnchor = returnAnchor == null ? "start" : "";
+			revealAnchor = returnAnchor == null ? (focusedTasks.isEmpty() ? "start" : "focused-task") : "";
 		}
 		redraw();
 	}
@@ -329,7 +348,6 @@ public final class GuidePanel extends PluginPanel
 		Component focusOwner = windowFocusOwner();
 		boolean sidebarFocused = focusOwner != null && SwingUtilities.isDescendingFrom(focusOwner, getWrappedPanel());
 		String previousFocus = sidebarFocused ? focusKey(focusOwner) : "";
-		int caret = focusOwner != null && focusOwner == searchField ? searchField.getCaretPosition() : -1;
 		rememberListPositions();
 		String account = live == null ? "" : live.accountKey, session = live == null ? "" : live.session;
 		if (!account.equals(shownAccount) || !session.equals(shownSession))
@@ -394,11 +412,11 @@ public final class GuidePanel extends PluginPanel
 		this.available = available;
 		searchField = null;
 		removeAll();
-		footerNavigation.setVisible(!available || focusedTasks.isEmpty());
 		checklistButton.setVisible(available && state.selectedGuide() != null &&
-			state.routeChoice() != null && !choosingGuide && !settingsOpen);
+			state.routeChoice() != null && !choosingGuide);
 		accountButton.setText(settingsOpen ? "Back to guide" : "Account & backups");
-		if (available && !focusedTasks.isEmpty())
+		accountButton.setToolTipText(accountButton.getText());
+		if (available && !settingsOpen && !focusedTasks.isEmpty())
 		{
 			int next = nextTaskIndex(focusedIndex + 1);
 			getScrollPane().setColumnHeaderView(taskNavigation(next));
@@ -464,10 +482,6 @@ public final class GuidePanel extends PluginPanel
 					{
 						restoredFocus = null;
 					}
-					if (caret >= 0 && replacement == searchField)
-					{
-						searchField.setCaretPosition(Math.min(caret, searchField.getDocument().getLength()));
-					}
 				}
 			}
 		});
@@ -512,6 +526,7 @@ public final class GuidePanel extends PluginPanel
 		scope = SUGGESTED;
 		query = "";
 		searchDraft = "";
+		searchDot = searchMark = 0;
 		resetListPositions();
 		skippedOffset = 0;
 		beforeHespori = null;
@@ -533,40 +548,65 @@ public final class GuidePanel extends PluginPanel
 	{
 		RewardGoal goal = state.rewardGoal();
 		boolean choosing = choosingGuide || state.selectedGuide() == null;
-		JTextArea title = text(choosing ? "Hilt Helper" : goal.reward, GOLD, 19, true);
-		title.putClientProperty("guideAnchor", "start");
-		add(title);
+		JPanel header = card();
+		header.putClientProperty("guideAnchor", "start");
+		header.add(text(choosing ? "Hilt Helper" : goal.reward, choosing ? TEXT : GOLD, 18, true));
+		JPanel heading = new JPanel(new BorderLayout(4, 0));
+		heading.setOpaque(false);
+		String guideLabel = choosing ? "Combat Achievement guides" : goal.label;
+		if (!choosing && state.routeChoice() != null)
+		{
+			guideLabel += state.routeChoice() == RouteStyle.SOLO ? " · Solo" : " · Group";
+		}
+		heading.add(text(guideLabel, TEXT, 12, false), BorderLayout.CENTER);
+		if (available && !choosing)
+		{
+			JButton change = button("Change guide", () ->
+			{
+				choosingGuide = true;
+				revealAnchor = "guide-picker";
+				focusTarget = "guide-medium";
+				redraw();
+			});
+			change.setName("change-guide");
+			heading.add(change, BorderLayout.EAST);
+		}
+		header.add(heading);
 		int target = catalogue.threshold(goal);
 		int remaining = Math.max(0, target - shownTotal);
-		add(text(choosing ? "Combat Achievement guides" : goal.label + " Combat Achievements", MUTED, 12, false));
 		if (live != null && live.mode.supported())
 		{
-			add(text(live.name + " · " + live.mode.label, MUTED, 12, false));
+			header.add(text(live.name + " · " + live.mode.label, MUTED, 11, false));
 		}
 		if (available)
 		{
-			add(gap(3));
+			header.add(gap(2));
 			if (choosing)
 			{
-				add(text(shownTotal + " Combat Achievement points", TEXT, 13, true));
+				header.add(text(shownTotal + " Combat Achievement points", TEXT, 13, true));
 			}
 			else
 			{
 				String points = shownTotal + " / " + target + " points";
-				add(text(remaining > 0 ? points + " · " + remaining + " to go" : points, TEXT, 13, true));
+				header.add(text(remaining > 0 ? points + " · " + remaining + " to go" : points, TEXT, 13, true));
 				JProgressBar bar = new JProgressBar(0, target);
 				bar.setValue(Math.min(shownTotal, target));
 				bar.getAccessibleContext().setAccessibleName(goal.label + " progress");
 				bar.setForeground(GOLD);
-				bar.setBackground(CARD);
-				bar.setMaximumSize(new Dimension(Integer.MAX_VALUE, 6));
-				add(bar);
+				bar.setBackground(BACKGROUND);
+				bar.setPreferredSize(new Dimension(1, 4));
+				bar.setMaximumSize(new Dimension(Integer.MAX_VALUE, 4));
+				header.add(bar);
 			}
-			if (live != null && live.mode.bankAllowed() && live.observedBank() == null)
+		}
+		add(header);
+		if (available && live != null)
+		{
+			if (live.mode.bankAllowed() && live.observedBank() == null)
 			{
-				add(text(ReadinessEngine.FIRST_BANK_CHECK, GOLD, 12, true));
+				add(text(ReadinessEngine.FIRST_BANK_CHECK, NEEDS_PREPARATION, 12, false));
 			}
-			if (live != null && live.freeWorld() && remaining > 0)
+			if (live.freeWorld() && remaining > 0)
 			{
 				add(text("The full route and hilt reward require a members’ world.", MUTED, 12, false));
 			}
@@ -584,15 +624,6 @@ public final class GuidePanel extends PluginPanel
 				guidePicker();
 				return;
 			}
-			JButton change = button("Change guide", () ->
-			{
-				choosingGuide = true;
-				revealAnchor = "guide-picker";
-				focusTarget = "guide-medium";
-				redraw();
-			});
-			change.setName("change-guide");
-			add(change);
 			if (shownState.routeChoice() == null || choosingRoute)
 			{
 				routePicker();
@@ -719,7 +750,7 @@ public final class GuidePanel extends PluginPanel
 	{
 		Planner.Next next = shownNext;
 		JPanel box = card();
-		box.add(text("Next up · " + state.routeChoice().label, GOLD, 12, true));
+		box.add(text("Next up", MUTED, 12, true));
 		if (!next.ids.isEmpty())
 		{
 			int id = next.ids.get(0);
@@ -729,7 +760,7 @@ public final class GuidePanel extends PluginPanel
 			boolean needsPreparation = preparation != null;
 			if (needsPreparation)
 			{
-				box.add(text(shortKitCheck(preparation), GOLD, 12, false));
+				box.add(text(shortKitCheck(preparation), NEEDS_PREPARATION, 12, false));
 			}
 			box.add(gap(4));
 			JButton open = primaryButton(needsPreparation ? "Review preparation" : "Open next task",
@@ -782,15 +813,11 @@ public final class GuidePanel extends PluginPanel
 			String timing = shownLive != null && shownLive.freeWorld() ? " on a members’ world" : " now";
 			String capacity = ready + " of " + remaining + " remaining points ready" + timing;
 			box.add(text(capacity, ready == remaining ? GREEN : TEXT, 12, true));
-			if (ready < remaining)
-			{
-				box.add(text((remaining - ready) + " more need preparation or other tasks.", MUTED, 12, false));
-			}
 		}
 		if (routeExpanded)
 		{
 			box.add(gap(4));
-			box.add(taskTypePicker("route-task-type"));
+			box.add(comboField("Task type", taskTypePicker("route-task-type")));
 			box.add(text("Unearned points in this filter", MUTED, 12, false));
 			RouteStyle current = shownState.routeChoice();
 			if (alternateRoute == null)
@@ -865,7 +892,8 @@ public final class GuidePanel extends PluginPanel
 		{
 			routeItemActivity = byActivity.keySet().stream().findFirst().orElse(ALL_MISSING_ITEMS);
 		}
-		box.add(routeItemPicker(byActivity.keySet()));
+		box.add(gap(4));
+		box.add(comboField("Activity", routeItemPicker(byActivity.keySet())));
 		if (ALL_MISSING_ITEMS.equals(routeItemActivity))
 		{
 			allMissingRouteItems(box);
@@ -893,13 +921,8 @@ public final class GuidePanel extends PluginPanel
 		options.addAll(activities);
 		String[] labels = options.stream().map(key -> ALL_MISSING_ITEMS.equals(key) ? key : catalogue.label(key))
 			.toArray(String[]::new);
-		JComboBox<String> chooser = new JComboBox<>(labels);
-		chooser.setName("route-item-activity");
-		chooser.getAccessibleContext().setAccessibleName("Item requirements to show");
+		JComboBox<String> chooser = choice("route-item-activity", "Item requirements to show", labels);
 		chooser.setSelectedIndex(options.indexOf(routeItemActivity));
-		chooser.setMaximumSize(new Dimension(Integer.MAX_VALUE, 28));
-		chooser.setFont(new Font(Font.SANS_SERIF, Font.PLAIN, 12));
-		chooser.addFocusListener(KEEP_FOCUS_VISIBLE);
 		chooser.addActionListener(e ->
 		{
 			routeItemActivity = options.get(chooser.getSelectedIndex());
@@ -919,11 +942,11 @@ public final class GuidePanel extends PluginPanel
 			return;
 		}
 
-		JPanel shortages = new JPanel();
-		shortages.setLayout(new BoxLayout(shortages, BoxLayout.Y_AXIS));
-		shortages.setOpaque(false);
+		JPanel shortages = card();
+		shortages.setBorder(BorderFactory.createCompoundBorder(
+			BorderFactory.createMatteBorder(0, 2, 0, 0, NEEDS_PREPARATION), new EmptyBorder(5, 6, 5, 6)));
 		shortages.putClientProperty("guideAnchor", "route-missing-short");
-		shortages.add(text("Missing or short", TEXT, 12, true));
+		shortages.add(text("Missing or short", NEEDS_PREPARATION, 13, true));
 		Map<String, List<Planner.ItemRequirement>> unchecked = new LinkedHashMap<>();
 		int unconfirmed = 0;
 		for (Map.Entry<String, List<Integer>> activity : byActivity.entrySet())
@@ -955,9 +978,9 @@ public final class GuidePanel extends PluginPanel
 		}
 		if (unconfirmed > 0)
 		{
-			JPanel review = new JPanel();
-			review.setLayout(new BoxLayout(review, BoxLayout.Y_AXIS));
-			review.setOpaque(false);
+			JPanel review = card();
+			review.setBorder(BorderFactory.createCompoundBorder(
+				BorderFactory.createMatteBorder(0, 2, 0, 0, ColorScheme.MEDIUM_GRAY_COLOR), new EmptyBorder(5, 6, 5, 6)));
 			review.putClientProperty("guideAnchor", "route-item-review");
 			JButton toggle = disclosure("Needs checking (" + unconfirmed + ")", routeNeedsCheckingExpanded, () ->
 			{
@@ -974,11 +997,10 @@ public final class GuidePanel extends PluginPanel
 				unchecked.forEach((key, items) ->
 					appendRouteActivityItems(review, key, items, byActivity.get(key).size(), "unchecked-items-"));
 			}
+			box.add(gap(4));
 			box.add(review);
-			shortages.setBorder(BorderFactory.createCompoundBorder(
-				BorderFactory.createMatteBorder(1, 0, 0, 0, BORDER), new EmptyBorder(7, 0, 0, 0)));
 		}
-		box.add(gap(8));
+		box.add(gap(5));
 		box.add(shortages);
 	}
 
@@ -1042,15 +1064,20 @@ public final class GuidePanel extends PluginPanel
 		items.sort(Comparator.comparing(item -> item.check.ready()));
 		for (Planner.ItemRequirement item : items)
 		{
+			JPanel row = new JPanel();
+			row.setLayout(new BoxLayout(row, BoxLayout.Y_AXIS));
+			row.setOpaque(false);
+			row.setBorder(BorderFactory.createCompoundBorder(BorderFactory.createMatteBorder(1, 0, 0, 0, BORDER),
+				new EmptyBorder(3, 0, 4, 0)));
 			ReadinessEngine.Check check = item.check;
 			boolean suggested = !item.required && !check.ready();
-			box.add(text(check.label + " — " + (suggested ? "Suggested" : check.displayStatus()),
-				suggested ? MUTED : check.ready() ? GREEN : GOLD, 12, true));
+			row.add(text(check.label + " — " + (suggested ? "Suggested" : check.displayStatus()),
+				suggested ? MUTED : check.ready() ? GREEN : NEEDS_PREPARATION, 12, true));
 			String quantity = item.quantity();
 			if (!quantity.isEmpty())
 			{
 				String action = ReadinessEngine.PROVIDED.equals(check.status) ? "Collect " : "Bring ";
-				box.add(text(action + quantity, MUTED, 12, false));
+				row.add(text(action + quantity, TEXT, 12, false));
 			}
 			if (item.taskIds.size() < taskCount)
 			{
@@ -1059,20 +1086,21 @@ public final class GuidePanel extends PluginPanel
 				{
 					names.add(catalogue.tasks.get(id).name);
 				}
-				box.add(text("For " + String.join(", ", names), MUTED, 12, false));
+				row.add(text("For " + String.join(", ", names), MUTED, 12, false));
 			}
 			boolean hasHint = !check.ready() && !ReadinessEngine.MISSING.equals(check.status) ||
 				check.fromBank || ReadinessEngine.ALTERNATIVE.equals(check.status) || ReadinessEngine.PROVIDED.equals(check.status);
 			if (!suggested && (ReadinessEngine.SHORT.equals(check.status) || hasHint && displayedHints.add(check.detail)))
 			{
-				box.add(text(check.detail, MUTED, 12, false));
+				row.add(text(check.detail, MUTED, 12, false));
 			}
 			boolean confirmed = ReadinessEngine.MANUAL.equals(check.status);
 			if (item.required && !item.correctionCategory.isEmpty() &&
 				(confirmed || ReadinessEngine.UNKNOWN.equals(check.status)))
 			{
-				box.add(itemConfirmation(item, confirmed));
+				row.add(itemConfirmation(item, confirmed));
 			}
+			box.add(row);
 		}
 	}
 
@@ -1173,6 +1201,7 @@ public final class GuidePanel extends PluginPanel
 				selectedActivity = "";
 				query = "";
 				searchDraft = "";
+				searchDot = searchMark = 0;
 				resetListPositions();
 				activityOptionsExpanded = false;
 			}
@@ -1182,6 +1211,8 @@ public final class GuidePanel extends PluginPanel
 				scope = beforeHespori.scope;
 				query = beforeHespori.query;
 				searchDraft = beforeHespori.draft;
+				searchDot = beforeHespori.dot;
+				searchMark = beforeHespori.mark;
 				checklistPosition = beforeHespori.checklist;
 				blockedPosition = beforeHespori.blocked;
 				blockedExpanded = beforeHespori.showBlocked;
@@ -1193,12 +1224,13 @@ public final class GuidePanel extends PluginPanel
 		}
 		else
 		{
-			beforeHespori = new ChecklistPosition(selectedActivity, scope, query, searchDraft, checklistPosition,
-				blockedPosition, filtersExpanded, activityOptionsExpanded, blockedExpanded, taskListExpanded);
+			beforeHespori = new ChecklistPosition(selectedActivity, scope, query, searchDraft, searchDot, searchMark,
+				checklistPosition, blockedPosition, filtersExpanded, activityOptionsExpanded, blockedExpanded, taskListExpanded);
 			selectedActivity = "hespori";
 			scope = RESERVES;
 			query = "";
 			searchDraft = "";
+			searchDot = searchMark = 0;
 			resetListPositions();
 			filtersExpanded = false;
 			activityOptionsExpanded = false;
@@ -1212,16 +1244,20 @@ public final class GuidePanel extends PluginPanel
 	private static final class ChecklistPosition
 	{
 		private final String activity, scope, query, draft;
+		private final int dot, mark;
 		private final ListPosition checklist, blocked;
 		private final boolean filters, activityOptions, showBlocked, showTaskList;
 
-		private ChecklistPosition(String activity, String scope, String query, String draft, ListPosition checklist,
-			ListPosition blocked, boolean filters, boolean activityOptions, boolean showBlocked, boolean showTaskList)
+		private ChecklistPosition(String activity, String scope, String query, String draft, int dot, int mark,
+			ListPosition checklist, ListPosition blocked, boolean filters, boolean activityOptions, boolean showBlocked,
+			boolean showTaskList)
 		{
 			this.activity = activity;
 			this.scope = scope;
 			this.query = query;
 			this.draft = draft;
+			this.dot = dot;
+			this.mark = mark;
 			this.checklist = checklist;
 			this.blocked = blocked;
 			this.filters = filters;
@@ -1251,7 +1287,16 @@ public final class GuidePanel extends PluginPanel
 		if (!selectedActivity.isEmpty())
 		{
 			header.add(gap(5));
-			header.add(text(catalogue.label(selectedActivity), TEXT, 14, true));
+			String activityLabel = catalogue.label(selectedActivity);
+			if (state.skipped(selectedActivity))
+			{
+				activityLabel += " · Skipped";
+			}
+			else if (catalogue.routeIds(catalogue.activity(selectedActivity), false, state.rewardGoal()).isEmpty())
+			{
+				activityLabel += " · Reserve";
+			}
+			header.add(text(activityLabel, TEXT, 14, true));
 			if (selectedActivity.equals("hespori"))
 			{
 				boolean watching = HesporiPatch.enabled(state);
@@ -1299,35 +1344,29 @@ public final class GuidePanel extends PluginPanel
 		JPanel row = new JPanel(new BorderLayout(4, 0));
 		row.setOpaque(false);
 		JTextField input = new JTextField(searchDraft);
+		input.setColumns(5);
 		searchField = input;
 		input.setName("search");
-		input.setFont(new Font(Font.SANS_SERIF, Font.PLAIN, 12));
-		input.setForeground(TEXT);
-		input.setCaretColor(TEXT);
-		input.setBackground(BACKGROUND);
-		Border searchBorder = BorderFactory.createCompoundBorder(BorderFactory.createLineBorder(BORDER),
-			new EmptyBorder(4, 6, 4, 6));
-		input.setBorder(searchBorder);
-		input.addFocusListener(new FocusAdapter()
-		{
-			@Override public void focusGained(FocusEvent event)
-			{
-				input.setBorder(BorderFactory.createCompoundBorder(BorderFactory.createLineBorder(GOLD),
-					new EmptyBorder(4, 6, 4, 6)));
-				scrollFocusedControl(input);
-			}
-
-			@Override public void focusLost(FocusEvent event)
-			{
-				input.setBorder(searchBorder);
-			}
-		});
+		input.setBackground(CARD);
+		input.putClientProperty("FlatLaf.style", FOCUS_STYLE);
+		input.putClientProperty("JTextField.leadingIcon", SEARCH_ICON);
+		input.addFocusListener(KEEP_FOCUS_VISIBLE);
 		String hint = "Find tasks by name, activity, rule or ID";
 		input.putClientProperty("JTextField.placeholderText", "Find a task");
 		input.setToolTipText(hint);
 		input.getAccessibleContext().setAccessibleName(hint);
-		input.setMinimumSize(new Dimension(32, 28));
-		row.setMaximumSize(new Dimension(Integer.MAX_VALUE, 29));
+		input.setMinimumSize(new Dimension(32, 26));
+		row.setMaximumSize(new Dimension(Integer.MAX_VALUE, 27));
+		input.setCaretPosition(Math.min(searchMark, searchDraft.length()));
+		input.moveCaretPosition(Math.min(searchDot, searchDraft.length()));
+		input.addCaretListener(event ->
+		{
+			if (searchField == input)
+			{
+				searchDot = event.getDot();
+				searchMark = event.getMark();
+			}
+		});
 		input.getDocument().addDocumentListener(new DocumentListener()
 		{
 			@Override public void insertUpdate(DocumentEvent event)
@@ -1354,18 +1393,29 @@ public final class GuidePanel extends PluginPanel
 			}
 		});
 		Runnable submit = () -> search(input.getText());
+		Runnable clear = () ->
+		{
+			focusTarget = "search";
+			search("");
+		};
 		input.addActionListener(event -> submit.run());
+		input.getInputMap().put(KeyStroke.getKeyStroke("ESCAPE"), "clear-task-search");
+		input.getActionMap().put("clear-task-search", new AbstractAction()
+		{
+			@Override public void actionPerformed(ActionEvent event)
+			{
+				clear.run();
+			}
+		});
 		row.add(input, BorderLayout.CENTER);
 		JPanel controls = new JPanel(new BorderLayout(3, 0));
 		controls.setOpaque(false);
 		controls.add(button("Search", submit), BorderLayout.CENTER);
 		if (!query.isEmpty())
 		{
-			controls.add(button("Clear", () ->
-			{
-				focusTarget = "search";
-				search("");
-			}), BorderLayout.EAST);
+			JButton reset = button("Clear", clear);
+			reset.setToolTipText("Clear task search");
+			controls.add(reset, BorderLayout.EAST);
 		}
 		row.add(controls, BorderLayout.EAST);
 		return row;
@@ -1391,8 +1441,7 @@ public final class GuidePanel extends PluginPanel
 
 	private void checklistFilters(JPanel header, GuideState state)
 	{
-		JComboBox<String> activities = new JComboBox<>();
-		activities.setName("activity-filter");
+		JComboBox<String> activities = choice("activity-filter", "Activity", new String[0]);
 		activities.addItem("All activities");
 		int selected = 0;
 		List<JsonObject> choices = catalogue.activities(state.rewardGoal());
@@ -1400,19 +1449,13 @@ public final class GuidePanel extends PluginPanel
 		{
 			JsonObject activity = choices.get(i);
 			String key = activity.get("key").getAsString();
-			activities.addItem(catalogue.label(key) +
-				(catalogue.routeIds(activity, false, state.rewardGoal()).isEmpty() ? " · reserve" : "") +
-				(state.skipped(key) ? " · skipped" : ""));
+			activities.addItem(catalogue.label(key));
 			if (key.equals(selectedActivity))
 			{
 				selected = i + 1;
 			}
 		}
 		activities.setSelectedIndex(selected);
-		activities.setMaximumSize(new Dimension(Integer.MAX_VALUE, 30));
-		activities.setFont(new Font(Font.SANS_SERIF, Font.PLAIN, 12));
-		activities.getAccessibleContext().setAccessibleName("Activity");
-		activities.addFocusListener(KEEP_FOCUS_VISIBLE);
 		activities.addActionListener(e ->
 		{
 			int i = activities.getSelectedIndex();
@@ -1422,9 +1465,10 @@ public final class GuidePanel extends PluginPanel
 			resetListPositions();
 			redraw();
 		});
-		header.add(activities);
-		header.add(taskTypePicker("checklist-task-type"));
-		header.add(text("Suggested follows your plan. Selected shows the guide’s core tasks.", MUTED, 12, false));
+		header.add(gap(3));
+		header.add(comboField("Activity", activities));
+		header.add(gap(3));
+		header.add(comboField("Task type", taskTypePicker("checklist-task-type")));
 		JCheckBox hide = checkbox("Hide completed tasks", hideCompleted);
 		hide.addActionListener(e ->
 		{
@@ -1437,14 +1481,9 @@ public final class GuidePanel extends PluginPanel
 
 	private JComboBox<String> taskTypePicker(String name)
 	{
-		JComboBox<String> scopes = new JComboBox<>(new String[] {SUGGESTED, SELECTED, RESERVES, ALL});
-		scopes.setName(name);
+		JComboBox<String> scopes = choice(name, "Task type", new String[] {SUGGESTED, SELECTED, RESERVES, ALL});
 		scopes.setSelectedItem(scope);
-		scopes.setMaximumSize(new Dimension(Integer.MAX_VALUE, 28));
-		scopes.setFont(new Font(Font.SANS_SERIF, Font.PLAIN, 12));
-		scopes.getAccessibleContext().setAccessibleName("Task type");
-		scopes.setToolTipText("Selected tasks are the guide’s core tasks. Suggestions can also use reserves.");
-		scopes.addFocusListener(KEEP_FOCUS_VISIBLE);
+		scopes.setToolTipText("Suggested follows your plan. Selected shows the guide’s core tasks.");
 		scopes.addActionListener(e ->
 		{
 			scope = (String)scopes.getSelectedItem();
@@ -1452,6 +1491,29 @@ public final class GuidePanel extends PluginPanel
 			redraw();
 		});
 		return scopes;
+	}
+
+	private static JComboBox<String> choice(String name, String accessibleName, String[] values)
+	{
+		JComboBox<String> chooser = new JComboBox<>(values);
+		chooser.setName(name);
+		chooser.getAccessibleContext().setAccessibleName(accessibleName);
+		chooser.putClientProperty("FlatLaf.style", FOCUS_STYLE);
+		chooser.addFocusListener(KEEP_FOCUS_VISIBLE);
+		return chooser;
+	}
+
+	private static JPanel comboField(String label, JComboBox<String> chooser)
+	{
+		JPanel field = new JPanel(new BorderLayout(0, 1));
+		field.setOpaque(false);
+		JLabel caption = new JLabel(label);
+		caption.setLabelFor(chooser);
+		caption.setForeground(MUTED);
+		field.add(caption, BorderLayout.NORTH);
+		field.add(chooser, BorderLayout.CENTER);
+		field.setMaximumSize(new Dimension(Integer.MAX_VALUE, field.getPreferredSize().height));
+		return field;
 	}
 
 	private List<Integer> plannedTasks(String activity)
@@ -1582,10 +1644,10 @@ public final class GuidePanel extends PluginPanel
 		list.getAccessibleContext().setAccessibleName(blocked ? "Blocked tasks" : "Checklist tasks");
 		list.setBackground(BACKGROUND);
 		list.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
-		list.setFixedCellHeight(blocked ? 108 : 88);
 		list.setFixedCellWidth(176);
 		list.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
-		list.setCellRenderer(new TaskCell(blocked));
+		TaskCell renderer = new TaskCell(blocked);
+		list.setCellRenderer(renderer);
 		list.addFocusListener(new FocusAdapter()
 		{
 			@Override public void focusGained(FocusEvent event)
@@ -1597,20 +1659,32 @@ public final class GuidePanel extends PluginPanel
 				scrollFocusedControl(list);
 			}
 		});
-		list.addMouseListener(new MouseAdapter()
+		MouseAdapter pointer = new MouseAdapter()
 		{
 			@Override public void mouseClicked(MouseEvent event)
 			{
-				int index = list.locationToIndex(event.getPoint());
-				Rectangle row = index < 0 ? null : list.getCellBounds(index, index);
-				if (SwingUtilities.isLeftMouseButton(event) && row != null && row.contains(event.getPoint()))
+				int index = taskAt(list, event.getPoint());
+				if (SwingUtilities.isLeftMouseButton(event) && index >= 0)
 				{
 					list.setSelectedIndex(index);
 					openTask(ids.get(index), ids, origin);
 				}
 			}
-		});
+
+			@Override public void mouseMoved(MouseEvent event)
+			{
+				renderer.hover(list, taskAt(list, event.getPoint()));
+			}
+
+			@Override public void mouseExited(MouseEvent event)
+			{
+				renderer.hover(list, -1);
+			}
+		};
+		list.addMouseListener(pointer);
+		list.addMouseMotionListener(pointer);
 		list.getInputMap().put(KeyStroke.getKeyStroke("ENTER"), "open-task");
+		list.getInputMap().put(KeyStroke.getKeyStroke("SPACE"), "open-task");
 		list.getActionMap().put("open-task", new AbstractAction()
 		{
 			@Override public void actionPerformed(ActionEvent event)
@@ -1633,6 +1707,13 @@ public final class GuidePanel extends PluginPanel
 			checklistArea = section;
 		}
 		return section;
+	}
+
+	private static int taskAt(JList<Integer> list, Point point)
+	{
+		int index = list.locationToIndex(point);
+		Rectangle row = index < 0 ? null : list.getCellBounds(index, index);
+		return row != null && row.contains(point) ? index : -1;
 	}
 
 	private void fitTaskLists()
@@ -1677,8 +1758,6 @@ public final class GuidePanel extends PluginPanel
 			JButton bottom = button("Bottom of list", () -> bar.setValue(bar.getMaximum()));
 			top.setMargin(new Insets(0, 3, 0, 3));
 			bottom.setMargin(new Insets(0, 3, 0, 3));
-			top.setFocusable(true);
-			bottom.setFocusable(true);
 			jump.add(top);
 			jump.add(bottom);
 			top.setName(list.getName() + "-top");
@@ -1689,12 +1768,12 @@ public final class GuidePanel extends PluginPanel
 
 		boolean fit(int viewportHeight)
 		{
-			int content = list.getModel().getSize() * list.getFixedCellHeight() + 2;
+			int content = list.getPreferredSize().height + 2;
 			int height = COMPACT_LIST_HEIGHT;
 			if (viewportHeight > 0)
 			{
 				// Keep room for the list disclosure and jump buttons at small window sizes.
-				height = Math.min(Math.max(list.getFixedCellHeight(), viewportHeight - 70),
+				height = Math.min(Math.max(list.getCellBounds(0, 0).height, viewportHeight - 70),
 					Math.max(COMPACT_LIST_HEIGHT, viewportHeight - 210));
 			}
 			height = Math.min(height, content);
@@ -1730,31 +1809,48 @@ public final class GuidePanel extends PluginPanel
 		private final boolean blocked;
 		private final JPanel card = new JPanel(new BorderLayout(4, 0));
 		private final JPanel labels = new JPanel();
-		private final JTextArea title = text("", TEXT, 13, true, TASK_CARD_TEXT_WIDTH);
-		private final JTextArea caption = text("", MUTED, 12, false, TASK_CARD_TEXT_WIDTH);
-		private final Border standard = BorderFactory.createCompoundBorder(BorderFactory.createLineBorder(BORDER),
-			new EmptyBorder(5, 8, 4, 6));
-		private final Border highlighted = BorderFactory.createCompoundBorder(BorderFactory.createLineBorder(GOLD),
-			new EmptyBorder(5, 8, 4, 6));
+		private final WrappedText title = text("", TEXT, 13, true, TASK_CARD_TEXT_WIDTH);
+		private final WrappedText caption = text("", MUTED, 11, false, TASK_CARD_TEXT_WIDTH);
+		private final JLabel arrow = new JLabel("›", JLabel.CENTER);
+		private final Border standard = new EmptyBorder(4, 8, 4, 5);
+		private final Border selectedBorder = BorderFactory.createCompoundBorder(
+			BorderFactory.createMatteBorder(0, 2, 0, 0, ACCENT), new EmptyBorder(4, 6, 4, 5));
+		private final Border focusBorder = BorderFactory.createCompoundBorder(BorderFactory.createLineBorder(ACCENT),
+			new EmptyBorder(3, 7, 3, 4));
+		private int hovered = -1;
 
 		TaskCell(boolean blocked)
 		{
 			super(new BorderLayout());
 			this.blocked = blocked;
 			setBackground(BACKGROUND);
-			setBorder(new EmptyBorder(3, 3, 2, 3));
-			card.setBackground(CARD);
+			setBorder(BorderFactory.createMatteBorder(0, 0, 1, 0, BORDER));
 			labels.setLayout(null);
 			labels.setOpaque(false);
+			title.setBorder(new EmptyBorder(0, 0, 0, 0));
+			caption.setBorder(new EmptyBorder(0, 0, 0, 0));
 			labels.add(title);
 			labels.add(caption);
 			card.add(labels, BorderLayout.CENTER);
-			JLabel arrow = new JLabel("›", JLabel.CENTER);
-			arrow.setForeground(TEXT);
-			arrow.setFont(new Font(Font.SANS_SERIF, Font.BOLD, 17));
 			arrow.setPreferredSize(new Dimension(12, 26));
 			card.add(arrow, BorderLayout.EAST);
 			add(card, BorderLayout.CENTER);
+		}
+
+		void hover(JList<Integer> list, int index)
+		{
+			if (hovered != index)
+			{
+				hovered = index;
+				list.repaint();
+			}
+		}
+
+		@Override public Dimension getPreferredSize()
+		{
+			// Use the narrow sidebar width so a resize can keep the list's measured row positions.
+			int height = title.preferredAt(TASK_CARD_TEXT_WIDTH).height + caption.preferredAt(TASK_CARD_TEXT_WIDTH).height;
+			return new Dimension(176, height + 10);
 		}
 
 		@Override public void validate()
@@ -1764,7 +1860,7 @@ public final class GuidePanel extends PluginPanel
 			card.doLayout();
 			int width = labels.getWidth(), height = labels.getHeight();
 			title.setSize(width, height);
-			int titleHeight = Math.min(height, title.getPreferredSize().height + 2);
+			int titleHeight = Math.min(height, title.getPreferredSize().height + 1);
 			title.setBounds(0, 0, width, titleHeight);
 			caption.setBounds(0, titleHeight, width, height - titleHeight);
 		}
@@ -1775,33 +1871,29 @@ public final class GuidePanel extends PluginPanel
 			title.setText(catalogue.tasks.get(id).name);
 			String owner = catalogue.owner(id);
 			String blocker = shownRoute.blockedTasks.get(id);
+			String detail = catalogue.label(owner) + " · " + taskPoints(id);
 			if (blocked)
 			{
 				String reason = blocker == null ? "Review preparation" : shortKitCheck(blocker);
-				caption.setText(reason.length() > 95 ? reason.substring(0, 92).stripTrailing() + "…" : reason);
-				caption.setForeground(GOLD);
+				detail += "\n" + (reason.length() > 64 ? reason.substring(0, 61).stripTrailing() + "…" : reason);
 			}
-			else
+			else if (completedIDs.contains(id))
 			{
-				String detail = taskPoints(id) + " · " + taskType(id);
-				if (completedIDs.contains(id))
-				{
-					detail += " · Complete";
-				}
-				else if (skippedIDs.contains(id) || shownState.skipped(owner))
-				{
-					detail += " · Skipped";
-				}
-				else if (blocker != null)
-				{
-					detail += " · Needs prep";
-				}
-				String activityName = selectedActivity.isEmpty() ? catalogue.label(owner) + " · " : "";
-				caption.setText(activityName + detail);
+				detail += " · Complete";
 			}
-			boolean firstSuggestion = !blocked && index == 0 && scope.equals(SUGGESTED) && query.isEmpty();
-			card.setBorder(selected || cellHasFocus || firstSuggestion ? highlighted : standard);
-			card.setBackground(selected ? SELECTED_CARD : CARD);
+			else if (skippedIDs.contains(id) || shownState.skipped(owner))
+			{
+				detail += " · Skipped";
+			}
+			else if (blocker != null)
+			{
+				detail += " · Needs prep";
+			}
+			caption.setText(detail);
+			caption.setForeground(blocked ? NEEDS_PREPARATION : MUTED);
+			card.setBorder(cellHasFocus ? focusBorder : selected ? selectedBorder : standard);
+			card.setBackground(selected || index == hovered ? ColorScheme.DARKER_GRAY_HOVER_COLOR : CARD);
+			arrow.setForeground(selected ? ACCENT : TEXT);
 			getAccessibleContext().setAccessibleName(title.getText() + ". " + caption.getText());
 			return this;
 		}
@@ -1847,9 +1939,9 @@ public final class GuidePanel extends PluginPanel
 		{
 			JViewport viewport = (JViewport)list.getParent();
 			int y = viewport.getViewPosition().y;
-			int row = Math.min(list.getModel().getSize() - 1, y / list.getFixedCellHeight());
+			int row = list.locationToIndex(new Point(0, y));
 			return row < 0 ? TOP : new ListPosition(list.getModel().getElementAt(row),
-				y - row * list.getFixedCellHeight(), y, list.getSelectedValue());
+				y - list.getCellBounds(row, row).y, y, list.getSelectedValue());
 		}
 
 		private void restore(JList<Integer> list)
@@ -1864,12 +1956,12 @@ public final class GuidePanel extends PluginPanel
 			{
 				if (list.getModel().getElementAt(i) == id)
 				{
-					position = i * list.getFixedCellHeight() + offset;
+					Rectangle row = list.getCellBounds(i, i);
+					position = row.y + Math.min(offset, row.height - 1);
 					break;
 				}
 			}
-			int max = Math.max(0,
-				list.getModel().getSize() * list.getFixedCellHeight() - viewport.getExtentSize().height);
+			int max = Math.max(0, list.getPreferredSize().height - viewport.getExtentSize().height);
 			list.setSelectedValue(selected, false);
 			viewport.setViewPosition(new Point(0, Math.max(0, Math.min(position, max))));
 		}
@@ -1943,14 +2035,29 @@ public final class GuidePanel extends PluginPanel
 		if (shownTotal < catalogue.threshold(shownState.rewardGoal()) && next >= 0 && next < focusedTasks.size())
 		{
 			selectFocusedTask(next);
-			focusTarget = "back-from-task";
+			if (settingsOpen)
+			{
+				settingsReturnAnchor = null;
+				revealAnchor = "";
+			}
+			else
+			{
+				focusTarget = "back-from-task";
+			}
 			return;
 		}
 		focusedTasks = List.of();
 		taskSection = null;
 		taskReturnAnchor = null;
-		revealAnchor = "start";
-		focusTarget = "Checklist";
+		if (settingsOpen)
+		{
+			settingsReturnAnchor = null;
+		}
+		else
+		{
+			revealAnchor = "start";
+			focusTarget = "Checklist";
+		}
 	}
 
 	private JPanel taskNavigation(int next)
@@ -1964,8 +2071,10 @@ public final class GuidePanel extends PluginPanel
 		JPanel step = new JPanel(new GridLayout(1, 2, 5, 0));
 		step.setOpaque(false);
 		JButton previous = button("‹ Previous", () -> moveTask(focusedIndex - 1));
+		previous.setName("previous-task");
 		previous.setEnabled(focusedIndex > 0);
 		JButton forward = primaryButton("Next task ›", () -> moveTask(next));
+		forward.setName("next-task");
 		forward.setEnabled(next < focusedTasks.size());
 		step.add(previous);
 		step.add(forward);
@@ -2106,7 +2215,7 @@ public final class GuidePanel extends PluginPanel
 			if (!requirements.isEmpty() || !kitChecks.isEmpty())
 			{
 				String first = shortKitCheck(requirements.isEmpty() ? kitChecks.get(0) : requirements.get(0));
-				box.add(text("Prepare before attempting", GOLD, 12, true));
+				box.add(text("Prepare before attempting", NEEDS_PREPARATION, 12, true));
 				box.add(text(first, TEXT, 12, false));
 			}
 			List<String> fromBank = new ArrayList<>();
@@ -2119,7 +2228,7 @@ public final class GuidePanel extends PluginPanel
 			}
 			if (!fromBank.isEmpty())
 			{
-				box.add(text("Bring from your bank", GOLD, 12, true));
+				box.add(text("Bring from your bank", TEXT, 12, true));
 				box.add(text(String.join(", ", fromBank), TEXT, 12, false));
 			}
 		}
@@ -2882,10 +2991,6 @@ public final class GuidePanel extends PluginPanel
 			{
 				((JComponent)child).setAlignmentX(Component.LEFT_ALIGNMENT);
 			}
-			if (child instanceof JComboBox)
-			{
-				((JComboBox<?>)child).setMinimumSize(new Dimension(0, 28));
-			}
 			if (child instanceof Container)
 			{
 				align((Container)child);
@@ -2897,7 +3002,7 @@ public final class GuidePanel extends PluginPanel
 		JPanel p = new JPanel();
 		p.setLayout(new BoxLayout(p, BoxLayout.Y_AXIS));
 		p.setBackground(CARD);
-		p.setBorder(new EmptyBorder(8, 8, 8, 8));
+		p.setBorder(new EmptyBorder(6, 7, 6, 7));
 		p.setAlignmentX(Component.LEFT_ALIGNMENT);
 		return p;
 	}
@@ -2907,22 +3012,22 @@ public final class GuidePanel extends PluginPanel
 	}
 	private static JTextArea text(String value, Color color, int size, boolean bold)
 	{
-		return text(value, color, size, bold, 190);
+		return text(value, color, size, bold, PANEL_WIDTH - 28);
 	}
 
-	private static JTextArea text(String value, Color color, int size, boolean bold, int initialWidth)
+	private static WrappedText text(String value, Color color, int size, boolean bold, int initialWidth)
 	{
-		JTextArea text = new WrappedText(value, initialWidth);
+		WrappedText text = new WrappedText(value, initialWidth);
 		text.setEditable(false);
 		text.setFocusable(false);
 		text.setOpaque(false);
 		text.setForeground(color);
 		text.setLineWrap(true);
 		text.setWrapStyleWord(true);
-		text.setFont(new Font(Font.SANS_SERIF, bold ? Font.BOLD : Font.PLAIN, size));
-		text.setColumns(20);
+		Font font = bold ? FontManager.getRunescapeBoldFont() : FontManager.getDefaultFont();
+		text.setFont(font.deriveFont(bold ? (size >= 17 ? 18f : 16f) : (float)size));
 		text.setAlignmentX(Component.LEFT_ALIGNMENT);
-		text.setBorder(new EmptyBorder(2, 0, 3, 0));
+		text.setBorder(new EmptyBorder(1, 0, 2, 0));
 		return text;
 	}
 	/** Measures wrapped height at the real sidebar width, including nested task cards. */
@@ -2967,7 +3072,11 @@ public final class GuidePanel extends PluginPanel
 					break;
 				}
 			}
-			width = Math.max(60, width);
+			return preferredAt(Math.max(60, width));
+		}
+
+		Dimension preferredAt(int width)
+		{
 			Insets insets = getInsets();
 			javax.swing.text.View view = getUI().getRootView(this);
 			view.setSize(Math.max(1, width - insets.left - insets.right), Float.MAX_VALUE);
@@ -2988,13 +3097,11 @@ public final class GuidePanel extends PluginPanel
 	{
 		JButton b = new JButton(label);
 		b.setAlignmentX(Component.LEFT_ALIGNMENT);
-		b.setFont(new Font(Font.SANS_SERIF, Font.PLAIN, 12));
 		b.setToolTipText(label);
-		b.setForeground(TEXT);
-		b.setBackground(CARD);
-		b.setMargin(new Insets(3, 7, 3, 7));
+		b.putClientProperty("FlatLaf.style", FOCUS_STYLE);
+		b.setMargin(new Insets(1, 6, 1, 6));
 		b.addFocusListener(KEEP_FOCUS_VISIBLE);
-		b.setMaximumSize(new Dimension(Integer.MAX_VALUE, 30));
+		b.setMaximumSize(new Dimension(Integer.MAX_VALUE, b.getPreferredSize().height));
 		b.addActionListener(e -> action.run());
 		return b;
 	}
@@ -3004,7 +3111,12 @@ public final class GuidePanel extends PluginPanel
 		JButton toggle = button((expanded ? "▾ " : "▸ ") + label, action);
 		toggle.setHorizontalAlignment(JButton.LEFT);
 		toggle.setActionCommand(label);
+		toggle.setToolTipText(label);
 		toggle.getAccessibleContext().setAccessibleName(label + (expanded ? ", expanded" : ", collapsed"));
+		if (expanded)
+		{
+			toggle.putClientProperty("FlatLaf.style", FOCUS_STYLE + "; borderColor: #dc8a00");
+		}
 		return toggle;
 	}
 
@@ -3012,8 +3124,9 @@ public final class GuidePanel extends PluginPanel
 	{
 		JButton button = button(label, action);
 		button.setBackground(GOLD);
-		button.setForeground(BACKGROUND);
-		button.setFont(new Font(Font.SANS_SERIF, Font.BOLD, 12));
+		button.setForeground(BORDER);
+		button.setFont(FontManager.getRunescapeBoldFont());
+		button.putClientProperty("FlatLaf.style", FOCUS_STYLE + "; hoverBackground: #ffe0a0; pressedBackground: #d9a64f");
 		return button;
 	}
 
@@ -3021,8 +3134,7 @@ public final class GuidePanel extends PluginPanel
 	{
 		JCheckBox check = new JCheckBox(label, selected);
 		check.setOpaque(false);
-		check.setForeground(TEXT);
-		check.setFont(new Font(Font.SANS_SERIF, Font.PLAIN, 12));
+		check.putClientProperty("FlatLaf.style", "icon.focusWidth: 1; icon.focusColor: #dc8a00");
 		check.addFocusListener(KEEP_FOCUS_VISIBLE);
 		return check;
 	}
@@ -3057,7 +3169,8 @@ public final class GuidePanel extends PluginPanel
 	private static JButton link(String label, String url)
 	{
 		JButton b = button(label + " ↗", () -> LinkBrowser.browse(url));
-		b.setForeground(GOLD);
+		b.setToolTipText(label);
+		b.getAccessibleContext().setAccessibleName(label);
 		return b;
 	}
 }
