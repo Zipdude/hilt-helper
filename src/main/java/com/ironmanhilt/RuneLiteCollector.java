@@ -144,17 +144,18 @@ public final class RuneLiteCollector
 		}
 	}
 	/** Capture real bank updates immediately, including a short visit between refresh ticks. */
-	public void observeContainer(int containerId, ItemContainer changed)
+	public boolean observeContainer(int containerId, ItemContainer changed)
 	{
 		if (containerId != InventoryID.BANK || changed == null || client.getGameState() != GameState.LOGGED_IN ||
 			client.getAccountHash() == 0 || client.getAccountHash() == -1 ||
 			RuneScapeProfileType.getCurrent(client) != RuneScapeProfileType.STANDARD ||
 			!AccountMode.fromVarbit(client.getVarbitValue(VarbitID.IRONMAN)).bankAllowed())
 		{
-			return;
+			return false;
 		}
 		bank = copyContainer(changed, Instant.now());
 		bankAccountKey = Long.toUnsignedString(client.getAccountHash()) + "-standard";
+		return true;
 	}
 	public LiveSnapshot collect(boolean refreshRequirements)
 	{

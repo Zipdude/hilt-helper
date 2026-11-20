@@ -1784,21 +1784,21 @@
         "rstr": 10
       },
       "stackable": true,
-      "wear_requirements": null,
-      "wear_quests": null,
-      "requirements_verified": false,
+      "wear_requirements": {},
+      "wear_quests": [],
+      "requirements_verified": true,
       "sources": [
         "https://static.runelite.net/cache/item/names.json",
         "https://static.runelite.net/cache/item/notes.json",
         "https://static.runelite.net/item/stats.ids.min.json",
-        "https://oldschool.runescape.wiki/w/Bronze_bolts"
+        "https://oldschool.runescape.wiki/w/Bronze_bolts",
+        "https://oldschool.runescape.wiki/w/Crossbow_(weapon)"
       ],
       "tags": [
         "ammunition"
       ],
       "wiki_page": "Bronze bolts",
-      "wiki_variant": "Unpoisoned",
-      "review_note": "Wear requirements not fully audited in this compact registry; show Unknown or require manual confirmation."
+      "wiki_variant": "Unpoisoned"
     },
     "878": {
       "id": 878,
@@ -9991,21 +9991,21 @@
         "rstr": 46
       },
       "stackable": true,
-      "wear_requirements": null,
-      "wear_quests": null,
-      "requirements_verified": false,
+      "wear_requirements": {},
+      "wear_quests": [],
+      "requirements_verified": true,
       "sources": [
         "https://static.runelite.net/cache/item/names.json",
         "https://static.runelite.net/cache/item/notes.json",
         "https://static.runelite.net/item/stats.ids.min.json",
-        "https://oldschool.runescape.wiki/w/Iron_bolts"
+        "https://oldschool.runescape.wiki/w/Iron_bolts",
+        "https://oldschool.runescape.wiki/w/Crossbow_(weapon)"
       ],
       "tags": [
         "ammunition"
       ],
       "wiki_page": "Iron bolts",
-      "wiki_variant": "Unpoisoned",
-      "review_note": "Wear requirements not fully audited in this compact registry; show Unknown or require manual confirmation."
+      "wiki_variant": "Unpoisoned"
     },
     "9141": {
       "id": 9141,
@@ -10019,21 +10019,23 @@
         "rstr": 64
       },
       "stackable": true,
-      "wear_requirements": null,
-      "wear_quests": null,
-      "requirements_verified": false,
+      "wear_requirements": {
+        "Ranged": 31
+      },
+      "wear_quests": [],
+      "requirements_verified": true,
       "sources": [
         "https://static.runelite.net/cache/item/names.json",
         "https://static.runelite.net/cache/item/notes.json",
         "https://static.runelite.net/item/stats.ids.min.json",
-        "https://oldschool.runescape.wiki/w/Steel_bolts"
+        "https://oldschool.runescape.wiki/w/Steel_bolts",
+        "https://oldschool.runescape.wiki/w/Crossbow_(weapon)"
       ],
       "tags": [
         "ammunition"
       ],
       "wiki_page": "Steel bolts",
-      "wiki_variant": "Unpoisoned",
-      "review_note": "Wear requirements not fully audited in this compact registry; show Unknown or require manual confirmation."
+      "wiki_variant": "Unpoisoned"
     },
     "9142": {
       "id": 9142,
@@ -10047,21 +10049,23 @@
         "rstr": 82
       },
       "stackable": true,
-      "wear_requirements": null,
-      "wear_quests": null,
-      "requirements_verified": false,
+      "wear_requirements": {
+        "Ranged": 36
+      },
+      "wear_quests": [],
+      "requirements_verified": true,
       "sources": [
         "https://static.runelite.net/cache/item/names.json",
         "https://static.runelite.net/cache/item/notes.json",
         "https://static.runelite.net/item/stats.ids.min.json",
-        "https://oldschool.runescape.wiki/w/Mithril_bolts"
+        "https://oldschool.runescape.wiki/w/Mithril_bolts",
+        "https://oldschool.runescape.wiki/w/Crossbow_(weapon)"
       ],
       "tags": [
         "ammunition"
       ],
       "wiki_page": "Mithril bolts",
-      "wiki_variant": "Unpoisoned",
-      "review_note": "Wear requirements not fully audited in this compact registry; show Unknown or require manual confirmation."
+      "wiki_variant": "Unpoisoned"
     },
     "9143": {
       "id": 9143,
@@ -10075,21 +10079,23 @@
         "rstr": 100
       },
       "stackable": true,
-      "wear_requirements": null,
-      "wear_quests": null,
-      "requirements_verified": false,
+      "wear_requirements": {
+        "Ranged": 46
+      },
+      "wear_quests": [],
+      "requirements_verified": true,
       "sources": [
         "https://static.runelite.net/cache/item/names.json",
         "https://static.runelite.net/cache/item/notes.json",
         "https://static.runelite.net/item/stats.ids.min.json",
-        "https://oldschool.runescape.wiki/w/Adamant_bolts"
+        "https://oldschool.runescape.wiki/w/Adamant_bolts",
+        "https://oldschool.runescape.wiki/w/Crossbow_(weapon)"
       ],
       "tags": [
         "ammunition"
       ],
       "wiki_page": "Adamant bolts",
-      "wiki_variant": "Unpoisoned",
-      "review_note": "Wear requirements not fully audited in this compact registry; show Unknown or require manual confirmation."
+      "wiki_variant": "Unpoisoned"
     },
     "9144": {
       "id": 9144,
@@ -10103,21 +10109,23 @@
         "rstr": 115
       },
       "stackable": true,
-      "wear_requirements": null,
-      "wear_quests": null,
-      "requirements_verified": false,
+      "wear_requirements": {
+        "Ranged": 61
+      },
+      "wear_quests": [],
+      "requirements_verified": true,
       "sources": [
         "https://static.runelite.net/cache/item/names.json",
         "https://static.runelite.net/cache/item/notes.json",
         "https://static.runelite.net/item/stats.ids.min.json",
-        "https://oldschool.runescape.wiki/w/Runite_bolts"
+        "https://oldschool.runescape.wiki/w/Runite_bolts",
+        "https://oldschool.runescape.wiki/w/Crossbow_(weapon)"
       ],
       "tags": [
         "ammunition"
       ],
       "wiki_page": "Runite bolts",
-      "wiki_variant": "Unpoisoned",
-      "review_note": "Wear requirements not fully audited in this compact registry; show Unknown or require manual confirmation."
+      "wiki_variant": "Unpoisoned"
     },
     "9185": {
       "id": 9185,
@@ -11951,6 +11959,1012 @@
       "sources": [
         "https://oldschool.runescape.wiki/w/Book_of_the_dead"
       ]
+    },
+    "1361": {
+      "id": 1361,
+      "name": "Black axe",
+      "noted_ids": [
+        1362
+      ],
+      "equipable": true,
+      "equipment_slot": 3,
+      "two_handed": false,
+      "equipment_bonuses": null,
+      "stackable": false,
+      "wear_requirements": {
+        "Attack": 10
+      },
+      "wear_quests": [],
+      "requirements_verified": true,
+      "sources": [
+        "https://static.runelite.net/cache/item/names.json",
+        "https://static.runelite.net/cache/item/notes.json",
+        "https://oldschool.runescape.wiki/w/Black_axe"
+      ],
+      "tags": [],
+      "wiki_page": "Black_axe",
+      "wiki_variant": null,
+      "use_requirements": {
+        "Woodcutting": 11
+      }
+    },
+    "1355": {
+      "id": 1355,
+      "name": "Mithril axe",
+      "noted_ids": [
+        1356
+      ],
+      "equipable": true,
+      "equipment_slot": 3,
+      "two_handed": false,
+      "equipment_bonuses": null,
+      "stackable": false,
+      "wear_requirements": {
+        "Attack": 20
+      },
+      "wear_quests": [],
+      "requirements_verified": true,
+      "sources": [
+        "https://static.runelite.net/cache/item/names.json",
+        "https://static.runelite.net/cache/item/notes.json",
+        "https://oldschool.runescape.wiki/w/Mithril_axe"
+      ],
+      "tags": [],
+      "wiki_page": "Mithril_axe",
+      "wiki_variant": null,
+      "use_requirements": {
+        "Woodcutting": 21
+      }
+    },
+    "1357": {
+      "id": 1357,
+      "name": "Adamant axe",
+      "noted_ids": [
+        1358
+      ],
+      "equipable": true,
+      "equipment_slot": 3,
+      "two_handed": false,
+      "equipment_bonuses": null,
+      "stackable": false,
+      "wear_requirements": {
+        "Attack": 30
+      },
+      "wear_quests": [],
+      "requirements_verified": true,
+      "sources": [
+        "https://static.runelite.net/cache/item/names.json",
+        "https://static.runelite.net/cache/item/notes.json",
+        "https://oldschool.runescape.wiki/w/Adamant_axe"
+      ],
+      "tags": [],
+      "wiki_page": "Adamant_axe",
+      "wiki_variant": null,
+      "use_requirements": {
+        "Woodcutting": 31
+      }
+    },
+    "23279": {
+      "id": 23279,
+      "name": "Gilded axe",
+      "noted_ids": [
+        23280
+      ],
+      "equipable": true,
+      "equipment_slot": 3,
+      "two_handed": false,
+      "equipment_bonuses": null,
+      "stackable": false,
+      "wear_requirements": {
+        "Attack": 40
+      },
+      "wear_quests": [],
+      "requirements_verified": true,
+      "sources": [
+        "https://static.runelite.net/cache/item/names.json",
+        "https://static.runelite.net/cache/item/notes.json",
+        "https://oldschool.runescape.wiki/w/Gilded_axe"
+      ],
+      "tags": [],
+      "wiki_page": "Gilded_axe",
+      "wiki_variant": null,
+      "use_requirements": {
+        "Woodcutting": 41
+      }
+    },
+    "20011": {
+      "id": 20011,
+      "name": "3rd Age axe",
+      "noted_ids": [
+        20012
+      ],
+      "equipable": true,
+      "equipment_slot": 3,
+      "two_handed": false,
+      "equipment_bonuses": null,
+      "stackable": false,
+      "wear_requirements": {
+        "Attack": 65
+      },
+      "wear_quests": [],
+      "requirements_verified": true,
+      "sources": [
+        "https://static.runelite.net/cache/item/names.json",
+        "https://static.runelite.net/cache/item/notes.json",
+        "https://oldschool.runescape.wiki/w/3rd_Age_axe"
+      ],
+      "tags": [],
+      "wiki_page": "3rd_Age_axe",
+      "wiki_variant": null,
+      "use_requirements": {
+        "Woodcutting": 61
+      }
+    },
+    "28196": {
+      "id": 28196,
+      "name": "Bronze felling axe",
+      "noted_ids": [
+        28197
+      ],
+      "equipable": true,
+      "equipment_slot": 3,
+      "two_handed": false,
+      "equipment_bonuses": null,
+      "stackable": false,
+      "wear_requirements": {
+        "Attack": 1
+      },
+      "wear_quests": [],
+      "requirements_verified": true,
+      "sources": [
+        "https://static.runelite.net/cache/item/names.json",
+        "https://static.runelite.net/cache/item/notes.json",
+        "https://oldschool.runescape.wiki/w/Bronze_felling_axe"
+      ],
+      "tags": [],
+      "wiki_page": "Bronze_felling_axe",
+      "wiki_variant": null,
+      "use_requirements": {
+        "Woodcutting": 1
+      }
+    },
+    "28199": {
+      "id": 28199,
+      "name": "Iron felling axe",
+      "noted_ids": [
+        28200
+      ],
+      "equipable": true,
+      "equipment_slot": 3,
+      "two_handed": false,
+      "equipment_bonuses": null,
+      "stackable": false,
+      "wear_requirements": {
+        "Attack": 1
+      },
+      "wear_quests": [],
+      "requirements_verified": true,
+      "sources": [
+        "https://static.runelite.net/cache/item/names.json",
+        "https://static.runelite.net/cache/item/notes.json",
+        "https://oldschool.runescape.wiki/w/Iron_felling_axe"
+      ],
+      "tags": [],
+      "wiki_page": "Iron_felling_axe",
+      "wiki_variant": null,
+      "use_requirements": {
+        "Woodcutting": 1
+      }
+    },
+    "28202": {
+      "id": 28202,
+      "name": "Steel felling axe",
+      "noted_ids": [
+        28203
+      ],
+      "equipable": true,
+      "equipment_slot": 3,
+      "two_handed": false,
+      "equipment_bonuses": null,
+      "stackable": false,
+      "wear_requirements": {
+        "Attack": 5
+      },
+      "wear_quests": [],
+      "requirements_verified": true,
+      "sources": [
+        "https://static.runelite.net/cache/item/names.json",
+        "https://static.runelite.net/cache/item/notes.json",
+        "https://oldschool.runescape.wiki/w/Steel_felling_axe"
+      ],
+      "tags": [],
+      "wiki_page": "Steel_felling_axe",
+      "wiki_variant": null,
+      "use_requirements": {
+        "Woodcutting": 6
+      }
+    },
+    "28205": {
+      "id": 28205,
+      "name": "Black felling axe",
+      "noted_ids": [
+        28206
+      ],
+      "equipable": true,
+      "equipment_slot": 3,
+      "two_handed": false,
+      "equipment_bonuses": null,
+      "stackable": false,
+      "wear_requirements": {
+        "Attack": 10
+      },
+      "wear_quests": [],
+      "requirements_verified": true,
+      "sources": [
+        "https://static.runelite.net/cache/item/names.json",
+        "https://static.runelite.net/cache/item/notes.json",
+        "https://oldschool.runescape.wiki/w/Black_felling_axe"
+      ],
+      "tags": [],
+      "wiki_page": "Black_felling_axe",
+      "wiki_variant": null,
+      "use_requirements": {
+        "Woodcutting": 11
+      }
+    },
+    "28208": {
+      "id": 28208,
+      "name": "Mithril felling axe",
+      "noted_ids": [
+        28209
+      ],
+      "equipable": true,
+      "equipment_slot": 3,
+      "two_handed": false,
+      "equipment_bonuses": null,
+      "stackable": false,
+      "wear_requirements": {
+        "Attack": 20
+      },
+      "wear_quests": [],
+      "requirements_verified": true,
+      "sources": [
+        "https://static.runelite.net/cache/item/names.json",
+        "https://static.runelite.net/cache/item/notes.json",
+        "https://oldschool.runescape.wiki/w/Mithril_felling_axe"
+      ],
+      "tags": [],
+      "wiki_page": "Mithril_felling_axe",
+      "wiki_variant": null,
+      "use_requirements": {
+        "Woodcutting": 21
+      }
+    },
+    "28211": {
+      "id": 28211,
+      "name": "Adamant felling axe",
+      "noted_ids": [
+        28212
+      ],
+      "equipable": true,
+      "equipment_slot": 3,
+      "two_handed": false,
+      "equipment_bonuses": null,
+      "stackable": false,
+      "wear_requirements": {
+        "Attack": 30
+      },
+      "wear_quests": [],
+      "requirements_verified": true,
+      "sources": [
+        "https://static.runelite.net/cache/item/names.json",
+        "https://static.runelite.net/cache/item/notes.json",
+        "https://oldschool.runescape.wiki/w/Adamant_felling_axe"
+      ],
+      "tags": [],
+      "wiki_page": "Adamant_felling_axe",
+      "wiki_variant": null,
+      "use_requirements": {
+        "Woodcutting": 31
+      }
+    },
+    "28214": {
+      "id": 28214,
+      "name": "Rune felling axe",
+      "noted_ids": [
+        28215
+      ],
+      "equipable": true,
+      "equipment_slot": 3,
+      "two_handed": false,
+      "equipment_bonuses": null,
+      "stackable": false,
+      "wear_requirements": {
+        "Attack": 40
+      },
+      "wear_quests": [],
+      "requirements_verified": true,
+      "sources": [
+        "https://static.runelite.net/cache/item/names.json",
+        "https://static.runelite.net/cache/item/notes.json",
+        "https://oldschool.runescape.wiki/w/Rune_felling_axe"
+      ],
+      "tags": [],
+      "wiki_page": "Rune_felling_axe",
+      "wiki_variant": null,
+      "use_requirements": {
+        "Woodcutting": 41
+      }
+    },
+    "28217": {
+      "id": 28217,
+      "name": "Dragon felling axe",
+      "noted_ids": [
+        28218
+      ],
+      "equipable": true,
+      "equipment_slot": 3,
+      "two_handed": false,
+      "equipment_bonuses": null,
+      "stackable": false,
+      "wear_requirements": {
+        "Attack": 60
+      },
+      "wear_quests": [],
+      "requirements_verified": true,
+      "sources": [
+        "https://static.runelite.net/cache/item/names.json",
+        "https://static.runelite.net/cache/item/notes.json",
+        "https://oldschool.runescape.wiki/w/Dragon_felling_axe"
+      ],
+      "tags": [],
+      "wiki_page": "Dragon_felling_axe",
+      "wiki_variant": null,
+      "use_requirements": {
+        "Woodcutting": 61
+      }
+    },
+    "28226": {
+      "id": 28226,
+      "name": "3rd Age felling axe",
+      "noted_ids": [
+        28227
+      ],
+      "equipable": true,
+      "equipment_slot": 3,
+      "two_handed": false,
+      "equipment_bonuses": null,
+      "stackable": false,
+      "wear_requirements": {
+        "Attack": 65
+      },
+      "wear_quests": [],
+      "requirements_verified": true,
+      "sources": [
+        "https://static.runelite.net/cache/item/names.json",
+        "https://static.runelite.net/cache/item/notes.json",
+        "https://oldschool.runescape.wiki/w/3rd_Age_felling_axe"
+      ],
+      "tags": [],
+      "wiki_page": "3rd_Age_felling_axe",
+      "wiki_variant": null,
+      "use_requirements": {
+        "Woodcutting": 61
+      }
+    },
+    "13241": {
+      "id": 13241,
+      "name": "Infernal axe",
+      "noted_ids": [],
+      "equipable": true,
+      "equipment_slot": 3,
+      "two_handed": false,
+      "equipment_bonuses": null,
+      "stackable": false,
+      "wear_requirements": {
+        "Attack": 60
+      },
+      "wear_quests": [],
+      "requirements_verified": true,
+      "sources": [
+        "https://static.runelite.net/cache/item/names.json",
+        "https://static.runelite.net/cache/item/notes.json",
+        "https://oldschool.runescape.wiki/w/Infernal_axe"
+      ],
+      "tags": [],
+      "wiki_page": "Infernal_axe",
+      "wiki_variant": null,
+      "use_requirements": {
+        "Woodcutting": 61
+      }
+    },
+    "13242": {
+      "id": 13242,
+      "name": "Infernal axe (uncharged)",
+      "noted_ids": [],
+      "equipable": true,
+      "equipment_slot": 3,
+      "two_handed": false,
+      "equipment_bonuses": null,
+      "stackable": false,
+      "wear_requirements": {
+        "Attack": 60
+      },
+      "wear_quests": [],
+      "requirements_verified": true,
+      "sources": [
+        "https://static.runelite.net/cache/item/names.json",
+        "https://static.runelite.net/cache/item/notes.json",
+        "https://oldschool.runescape.wiki/w/Infernal_axe_(uncharged)"
+      ],
+      "tags": [],
+      "wiki_page": "Infernal_axe_(uncharged)",
+      "wiki_variant": null,
+      "use_requirements": {
+        "Woodcutting": 61
+      }
+    },
+    "25066": {
+      "id": 25066,
+      "name": "Infernal axe (or)",
+      "noted_ids": [],
+      "equipable": true,
+      "equipment_slot": 3,
+      "two_handed": false,
+      "equipment_bonuses": null,
+      "stackable": false,
+      "wear_requirements": {
+        "Attack": 60
+      },
+      "wear_quests": [],
+      "requirements_verified": true,
+      "sources": [
+        "https://static.runelite.net/cache/item/names.json",
+        "https://static.runelite.net/cache/item/notes.json",
+        "https://oldschool.runescape.wiki/w/Infernal_axe_(or)"
+      ],
+      "tags": [],
+      "wiki_page": "Infernal_axe_(or)",
+      "wiki_variant": null,
+      "use_requirements": {
+        "Woodcutting": 61
+      }
+    },
+    "25371": {
+      "id": 25371,
+      "name": "Infernal axe (uncharged)",
+      "noted_ids": [],
+      "equipable": true,
+      "equipment_slot": 3,
+      "two_handed": false,
+      "equipment_bonuses": null,
+      "stackable": false,
+      "wear_requirements": {
+        "Attack": 60
+      },
+      "wear_quests": [],
+      "requirements_verified": true,
+      "sources": [
+        "https://static.runelite.net/cache/item/names.json",
+        "https://static.runelite.net/cache/item/notes.json",
+        "https://oldschool.runescape.wiki/w/Infernal_axe_(or)"
+      ],
+      "tags": [],
+      "wiki_page": "Infernal_axe_(or)",
+      "wiki_variant": null,
+      "use_requirements": {
+        "Woodcutting": 61
+      }
+    },
+    "30347": {
+      "id": 30347,
+      "name": "Infernal axe (or)",
+      "noted_ids": [],
+      "equipable": true,
+      "equipment_slot": 3,
+      "two_handed": false,
+      "equipment_bonuses": null,
+      "stackable": false,
+      "wear_requirements": {
+        "Attack": 60
+      },
+      "wear_quests": [],
+      "requirements_verified": true,
+      "sources": [
+        "https://static.runelite.net/cache/item/names.json",
+        "https://static.runelite.net/cache/item/notes.json",
+        "https://oldschool.runescape.wiki/w/Infernal_axe_(or)_(Trailblazer_Reloaded)"
+      ],
+      "tags": [],
+      "wiki_page": "Infernal_axe_(or)_(Trailblazer_Reloaded)",
+      "wiki_variant": null,
+      "use_requirements": {
+        "Woodcutting": 61
+      }
+    },
+    "30348": {
+      "id": 30348,
+      "name": "Infernal axe (uncharged)",
+      "noted_ids": [],
+      "equipable": true,
+      "equipment_slot": 3,
+      "two_handed": false,
+      "equipment_bonuses": null,
+      "stackable": false,
+      "wear_requirements": {
+        "Attack": 60
+      },
+      "wear_quests": [],
+      "requirements_verified": true,
+      "sources": [
+        "https://static.runelite.net/cache/item/names.json",
+        "https://static.runelite.net/cache/item/notes.json",
+        "https://oldschool.runescape.wiki/w/Infernal_axe_(or)_(Trailblazer_Reloaded)"
+      ],
+      "tags": [],
+      "wiki_page": "Infernal_axe_(or)_(Trailblazer_Reloaded)",
+      "wiki_variant": null,
+      "use_requirements": {
+        "Woodcutting": 61
+      }
+    },
+    "25378": {
+      "id": 25378,
+      "name": "Dragon axe (or)",
+      "noted_ids": [],
+      "equipable": true,
+      "equipment_slot": 3,
+      "two_handed": false,
+      "equipment_bonuses": null,
+      "stackable": false,
+      "wear_requirements": {
+        "Attack": 60
+      },
+      "wear_quests": [],
+      "requirements_verified": true,
+      "sources": [
+        "https://static.runelite.net/cache/item/names.json",
+        "https://static.runelite.net/cache/item/notes.json",
+        "https://oldschool.runescape.wiki/w/Dragon_axe_(or)"
+      ],
+      "tags": [],
+      "wiki_page": "Dragon_axe_(or)",
+      "wiki_variant": null,
+      "use_requirements": {
+        "Woodcutting": 61
+      }
+    },
+    "30352": {
+      "id": 30352,
+      "name": "Dragon axe (or)",
+      "noted_ids": [],
+      "equipable": true,
+      "equipment_slot": 3,
+      "two_handed": false,
+      "equipment_bonuses": null,
+      "stackable": false,
+      "wear_requirements": {
+        "Attack": 60
+      },
+      "wear_quests": [],
+      "requirements_verified": true,
+      "sources": [
+        "https://static.runelite.net/cache/item/names.json",
+        "https://static.runelite.net/cache/item/notes.json",
+        "https://oldschool.runescape.wiki/w/Dragon_axe_(or)_(Trailblazer_Reloaded)"
+      ],
+      "tags": [],
+      "wiki_page": "Dragon_axe_(or)_(Trailblazer_Reloaded)",
+      "wiki_variant": null,
+      "use_requirements": {
+        "Woodcutting": 61
+      }
+    },
+    "23673": {
+      "id": 23673,
+      "name": "Crystal axe",
+      "noted_ids": [],
+      "equipable": true,
+      "equipment_slot": 3,
+      "two_handed": false,
+      "equipment_bonuses": null,
+      "stackable": false,
+      "wear_requirements": {
+        "Attack": 70,
+        "Agility": 50
+      },
+      "wear_quests": [
+        "Song of the Elves"
+      ],
+      "requirements_verified": true,
+      "sources": [
+        "https://static.runelite.net/cache/item/names.json",
+        "https://static.runelite.net/cache/item/notes.json",
+        "https://oldschool.runescape.wiki/w/Crystal_axe"
+      ],
+      "tags": [],
+      "wiki_page": "Crystal_axe",
+      "wiki_variant": null,
+      "use_requirements": {
+        "Woodcutting": 71
+      },
+      "use_quests": [
+        "Song of the Elves"
+      ]
+    },
+    "28220": {
+      "id": 28220,
+      "name": "Crystal felling axe",
+      "noted_ids": [],
+      "equipable": true,
+      "equipment_slot": 3,
+      "two_handed": false,
+      "equipment_bonuses": null,
+      "stackable": false,
+      "wear_requirements": {
+        "Attack": 70,
+        "Agility": 50
+      },
+      "wear_quests": [
+        "Song of the Elves"
+      ],
+      "requirements_verified": true,
+      "sources": [
+        "https://static.runelite.net/cache/item/names.json",
+        "https://static.runelite.net/cache/item/notes.json",
+        "https://oldschool.runescape.wiki/w/Crystal_felling_axe"
+      ],
+      "tags": [],
+      "wiki_page": "Crystal_felling_axe",
+      "wiki_variant": null,
+      "use_requirements": {
+        "Woodcutting": 71,
+        "Agility": 50
+      },
+      "use_quests": [
+        "Song of the Elves"
+      ]
+    },
+    "13258": {
+      "id": 13258,
+      "name": "Angler hat",
+      "noted_ids": [],
+      "equipable": true,
+      "equipment_slot": 0,
+      "two_handed": false,
+      "equipment_bonuses": null,
+      "stackable": false,
+      "wear_requirements": {
+        "Fishing": 34
+      },
+      "wear_quests": [],
+      "requirements_verified": true,
+      "sources": [
+        "https://static.runelite.net/cache/item/names.json",
+        "https://static.runelite.net/cache/item/notes.json",
+        "https://oldschool.runescape.wiki/w/Angler_hat"
+      ],
+      "tags": [],
+      "wiki_page": "Angler_hat",
+      "wiki_variant": null
+    },
+    "13259": {
+      "id": 13259,
+      "name": "Angler top",
+      "noted_ids": [],
+      "equipable": true,
+      "equipment_slot": 4,
+      "two_handed": false,
+      "equipment_bonuses": null,
+      "stackable": false,
+      "wear_requirements": {
+        "Fishing": 34
+      },
+      "wear_quests": [],
+      "requirements_verified": true,
+      "sources": [
+        "https://static.runelite.net/cache/item/names.json",
+        "https://static.runelite.net/cache/item/notes.json",
+        "https://oldschool.runescape.wiki/w/Angler_top"
+      ],
+      "tags": [],
+      "wiki_page": "Angler_top",
+      "wiki_variant": null
+    },
+    "13260": {
+      "id": 13260,
+      "name": "Angler waders",
+      "noted_ids": [],
+      "equipable": true,
+      "equipment_slot": 7,
+      "two_handed": false,
+      "equipment_bonuses": null,
+      "stackable": false,
+      "wear_requirements": {
+        "Fishing": 34
+      },
+      "wear_quests": [],
+      "requirements_verified": true,
+      "sources": [
+        "https://static.runelite.net/cache/item/names.json",
+        "https://static.runelite.net/cache/item/notes.json",
+        "https://oldschool.runescape.wiki/w/Angler_waders"
+      ],
+      "tags": [],
+      "wiki_page": "Angler_waders",
+      "wiki_variant": null
+    },
+    "13261": {
+      "id": 13261,
+      "name": "Angler boots",
+      "noted_ids": [],
+      "equipable": true,
+      "equipment_slot": 10,
+      "two_handed": false,
+      "equipment_bonuses": null,
+      "stackable": false,
+      "wear_requirements": {
+        "Fishing": 34
+      },
+      "wear_quests": [],
+      "requirements_verified": true,
+      "sources": [
+        "https://static.runelite.net/cache/item/names.json",
+        "https://static.runelite.net/cache/item/notes.json",
+        "https://oldschool.runescape.wiki/w/Angler_boots"
+      ],
+      "tags": [],
+      "wiki_page": "Angler_boots",
+      "wiki_variant": null
+    },
+    "25592": {
+      "id": 25592,
+      "name": "Spirit angler headband",
+      "noted_ids": [],
+      "equipable": true,
+      "equipment_slot": 0,
+      "two_handed": false,
+      "equipment_bonuses": null,
+      "stackable": false,
+      "wear_requirements": {
+        "Fishing": 34
+      },
+      "wear_quests": [],
+      "requirements_verified": true,
+      "sources": [
+        "https://static.runelite.net/cache/item/names.json",
+        "https://static.runelite.net/cache/item/notes.json",
+        "https://oldschool.runescape.wiki/w/Spirit_angler_headband"
+      ],
+      "tags": [],
+      "wiki_page": "Spirit_angler_headband",
+      "wiki_variant": null
+    },
+    "25594": {
+      "id": 25594,
+      "name": "Spirit angler top",
+      "noted_ids": [],
+      "equipable": true,
+      "equipment_slot": 4,
+      "two_handed": false,
+      "equipment_bonuses": null,
+      "stackable": false,
+      "wear_requirements": {
+        "Fishing": 34
+      },
+      "wear_quests": [],
+      "requirements_verified": true,
+      "sources": [
+        "https://static.runelite.net/cache/item/names.json",
+        "https://static.runelite.net/cache/item/notes.json",
+        "https://oldschool.runescape.wiki/w/Spirit_angler_top"
+      ],
+      "tags": [],
+      "wiki_page": "Spirit_angler_top",
+      "wiki_variant": null
+    },
+    "25596": {
+      "id": 25596,
+      "name": "Spirit angler waders",
+      "noted_ids": [],
+      "equipable": true,
+      "equipment_slot": 7,
+      "two_handed": false,
+      "equipment_bonuses": null,
+      "stackable": false,
+      "wear_requirements": {
+        "Fishing": 34
+      },
+      "wear_quests": [],
+      "requirements_verified": true,
+      "sources": [
+        "https://static.runelite.net/cache/item/names.json",
+        "https://static.runelite.net/cache/item/notes.json",
+        "https://oldschool.runescape.wiki/w/Spirit_angler_waders"
+      ],
+      "tags": [],
+      "wiki_page": "Spirit_angler_waders",
+      "wiki_variant": null
+    },
+    "25598": {
+      "id": 25598,
+      "name": "Spirit angler boots",
+      "noted_ids": [],
+      "equipable": true,
+      "equipment_slot": 10,
+      "two_handed": false,
+      "equipment_bonuses": null,
+      "stackable": false,
+      "wear_requirements": {
+        "Fishing": 34
+      },
+      "wear_quests": [],
+      "requirements_verified": true,
+      "sources": [
+        "https://static.runelite.net/cache/item/names.json",
+        "https://static.runelite.net/cache/item/notes.json",
+        "https://oldschool.runescape.wiki/w/Spirit_angler_boots"
+      ],
+      "tags": [],
+      "wiki_page": "Spirit_angler_boots",
+      "wiki_variant": null
+    },
+    "6570": {
+      "id": 6570,
+      "name": "Fire cape",
+      "noted_ids": [],
+      "equipable": true,
+      "equipment_slot": 1,
+      "two_handed": false,
+      "equipment_bonuses": null,
+      "stackable": false,
+      "wear_requirements": {},
+      "wear_quests": [],
+      "requirements_verified": true,
+      "sources": [
+        "https://static.runelite.net/cache/item/names.json",
+        "https://static.runelite.net/cache/item/notes.json",
+        "https://oldschool.runescape.wiki/w/Fire_cape"
+      ],
+      "tags": [],
+      "wiki_page": "Fire_cape",
+      "wiki_variant": null
+    },
+    "24223": {
+      "id": 24223,
+      "name": "Fire cape (l)",
+      "noted_ids": [],
+      "equipable": true,
+      "equipment_slot": 1,
+      "two_handed": false,
+      "equipment_bonuses": null,
+      "stackable": false,
+      "wear_requirements": {},
+      "wear_quests": [],
+      "requirements_verified": true,
+      "sources": [
+        "https://static.runelite.net/cache/item/names.json",
+        "https://static.runelite.net/cache/item/notes.json",
+        "https://oldschool.runescape.wiki/w/Fire_cape"
+      ],
+      "tags": [],
+      "wiki_page": "Fire_cape",
+      "wiki_variant": null
+    },
+    "20720": {
+      "id": 20720,
+      "name": "Bruma torch",
+      "noted_ids": [],
+      "equipable": true,
+      "equipment_slot": 3,
+      "two_handed": false,
+      "equipment_bonuses": null,
+      "stackable": false,
+      "wear_requirements": {},
+      "wear_quests": [],
+      "requirements_verified": true,
+      "sources": [
+        "https://static.runelite.net/cache/item/names.json",
+        "https://static.runelite.net/cache/item/notes.json",
+        "https://oldschool.runescape.wiki/w/Bruma_torch"
+      ],
+      "tags": [],
+      "wiki_page": "Bruma_torch",
+      "wiki_variant": null
+    },
+    "7409": {
+      "id": 7409,
+      "name": "Magic secateurs",
+      "noted_ids": [],
+      "equipable": true,
+      "equipment_slot": 3,
+      "two_handed": false,
+      "equipment_bonuses": null,
+      "stackable": false,
+      "wear_requirements": {},
+      "wear_quests": [],
+      "requirements_verified": true,
+      "sources": [
+        "https://static.runelite.net/cache/item/names.json",
+        "https://static.runelite.net/cache/item/notes.json",
+        "https://oldschool.runescape.wiki/w/Magic_secateurs"
+      ],
+      "tags": [],
+      "wiki_page": "Magic_secateurs",
+      "wiki_variant": null
+    },
+    "11875": {
+      "id": 11875,
+      "name": "Broad bolts",
+      "noted_ids": [],
+      "equipable": true,
+      "equipment_slot": 13,
+      "two_handed": false,
+      "equipment_bonuses": null,
+      "stackable": true,
+      "wear_requirements": {
+        "Ranged": 61,
+        "Slayer": 55
+      },
+      "wear_quests": [],
+      "requirements_verified": true,
+      "sources": [
+        "https://static.runelite.net/cache/item/names.json",
+        "https://oldschool.runescape.wiki/w/Broad_bolts"
+      ],
+      "tags": [
+        "ammunition"
+      ],
+      "wiki_page": "Broad_bolts",
+      "wiki_variant": null
+    },
+    "9242": {
+      "id": 9242,
+      "name": "Ruby bolts (e)",
+      "noted_ids": [],
+      "equipable": true,
+      "equipment_slot": 13,
+      "two_handed": false,
+      "equipment_bonuses": null,
+      "stackable": true,
+      "wear_requirements": {
+        "Ranged": 46
+      },
+      "wear_quests": [],
+      "requirements_verified": true,
+      "sources": [
+        "https://static.runelite.net/cache/item/names.json",
+        "https://oldschool.runescape.wiki/w/Ruby_bolts_(e)"
+      ],
+      "tags": [
+        "ammunition"
+      ],
+      "wiki_page": "Ruby_bolts_(e)",
+      "wiki_variant": null
+    },
+    "9243": {
+      "id": 9243,
+      "name": "Diamond bolts (e)",
+      "noted_ids": [],
+      "equipable": true,
+      "equipment_slot": 13,
+      "two_handed": false,
+      "equipment_bonuses": null,
+      "stackable": true,
+      "wear_requirements": {
+        "Ranged": 46
+      },
+      "wear_quests": [],
+      "requirements_verified": true,
+      "sources": [
+        "https://static.runelite.net/cache/item/names.json",
+        "https://oldschool.runescape.wiki/w/Diamond_bolts_(e)"
+      ],
+      "tags": [
+        "ammunition"
+      ],
+      "wiki_page": "Diamond_bolts_(e)",
+      "wiki_variant": null
     }
   },
   "note_to_base": {
@@ -12179,7 +13193,21 @@
     "12630": 12629,
     "12632": 12631,
     "28584": 28583,
-    "29890": 29889
+    "29890": 29889,
+    "1362": 1361,
+    "1356": 1355,
+    "1358": 1357,
+    "23280": 23279,
+    "20012": 20011,
+    "28197": 28196,
+    "28200": 28199,
+    "28203": 28202,
+    "28206": 28205,
+    "28209": 28208,
+    "28212": 28211,
+    "28215": 28214,
+    "28218": 28217,
+    "28227": 28226
   },
   "groups": {
     "basic_melee": [
@@ -12211,11 +13239,35 @@
       28796
     ],
     "ordinary_axes": [
-      1351,
       1349,
+      1351,
       1353,
+      1355,
+      1357,
       1359,
-      6739
+      1361,
+      6739,
+      13241,
+      13242,
+      20011,
+      23279,
+      23673,
+      25066,
+      25371,
+      25378,
+      28196,
+      28199,
+      28202,
+      28205,
+      28208,
+      28211,
+      28214,
+      28217,
+      28220,
+      28226,
+      30347,
+      30348,
+      30352
     ],
     "basic_elemental_staff": [
       1381,
@@ -12455,6 +13507,16 @@
       13379,
       13380,
       13381
+    ],
+    "angler_outfit": [
+      13258,
+      13259,
+      13260,
+      13261,
+      25592,
+      25594,
+      25596,
+      25598
     ]
   },
   "ammo_compatibility": {
@@ -12473,9 +13535,12 @@
         9141,
         9142,
         9143,
-        9144
+        9144,
+        11875,
+        9242,
+        9243
       ],
-      "note": "Ordinary metal bolts up to runite; enchanted variants need separate valid IDs."
+      "note": "Ordinary bolts up to runite, broad bolts, and the listed enchanted adamant bolts."
     },
     "841": {
       "allowed_base_ids": [
@@ -12704,7 +13769,8 @@
           "minimum": 1,
           "unit": "items",
           "group": "ordinary_axes",
-          "notes": "Can remain in inventory; use Woodcutting gate rather than Attack-to-wield gate."
+          "notes": "Can remain in inventory; use Woodcutting gate rather than Attack-to-wield gate.",
+          "on_site": "Take a bronze axe from the supplies crate by the Doors of Dinh."
         },
         {
           "label": "Hammer",
@@ -12713,16 +13779,23 @@
           "unit": "items",
           "any_of_ids": [
             2347
+          ],
+          "on_site": "Take a hammer from the supplies crate.",
+          "task_ids": [
+            282,
+            283
           ]
         },
         {
-          "label": "Tinderbox",
+          "label": "Tinderbox or Bruma torch",
           "role": "required_strategy",
           "minimum": 1,
           "unit": "items",
           "any_of_ids": [
-            590
-          ]
+            590,
+            20720
+          ],
+          "on_site": "Take a tinderbox from the supplies crate."
         },
         {
           "label": "Four warm items in distinct wearable slots",
@@ -12778,6 +13851,19 @@
             1929
           ],
           "recommended_upper": 5
+        },
+        {
+          "label": "Angler outfit",
+          "role": "required_task",
+          "minimum": 4,
+          "unit": "equipment slots",
+          "group": "angler_outfit",
+          "task_ids": [
+            355
+          ],
+          "distinct_equipment_slots": true,
+          "resource_token": "angler",
+          "notes": "Wear four distinct pieces. Angler and Spirit Angler pieces can be mixed."
         }
       ],
       "notes": [
@@ -13121,7 +14207,7 @@
           "role": "required_strategy",
           "minimum": 100,
           "predicate": "ammo_compatible_with_selected_weapon",
-          "notes": "Equip your intended ranged weapon to check ammo. Pack enough for the full attempt."
+          "notes": "Check the matched ranged weapon and pack enough ammunition for the attempt."
         }
       ],
       "notes": [
@@ -13526,12 +14612,16 @@
           ]
         },
         {
-          "label": "A usable woodcutting axe",
+          "label": "Equippable axe or magic secateurs",
           "role": "required_strategy",
           "minimum": 1,
           "unit": "items",
           "group": "ordinary_axes",
-          "notes": "Can remain in inventory; use Woodcutting gate rather than Attack-to-wield gate."
+          "notes": "Equip the axe or magic secateurs to finish growthlings quickly.",
+          "must_equip": true,
+          "any_of_ids": [
+            7409
+          ]
         }
       ],
       "notes": [
@@ -13788,14 +14878,28 @@
           "label": "Ranged weapon",
           "role": "required_strategy",
           "minimum": 1,
-          "group": "ranged_weapon"
+          "group": "ranged_weapon",
+          "task_ids": [
+            147,
+            148,
+            150,
+            151,
+            152
+          ]
         },
         {
           "label": "Compatible ammunition",
           "role": "required_strategy",
           "minimum": 400,
           "predicate": "ammo_compatible_with_selected_weapon",
-          "notes": "Pack according to your weapon’s damage and ammo recovery. 400 is a starting check for the guided setup."
+          "notes": "Bring ammunition for the checked ranged setup. 400 is a planning baseline.",
+          "task_ids": [
+            147,
+            148,
+            150,
+            151,
+            152
+          ]
         },
         {
           "label": "Prayer restoration",

@@ -36,6 +36,7 @@ import com.ironmanhilt.core.Planner;
 import com.ironmanhilt.core.ProgressEngine;
 import com.ironmanhilt.core.ReadinessEngine;
 import com.ironmanhilt.core.RiskPolicy;
+import com.ironmanhilt.core.RewardGoal;
 import com.ironmanhilt.core.RouteStyle;
 import java.awt.BorderLayout;
 import java.awt.Color;
@@ -118,6 +119,9 @@ public final class GuidePanel extends PluginPanel
 		default void follow(String activity)
 		{
 		}
+		default void selectGuide(RewardGoal goal)
+		{
+		}
 		default void routeStyle(RouteStyle choice)
 		{
 		}
@@ -190,7 +194,7 @@ public final class GuidePanel extends PluginPanel
 	private Runnable deferredRender;
 	private long renderNumber;
 	private volatile String shownSession = "";
-	private boolean settingsOpen, associationConfirmed, hideCompleted, choosingRoute, showingSkipped;
+	private boolean settingsOpen, associationConfirmed, hideCompleted, choosingRoute, choosingGuide, showingSkipped;
 	private boolean routeExpanded, filtersExpanded, activityOptionsExpanded, blockedExpanded, correctionsExpanded;
 	private boolean routeItemsExpanded, routeNeedsCheckingExpanded;
 	private boolean taskListExpanded = true;
@@ -200,6 +204,7 @@ public final class GuidePanel extends PluginPanel
 	private String focusTarget = "";
 	private Migration.Preview preview;
 	private GuideState shownState = GuideState.empty();
+	private HesporiPatch.Status shownHesporiPatch = HesporiPatch.Status.UNKNOWN;
 	private LiveSnapshot shownLive;
 	private String status = SIGN_IN, message = "";
 	private boolean available;
@@ -239,6 +244,7 @@ public final class GuidePanel extends PluginPanel
 		{
 			showingSkipped = false;
 			choosingRoute = false;
+			choosingGuide = false;
 			revealAnchor = "checklist";
 			focusTarget = "search";
 			redraw();
@@ -302,8 +308,11 @@ public final class GuidePanel extends PluginPanel
 			deferredRender = () -> render(state, live, status, message, available);
 			return;
 		}
-		boolean evidenceChanged = live == null ? shownLive != null : !live.sameView(shownLive, readiness::usesItem);
-		boolean modelChanged = evidenceChanged || !state.sameProgress(shownState);
+		RewardGoal goal = state.rewardGoal();
+		HesporiPatch.Status patch = HesporiPatch.status(state, live == null ? Instant.now() : live.at);
+		boolean evidenceChanged = live == null ? shownLive != null :
+			!live.sameView(shownLive, id -> readiness.usesItem(id, goal));
+		boolean modelChanged = evidenceChanged || patch != shownHesporiPatch || !state.sameProgress(shownState);
 		boolean viewChanged =
 			modelChanged || !status.equals(this.status) || !message.equals(this.message) || available != this.available;
 		if (!forceRender && !viewChanged)
@@ -327,6 +336,7 @@ public final class GuidePanel extends PluginPanel
 		{
 			resetChecklist();
 			choosingRoute = false;
+			choosingGuide = false;
 			showingSkipped = false;
 			preview = null;
 			associationConfirmed = false;
@@ -339,11 +349,13 @@ public final class GuidePanel extends PluginPanel
 		}
 		shownAccount = account;
 		shownSession = session;
+		shownHesporiPatch = patch;
 		if (modelChanged || shownNext == null || available != this.available)
 		{
-			if (shownState.routeChoice() != state.routeChoice())
+			if (shownState.routeChoice() != state.routeChoice() || shownState.selectedGuide() != state.selectedGuide())
 			{
 				resetChecklist();
+				choosingGuide = false;
 				if (state.routeChoice() != null)
 				{
 					focusTarget = "next-action";
@@ -357,17 +369,20 @@ public final class GuidePanel extends PluginPanel
 			missingUnlocks = null;
 			shownNext = planner.next(shownState, live, shownRoute.entries);
 			Set<Integer> priorCompleted = completedIDs;
-			completedIDs = progress.knownCompleted(shownState);
+			completedIDs = planner.completedForGuide(shownState, live);
 			syncedIDs = shownState.knownIds("syncIDs", catalogue.tasks.keySet());
 			baseIDs = shownState.knownIds("baseIDs", catalogue.tasks.keySet());
 			skippedIDs = shownState.knownIds("skipTaskIDs", catalogue.tasks.keySet());
-			skippedIDs.removeIf(id -> catalogue.owner(id) == null);
-			shownTotal = progress.total(shownState);
+			skippedIDs.removeIf(id -> !catalogue.includes(id, state.rewardGoal()));
+			int previousTotal = shownTotal;
+			shownTotal = planner.currentPoints(shownState, live);
 			if (available && !focusedTasks.isEmpty())
 			{
 				int current = focusedTasks.get(focusedIndex);
 				extendWithSuggestedTasks();
-				if (this.available && !priorCompleted.contains(current) && completedIDs.contains(current))
+				int target = catalogue.threshold(state.rewardGoal());
+				if (this.available && (!priorCompleted.contains(current) && completedIDs.contains(current) ||
+					state.rewardGoal() == RewardGoal.HARD && previousTotal < target && shownTotal >= target))
 				{
 					advanceCompletedTask();
 				}
@@ -380,7 +395,8 @@ public final class GuidePanel extends PluginPanel
 		searchField = null;
 		removeAll();
 		footerNavigation.setVisible(!available || focusedTasks.isEmpty());
-		checklistButton.setVisible(available && state.routeChoice() != null && !settingsOpen);
+		checklistButton.setVisible(available && state.selectedGuide() != null &&
+			state.routeChoice() != null && !choosingGuide && !settingsOpen);
 		accountButton.setText(settingsOpen ? "Back to guide" : "Account & backups");
 		if (available && !focusedTasks.isEmpty())
 		{
@@ -515,11 +531,14 @@ public final class GuidePanel extends PluginPanel
 
 	private void overview(GuideState state, LiveSnapshot live)
 	{
-		JTextArea title = text("Ghommal’s hilt 2", GOLD, 19, true);
+		RewardGoal goal = state.rewardGoal();
+		boolean choosing = choosingGuide || state.selectedGuide() == null;
+		JTextArea title = text(choosing ? "Hilt Helper" : goal.reward, GOLD, 19, true);
 		title.putClientProperty("guideAnchor", "start");
 		add(title);
-		int remaining = Math.max(0, catalogue.threshold - shownTotal);
-		add(text("Medium Combat Achievements", MUTED, 12, false));
+		int target = catalogue.threshold(goal);
+		int remaining = Math.max(0, target - shownTotal);
+		add(text(choosing ? "Combat Achievement guides" : goal.label + " Combat Achievements", MUTED, 12, false));
 		if (live != null && live.mode.supported())
 		{
 			add(text(live.name + " · " + live.mode.label, MUTED, 12, false));
@@ -527,15 +546,22 @@ public final class GuidePanel extends PluginPanel
 		if (available)
 		{
 			add(gap(3));
-			String points = shownTotal + " / " + catalogue.threshold + " points";
-			add(text(remaining > 0 ? points + " · " + remaining + " to go" : points, TEXT, 13, true));
-			JProgressBar bar = new JProgressBar(0, catalogue.threshold);
-			bar.setValue(Math.min(shownTotal, catalogue.threshold));
-			bar.getAccessibleContext().setAccessibleName("Medium progress");
-			bar.setForeground(GOLD);
-			bar.setBackground(CARD);
-			bar.setMaximumSize(new Dimension(Integer.MAX_VALUE, 6));
-			add(bar);
+			if (choosing)
+			{
+				add(text(shownTotal + " Combat Achievement points", TEXT, 13, true));
+			}
+			else
+			{
+				String points = shownTotal + " / " + target + " points";
+				add(text(remaining > 0 ? points + " · " + remaining + " to go" : points, TEXT, 13, true));
+				JProgressBar bar = new JProgressBar(0, target);
+				bar.setValue(Math.min(shownTotal, target));
+				bar.getAccessibleContext().setAccessibleName(goal.label + " progress");
+				bar.setForeground(GOLD);
+				bar.setBackground(CARD);
+				bar.setMaximumSize(new Dimension(Integer.MAX_VALUE, 6));
+				add(bar);
+			}
 			if (live != null && live.mode.bankAllowed() && live.observedBank() == null)
 			{
 				add(text(ReadinessEngine.FIRST_BANK_CHECK, GOLD, 12, true));
@@ -553,6 +579,20 @@ public final class GuidePanel extends PluginPanel
 		}
 		if (available)
 		{
+			if (choosing)
+			{
+				guidePicker();
+				return;
+			}
+			JButton change = button("Change guide", () ->
+			{
+				choosingGuide = true;
+				revealAnchor = "guide-picker";
+				focusTarget = "guide-medium";
+				redraw();
+			});
+			change.setName("change-guide");
+			add(change);
 			if (shownState.routeChoice() == null || choosingRoute)
 			{
 				routePicker();
@@ -586,6 +626,47 @@ public final class GuidePanel extends PluginPanel
 		}
 	}
 
+	private void guidePicker()
+	{
+		JPanel box = card();
+		box.putClientProperty("guideAnchor", "guide-picker");
+		box.add(text("Choose a guide", TEXT, 16, true));
+		for (RewardGoal goal : RewardGoal.values())
+		{
+			JButton choose = button(goal.label + " · " + catalogue.threshold(goal) + " points",
+				savedAction(() -> chooseGuide(goal)));
+			choose.setName("guide-" + goal.key);
+			box.add(choose);
+			box.add(text(goal == RewardGoal.MEDIUM ? "Build toward Ghommal’s hilt 2." :
+				"Use your current points to build toward Ghommal’s hilt 3.", MUTED, 12, false));
+			box.add(gap(4));
+		}
+		if (choosingGuide)
+		{
+			box.add(button("Back to guide", () ->
+			{
+				choosingGuide = false;
+				redraw();
+			}));
+		}
+		add(gap(6));
+		add(box);
+	}
+
+	private void chooseGuide(RewardGoal goal)
+	{
+		choosingGuide = false;
+		showingSkipped = false;
+		if (shownState.selectedGuide() == goal)
+		{
+			redraw();
+		}
+		else
+		{
+			actions.selectGuide(goal);
+		}
+	}
+
 	private void routePicker()
 	{
 		JPanel box = card();
@@ -595,10 +676,11 @@ public final class GuidePanel extends PluginPanel
 		box.add(gap(5));
 		box.add(primaryButton(RouteStyle.SOLO.label + " · recommended",
 			savedAction(() -> chooseRoute(RouteStyle.SOLO))));
-		box.add(text("Start with skilling bosses and solo combat.", TEXT, 12, false));
+		box.add(text(shownState.rewardGoal() == RewardGoal.MEDIUM ? "Start with skilling bosses and solo combat." :
+			"Prioritize ready tasks you can complete on your own.", TEXT, 12, false));
 		box.add(gap(4));
 		box.add(button(RouteStyle.GROUP.label, savedAction(() -> chooseRoute(RouteStyle.GROUP))));
-		box.add(text("Start with the same early tasks. Add group bosses and raid tasks when you’re ready.", TEXT, 12, false));
+		box.add(text("Include eligible party tasks when you’re ready.", TEXT, 12, false));
 		if (shownState.routeChoice() != null)
 		{
 			box.add(button("Back to guide", () ->
@@ -661,11 +743,11 @@ public final class GuidePanel extends PluginPanel
 			box.add(text(next.detail, MUTED, 12, false));
 			if (remaining == 0)
 			{
-				box.add(link("Hilt rewards on the Wiki", "https://oldschool.runescape.wiki/w/Ghommal%27s_hilt_2"));
+				box.add(link("Hilt rewards on the Wiki", state.rewardGoal().wiki));
 			}
 		}
 		int tracked = state.screenTask();
-		if (catalogue.owner(tracked) != null && !completedIDs.contains(tracked))
+		if (catalogue.includes(tracked, state.rewardGoal()) && !completedIDs.contains(tracked))
 		{
 			box.add(gap(4));
 			box.add(text("Pinned · " + catalogue.tasks.get(tracked).name, MUTED, 12, false));
@@ -829,7 +911,7 @@ public final class GuidePanel extends PluginPanel
 
 	private void allMissingRouteItems(JPanel box)
 	{
-		box.add(text("Required items across all unfinished tasks on this route.", MUTED, 12, false));
+		box.add(text("Required items for unfinished tasks. Open a task to see what to bring or wear.", MUTED, 12, false));
 		Map<String, List<Integer>> byActivity = tasksByActivity(shownRoute.taskPool);
 		if (byActivity.isEmpty())
 		{
@@ -840,6 +922,8 @@ public final class GuidePanel extends PluginPanel
 		JPanel shortages = new JPanel();
 		shortages.setLayout(new BoxLayout(shortages, BoxLayout.Y_AXIS));
 		shortages.setOpaque(false);
+		shortages.putClientProperty("guideAnchor", "route-missing-short");
+		shortages.add(text("Missing or short", TEXT, 12, true));
 		Map<String, List<Planner.ItemRequirement>> unchecked = new LinkedHashMap<>();
 		int unconfirmed = 0;
 		for (Map.Entry<String, List<Integer>> activity : byActivity.entrySet())
@@ -865,12 +949,16 @@ public final class GuidePanel extends PluginPanel
 			}
 			appendRouteActivityItems(shortages, key, missing, tasks.size(), "missing-items-");
 		}
-		if (shortages.getComponentCount() == 0)
+		if (shortages.getComponentCount() == 1)
 		{
-			box.add(text("No confirmed missing or short items.", TEXT, 12, true));
+			shortages.add(text("No confirmed missing or short items.", MUTED, 12, false));
 		}
 		if (unconfirmed > 0)
 		{
+			JPanel review = new JPanel();
+			review.setLayout(new BoxLayout(review, BoxLayout.Y_AXIS));
+			review.setOpaque(false);
+			review.putClientProperty("guideAnchor", "route-item-review");
 			JButton toggle = disclosure("Needs checking (" + unconfirmed + ")", routeNeedsCheckingExpanded, () ->
 			{
 				routeNeedsCheckingExpanded = !routeNeedsCheckingExpanded;
@@ -880,13 +968,17 @@ public final class GuidePanel extends PluginPanel
 			});
 			toggle.setName("route-needs-checking");
 			toggle.putClientProperty("guideAnchor", "route-needs-checking");
-			box.add(toggle);
+			review.add(toggle);
 			if (routeNeedsCheckingExpanded)
 			{
 				unchecked.forEach((key, items) ->
-					appendRouteActivityItems(box, key, items, byActivity.get(key).size(), "unchecked-items-"));
+					appendRouteActivityItems(review, key, items, byActivity.get(key).size(), "unchecked-items-"));
 			}
+			box.add(review);
+			shortages.setBorder(BorderFactory.createCompoundBorder(
+				BorderFactory.createMatteBorder(1, 0, 0, 0, BORDER), new EmptyBorder(7, 0, 0, 0)));
 		}
+		box.add(gap(8));
 		box.add(shortages);
 	}
 
@@ -951,7 +1043,9 @@ public final class GuidePanel extends PluginPanel
 		for (Planner.ItemRequirement item : items)
 		{
 			ReadinessEngine.Check check = item.check;
-			box.add(text(check.label + " — " + check.status, check.ready() ? GREEN : GOLD, 12, true));
+			boolean suggested = !item.required && !check.ready();
+			box.add(text(check.label + " — " + (suggested ? "Suggested" : check.displayStatus()),
+				suggested ? MUTED : check.ready() ? GREEN : GOLD, 12, true));
 			String quantity = item.quantity();
 			if (!quantity.isEmpty())
 			{
@@ -968,12 +1062,38 @@ public final class GuidePanel extends PluginPanel
 				box.add(text("For " + String.join(", ", names), MUTED, 12, false));
 			}
 			boolean hasHint = !check.ready() && !ReadinessEngine.MISSING.equals(check.status) ||
-				ReadinessEngine.ALTERNATIVE.equals(check.status);
-			if (ReadinessEngine.SHORT.equals(check.status) || hasHint && displayedHints.add(check.detail))
+				check.fromBank || ReadinessEngine.ALTERNATIVE.equals(check.status) || ReadinessEngine.PROVIDED.equals(check.status);
+			if (!suggested && (ReadinessEngine.SHORT.equals(check.status) || hasHint && displayedHints.add(check.detail)))
 			{
 				box.add(text(check.detail, MUTED, 12, false));
 			}
+			boolean confirmed = ReadinessEngine.MANUAL.equals(check.status);
+			if (item.required && !item.correctionCategory.isEmpty() &&
+				(confirmed || ReadinessEngine.UNKNOWN.equals(check.status)))
+			{
+				box.add(itemConfirmation(item, confirmed));
+			}
 		}
+	}
+
+	private JCheckBox itemConfirmation(Planner.ItemRequirement item, boolean confirmed)
+	{
+		JCheckBox checkbox = checkbox("Confirmed available", confirmed);
+		checkbox.setName("confirm-" + item.correctionCategory + "-" + item.correctionKey);
+		checkbox.getAccessibleContext().setAccessibleName("Confirm " + item.check.label);
+		checkbox.setToolTipText("Verify this in game. Checking it saves a preparation correction for this account.");
+		checkbox.setEnabled(available);
+		Runnable save = savedAction(() ->
+		{
+			JsonElement value = null;
+			if (checkbox.isSelected())
+			{
+				value = "items".equals(item.correctionCategory) ? new JsonPrimitive(true) : readinessOverride("Owned");
+			}
+			actions.correction(item.correctionCategory, item.correctionKey, value);
+		});
+		checkbox.addActionListener(event -> save.run());
+		return checkbox;
 	}
 
 	private static void appendUnlocks(JPanel box, String heading, Map<String, Set<String>> unlocks)
@@ -1035,9 +1155,9 @@ public final class GuidePanel extends PluginPanel
 		}
 		box.putClientProperty("guideAnchor", "hespori-shortcut");
 		box.add(disclosure(open ? "Close Hespori checklist" : "Open Hespori checklist", open, this::toggleHespori));
-		if (watching)
+		if (open && planner.hasUnfinishedHespori(state, live))
 		{
-			box.add(text(HesporiPatch.status(state, Instant.now()).detail, TEXT, 11, false));
+			box.add(text(HesporiPatch.checklist(state, live, live == null ? Instant.now() : live.at), TEXT, 11, false));
 		}
 		add(gap(6));
 		add(box);
@@ -1149,7 +1269,7 @@ public final class GuidePanel extends PluginPanel
 			}
 		}
 		int skippedCount = skippedIDs.size();
-		for (JsonObject activity : catalogue.activities)
+		for (JsonObject activity : catalogue.activities(shownState.rewardGoal()))
 		{
 			if (state.skipped(activity.get("key").getAsString()))
 			{
@@ -1275,12 +1395,13 @@ public final class GuidePanel extends PluginPanel
 		activities.setName("activity-filter");
 		activities.addItem("All activities");
 		int selected = 0;
-		for (int i = 0; i < catalogue.activities.size(); i++)
+		List<JsonObject> choices = catalogue.activities(state.rewardGoal());
+		for (int i = 0; i < choices.size(); i++)
 		{
-			JsonObject activity = catalogue.activities.get(i);
+			JsonObject activity = choices.get(i);
 			String key = activity.get("key").getAsString();
 			activities.addItem(catalogue.label(key) +
-				(catalogue.routeIds(activity, false).isEmpty() ? " · reserve" : "") +
+				(catalogue.routeIds(activity, false, state.rewardGoal()).isEmpty() ? " · reserve" : "") +
 				(state.skipped(key) ? " · skipped" : ""));
 			if (key.equals(selectedActivity))
 			{
@@ -1295,7 +1416,7 @@ public final class GuidePanel extends PluginPanel
 		activities.addActionListener(e ->
 		{
 			int i = activities.getSelectedIndex();
-			selectedActivity = i <= 0 ? "" : catalogue.activities.get(i - 1).get("key").getAsString();
+			selectedActivity = i <= 0 ? "" : choices.get(i - 1).get("key").getAsString();
 			beforeHespori = null;
 			activityOptionsExpanded = false;
 			resetListPositions();
@@ -1373,7 +1494,7 @@ public final class GuidePanel extends PluginPanel
 		List<Integer> ids = scope.equals(SUGGESTED) ? plannedTasks(selectedActivity) : new ArrayList<>();
 		if (!scope.equals(SUGGESTED))
 		{
-			for (JsonObject activity : catalogue.activities)
+			for (JsonObject activity : catalogue.activities(shownState.rewardGoal()))
 			{
 				if (!selectedActivity.isEmpty() && !selectedActivity.equals(activity.get("key").getAsString()))
 				{
@@ -1381,11 +1502,11 @@ public final class GuidePanel extends PluginPanel
 				}
 				if (!scope.equals(RESERVES))
 				{
-					ids.addAll(catalogue.routeIds(activity, false));
+					ids.addAll(catalogue.routeIds(activity, false, shownState.rewardGoal()));
 				}
 				if (!scope.equals(SELECTED))
 				{
-					ids.addAll(catalogue.routeIds(activity, true));
+					ids.addAll(catalogue.routeIds(activity, true, shownState.rewardGoal()));
 				}
 			}
 		}
@@ -1768,7 +1889,7 @@ public final class GuidePanel extends PluginPanel
 	private void activityOptions(JPanel box, String key, GuideState state)
 	{
 		String pinned = ReadinessEngine.str(state.data, "pinnedActivity", "");
-		if (catalogue.groupOption(key))
+		if (catalogue.groupOption(key, state.rewardGoal()))
 		{
 			box.add(text(ReadinessEngine.str(catalogue.activity(key), "groupOption", ""), MUTED, 11, false));
 		}
@@ -1819,7 +1940,7 @@ public final class GuidePanel extends PluginPanel
 		{
 			next = focusedTasks.indexOf(shownNext.ids.get(0));
 		}
-		if (shownTotal < catalogue.threshold && next >= 0 && next < focusedTasks.size())
+		if (shownTotal < catalogue.threshold(shownState.rewardGoal()) && next >= 0 && next < focusedTasks.size())
 		{
 			selectFocusedTask(next);
 			focusTarget = "back-from-task";
@@ -1865,9 +1986,10 @@ public final class GuidePanel extends PluginPanel
 	private boolean canTrackTask(int id)
 	{
 		String key = catalogue.owner(id);
-		return !completedIDs.contains(id) && !skippedIDs.contains(id) && !shownState.skipped(key) &&
+		return catalogue.includes(id, shownState.rewardGoal()) && !completedIDs.contains(id) &&
+			!skippedIDs.contains(id) && !shownState.skipped(key) &&
 			(!RiskPolicy.wilderness(key) || shownState.wildernessEnabled()) &&
-			(!catalogue.groupOption(key) || shownState.routeChoice() == RouteStyle.GROUP);
+			(!catalogue.needsGroup(id, shownState.rewardGoal()) || shownState.routeChoice() == RouteStyle.GROUP);
 	}
 
 	private void selectFocusedTask(int index)
@@ -1967,6 +2089,15 @@ public final class GuidePanel extends PluginPanel
 			box.add(text(skipped ? "Task skipped" : "Activity skipped", GOLD, 12, true));
 		}
 		addNotices(box);
+		if (id == 147)
+		{
+			ReadinessEngine.Check cape = readiness.token("fire-cape", state, live, Instant.now());
+			if (cape.ready())
+			{
+				String found = cape.fromBank ? "Fire cape found in your bank." : "Fire cape on hand.";
+				box.add(text(found + " Achievement credit comes from the game’s record.", MUTED, 12, false));
+			}
+		}
 		List<String> requirements = activityRequirements(key, state, live);
 		requirements.addAll(planner.taskGates(id, state, live));
 		if (!complete)
@@ -1977,6 +2108,19 @@ public final class GuidePanel extends PluginPanel
 				String first = shortKitCheck(requirements.isEmpty() ? kitChecks.get(0) : requirements.get(0));
 				box.add(text("Prepare before attempting", GOLD, 12, true));
 				box.add(text(first, TEXT, 12, false));
+			}
+			List<String> fromBank = new ArrayList<>();
+			for (Planner.ItemRequirement item : planner.itemRequirements(key, List.of(id), state, live))
+			{
+				if (item.required && item.check.fromBank)
+				{
+					fromBank.add(item.check.label);
+				}
+			}
+			if (!fromBank.isEmpty())
+			{
+				box.add(text("Bring from your bank", GOLD, 12, true));
+				box.add(text(String.join(", ", fromBank), TEXT, 12, false));
 			}
 		}
 		box.add(gap(5));
@@ -1998,12 +2142,23 @@ public final class GuidePanel extends PluginPanel
 		}
 		addTaskSection("Requirements & kit", TaskSection.KIT, content ->
 		{
+			if (state.rewardGoal() == RewardGoal.HARD)
+			{
+				for (String line : planner.requirementSummary(id, state))
+				{
+					content.add(text(line, TEXT, 12, false));
+				}
+				if (rule.has("minimumParty"))
+				{
+					content.add(text("Party of " + rule.get("minimumParty").getAsInt() + " or more", TEXT, 12, false));
+				}
+			}
 			addRequirements(content, requirements);
 			if (!showRisk && !risk.isEmpty())
 			{
 				content.add(text(risk, MUTED, 11, false));
 			}
-			if (catalogue.groupOption(key))
+			if (catalogue.groupOption(key, state.rewardGoal()))
 			{
 				content.add(text(ReadinessEngine.str(activity, "groupOption", ""), MUTED, 11, false));
 			}
@@ -2015,6 +2170,10 @@ public final class GuidePanel extends PluginPanel
 			{
 				content.add(link("Exact task rule", rule.getAsJsonArray("sources").get(0).getAsJsonObject()
 					.get("url").getAsString()));
+			}
+			if (rule.has("plan"))
+			{
+				content.add(text(rule.get("plan").getAsString(), MUTED, 12, false));
 			}
 			walkthrough(content, activity);
 		});
@@ -2097,21 +2256,33 @@ public final class GuidePanel extends PluginPanel
 					"A recorded boss task establishes the permanent first-key unlock. Four-key reserves still need four keys.",
 					1);
 			}
-			box.add(text(result.label + " — " + result.status, result.ready() ? GREEN : GOLD, 12, true));
 			String role = ReadinessEngine.str(requirement, "role", "");
-			if ("required_strategy".equals(role) || "required_task".equals(role))
+			boolean suggested = !result.ready() && !role.equals("required_task") && !role.equals("required_strategy");
+			box.add(text(result.label + " — " + (suggested ? "Suggested" : result.displayStatus()),
+				suggested ? MUTED : result.ready() ? GREEN : GOLD, 12, true));
+			if ("required_task".equals(role))
 			{
 				box.add(text("Required for this task", TEXT, 12, false));
 			}
-			box.add(text(result.detail, MUTED, 12, false));
-			if (requirement.has("notes") && !ReadinessEngine.PROVIDED.equals(result.status))
+			else if ("required_strategy".equals(role))
+			{
+				box.add(text("Required for this guide’s method", TEXT, 12, false));
+			}
+			if (!suggested)
+			{
+				box.add(text(result.detail, MUTED, 12, false));
+			}
+			boolean setupCheck = ReadinessEngine.taskSetup(requirement);
+			if (requirement.has("notes") && !setupCheck && !ReadinessEngine.PROVIDED.equals(result.status))
 			{
 				box.add(text(requirement.get("notes").getAsString(), MUTED, 12, false));
 			}
 			final int index = i;
-			if (!ReadinessEngine.PROVIDED.equals(result.status))
+			if (!setupCheck && !ReadinessEngine.PROVIDED.equals(result.status))
 			{
-				JButton correct = button("Correct item check…", () -> correctReadiness(key, index));
+				boolean manual = requirement.has("manualCheck");
+				JButton correct = button(manual ? "Confirm requirement…" : "Correct item check…",
+					() -> correctReadiness(key, index, manual));
 				correct.setName("kit-check-" + i);
 				correct.getAccessibleContext().setAccessibleName("Correct check for " + result.label);
 				correct.setEnabled(available);
@@ -2129,7 +2300,7 @@ public final class GuidePanel extends PluginPanel
 
 		box.add(text("How to do it", GOLD, 13, true));
 		int number = 1;
-		for (JsonElement step : activity.getAsJsonArray("steps"))
+		for (JsonElement step : catalogue.steps(activity, shownState.rewardGoal()))
 		{
 			box.add(text((number++) + ". " + step.getAsString(), TEXT, 12, false));
 		}
@@ -2162,7 +2333,7 @@ public final class GuidePanel extends PluginPanel
 		back.setName("back-from-skips");
 		box.add(back);
 		List<String> activities = new ArrayList<>();
-		for (JsonObject activity : catalogue.activities)
+		for (JsonObject activity : catalogue.activities(shownState.rewardGoal()))
 		{
 			String key = activity.get("key").getAsString();
 			if (state.skipped(key))
@@ -2236,21 +2407,33 @@ public final class GuidePanel extends PluginPanel
 		redraw();
 	}
 
-	private void correctReadiness(String activity, int index)
+	private void correctReadiness(String activity, int index, boolean manual)
 	{
 		String intended = session();
-		String[] options = {"Automatic", "Owned", "Missing", "Not required"};
+		String[] options = manual ? new String[] {"Automatic", "Confirmed", "Still needed"} :
+			new String[] {"Automatic", "Owned", "Missing", "Not required"};
 		Object choice = JOptionPane.showInputDialog(
-			this, "Choose how to check this item for your account.",
+			this, manual ? "Inspect this requirement in game before confirming it." :
+				"Choose how to check this item for your account.",
 			"Preparation correction", JOptionPane.PLAIN_MESSAGE, null, options, options[0]);
 		if (choice == null || !stillCurrent(intended))
 		{
 			return;
 		}
+		String status = choice.toString();
+		if (manual && !status.equals("Automatic"))
+		{
+			status = status.equals("Confirmed") ? "Owned" : "Missing";
+		}
+		actions.correction("overrides", activity + ":" + index, status.equals("Automatic") ? null : readinessOverride(status));
+	}
+
+	private static JsonObject readinessOverride(String status)
+	{
 		JsonObject value = new JsonObject();
-		value.addProperty("status", choice.toString());
+		value.addProperty("status", status);
 		value.addProperty("at", Instant.now().toString());
-		actions.correction("overrides", activity + ":" + index, choice.equals("Automatic") ? null : value);
+		return value;
 	}
 	private void editPreparation()
 	{
@@ -2339,7 +2522,7 @@ public final class GuidePanel extends PluginPanel
 	private void showPreparation()
 	{
 		StringBuilder b = new StringBuilder();
-		for (JsonElement e : catalogue.guide.getAsJsonArray("preparation"))
+		for (JsonElement e : catalogue.preparation(shownState.rewardGoal()))
 		{
 			JsonObject o = e.getAsJsonObject();
 			b.append(o.get("text").getAsString()).append("\n\n");

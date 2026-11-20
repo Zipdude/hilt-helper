@@ -1,0 +1,4036 @@
+{
+  "schema": 1,
+  "checkedDate": "2026-11-19",
+  "activities": [
+    {
+      "key": "brutus",
+      "main": [],
+      "extra": [
+        634
+      ],
+      "tasks": [
+        {
+          "id": 634,
+          "name": "Brutus Speed-Trialist",
+          "condition": "Defeat Brutus in strictly under two seconds.",
+          "tip": "Use an immediate close-range hit strong enough to kill before two seconds. Learn the boss and measure your actual max hit before choosing this reserve.",
+          "plan": "Use only with observed setup. A slow projectile or delayed spec can fail even if it kills.",
+          "sources": [
+            {
+              "label": "Exact task / Wiki",
+              "url": "https://oldschool.runescape.wiki/w/Brutus_Speed-Trialist"
+            }
+          ],
+          "effort": 16
+        }
+      ]
+    },
+    {
+      "key": "moons",
+      "main": [],
+      "extra": [
+        533,
+        536
+      ],
+      "tasks": [
+        {
+          "id": 533,
+          "name": "Betrayal",
+          "condition": "Kill one Moon while using the corresponding weapon it drops.",
+          "tip": "Use the Moon’s own obtainable reward weapon. Blood uses dual macuahuitl, Blue uses blue moon spear, Eclipse uses eclipse atlatl. Skip until you own the exact appropriate weapon.",
+          "plan": "Only available when the matching reward is owned or affordable for a main. Do not add an Iron drop grind.",
+          "sources": [
+            {
+              "label": "Exact task / Wiki",
+              "url": "https://oldschool.runescape.wiki/w/Betrayal"
+            }
+          ],
+          "effort": 9
+        },
+        {
+          "id": 536,
+          "name": "Moons of Peril Speed-Chaser",
+          "condition": "Defeat all three Moons on one run in under six minutes.",
+          "tip": "Pre-pot and prepare at camp first. Use each Moon’s effective style, move immediately between fights and avoid Blood healing. Check the actual timer at completion.",
+          "plan": "Speed is a bonus for demonstrated pace. Don’t make weak DPS wait for it before moving on.",
+          "sources": [
+            {
+              "label": "Exact task / Wiki",
+              "url": "https://oldschool.runescape.wiki/w/Moons_of_Peril_Speed-Chaser"
+            }
+          ],
+          "effort": 16
+        }
+      ]
+    },
+    {
+      "key": "amoxliatl",
+      "main": [],
+      "extra": [
+        585,
+        582
+      ],
+      "tasks": [
+        {
+          "id": 585,
+          "name": "Without Ralos' Light",
+          "condition": "Kill Amoxliatl without losing Prayer points.",
+          "tip": "After a clean normal kill, use the current prayer-disable/good movement method and preserve points from start through finish. Bring food for a protection-free attempt and reset if points fall.",
+          "plan": "Do not use this on a Hardcore learning attempt. Separate from protective perfection if necessary.",
+          "sources": [
+            {
+              "label": "Exact task / Wiki",
+              "url": "https://oldschool.runescape.wiki/w/Without_Ralos%27_Light"
+            }
+          ],
+          "effort": 9
+        },
+        {
+          "id": 582,
+          "name": "Amoxliatl Speed-Chaser",
+          "condition": "Kill Amoxliatl under 30 seconds.",
+          "tip": "Use proven high DPS and good timing, beware sped-up plate clearing. Check normal under-60 achievement first.",
+          "plan": "High DPS bonus only.",
+          "sources": [
+            {
+              "label": "Exact task / Wiki",
+              "url": "https://oldschool.runescape.wiki/w/Amoxliatl_Speed-Chaser"
+            }
+          ],
+          "effort": 16
+        }
+      ]
+    },
+    {
+      "key": "titans",
+      "main": [],
+      "extra": [
+        592
+      ],
+      "tasks": [
+        {
+          "id": 592,
+          "name": "Royal Titan Speed-Runner",
+          "condition": "Kill both Royal Titans in under 90 seconds.",
+          "tip": "Have both styles ready, a fast weapon setup and quick target switches. Use a stable partner if permitted. Record a normal time before committing a separate speed attempt.",
+          "plan": "Only count as likely if already near pace. Tier does not guarantee accessibility.",
+          "sources": [
+            {
+              "label": "Exact task / Wiki",
+              "url": "https://oldschool.runescape.wiki/w/Royal_Titan_Speed-Runner"
+            }
+          ],
+          "effort": 16
+        }
+      ]
+    },
+    {
+      "key": "hespori",
+      "main": [],
+      "extra": [
+        126,
+        127
+      ],
+      "tasks": [
+        {
+          "id": 126,
+          "name": "Plant-Based Diet",
+          "condition": "Kill Hespori without losing any Prayer points.",
+          "tip": "Use a separate no-drain kill after ordinary protection practice. Enter with the protection prayer off, bring enough food for incoming damage and keep Prayer points unchanged.",
+          "plan": "Can combine with a flower/special kill once safe and accessible.",
+          "sources": [
+            {
+              "label": "Exact task / Wiki",
+              "url": "https://oldschool.runescape.wiki/w/Plant-Based_Diet"
+            }
+          ],
+          "effort": 9
+        },
+        {
+          "id": 127,
+          "name": "Hespori Speed-Trialist",
+          "condition": "Kill Hespori in strictly under 48 seconds.",
+          "tip": "Pre-boost, use a fast ranged swap for flowers and maximise responsive attacks. Try only after an ordinary practice kill approaches the time.",
+          "plan": "Separate from any build that trades DPS for no-prayer safety.",
+          "sources": [
+            {
+              "label": "Exact task / Wiki",
+              "url": "https://oldschool.runescape.wiki/w/Hespori_Speed-Trialist"
+            }
+          ],
+          "effort": 16
+        }
+      ]
+    },
+    {
+      "key": "skotizo",
+      "main": [],
+      "extra": [
+        49,
+        50
+      ],
+      "tasks": [
+        {
+          "id": 49,
+          "name": "Up for the Challenge",
+          "condition": "Kill Skotizo while never equipping a demonbane weapon on the attempt.",
+          "tip": "Bank demonbane or leave it in inventory unused, use conventional DPS and kill altars without the Arclight shortcut. Protect appropriately.",
+          "plan": "Separate totem. Do not equip demonbane to clear an altar.",
+          "sources": [
+            {
+              "label": "Exact task / Wiki",
+              "url": "https://oldschool.runescape.wiki/w/Up_for_the_Challenge"
+            }
+          ],
+          "effort": 9
+        },
+        {
+          "id": 50,
+          "name": "Precise Positioning",
+          "condition": "Finish Skotizo with an exploding chinchompa.",
+          "tip": "Lower boss HP using controlled hits, then equip chins and throw at the correct target until the chin explosion deals the last damage. Avoid any other ongoing damage at the end.",
+          "plan": "Use a few spare caught or bought chins. Can combine with #49 only if no demonbane was equipped.",
+          "sources": [
+            {
+              "label": "Exact task / Wiki",
+              "url": "https://oldschool.runescape.wiki/w/Precise_Positioning"
+            }
+          ],
+          "effort": 9,
+          "requirements": {
+            "level": [
+              "ranged",
+              45
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "key": "fightcaves",
+      "main": [],
+      "extra": [
+        150,
+        151,
+        152,
+        148,
+        153
+      ],
+      "tasks": [
+        {
+          "id": 150,
+          "name": "Denying the Healers",
+          "condition": "Complete Fight Cave without any Yt-MejKot healing.",
+          "tip": "Know which melee monsters heal, safespot from separation and finish promptly when their heal trigger is possible. Keep them from reaching each other and verify the failure messages.",
+          "plan": "This is the ordinary melee wave healer task, different from #151 at Jad.",
+          "sources": [
+            {
+              "label": "Exact task / Wiki",
+              "url": "https://oldschool.runescape.wiki/w/Denying_the_Healers"
+            }
+          ],
+          "effort": 9
+        },
+        {
+          "id": 151,
+          "name": "Denying the Healers II",
+          "condition": "Complete Fight Cave with zero successful healing of Jad by a Yt-HurKot.",
+          "tip": "Pick a useful spawn rotation and lure Jad to a spot that gives healer travel time. Tag each healer before it reaches healing range using long-range gear; handle one extra action per prayer cue.",
+          "plan": "One tick of healing fails. Rotation 5 can spawn a healer immediately adjacent. Consider rotations 7/8/11 or the Wiki trap layout.",
+          "sources": [
+            {
+              "label": "Exact task / Wiki",
+              "url": "https://oldschool.runescape.wiki/w/Denying_the_Healers_II"
+            }
+          ],
+          "effort": 9
+        },
+        {
+          "id": 152,
+          "name": "You Didn't Say Anything About a Bat",
+          "condition": "Complete Fight Cave without being attacked by any Tz-Kih.",
+          "tip": "Check the wave spawn, prioritise all bats while they are far away, use range and terrain and never let them start a melee attack. A zero can fail.",
+          "plan": "Start the condition on wave 1, including both bats on wave 2. Can share the healer tasks if all conditions stay valid.",
+          "sources": [
+            {
+              "label": "Exact task / Wiki",
+              "url": "https://oldschool.runescape.wiki/w/You_Didn%27t_Say_Anything_About_a_Bat"
+            }
+          ],
+          "effort": 9
+        },
+        {
+          "id": 148,
+          "name": "Fight Caves Master",
+          "condition": "Complete Fight Cave five times.",
+          "tip": "Finish all waves and Jad five times across the planned restricted and conventional trips.",
+          "plan": "An existing fire cape does not prove five clears. Use the counter.",
+          "sources": [
+            {
+              "label": "Exact task / Wiki",
+              "url": "https://oldschool.runescape.wiki/w/Fight_Caves_Master"
+            }
+          ],
+          "effort": 10
+        },
+        {
+          "id": 153,
+          "name": "Facing Jad Head-on",
+          "condition": "Complete Fight Cave credit using only melee damage.",
+          "tip": "Bring an effective melee weapon, appropriate defence and prayer. Attack Jad from melee reach only when comfortable responding to this third style. No ranged/magic/other damage.",
+          "plan": "Use a dedicated attempt and budget additional food/margin.",
+          "sources": [
+            {
+              "label": "Exact task / Wiki",
+              "url": "https://oldschool.runescape.wiki/w/Facing_Jad_Head-on"
+            }
+          ],
+          "effort": 9
+        }
+      ]
+    },
+    {
+      "key": "chambers",
+      "main": [
+        314
+      ],
+      "extra": [
+        302,
+        303,
+        304,
+        307,
+        308,
+        309,
+        310,
+        312,
+        319,
+        299
+      ],
+      "tasks": [
+        {
+          "id": 314,
+          "name": "Shayzien Specialist",
+          "condition": "Receive Shaman room kill-credit without damage from any of its shamans.",
+          "tip": "Protect appropriately, step clear of leap/poison/adds, and attack an eligible shaman with ranged from a good position. Confirm no shaman damage.",
+          "plan": "See exact room rules. Show this only for Chambers, separate from ordinary Kourend Shamans.",
+          "sources": [
+            {
+              "label": "Exact task / Wiki",
+              "url": "https://oldschool.runescape.wiki/w/Shayzien_Specialist"
+            }
+          ],
+          "effort": 9
+        },
+        {
+          "id": 302,
+          "name": "Perfectly Balanced",
+          "condition": "Kill the Vanguard trio with no health reset.",
+          "tip": "Bring each to similar HP, swapping styles by target and avoiding bursts that put one outside the level-specific health balance window. Finish as a team.",
+          "plan": "Can share #303. Check applicable HP difference and team scaling before trying.",
+          "sources": [
+            {
+              "label": "Exact task / Wiki",
+              "url": "https://oldschool.runescape.wiki/w/Perfectly_Balanced"
+            }
+          ],
+          "effort": 9,
+          "minimumParty": 2
+        },
+        {
+          "id": 303,
+          "name": "Together We'll Fall",
+          "condition": "Finish all three Vanguards within ten seconds of the first dying.",
+          "tip": "Balance all to near death before killing any. Call or trigger finishers immediately and verify the timer.",
+          "plan": "Coordinate with #302 instead of killing them one at a time from high HP.",
+          "sources": [
+            {
+              "label": "Exact task / Wiki",
+              "url": "https://oldschool.runescape.wiki/w/Together_We%27ll_Fall"
+            }
+          ],
+          "effort": 9,
+          "minimumParty": 2
+        },
+        {
+          "id": 304,
+          "name": "No Time for Death",
+          "condition": "Clear the Tightrope room without killing any Deathly Mage or Ranger.",
+          "tip": "Traverse the Tightrope puzzle and collect the key without killing either kind of Deathly enemy. With a learner partner, confirm who runs through and who manages line of sight before starting.",
+          "plan": "Try with a partner on the lower-requirements route. Room-only credit and no-kill rules are separate.",
+          "sources": [
+            {
+              "label": "Exact task / Wiki",
+              "url": "https://oldschool.runescape.wiki/w/No_Time_for_Death"
+            }
+          ],
+          "effort": 9,
+          "minimumParty": 2
+        },
+        {
+          "id": 307,
+          "name": "Mutta-diet",
+          "condition": "Kill both Muttadiles without any meat-tree healing.",
+          "tip": "Use an eligible cut/freeze method, stay on the correct prayer, have the assigned player protect the tree step and verify neither baby nor adult heals.",
+          "plan": "Confirm the required woodcutting tool/level or freeze setup for your chosen method before entry.",
+          "sources": [
+            {
+              "label": "Exact task / Wiki",
+              "url": "https://oldschool.runescape.wiki/w/Mutta-diet"
+            }
+          ],
+          "effort": 9,
+          "minimumParty": 2
+        },
+        {
+          "id": 308,
+          "name": "Redemption Enthusiast",
+          "condition": "Close Vespula’s Abyssal Portal without causing Vespula to land.",
+          "tip": "Use a documented run-in/attack/back-out Redemption approach and preserve enough resources. Attack the portal with your best ranged style from approved tiles and avoid forcing Vespula down.",
+          "plan": "Reliable only once rehearsed. Do not present as a low-risk technique outside ordinary HCIM CoX conditions.",
+          "sources": [
+            {
+              "label": "Exact task / Wiki",
+              "url": "https://oldschool.runescape.wiki/w/Redemption_Enthusiast"
+            }
+          ],
+          "effort": 9,
+          "minimumParty": 2
+        },
+        {
+          "id": 309,
+          "name": "Stop Drop and Roll",
+          "condition": "Defeat Vasa before the second teleport attack.",
+          "tip": "Plan ranged DPS and adequate stab on crystals. Reposition at the teleport, damage the correct crystal and finish Vasa before another teleport.",
+          "plan": "Only plan with a practiced team and observed pace.",
+          "sources": [
+            {
+              "label": "Exact task / Wiki",
+              "url": "https://oldschool.runescape.wiki/w/Stop_Drop_and_Roll"
+            }
+          ],
+          "effort": 9,
+          "minimumParty": 2
+        },
+        {
+          "id": 310,
+          "name": "Anvil No More",
+          "condition": "Defeat Tekton before his second return to the anvil.",
+          "tip": "Bring a strong crush setup and coordinated DPS, use his anvil phases to maximise safe damage and finish before the second return.",
+          "plan": "Can share #319 with practised hit-and-move technique.",
+          "sources": [
+            {
+              "label": "Exact task / Wiki",
+              "url": "https://oldschool.runescape.wiki/w/Anvil_No_More"
+            }
+          ],
+          "effort": 9,
+          "minimumParty": 2
+        },
+        {
+          "id": 312,
+          "name": "Undying Raid Team",
+          "condition": "Complete a standard CoX run with nobody dying.",
+          "tip": "Use a rehearsed layout and stock supplies before Olm. Check every member’s death count. If anyone dies, the full-raid perfection is for a new run.",
+          "plan": "Never interpret a successful wipe-and-clear as deathless.",
+          "sources": [
+            {
+              "label": "Exact task / Wiki",
+              "url": "https://oldschool.runescape.wiki/w/Undying_Raid_Team"
+            }
+          ],
+          "effort": 9,
+          "minimumParty": 2
+        },
+        {
+          "id": 319,
+          "name": "Blind Spot",
+          "condition": "Defeat Tekton without receiving damage.",
+          "tip": "Use the practised outside/circle hit-and-move timing. Wait for the correct slam beat before taking each single attack and step clear of hazards while he anvils.",
+          "plan": "Avoid going for the speed goal until a no-damage pattern is reliable.",
+          "sources": [
+            {
+              "label": "Exact task / Wiki",
+              "url": "https://oldschool.runescape.wiki/w/Blind_Spot"
+            }
+          ],
+          "effort": 9
+        },
+        {
+          "id": 299,
+          "name": "Chambers of Xeric Veteran",
+          "condition": "Complete 25 standard Chambers of Xeric raids.",
+          "tip": "Complete full raids through Olm on eligible credit. Taking room CAs and leaving does not advance this counter.",
+          "plan": "Use as a natural four-point closer when near 25, replacing the Mimic drop dependency.",
+          "sources": [
+            {
+              "label": "Exact task / Wiki",
+              "url": "https://oldschool.runescape.wiki/w/Chambers_of_Xeric_Veteran"
+            }
+          ],
+          "effort": 50
+        }
+      ],
+      "steps": [
+        "Reach Mount Quidamortem and scout a layout containing the room you want. Bring a pickaxe for Guardians, fire runes and an axe/tinderbox for Ice Demon, and Bind/colour-changing gear for Crabs.",
+        "For Ice Demon burn kindling in the braziers and move clear of the targeted hit. Ironmen should deal all damage themselves. Start with Protect from Missiles for the clean fire-spell finish (eight points). Use a separate kill without that prayer for Blizzard Dodger (four points).",
+        "For Guardians move at least two tiles from the rock’s target after each pickaxe swing. Ironmen should deal all damage to their chosen guardian. For Shamans avoid the leap, poison and adds and secure personal kill credit.",
+        "For Crabs route each orb through the right colours. Plan the route before the first crystal. After the first crystal is activated, any wasted orb fails the task.",
+        "Room objectives can be credited before Olm. Undying Raid Team and the 25-clear task require real clears. Hardcore Group deaths cost a life."
+      ]
+    },
+    {
+      "key": "theatre",
+      "main": [
+        397
+      ],
+      "extra": [
+        392,
+        393,
+        394,
+        389,
+        391,
+        395
+      ],
+      "tasks": [
+        {
+          "id": 397,
+          "name": "Theatre of Blood: SM Adept",
+          "condition": "Complete one Theatre of Blood Entry Mode run.",
+          "tip": "Choose Entry at Ver Sinhaza, progress all six rooms and defeat Verzik, then verify the clear. Practise without optional restrictions first if needed.",
+          "plan": "Room credit and full clear credit are distinct. Standard Mode is not the same request.",
+          "sources": [
+            {
+              "label": "Exact task / Wiki",
+              "url": "https://oldschool.runescape.wiki/w/Theatre_of_Blood%3A_SM_Adept"
+            }
+          ],
+          "effort": 9
+        },
+        {
+          "id": 392,
+          "name": "Don't Look at Me!",
+          "condition": "Kill Entry Xarpus without anyone taking reflected damage.",
+          "tip": "Dodge poison as usual. Once he screeches and starts looking, stop attacking into his current quadrant and only fire from another side. Have everyone follow the same rule.",
+          "plan": "If anyone reflects damage this attempt fails even if you personally are clean.",
+          "sources": [
+            {
+              "label": "Exact task / Wiki",
+              "url": "https://oldschool.runescape.wiki/w/Don%27t_Look_at_Me!"
+            }
+          ],
+          "effort": 9
+        },
+        {
+          "id": 393,
+          "name": "No-Pillar",
+          "condition": "Finish Entry Verzik pillar phase without any pillar being destroyed.",
+          "tip": "Use Dawnbringer specials from behind pillars. Move before any pillar breaks. In a party hand off the staff to players with remaining special energy. Confirm the phase result before proceeding.",
+          "plan": "Solo exact repeat depends on DPS and special timing. Verify phase condition at transition.",
+          "sources": [
+            {
+              "label": "Exact task / Wiki",
+              "url": "https://oldschool.runescape.wiki/w/No-Pillar"
+            }
+          ],
+          "effort": 9
+        },
+        {
+          "id": 394,
+          "name": "Attack, Step, Wait",
+          "condition": "Finish Entry Verzik phase two without any player being bounced.",
+          "tip": "Use the Entry Mode hit-step rhythm, or range from outside bounce reach. Everyone must avoid a bounce during phase two.",
+          "plan": "Team member bounce fails the whole attempt. Do not trade a bounce for DPS.",
+          "sources": [
+            {
+              "label": "Exact task / Wiki",
+              "url": "https://oldschool.runescape.wiki/w/Attack%2C_Step%2C_Wait"
+            }
+          ],
+          "effort": 9
+        },
+        {
+          "id": 389,
+          "name": "Chally Time",
+          "condition": "Kill Entry Bloat with the final hit from a halberd special.",
+          "tip": "Bring a valid halberd with damaging special. Stop regular swings at low boss HP, use downtime and land the special as the final damaging attack.",
+          "plan": "Pairs with other Bloat objectives if the Salve condition and positioning hold.",
+          "sources": [
+            {
+              "label": "Exact task / Wiki",
+              "url": "https://oldschool.runescape.wiki/w/Chally_Time"
+            }
+          ],
+          "effort": 9,
+          "requirements": {
+            "level": [
+              "attack",
+              60
+            ]
+          }
+        },
+        {
+          "id": 391,
+          "name": "Just To Be Safe",
+          "condition": "Kill Entry Sotetseg after the entire team splits the large ball at least once.",
+          "tip": "Enter with at least two. When the large orb targets somebody, group together safely at the impact, take the shared hit and finish Sotetseg.",
+          "plan": "Solo cannot earn it. Keep correct prayer for the regular orbs.",
+          "sources": [
+            {
+              "label": "Exact task / Wiki",
+              "url": "https://oldschool.runescape.wiki/w/Just_To_Be_Safe"
+            }
+          ],
+          "effort": 9,
+          "minimumParty": 2
+        },
+        {
+          "id": 395,
+          "name": "Pass It On",
+          "condition": "Successfully transfer the Entry Verzik green projectile to a teammate.",
+          "tip": "Have two or more still alive in the final phase, be in eligible passing range and use the targeted handoff positioning before it lands. Confirm actual transfer.",
+          "plan": "Solo cannot earn it. Plan on a separate attempt from strict clear speed.",
+          "sources": [
+            {
+              "label": "Exact task / Wiki",
+              "url": "https://oldschool.runescape.wiki/w/Pass_It_On"
+            }
+          ],
+          "effort": 9,
+          "minimumParty": 2
+        }
+      ],
+      "steps": [
+        "Travel to Ver Sinhaza through Morytania and select Entry Mode. Bring all three styles, food, restores and task-specific kit. Priest in Peril opens Morytania. The A Taste of Hope medallion is a travel shortcut.",
+        "At Maiden deal with bloodspawn immediately. After Maiden walk round the opposite Bloat entrance for the separate objective. Attack Bloat when down and use Salve if targeting that specific kill.",
+        "Kill Nylocas with matching styles (white melee, green ranged, blue Magic). At Sotetseg follow the safe maze path. The ball-sharing CA requires the team to split the big orb.",
+        "At Xarpus dodge away from the poison. Once he starts looking at quadrants, attack only away from his gaze. At Verzik use Dawnbringer specials and rotate pillars before collapse, use a clean hit-step or ranged technique during phase two, then finish the final phase.",
+        "Entry Mode clears can award room points separately. Complete the entire raid for the clear. Watch Hardcore status and team size. Several objectives depend on the actions of all players."
+      ]
+    },
+    {
+      "key": "huey",
+      "main": [],
+      "extra": [
+        572,
+        571,
+        570,
+        575,
+        576
+      ],
+      "tasks": [
+        {
+          "id": 572,
+          "name": "Pillar Lover",
+          "condition": "Kill Hueycoatl during the brazier-lit vulnerable window.",
+          "tip": "Use a party of at least three. Balance all three protection prayers so the braziers are lit, then kill the boss during the vulnerable window. Confirm each player’s credit.",
+          "plan": "Actual three-player minimum. Not a solo CA.",
+          "sources": [
+            {
+              "label": "Exact task / Wiki",
+              "url": "https://oldschool.runescape.wiki/w/Pillar_Lover"
+            }
+          ],
+          "effort": 9,
+          "minimumParty": 3
+        },
+        {
+          "id": 571,
+          "name": "Perfect Hueycoatl",
+          "condition": "Complete five perfect Huey kills without leaving.",
+          "tip": "Use an eligible stable group. Stay clear of lightning, dodge tail slams and react to projectile prayer cues all five. Keep enough supplies for all kills.",
+          "plan": "Follows full streak with no leaving. Use normal damaging gear unless already fluent with earth-only.",
+          "sources": [
+            {
+              "label": "Exact task / Wiki",
+              "url": "https://oldschool.runescape.wiki/w/Perfect_Hueycoatl"
+            }
+          ],
+          "effort": 9,
+          "minimumParty": 2
+        },
+        {
+          "id": 570,
+          "name": "Hueycoatl Veteran",
+          "condition": "Accumulate 25 Hueycoatl kills.",
+          "tip": "Repeat with an eligible capable group for time efficiency, preserving correct personal damage. Verify remaining count each session.",
+          "plan": "Stacks ten and perfection milestones. Solo time can be materially longer.",
+          "sources": [
+            {
+              "label": "Exact task / Wiki",
+              "url": "https://oldschool.runescape.wiki/w/Hueycoatl_Veteran"
+            }
+          ],
+          "effort": 9
+        },
+        {
+          "id": 575,
+          "name": "I'm your son",
+          "condition": "Finish Hueycoatl wearing at least two pieces of Hueycoatl armour.",
+          "tip": "Acquire two qualifying pieces, meet their requirements, equip them and maintain the active setup when the boss dies.",
+          "plan": "GE can buy hides/pieces if appropriate. Iron should treat as a drop/crafting opportunity, not a prerequisite.",
+          "sources": [
+            {
+              "label": "Exact task / Wiki",
+              "url": "https://oldschool.runescape.wiki/w/I%27m_your_son"
+            }
+          ],
+          "effort": 9,
+          "requirements": {
+            "level": [
+              "ranged",
+              70
+            ]
+          }
+        },
+        {
+          "id": 576,
+          "name": "Hueycoatl Speed-Trialist",
+          "condition": "Kill Hueycoatl in the time window of two minutes and thirty seconds.",
+          "tip": "Use a group whose normal time is near that pace and prepare rapidly for each phase change. On repeat, skip trying to stack gear restrictions if they cost enough DPS.",
+          "plan": "Timing bonuses conditional on demonstrable DPS and group availability.",
+          "sources": [
+            {
+              "label": "Exact task / Wiki",
+              "url": "https://oldschool.runescape.wiki/w/Hueycoatl_Speed-Trialist"
+            }
+          ],
+          "effort": 16,
+          "minimumParty": 3
+        }
+      ]
+    },
+    {
+      "key": "toa",
+      "main": [
+        461,
+        464,
+        465,
+        468
+      ],
+      "extra": [
+        431,
+        432,
+        438,
+        462
+      ],
+      "tasks": [
+        {
+          "id": 461,
+          "name": "Novice Tomb Explorer",
+          "condition": "Complete ToA at Entry or above once.",
+          "tip": "Select verified difficulty and complete all rooms plus Wardens. Clear at 100+ when able to stack the two higher entry thresholds.",
+          "plan": "Completes in same successful clear as #464/#465.",
+          "sources": [
+            {
+              "label": "Exact task / Wiki",
+              "url": "https://oldschool.runescape.wiki/w/Novice_Tomb_Explorer"
+            }
+          ],
+          "effort": 40
+        },
+        {
+          "id": 464,
+          "name": "Movin' on up",
+          "condition": "Complete ToA at a displayed level of at least 50.",
+          "tip": "Check invocation total before entering. Build confidence in the base rooms then finish all Wardens phases.",
+          "plan": "A qualifying ≥100 clear also earns this when missing.",
+          "sources": [
+            {
+              "label": "Exact task / Wiki",
+              "url": "https://oldschool.runescape.wiki/w/Movin%27_on_up"
+            }
+          ],
+          "effort": 3
+        },
+        {
+          "id": 465,
+          "name": "Confident Raider",
+          "condition": "Complete ToA at a displayed level of at least 100.",
+          "tip": "Use a controlled set of invocations totalling ≥100 and finish the full raid. Avoid restricted supplies or rushed timers while learning.",
+          "plan": "Stacks with #461/#464. Room-only progress is insufficient.",
+          "sources": [
+            {
+              "label": "Exact task / Wiki",
+              "url": "https://oldschool.runescape.wiki/w/Confident_Raider"
+            }
+          ],
+          "effort": 3
+        },
+        {
+          "id": 468,
+          "name": "Tomb Explorer",
+          "condition": "Get a successful ToA Normal clear.",
+          "tip": "Set 150+ and finish all rooms and Wardens. Can occur on a solo or group clear if eligible.",
+          "plan": "Cumulative thresholds #461/#464/#465 can award during that same success.",
+          "sources": [
+            {
+              "label": "Exact task / Wiki",
+              "url": "https://oldschool.runescape.wiki/w/Tomb_Explorer"
+            }
+          ],
+          "effort": 9
+        },
+        {
+          "id": 431,
+          "name": "Hardcore Tombs",
+          "condition": "Clear ToA solo at the eligible Normal level without dying.",
+          "tip": "Clear the raid solo at level 150 or above without a death. A clear in team mode or after a death does not earn this objective.",
+          "plan": "Stack full clear and Entry threshold tasks on an eligible success.",
+          "sources": [
+            {
+              "label": "Exact task / Wiki",
+              "url": "https://oldschool.runescape.wiki/w/Hardcore_Tombs"
+            }
+          ],
+          "effort": 9
+        },
+        {
+          "id": 432,
+          "name": "Perfect Het",
+          "condition": "Complete the Het puzzle damage-free and break its exposed seal on the first cycle at 150+.",
+          "tip": "At level 150 or above, avoid the light beam and orbs and break Het’s seal on its first exposure. Bring a pickaxe and enough Mining/DPS to confirm the one-cycle in practice.",
+          "plan": "Rune pickaxe can work at sufficient Mining and timing depending on scaling, but validate on a rehearsal before relying on it.",
+          "sources": [
+            {
+              "label": "Exact task / Wiki",
+              "url": "https://oldschool.runescape.wiki/w/Perfect_Het"
+            }
+          ],
+          "effort": 9
+        },
+        {
+          "id": 438,
+          "name": "Perfect Crondis",
+          "condition": "Finish the Crondis puzzle at 150+ in under one minute with no lost water or croc reaching the tree.",
+          "tip": "At level 150 or above, complete Crondis in under a minute, with no water lost and no crocodile reaching the tree. Use a separate puzzle attempt if your first 150 clear takes longer.",
+          "plan": "The selected fastest route uses a separate solo 150 clear if coming from a party, because #431 is solo-only.",
+          "sources": [
+            {
+              "label": "Exact task / Wiki",
+              "url": "https://oldschool.runescape.wiki/w/Perfect_Crondis"
+            }
+          ],
+          "effort": 9
+        },
+        {
+          "id": 462,
+          "name": "Novice Tomb Looter",
+          "condition": "Complete ToA at Entry or above 25 times.",
+          "tip": "Continue eligible raid clears across your normal sessions until 25. Count successful exits and don’t include abandoned rooms.",
+          "plan": "At three points, use only when naturally near 25.",
+          "sources": [
+            {
+              "label": "Exact task / Wiki",
+              "url": "https://oldschool.runescape.wiki/w/Novice_Tomb_Looter"
+            }
+          ],
+          "effort": 50
+        }
+      ],
+      "label": "Tombs of Amascut",
+      "title": "Tombs of Amascut",
+      "kind": "Raid",
+      "requirements": {
+        "quests": [
+          "Beneath Cursed Sands"
+        ],
+        "levels": {
+          "agility": 62,
+          "crafting": 55,
+          "firemaking": 55
+        }
+      },
+      "recommended": {
+        "attack": 70,
+        "ranged": 65,
+        "magic": 65,
+        "prayer": 43
+      },
+      "minutes": 85,
+      "intro": [
+        "Stab such as Keris partisan/dragon sword where appropriate, RCB/MSB, usable Magic, runes/bolts, food, prayer, pickaxe and teleport."
+      ],
+      "steps": [
+        "Finish Beneath Cursed Sands after Contact!. From Sophanem take the desert route to the Necropolis or use a charged sceptre with the teleport unlocked. Bank at the raid lobby.",
+        "Bring a usable stab weapon, ranged and Magic switches, compatible ammo/runes, food and prayer restoration. The quest’s Keris partisan needs 65 Attack. Rune crossbow and a good elemental spell are obtainable without raid drops. Mains can buy tradeable alternatives.",
+        "Start at 0 to practise. At a displayed level of 100 or higher one successful clear can give the one-clear, 50 and 100 tasks. The Normal tasks below are a separate 150+ step; a qualifying Normal clear also covers the Entry thresholds.",
+        "Crondis: carry water through traps, then dodge waves and use jugs for Zebak’s roars. Scabaras: solve the puzzle, step from Kephri impacts and handle swarms. Apmeken: follow the signals, kill baboons with matching styles and pass through appropriate boulder gaps at Ba-Ba.",
+        "Het: direct the beam, dodge light and orbs, then mine the seal. Change styles at Akkha and move out of the enrage orbs. At Wardens react to obelisk/room patterns, match attack style, deal core damage when exposed and step through floor attacks to finish.",
+        "Check the actual raid level, party and death count. For Hardcore Tombs use solo 150+ and finish without dying. Round out the last few points with easier bosses if raid practice or puzzle retries start taking too long."
+      ],
+      "sources": [
+        {
+          "label": "Encounter guide",
+          "url": "https://oldschool.runescape.wiki/w/Tombs_of_Amascut/Strategies"
+        }
+      ],
+      "videos": [],
+      "bossSource": "https://oldschool.runescape.wiki/w/Tombs_of_Amascut/Strategies",
+      "wilderness": false
+    },
+    {
+      "key": "shellbane",
+      "main": [
+        630,
+        627,
+        631,
+        625,
+        629
+      ],
+      "extra": [
+        628,
+        626
+      ],
+      "tasks": [
+        {
+          "id": 630,
+          "name": "Dry Cleaning",
+          "condition": "Kill Shellbane after removing corrosive spit from your armour.",
+          "tip": "Intentionally let the relevant spit status apply in a controlled single kill, then use the correct cleanup interaction and ensure enemy HP is sufficient to finish afterward.",
+          "plan": "Opposite of an ordinary first perfect-kill plan. Practise with health margin.",
+          "sources": [
+            {
+              "label": "Exact task / Wiki",
+              "url": "https://oldschool.runescape.wiki/w/Dry_Cleaning"
+            }
+          ],
+          "effort": 9
+        },
+        {
+          "id": 627,
+          "name": "Perfect Shellbane",
+          "condition": "Kill Shellbane without taking damage.",
+          "tip": "Use Tortugan shield and the qualifying heavy equip weight to defeat knockback; respond to melee/range cues and avoid spit and floor hazards. Reset after a damage event.",
+          "plan": "A heavy-gear attempt is separate from <40 kg. Kite alternative only with verified avoidance.",
+          "sources": [
+            {
+              "label": "Exact task / Wiki",
+              "url": "https://oldschool.runescape.wiki/w/Perfect_Shellbane"
+            }
+          ],
+          "effort": 9
+        },
+        {
+          "id": 631,
+          "name": "Featherweight Fighter",
+          "condition": "Kill five Shellbane Gryphons with worn gear under 40 kg without leaving the cave.",
+          "tip": "Weigh your worn gear before entry. Keep it under 40 kg for all five. The heavy Tortugan shield method cannot protect this light attempt.",
+          "plan": "Separate from the ≥40 kg knockback protection method. Exact less-than rule matters.",
+          "sources": [
+            {
+              "label": "Exact task / Wiki",
+              "url": "https://oldschool.runescape.wiki/w/Featherweight_Fighter"
+            }
+          ],
+          "effort": 10
+        },
+        {
+          "id": 625,
+          "name": "Shellbane Adept",
+          "condition": "Accumulate 25 Shellbane Gryphon kills.",
+          "tip": "Repeat fully credited fights on the normal heavy setup. Transfer progress from both the light and heavy trips into cumulative KC.",
+          "plan": "A valid #629 run also gives this if you start from zero.",
+          "sources": [
+            {
+              "label": "Exact task / Wiki",
+              "url": "https://oldschool.runescape.wiki/w/Shellbane_Adept"
+            }
+          ],
+          "effort": 50
+        },
+        {
+          "id": 629,
+          "name": "Shellbane Survivor",
+          "condition": "Kill 25 Shellbane Gryphons without leaving the cave.",
+          "tip": "Start with enough assigned kills. Use a well-supplied Tortugan shield setup with at least 40 kg of equipped weight to block knockback, and practise the protection cues. Stay in for the entire streak, including between kills.",
+          "plan": "Log out or leave and the trip must restart. Use the light gear restriction on its own trip.",
+          "sources": [
+            {
+              "label": "Exact task / Wiki",
+              "url": "https://oldschool.runescape.wiki/w/Shellbane_Survivor"
+            }
+          ],
+          "effort": 50
+        },
+        {
+          "id": 628,
+          "name": "Shellbane Speedrunner",
+          "condition": "Get ten Shellbane kills within 12:30 of cave entry.",
+          "tip": "Enter ready with gear/spec/prayer, manage brief respawns and confirm the time after ten. Avoid setup switches or extra moves during the timed run.",
+          "plan": "Only use with measured pace or as a reserve for an experienced kill route.",
+          "sources": [
+            {
+              "label": "Exact task / Wiki",
+              "url": "https://oldschool.runescape.wiki/w/Shellbane_Speedrunner"
+            }
+          ],
+          "effort": 20
+        },
+        {
+          "id": 626,
+          "name": "Shellbane Veteran",
+          "condition": "Accumulate 50 Shellbane Gryphon kills.",
+          "tip": "Continue only after checking how close the remaining count is. Stay heavy for reliable farm damage unless targeting the distinct light streak.",
+          "plan": "Low gain if 25 remain. Prefer other short alternatives if no existing farm plan.",
+          "sources": [
+            {
+              "label": "Exact task / Wiki",
+              "url": "https://oldschool.runescape.wiki/w/Shellbane_Veteran"
+            }
+          ],
+          "effort": 100
+        }
+      ],
+      "label": "Shellbane Gryphon",
+      "title": "Shellbane Gryphon",
+      "kind": "Boss",
+      "requirements": {
+        "quests": [
+          "Troubled Tortugans"
+        ],
+        "levels": {
+          "slayer": 51,
+          "construction": 48,
+          "sailing": 45,
+          "hunter": 45,
+          "woodcutting": 40,
+          "crafting": 34
+        }
+      },
+      "recommended": {
+        "attack": 60,
+        "prayer": 43,
+        "hitpoints": 65
+      },
+      "minutes": 90,
+      "intro": [
+        "Tortugan shield from the quest, worn in the cape slot with at least 40 kg of equipped weight for the knockback-blocking strategy. Separate <40 kg kit for the featherweight streak, sharp melee, food and stamina."
+      ],
+      "steps": [
+        "Complete Troubled Tortugans, then get an active Gryphon Slayer assignment for repeat kills in the Great Conch cave. Confirm enough assigned kills for your chosen streak. A matching elite clue allows just one kill.",
+        "Use a working melee setup, healing food and prayer. Wear the Tortugan shield from Troubled Tortugans in your cape slot with the qualifying heavy armour for the long or perfect attempt. At 40 kg or more of worn gear the shield can stop knockback. Keep a separate light set under 40 kg for Featherweight.",
+        "React to the ordinary attack style and its ranged cue. Step away from spit and other hazardous tiles. For Dry Cleaning receive and clear the armour corrosion before the boss dies. Use normal well-protected kills for the long streak.",
+        "Bring spare food for the light challenge. A logout or exit breaks the required continuous cave visit. Decide before entering whether this is five in light gear, 25 in heavy gear, or a measured speed attempt."
+      ],
+      "sources": [
+        {
+          "label": "Encounter guide",
+          "url": "https://oldschool.runescape.wiki/w/Shellbane_gryphon/Strategies"
+        }
+      ],
+      "videos": [],
+      "bossSource": "https://oldschool.runescape.wiki/w/Shellbane_gryphon/Strategies",
+      "wilderness": false
+    },
+    {
+      "key": "mad-angel",
+      "main": [
+        651,
+        652,
+        653,
+        648,
+        646
+      ],
+      "extra": [
+        647,
+        650
+      ],
+      "tasks": [
+        {
+          "id": 651,
+          "name": "Dancing Queen",
+          "condition": "Win after six consecutive enhanced player attacks gained by evading enrage sweeps.",
+          "tip": "Keep the boss alive through enrage, dodge each sweep as her sword telegraphs which side to avoid, and take the enhanced retaliations. Finish once the six-hit condition is satisfied.",
+          "plan": "Separate early enrage attempts if too little boss HP remains for repeated actions.",
+          "sources": [
+            {
+              "label": "Exact task / Wiki",
+              "url": "https://oldschool.runescape.wiki/w/Dancing_Queen"
+            }
+          ],
+          "effort": 9
+        },
+        {
+          "id": 652,
+          "name": "Smite Fight",
+          "condition": "Win after three consecutive enhanced attacks from correct protection on enrage smites.",
+          "tip": "Watch the smite cue, use the correct overhead for each case and return an enhanced attack during the opening. Continue until three consecutive, then finish.",
+          "plan": "Use prayer supplies and a separate attempt if sweep training keeps interrupting the count.",
+          "sources": [
+            {
+              "label": "Exact task / Wiki",
+              "url": "https://oldschool.runescape.wiki/w/Smite_Fight"
+            }
+          ],
+          "effort": 9
+        },
+        {
+          "id": 653,
+          "name": "Juggling Act",
+          "condition": "Win after hitting Mad Angel between each bounce of her enrage blast.",
+          "tip": "Read her blast timing, work a quick enough manual attack between bounces while moving off marked tiles and complete an entire qualifying sequence. Defeat her afterward.",
+          "plan": "Full sequence may occur before the kill window. Verify before choosing an exact speed gear route.",
+          "sources": [
+            {
+              "label": "Exact task / Wiki",
+              "url": "https://oldschool.runescape.wiki/w/Juggling_Act"
+            }
+          ],
+          "effort": 9
+        },
+        {
+          "id": 648,
+          "name": "Perfect Mad Angel",
+          "condition": "Finish Mad Angel without avoidable damage.",
+          "tip": "Read the full cues, zero every avoidable hazard and complete her enrage calmly. Keep food high and reset an invalid perfection attempt.",
+          "plan": "Normal attacks and avoidable mechanics are distinguished by the task. Combine with enrage goals only once comfortable.",
+          "sources": [
+            {
+              "label": "Exact task / Wiki",
+              "url": "https://oldschool.runescape.wiki/w/Perfect_Mad_Angel"
+            }
+          ],
+          "effort": 9
+        },
+        {
+          "id": 646,
+          "name": "Mad Angel Adept",
+          "condition": "Accumulate 25 Mad Angel kills.",
+          "tip": "Repeat a safe post-quest fight and use stable attempts for enrage-specific tasks. Build a reliable bank/travel loop.",
+          "plan": "Quest kill count can contribute if recorded. Follow live KC and bits.",
+          "sources": [
+            {
+              "label": "Exact task / Wiki",
+              "url": "https://oldschool.runescape.wiki/w/Mad_Angel_Adept"
+            }
+          ],
+          "effort": 50
+        },
+        {
+          "id": 647,
+          "name": "Mad Angel Veteran",
+          "condition": "Accumulate 50 Mad Angel kills.",
+          "tip": "Use a safe repeat setup with short bank trips and work the 25-KC/phase goals first.",
+          "plan": "Post-quest KC and the quest’s awarded count must be observed, not assumed.",
+          "sources": [
+            {
+              "label": "Exact task / Wiki",
+              "url": "https://oldschool.runescape.wiki/w/Mad_Angel_Veteran"
+            }
+          ],
+          "effort": 100
+        },
+        {
+          "id": 650,
+          "name": "Mad Angel Speed-Runner",
+          "condition": "Get five Mad Angel kills within 10 minutes of entering the arena.",
+          "tip": "Measure from entering the arena, get five kills inside ten minutes, and leave/re-enter before a fresh attempt. Do this only with a comfortable repeat pace.",
+          "plan": "Do not spend the timer waiting for off-plan enrage actions or gathering supplies.",
+          "sources": [
+            {
+              "label": "Exact task / Wiki",
+              "url": "https://oldschool.runescape.wiki/w/Mad_Angel_Speed-Runner"
+            }
+          ],
+          "effort": 10
+        }
+      ],
+      "label": "Mad Angel",
+      "title": "Mad Angel",
+      "kind": "Boss",
+      "requirements": {
+        "quests": [
+          "Fallen From Grace"
+        ],
+        "levels": {
+          "sailing": 62,
+          "crafting": 60,
+          "runecraft": 47
+        }
+      },
+      "recommended": {
+        "magic": 65,
+        "prayer": 43,
+        "hitpoints": 65
+      },
+      "minutes": 95,
+      "intro": [
+        "Magic is a good starting style. For weaponless task use manual casts with empty weapon slot, verified runes, food, prayer and teleport."
+      ],
+      "steps": [
+        "Visit Wyrmscraig after Fallen From Grace. Check its Pandemonium quest chain, Sailing, Crafting and Runecraft. The quest’s boat section needs an appropriate personal raft or skiff.",
+        "Learn the repeat fight in Ardeag Monastery with familiar Magic, food and restores. Keep the boss above finishing range long enough to practise her enrage cues. Protect against the correct attacks and step away from floor effects.",
+        "During enrage, use a sweep dodge, correct smite prayer or a well-timed hit between blast bounces for the corresponding objective. Work on one pattern per kill until the game confirms it. Aim at the cumulative 25 or 50 only if already using the boss."
+      ],
+      "sources": [
+        {
+          "label": "Encounter guide",
+          "url": "https://oldschool.runescape.wiki/w/Mad_Angel/Strategies"
+        }
+      ],
+      "videos": [],
+      "bossSource": "https://oldschool.runescape.wiki/w/Mad_Angel/Strategies",
+      "wilderness": false
+    },
+    {
+      "key": "guardian",
+      "main": [
+        84,
+        85,
+        86,
+        87,
+        88,
+        95,
+        82
+      ],
+      "extra": [
+        89,
+        90,
+        83,
+        96,
+        91,
+        92
+      ],
+      "tasks": [
+        {
+          "id": 84,
+          "name": "Don't Look at the Eclipse",
+          "condition": "Kill the Guardians without Dusk’s blinding attack damaging you.",
+          "tip": "Recognise his early blinding cue and step clear/resolve it before attacking again. Use the strategy page’s safe movement for that phase.",
+          "plan": "Can combine with other avoidance tasks.",
+          "sources": [
+            {
+              "label": "Exact task / Wiki",
+              "url": "https://oldschool.runescape.wiki/w/Don%27t_Look_at_the_Eclipse"
+            }
+          ],
+          "effort": 9
+        },
+        {
+          "id": 85,
+          "name": "Prison Break",
+          "condition": "Kill the Guardians without damage from Dusk’s prison.",
+          "tip": "At the marked final-phase prison move through the available opening immediately. Pause extra attacks until you are out of the hazard.",
+          "plan": "Skip the attack with fast damage only when already practised.",
+          "sources": [
+            {
+              "label": "Exact task / Wiki",
+              "url": "https://oldschool.runescape.wiki/w/Prison_Break"
+            }
+          ],
+          "effort": 9
+        },
+        {
+          "id": 86,
+          "name": "Granite Footwork",
+          "condition": "Kill the Guardians without taking Dawn rockfall damage.",
+          "tip": "Watch floor shadows, choose an unmarked reachable tile immediately and avoid pathing through a second fall on the way back.",
+          "plan": "No need to force a speed target on the first clean attempt.",
+          "sources": [
+            {
+              "label": "Exact task / Wiki",
+              "url": "https://oldschool.runescape.wiki/w/Granite_Footwork"
+            }
+          ],
+          "effort": 9
+        },
+        {
+          "id": 87,
+          "name": "Heal No More",
+          "condition": "Kill the Guardians without Dawn healing from any orb.",
+          "tip": "Plan to collect the glowing orbs before they reach/restore her. On higher DPS, finish her phase before heals can occur.",
+          "plan": "Early orb interaction can cost HP. Bring margin instead of relying on a rare ranged upgrade.",
+          "sources": [
+            {
+              "label": "Exact task / Wiki",
+              "url": "https://oldschool.runescape.wiki/w/Heal_No_More"
+            }
+          ],
+          "effort": 9
+        },
+        {
+          "id": 88,
+          "name": "Static Awareness",
+          "condition": "Kill the Guardians while avoiding all lightning hits.",
+          "tip": "Move to unmarked ground when lightning tiles appear. Keep actively checking fresh tiles during transitions.",
+          "plan": "Attack cue matters even when the hitsplat would be zero.",
+          "sources": [
+            {
+              "label": "Exact task / Wiki",
+              "url": "https://oldschool.runescape.wiki/w/Static_Awareness"
+            }
+          ],
+          "effort": 9
+        },
+        {
+          "id": 95,
+          "name": "From Dusk...",
+          "condition": "Kill the Guardians ten times without leaving.",
+          "tip": "Bank before beginning to refill prayer, ammo and food. Enter a fresh instance, repeat ordinary clean fights to ten and only leave once credited.",
+          "plan": "Stamina pairs with #82 and ordinary CAs. Treat #96 as separate margin.",
+          "sources": [
+            {
+              "label": "Exact task / Wiki",
+              "url": "https://oldschool.runescape.wiki/w/From_Dusk..."
+            }
+          ],
+          "effort": 20
+        },
+        {
+          "id": 82,
+          "name": "Grotesque Guardians Adept",
+          "condition": "Accumulate 25 Grotesque Guardians kills.",
+          "tip": "Do ordinary KC on an eligible assignment. Bank if unsafe, and use early kills for the avoidance trio and later kills for pace and stamina.",
+          "plan": "A valid kill advances total even when mechanics fail.",
+          "sources": [
+            {
+              "label": "Exact task / Wiki",
+              "url": "https://oldschool.runescape.wiki/w/Grotesque_Guardians_Adept"
+            }
+          ],
+          "effort": 50
+        },
+        {
+          "id": 89,
+          "name": "Done before Dusk",
+          "condition": "Kill both Guardians before Dusk fires his second prison attack.",
+          "tip": "Learn movement first. Stay on targets during safe windows, handle the first prison, and close the final phase before the second cue.",
+          "plan": "This pace condition is a prerequisite for #90 on the same kill.",
+          "sources": [
+            {
+              "label": "Exact task / Wiki",
+              "url": "https://oldschool.runescape.wiki/w/Done_before_Dusk"
+            }
+          ],
+          "effort": 9
+        },
+        {
+          "id": 90,
+          "name": "Perfect Grotesque Guardians",
+          "condition": "Meet all six listed Guardians mechanics and pace conditions in a single kill.",
+          "tip": "Start only when #84–89 are individually within reach. During the same fight dodge blind/prison/rocks/lightning, prevent all orbs healing, and finish Dusk promptly.",
+          "plan": "Previously earning the six tasks alone does not award perfection. Protect pace and survival, then replace if repeated misses.",
+          "sources": [
+            {
+              "label": "Exact task / Wiki",
+              "url": "https://oldschool.runescape.wiki/w/Perfect_Grotesque_Guardians"
+            }
+          ],
+          "effort": 9
+        },
+        {
+          "id": 83,
+          "name": "Grotesque Guardians Veteran",
+          "condition": "Accumulate 50 Guardian kills.",
+          "tip": "Continue a normal route across eligible assignments after 25. Leave if task/gear is unsuitable.",
+          "plan": "Near-milestone reserve.",
+          "sources": [
+            {
+              "label": "Exact task / Wiki",
+              "url": "https://oldschool.runescape.wiki/w/Grotesque_Guardians_Veteran"
+            }
+          ],
+          "effort": 100
+        },
+        {
+          "id": 96,
+          "name": "... 'til Dawn",
+          "condition": "Get 20 Guard kills in one instance.",
+          "tip": "Start fully resupplied on an assignment with at least 20 remaining. Complete ten milestone en route, keep health high.",
+          "plan": "Only choose if sufficient supply margin.",
+          "sources": [
+            {
+              "label": "Exact task / Wiki",
+              "url": "https://oldschool.runescape.wiki/w/..._%27til_Dawn"
+            }
+          ],
+          "effort": 40
+        },
+        {
+          "id": 91,
+          "name": "Perfect Grotesque Guardians II",
+          "condition": "Kill the Guardians perfectly five times consecutively without leaving.",
+          "tip": "Use the #90 run conditions five times within one session. Reset after any invalid kill.",
+          "plan": "High skill reserve only.",
+          "sources": [
+            {
+              "label": "Exact task / Wiki",
+              "url": "https://oldschool.runescape.wiki/w/Perfect_Grotesque_Guardians_II"
+            }
+          ],
+          "effort": 9
+        },
+        {
+          "id": 92,
+          "name": "Grotesque Guardians Speed-Trialist",
+          "condition": "Defeat Guardians in under two minutes.",
+          "tip": "Bring a measured pace with successful Dawn/Dusk transitions. Save damage specials and enough food to maintain uptime.",
+          "plan": "High DPS reserve.",
+          "sources": [
+            {
+              "label": "Exact task / Wiki",
+              "url": "https://oldschool.runescape.wiki/w/Grotesque_Guardians_Speed-Trialist"
+            }
+          ],
+          "effort": 16
+        }
+      ],
+      "label": "Grotesque Guardians",
+      "title": "Grotesque Guardians",
+      "kind": "Boss",
+      "requirements": {
+        "quests": [
+          "Priest in Peril"
+        ],
+        "levels": {
+          "slayer": 75
+        }
+      },
+      "recommended": {
+        "ranged": 70,
+        "attack": 70,
+        "prayer": 43
+      },
+      "minutes": 90,
+      "intro": [
+        "Ranged for Dawn, melee for Dusk, food, restores, compact switches. DPS matters for skips, not for every avoidance task."
+      ],
+      "steps": [
+        "Get a gargoyle task at 75 Slayer. Kill ordinary gargoyles on assignment for a brittle key, then unlock the Slayer Tower rooftop. Bring a rock hammer and keep a suitable task active for rooftop kills.",
+        "Bring ranged for Dawn, melee for Dusk and enough ammo, food and prayer. A budget Ironman can use an owned magic shortbow or rune crossbow and rune/dragon melee before considering a rare upgrade.",
+        "Step clear of Dusk’s blinding attack, dodge marked rocks and lightning, and remove Dawn’s healing orbs or finish the phase before she heals. At the prison move through the opening promptly.",
+        "Bank before a ten-kill streak. Treat the pre-second-prison pace and the six-condition perfect kill as later attempts. A counted normal kill still advances 25 or 50."
+      ],
+      "sources": [
+        {
+          "label": "Encounter guide",
+          "url": "https://oldschool.runescape.wiki/w/Grotesque_Guardians/Strategies"
+        }
+      ],
+      "videos": [],
+      "bossSource": "https://oldschool.runescape.wiki/w/Grotesque_Guardians/Strategies",
+      "wilderness": false
+    },
+    {
+      "key": "prime",
+      "main": [],
+      "extra": [
+        197,
+        198,
+        200
+      ],
+      "tasks": [
+        {
+          "id": 197,
+          "name": "Dagannoth Prime Champion",
+          "condition": "Accumulate ten Dagannoth Prime kills.",
+          "tip": "Use range and Protect Magic. Stagger spawns and take multiple trips if needed.",
+          "plan": "Contributes to #198. Don’t force overlapping kings.",
+          "sources": [
+            {
+              "label": "Exact task / Wiki",
+              "url": "https://oldschool.runescape.wiki/w/Dagannoth_Prime_Champion"
+            }
+          ],
+          "effort": 20
+        },
+        {
+          "id": 198,
+          "name": "Dagannoth Prime Adept",
+          "condition": "Accumulate 25 Dagannoth Prime kills.",
+          "tip": "Deploy ranged and Protect Magic. Take short rotation trips if comfortable and stop at each KC milestone.",
+          "plan": "Pairs with #197. No need to finish all three kings in one trip.",
+          "sources": [
+            {
+              "label": "Exact task / Wiki",
+              "url": "https://oldschool.runescape.wiki/w/Dagannoth_Prime_Adept"
+            }
+          ],
+          "effort": 50
+        },
+        {
+          "id": 200,
+          "name": "From One King to Another",
+          "condition": "Kill Dagannoth Prime with rune thrownaxe special rebounding from Dagannoth Rex.",
+          "tip": "Leave Prime at low HP, position both kings within valid bounce range, target Rex with the thrownaxe spec so the rebound finishes Prime. Bring more than the door axe.",
+          "plan": "A direct final throw at Prime is not enough. Team kill-credit rules matter.",
+          "sources": [
+            {
+              "label": "Exact task / Wiki",
+              "url": "https://oldschool.runescape.wiki/w/From_One_King_to_Another"
+            }
+          ],
+          "effort": 9,
+          "requirements": {
+            "level": [
+              "ranged",
+              40
+            ]
+          }
+        }
+      ],
+      "label": "Dagannoth Prime",
+      "title": "Dagannoth Prime",
+      "kind": "Boss",
+      "requirements": {},
+      "recommended": {
+        "ranged": 70,
+        "prayer": 43,
+        "hitpoints": 65
+      },
+      "minutes": 110,
+      "intro": [
+        "Ranged, Protect from Magic, poison protection, prayer, food and other styles if cycling kings. Bring an extra rune thrownaxe for #200."
+      ],
+      "steps": [
+        "Waterbirth Island Dungeon. Solo uses pet rock and rune thrownaxe door method. A teammate may help with doors. Travel from Rellekka or use an unlock.",
+        "Stagger kings to avoid overlap. Range Prime without bringing Supreme or Rex into the fight. For bounced finish set up Prime low and ricochet off Rex."
+      ],
+      "sources": [
+        {
+          "label": "Encounter guide",
+          "url": "https://oldschool.runescape.wiki/w/Dagannoth_Kings/Strategies"
+        }
+      ],
+      "videos": [],
+      "bossSource": "https://oldschool.runescape.wiki/w/Dagannoth_Kings/Strategies",
+      "wilderness": false
+    },
+    {
+      "key": "supreme",
+      "main": [],
+      "extra": [
+        233,
+        234
+      ],
+      "tasks": [
+        {
+          "id": 233,
+          "name": "Dagannoth Supreme Champion",
+          "condition": "Accumulate ten Dagannoth Supreme kills.",
+          "tip": "Use melee and a planned stagger. Bank if incoming Prime/Rex damage or poison makes your intended count unsafe.",
+          "plan": "Counts toward #234 across multiple trips.",
+          "sources": [
+            {
+              "label": "Exact task / Wiki",
+              "url": "https://oldschool.runescape.wiki/w/Dagannoth_Supreme_Champion"
+            }
+          ],
+          "effort": 20
+        },
+        {
+          "id": 234,
+          "name": "Dagannoth Supreme Adept",
+          "condition": "Accumulate 25 Dagannoth Supreme kills.",
+          "tip": "Stagger other kings and use a strong melee setup. Count across trips rather than forcing two aggro sources.",
+          "plan": "Pairs with #233. No requirement to finish 25 in one trip.",
+          "sources": [
+            {
+              "label": "Exact task / Wiki",
+              "url": "https://oldschool.runescape.wiki/w/Dagannoth_Supreme_Adept"
+            }
+          ],
+          "effort": 50
+        }
+      ],
+      "label": "Dagannoth Supreme",
+      "title": "Dagannoth Supreme",
+      "kind": "Boss",
+      "requirements": {},
+      "recommended": {
+        "attack": 70,
+        "prayer": 43,
+        "hitpoints": 65
+      },
+      "minutes": 110,
+      "intro": [
+        "Melee, Magic for Rex, ranged for Prime, antipoison, restores and food."
+      ],
+      "steps": [
+        "Same Waterbirth doors and ladders as for Rex. Use a three-style rotation to add Prime and Supreme.",
+        "Isolate Supreme if the ladder layout allows it. Protect against the most dangerous source and stagger the next respawn."
+      ],
+      "sources": [
+        {
+          "label": "Encounter guide",
+          "url": "https://oldschool.runescape.wiki/w/Dagannoth_Kings/Strategies"
+        }
+      ],
+      "videos": [],
+      "bossSource": "https://oldschool.runescape.wiki/w/Dagannoth_Kings/Strategies",
+      "wilderness": false
+    },
+    {
+      "key": "zulrah",
+      "main": [],
+      "extra": [
+        224,
+        229,
+        228
+      ],
+      "tasks": [
+        {
+          "id": 224,
+          "name": "Zulrah Adept",
+          "condition": "Accumulate 25 Zulrah kills.",
+          "tip": "Use known rotations, pray correctly, maintain venom plan and collect kills across trips. Learn with one or two safe attempts before committing to the full set.",
+          "plan": "Combine mechanics only after enough personal repeatability. Bank any gear you cannot risk.",
+          "sources": [
+            {
+              "label": "Exact task / Wiki",
+              "url": "https://oldschool.runescape.wiki/w/Zulrah_Adept"
+            }
+          ],
+          "effort": 50
+        },
+        {
+          "id": 229,
+          "name": "Perfect Zulrah",
+          "condition": "Kill Zulrah with zero damage from snakelings, clouds, green or crimson phases.",
+          "tip": "Use normal rotations and protect against the listed phases. Kill snakelings promptly, move off clouds and react to the crimson melee cue. Try the three-snakeling objective in a different kill.",
+          "plan": "The blue phase has separate damage rules. Keep #228 in a different attempt when stacking is unreliable.",
+          "sources": [
+            {
+              "label": "Exact task / Wiki",
+              "url": "https://oldschool.runescape.wiki/w/Perfect_Zulrah"
+            }
+          ],
+          "effort": 9
+        },
+        {
+          "id": 228,
+          "name": "Snake. Snake!? Snaaaaaake!",
+          "condition": "Kill three snakelings on the same damage event.",
+          "tip": "Lose the auto-kill recoil or redeploy it only after the attempt, let three group, then attack with area damage such as chins or eligible multi-target Magic. Soften only as needed without killing one.",
+          "plan": "Separate from perfection unless you can avoid all snakeling hits.",
+          "sources": [
+            {
+              "label": "Exact task / Wiki",
+              "url": "https://oldschool.runescape.wiki/w/Snake._Snake!%3F_Snaaaaaake!"
+            }
+          ],
+          "effort": 9
+        }
+      ],
+      "label": "Zulrah",
+      "title": "Zulrah",
+      "kind": "Boss",
+      "requirements": {},
+      "recommended": {
+        "magic": 75,
+        "ranged": 70,
+        "prayer": 43
+      },
+      "minutes": 120,
+      "intro": [
+        "Ranged/Magic, recoil or alternative, poison/venom management, food and prayer. For #228 use area damage and remove automatic kills."
+      ],
+      "steps": [
+        "Partial Regicide via Underground Pass and elven chain. Zul-Andra via fixed walking route or unlocked teleports.",
+        "Learn rotations, stay clear of poison clouds and melee, respond to alternate prayers in Jad phase. Group snakelings only for the separate CA."
+      ],
+      "sources": [
+        {
+          "label": "Encounter guide",
+          "url": "https://oldschool.runescape.wiki/w/Zulrah/Strategies"
+        }
+      ],
+      "videos": [],
+      "bossSource": "https://oldschool.runescape.wiki/w/Zulrah/Strategies",
+      "wilderness": false
+    },
+    {
+      "key": "kq",
+      "main": [],
+      "extra": [
+        159,
+        157
+      ],
+      "tasks": [
+        {
+          "id": 159,
+          "name": "Chitin Penetrator",
+          "condition": "Kill KQ after you supplied the latest defence reduction.",
+          "tip": "Use a qualifying defence-lowering hit, then finish both forms with the last reduction credited to you. A bone dagger special can be a budget setup if its quest is complete.",
+          "plan": "Good one-off if geared. Other validated defence-reduction specials also work.",
+          "sources": [
+            {
+              "label": "Exact task / Wiki",
+              "url": "https://oldschool.runescape.wiki/w/Chitin_Penetrator"
+            }
+          ],
+          "effort": 9
+        },
+        {
+          "id": 157,
+          "name": "Kalphite Queen Adept",
+          "condition": "Accumulate 25 Kalphite Queen kills.",
+          "tip": "Complete both forms across as many trips as needed. Keep antipoison and dragon-style switches distinct, and keep enough food for both forms.",
+          "plan": "Prioritize if already doing Desert diary or boss loot.",
+          "sources": [
+            {
+              "label": "Exact task / Wiki",
+              "url": "https://oldschool.runescape.wiki/w/Kalphite_Queen_Adept"
+            }
+          ],
+          "effort": 50
+        }
+      ],
+      "label": "Kalphite Queen",
+      "title": "Kalphite Queen",
+      "kind": "Boss",
+      "requirements": {},
+      "recommended": {
+        "attack": 75,
+        "ranged": 70,
+        "prayer": 43
+      },
+      "minutes": 70,
+      "intro": [
+        "Crush for ground form, ranged/Magic for flying form, prayer and food. Bone dagger or a valid defence-reducing spec for #159."
+      ],
+      "steps": [
+        "Desert Kalphite Lair. Bring two ropes without shortcuts/diary, antipoison, food and exit. Task optional for access.",
+        "Open with the reducing hit, then manage first form and swap styles for flight. Use the stand-under method between attacks only once comfortable. Reset a bad attempt."
+      ],
+      "sources": [
+        {
+          "label": "Encounter guide",
+          "url": "https://oldschool.runescape.wiki/w/Kalphite_Queen/Strategies"
+        }
+      ],
+      "videos": [],
+      "bossSource": "https://oldschool.runescape.wiki/w/Kalphite_Queen/Strategies",
+      "wilderness": false
+    },
+    {
+      "key": "kraken",
+      "main": [
+        169,
+        168,
+        170
+      ],
+      "extra": [
+        171
+      ],
+      "tasks": [
+        {
+          "id": 169,
+          "name": "Unnecessary Optimisation",
+          "condition": "Kill Kraken after killing all four of its tentacles.",
+          "tip": "Manually wake each small whirlpool, kill each tentacle and then wake/finish the main Kraken. Do not leave a live tentacle.",
+          "plan": "Do one slower attempt inside a planned private KC trip.",
+          "sources": [
+            {
+              "label": "Exact task / Wiki",
+              "url": "https://oldschool.runescape.wiki/w/Unnecessary_Optimisation"
+            }
+          ],
+          "effort": 9
+        },
+        {
+          "id": 168,
+          "name": "Kraken Adept",
+          "condition": "Accumulate 20 Kraken kills.",
+          "tip": "Use your assignment and an ordinary Magic wake method. Include the tentacle CA on a separate kill if it reduces overall pace.",
+          "plan": "Credited during a valid 25-streak.",
+          "sources": [
+            {
+              "label": "Exact task / Wiki",
+              "url": "https://oldschool.runescape.wiki/w/Kraken_Adept"
+            }
+          ],
+          "effort": 40
+        },
+        {
+          "id": 170,
+          "name": "Krakan't Hurt Me",
+          "condition": "Kill Kraken 25 times in one private-room stay.",
+          "tip": "Pay for the instance, check food, charges and assignment length, then stay inside while each kill is credited. Leave only after confirmation.",
+          "plan": "Stacks #168 and continues to #171 when equipped with sufficient supplies.",
+          "sources": [
+            {
+              "label": "Exact task / Wiki",
+              "url": "https://oldschool.runescape.wiki/w/Krakan%27t_Hurt_Me"
+            }
+          ],
+          "effort": 50
+        },
+        {
+          "id": 171,
+          "name": "Ten-tacles",
+          "condition": "Kill Kraken 50 times without leaving a private instance.",
+          "tip": "Enter on an assignment with fifty or more remaining, maintain charges and enough food or eligible sustain for all fifty. Do the tentacle kill early if still needed.",
+          "plan": "Stacks the 20- and 25-kill goals. At 25 leave if continuing would be unsafe.",
+          "sources": [
+            {
+              "label": "Exact task / Wiki",
+              "url": "https://oldschool.runescape.wiki/w/Ten-tacles"
+            }
+          ],
+          "effort": 100
+        }
+      ],
+      "label": "Kraken",
+      "title": "Kraken",
+      "kind": "Boss",
+      "requirements": {
+        "levels": {
+          "slayer": 87
+        }
+      },
+      "recommended": {
+        "magic": 75,
+        "hitpoints": 70
+      },
+      "minutes": 60,
+      "intro": [
+        "Magic with charges, food, coin and optional fishing explosives for later kills. Have food for full streak."
+      ],
+      "steps": [
+        "Get a cave kraken assignment at 87 unboosted Slayer. Check enough assigned kills for your selected challenge. Take your usable Magic weapon, runes or charges, plenty of food and coins to Kraken Cove.",
+        "Enter the paid private room for 25 or 50 without leaving. On the tentacle objective manually disturb and kill each of the four small whirlpools, then wake and kill the main Kraken.",
+        "Use ordinary fast wakes for repeat kills and stop if heal supplies are insufficient. A valid 25-kill streak also satisfies 20 total when both are unfinished."
+      ],
+      "sources": [
+        {
+          "label": "Encounter guide",
+          "url": "https://oldschool.runescape.wiki/w/Kraken/Strategies"
+        }
+      ],
+      "videos": [],
+      "bossSource": "https://oldschool.runescape.wiki/w/Kraken/Strategies",
+      "wilderness": false
+    },
+    {
+      "key": "sire",
+      "main": [],
+      "extra": [
+        1,
+        3,
+        5,
+        7
+      ],
+      "tasks": [
+        {
+          "id": 1,
+          "name": "Abyssal Adept",
+          "condition": "Accumulate 20 Abyssal Sire kills.",
+          "tip": "Use the normal respiratory-system and melee fight; resume across trips on eligible tasks until KC is 20. Pair early attempts with movement checks.",
+          "plan": "No continuous-trip restriction.",
+          "sources": [
+            {
+              "label": "Exact task / Wiki",
+              "url": "https://oldschool.runescape.wiki/w/Abyssal_Adept"
+            }
+          ],
+          "effort": 40
+        },
+        {
+          "id": 3,
+          "name": "They Grow Up Too Fast",
+          "condition": "Finish Sire with no Scion having matured.",
+          "tip": "Kill small Scions promptly, especially at the final spawn wave. Move from the explosion and use eligible area damage or kill Sire before a live Scion can mature.",
+          "plan": "Can share a clean fight with #5/#7. Do not assume that killing mature Spawns repairs the attempt.",
+          "sources": [
+            {
+              "label": "Exact task / Wiki",
+              "url": "https://oldschool.runescape.wiki/w/They_Grow_Up_Too_Fast"
+            }
+          ],
+          "effort": 9
+        },
+        {
+          "id": 5,
+          "name": "Don't Whip Me",
+          "condition": "Finish Sire without an external tentacle hit.",
+          "tip": "Stun during the ventilator phase, attack from tiles away from the perimeter tentacles and stay out of their reach when unstunned.",
+          "plan": "Layer into #3/#7 after learning phase one. Check the tentacle attack cue before ranged swaps.",
+          "sources": [
+            {
+              "label": "Exact task / Wiki",
+              "url": "https://oldschool.runescape.wiki/w/Don%27t_Whip_Me"
+            }
+          ],
+          "effort": 9
+        },
+        {
+          "id": 7,
+          "name": "Don't Stop Moving",
+          "condition": "Take zero miasma-pool damage in a Sire kill.",
+          "tip": "Move as each pool forms and do not path across earlier pools. Reposition immediately after teleports and before starting a new attack cycle.",
+          "plan": "Different failure from Scions or tentacles. Reset after taking pool damage.",
+          "sources": [
+            {
+              "label": "Exact task / Wiki",
+              "url": "https://oldschool.runescape.wiki/w/Don%27t_Stop_Moving"
+            }
+          ],
+          "effort": 9
+        }
+      ],
+      "label": "Abyssal Sire",
+      "title": "Abyssal Sire",
+      "kind": "Boss",
+      "requirements": {
+        "levels": {
+          "slayer": 85
+        }
+      },
+      "recommended": {
+        "attack": 75,
+        "magic": 70,
+        "prayer": 43
+      },
+      "minutes": 75,
+      "intro": [
+        "Melee for Sire, ranged for respiratory systems, Shadow spells if using that stun method, prayer, antipoison and high-healing food. High 70s–80s combat levels are practical."
+      ],
+      "steps": [
+        "85 Slayer and eligible abyssal demon/Sire task. Access the Abyssal Nexus with Enter the Abyss or fairy ring DIP. Pick an empty chamber.",
+        "Stun Sire, disable systems, then melee. Step off each new miasma tile, move immediately after the forced teleport, and kill Scions before they mature."
+      ],
+      "sources": [
+        {
+          "label": "Encounter guide",
+          "url": "https://oldschool.runescape.wiki/w/Abyssal_Sire/Strategies"
+        }
+      ],
+      "videos": [],
+      "bossSource": "https://oldschool.runescape.wiki/w/Abyssal_Sire/Strategies",
+      "wilderness": false
+    },
+    {
+      "key": "demonic",
+      "main": [
+        74,
+        75
+      ],
+      "extra": [],
+      "tasks": [
+        {
+          "id": 74,
+          "name": "If Gorillas Could Fly",
+          "condition": "Kill a demonic gorilla.",
+          "tip": "Use personal eligible kill credit. Prayer/style switching and boulder avoidance take priority over raw DPS.",
+          "plan": "Shares first kill with #75.",
+          "sources": [
+            {
+              "label": "Exact task / Wiki",
+              "url": "https://oldschool.runescape.wiki/w/If_Gorillas_Could_Fly"
+            }
+          ],
+          "effort": 9
+        },
+        {
+          "id": 75,
+          "name": "Hitting Them Where It Hurts",
+          "condition": "Give a demonic gorilla the final hit with demonbane.",
+          "tip": "Bring the gorilla low with whichever style works, wait for melee to be open if needed, and finish with an eligible demonbane item.",
+          "plan": "The rest of the kill can use a different style. Avoid ongoing finishing damage.",
+          "sources": [
+            {
+              "label": "Exact task / Wiki",
+              "url": "https://oldschool.runescape.wiki/w/Hitting_Them_Where_It_Hurts"
+            }
+          ],
+          "effort": 9
+        }
+      ],
+      "label": "Demonic gorillas",
+      "title": "Demonic gorillas",
+      "kind": "Boss",
+      "requirements": {
+        "quests": [
+          "Monkey Madness II"
+        ],
+        "levels": {
+          "slayer": 69,
+          "crafting": 70,
+          "hunter": 60,
+          "firemaking": 60,
+          "agility": 55,
+          "thieving": 55
+        }
+      },
+      "recommended": {
+        "attack": 65,
+        "ranged": 61,
+        "prayer": 43
+      },
+      "minutes": 24,
+      "intro": [
+        "Usable melee and ranged, demonbane such as Darklight or Arclight, food/prayer and escape."
+      ],
+      "steps": [
+        "Complete Monkey Madness II and return to Crash Site Cavern. Bring two working styles, food and prayer. Use Darklight or charged Arclight for the final-hit task if available.",
+        "React to the gorilla’s protection and attack-style changes, dodge the falling boulder, lower its HP and land the eligible demonbane final blow. Two objectives can share that first kill."
+      ],
+      "sources": [
+        {
+          "label": "Encounter guide",
+          "url": "https://oldschool.runescape.wiki/w/Demonic_gorilla/Strategies"
+        }
+      ],
+      "videos": [],
+      "bossSource": "https://oldschool.runescape.wiki/w/Demonic_gorilla/Strategies",
+      "wilderness": false
+    },
+    {
+      "key": "tormented",
+      "main": [
+        551,
+        552
+      ],
+      "extra": [],
+      "tasks": [
+        {
+          "id": 551,
+          "name": "Unending Torment",
+          "condition": "Defeat one Tormented Demon.",
+          "tip": "Keep one spawn engaged, match damage style to protections and avoid the fire bomb. Finish with eligible damage.",
+          "plan": "Can pair with shield-drop final hit.",
+          "sources": [
+            {
+              "label": "Exact task / Wiki",
+              "url": "https://oldschool.runescape.wiki/w/Unending_Torment"
+            }
+          ],
+          "effort": 9
+        },
+        {
+          "id": 552,
+          "name": "Through Fire and Flames",
+          "condition": "Finish a Tormented Demon while its fire shield is down.",
+          "tip": "Bring boss low, dodge fire bombs and immediately hit in the exposed/stun window. Save the strong hit until the shield actually drops.",
+          "plan": "Boss being low does not on its own mean shield is inactive.",
+          "sources": [
+            {
+              "label": "Exact task / Wiki",
+              "url": "https://oldschool.runescape.wiki/w/Through_Fire_and_Flames"
+            }
+          ],
+          "effort": 9
+        }
+      ],
+      "label": "Tormented Demons",
+      "title": "Tormented Demons",
+      "kind": "Boss",
+      "requirements": {
+        "quests": [
+          "While Guthix Sleeps"
+        ],
+        "levels": {
+          "thieving": 72,
+          "magic": 67,
+          "agility": 66,
+          "farming": 65,
+          "herblore": 65,
+          "hunter": 62
+        }
+      },
+      "recommended": {
+        "attack": 70,
+        "ranged": 65,
+        "prayer": 43
+      },
+      "minutes": 25,
+      "intro": [
+        "Two effective styles, ordinary rune crossbow/bolts and a usable melee weapon or spell, slow finisher for exposed window, food/prayer."
+      ],
+      "steps": [
+        "Complete While Guthix Sleeps and return to the Ancient Guthixian Temple. Isolate a single demon. Take two working styles with ammo or runes, food, restores and an escape.",
+        "Watch its overheads, protect against the actual style and leave the fire bomb tile. Bring its HP low, then finish in the shield-down window immediately after the special. Choose the normal kill first if the timing is unfamiliar."
+      ],
+      "sources": [
+        {
+          "label": "Encounter guide",
+          "url": "https://oldschool.runescape.wiki/w/Tormented_Demon/Strategies"
+        }
+      ],
+      "videos": [],
+      "bossSource": "https://oldschool.runescape.wiki/w/Tormented_Demon/Strategies",
+      "wilderness": false
+    },
+    {
+      "key": "muspah",
+      "main": [
+        478
+      ],
+      "extra": [
+        473,
+        479,
+        482
+      ],
+      "tasks": [
+        {
+          "id": 478,
+          "name": "Phantom Muspah Adept",
+          "condition": "Defeat the Phantom Muspah for kill credit.",
+          "tip": "Use a normal fight with ranged, suitable melee-form movement and sapphire bolts/Smite for shield. Keep protection up and exit when a pattern breaks.",
+          "plan": "Also awards #473 only if the entire qualifying attempt avoided running.",
+          "sources": [
+            {
+              "label": "Exact task / Wiki",
+              "url": "https://oldschool.runescape.wiki/w/Phantom_Muspah_Adept"
+            }
+          ],
+          "effort": 6
+        },
+        {
+          "id": 473,
+          "name": "Can't Escape",
+          "condition": "Kill Muspah without running at any point in its qualifying encounter.",
+          "tip": "Turn run off before entry, rehearse a proven walk-step/freeze method for melee form and find transition spike cover before it is needed. Keep all movement in walk mode.",
+          "plan": "Separate from first practice. Movement restrictions do not remove normal damage risk.",
+          "sources": [
+            {
+              "label": "Exact task / Wiki",
+              "url": "https://oldschool.runescape.wiki/w/Can%27t_Escape"
+            }
+          ],
+          "effort": 9
+        },
+        {
+          "id": 479,
+          "name": "Phantom Muspah Veteran",
+          "condition": "Accumulate 25 Muspah kills.",
+          "tip": "Bank and repeat the successful ranged/Magic method. Use ordinary speedy kills if restriction adds effort.",
+          "plan": "Conditional if already farming it.",
+          "sources": [
+            {
+              "label": "Exact task / Wiki",
+              "url": "https://oldschool.runescape.wiki/w/Phantom_Muspah_Veteran"
+            }
+          ],
+          "effort": 50
+        },
+        {
+          "id": 482,
+          "name": "Versatile Drainer",
+          "condition": "Drain Muspah Prayer from three separate sources in one kill.",
+          "tip": "Use a tested combination such as Smite and sapphire bolts (e) with a third qualifying source. Check each source actually drained before shield breaks.",
+          "plan": "Confirm ownership and requirements of the third source. Do not require rare kit.",
+          "sources": [
+            {
+              "label": "Exact task / Wiki",
+              "url": "https://oldschool.runescape.wiki/w/Versatile_Drainer"
+            }
+          ],
+          "effort": 9
+        }
+      ],
+      "label": "Phantom Muspah",
+      "title": "Phantom Muspah",
+      "kind": "Boss",
+      "requirements": {
+        "quests": [
+          "Secrets of the North"
+        ],
+        "levels": {
+          "agility": 69,
+          "thieving": 64,
+          "hunter": 56
+        }
+      },
+      "recommended": {
+        "ranged": 75,
+        "prayer": 52
+      },
+      "minutes": 28,
+      "intro": [
+        "Reliable ranged, sapphire bolts (e) and Smite for shield, optional freezes, food, prayer. Practise the walk-only setup separately."
+      ],
+      "steps": [
+        "Secrets of the North, 69 Agility, 64 Thieving, 56 Hunter and quest chain including Making Friends with My Arm and The General’s Shadow.",
+        "Pray Missiles against ordinary ranged hits, Mage on the telegraphed special, and kite/freeze the melee form. For transition hide behind a spike, then drain shield and finish."
+      ],
+      "sources": [
+        {
+          "label": "Encounter guide",
+          "url": "https://oldschool.runescape.wiki/w/Phantom_Muspah/Strategies"
+        }
+      ],
+      "videos": [],
+      "bossSource": "https://oldschool.runescape.wiki/w/Phantom_Muspah/Strategies",
+      "wilderness": false
+    },
+    {
+      "key": "gauntlet",
+      "main": [
+        111,
+        115,
+        109
+      ],
+      "extra": [
+        112,
+        114,
+        116,
+        110,
+        113,
+        117
+      ],
+      "tasks": [
+        {
+          "id": 111,
+          "name": "3, 2, 1 - Range",
+          "condition": "Defeat Crystalline Hunllef without taking off-prayer damage.",
+          "tip": "Track four attacks per style and swap on the correct cue. Reactivate prayer after a disable. Use standard gear and avoid unnecessary restrictions.",
+          "plan": "Subset of a successful #112 kill.",
+          "sources": [
+            {
+              "label": "Exact task / Wiki",
+              "url": "https://oldschool.runescape.wiki/w/3%2C_2%2C_1_-_Range"
+            }
+          ],
+          "effort": 9
+        },
+        {
+          "id": 115,
+          "name": "Crystalline Warrior",
+          "condition": "Kill Hunllef while wearing the complete perfected armour set.",
+          "tip": "Plan the prep route for enough resources, craft all three tier-3 body pieces and equip them at the finish. Use appropriate weapons and food.",
+          "plan": "Shares ordinary clean clear, and is separate from a no-armour attempt.",
+          "sources": [
+            {
+              "label": "Exact task / Wiki",
+              "url": "https://oldschool.runescape.wiki/w/Crystalline_Warrior"
+            }
+          ],
+          "effort": 9
+        },
+        {
+          "id": 109,
+          "name": "Gauntlet Veteran",
+          "condition": "Clear normal Gauntlet five times.",
+          "tip": "Start an ordinary run with full armour/food as needed, learn two weapons and repeat until five credited completions.",
+          "plan": "Use existing Song of the Elves unlock. Works with all individual Gauntlet checks.",
+          "sources": [
+            {
+              "label": "Exact task / Wiki",
+              "url": "https://oldschool.runescape.wiki/w/Gauntlet_Veteran"
+            }
+          ],
+          "effort": 10
+        },
+        {
+          "id": 112,
+          "name": "Perfect Crystalline Hunllef",
+          "condition": "Defeat normal Hunllef without off-prayer, floor, tornado or stomp damage, and never attack into its protection.",
+          "tip": "Use two mastered weapon styles, identify the protection icon before each swap and stop attacking to route safely when needed. Keep the correct prayer through transitions.",
+          "plan": "Do clean run in armour. A lucky zero or wrong weapon attempt may not repair an invalid run.",
+          "sources": [
+            {
+              "label": "Exact task / Wiki",
+              "url": "https://oldschool.runescape.wiki/w/Perfect_Crystalline_Hunllef"
+            }
+          ],
+          "effort": 9
+        },
+        {
+          "id": 114,
+          "name": "Egniol Diet",
+          "condition": "Defeat Hunllef without making an egniol potion during this run.",
+          "tip": "Gather usual food, weapons and armour and omit making the potion entirely. Manage prayer throughout preparation and boss. Stop if your usual supplies cannot meet demand.",
+          "plan": "Not simply avoiding a sip. Best as a separate practised clear.",
+          "sources": [
+            {
+              "label": "Exact task / Wiki",
+              "url": "https://oldschool.runescape.wiki/w/Egniol_Diet"
+            }
+          ],
+          "effort": 9
+        },
+        {
+          "id": 116,
+          "name": "Wolf Puncher",
+          "condition": "Kill normal Hunllef without making more than one attuned weapon.",
+          "tip": "Choose one attuned path and a separate basic weapon if required to switch. Do not make a second attuned weapon during prep. Check the exact upgrade path for whichever perfected weapon you use.",
+          "plan": "Keep different production-count restrictions separate from timed clears.",
+          "sources": [
+            {
+              "label": "Exact task / Wiki",
+              "url": "https://oldschool.runescape.wiki/w/Wolf_Puncher"
+            }
+          ],
+          "effort": 9
+        },
+        {
+          "id": 110,
+          "name": "Gauntlet Master",
+          "condition": "Complete Normal Gauntlet 20 times.",
+          "tip": "Earn the five milestone during the same progression. Use normal repeated runs without restrictions if count is the aim.",
+          "plan": "Reserve if already practising or near threshold.",
+          "sources": [
+            {
+              "label": "Exact task / Wiki",
+              "url": "https://oldschool.runescape.wiki/w/Gauntlet_Master"
+            }
+          ],
+          "effort": 40
+        },
+        {
+          "id": 113,
+          "name": "Defence Doesn't Matter",
+          "condition": "Kill normal Hunllef without crafting armour.",
+          "tip": "Skip all armour production in the chosen run, gather food and strong weapons, pray correctly and manage movement. Do this only once comfortable.",
+          "plan": "Conflicts with making the full armour in #115.",
+          "sources": [
+            {
+              "label": "Exact task / Wiki",
+              "url": "https://oldschool.runescape.wiki/w/Defence_Doesn%27t_Matter"
+            }
+          ],
+          "effort": 9
+        },
+        {
+          "id": 117,
+          "name": "Gauntlet Speed-Chaser",
+          "condition": "Complete Normal Gauntlet in under five minutes.",
+          "tip": "Only chase with proven prep and fight time. Choose a short resource route and efficient boss attack rhythm.",
+          "plan": "Keep the armour/no-potion variants separate when they slow execution.",
+          "sources": [
+            {
+              "label": "Exact task / Wiki",
+              "url": "https://oldschool.runescape.wiki/w/Gauntlet_Speed-Chaser"
+            }
+          ],
+          "effort": 16
+        }
+      ],
+      "label": "The Gauntlet",
+      "title": "The Gauntlet",
+      "kind": "Boss",
+      "requirements": {
+        "quests": [
+          "Song of the Elves"
+        ]
+      },
+      "recommended": {
+        "ranged": 75,
+        "magic": 75,
+        "prayer": 43
+      },
+      "minutes": 100,
+      "intro": [
+        "Weapons, food and potion contents come from within. Practise two perfected weapons and ample food. Offensive prayers optional for baseline clear."
+      ],
+      "steps": [
+        "Enter the normal Gauntlet at Prifddinas after Song of the Elves. The encounter supplies the weapon, armour and food materials. Prepare enough fish and two distinct weapon styles before attempting restrictions.",
+        "At Hunllef watch its four-hit attack rhythm, match protection and attack using a style it does not protect. Move from marked floor and tornadoes before starting another hit.",
+        "Finish five ordinary runs and learn the no-off-prayer and full-tier-3-armour variants as available. Separate the no-armour, no-potion or weapon-crafting restrictions. Track the actual condition because time and gear goals can conflict."
+      ],
+      "sources": [
+        {
+          "label": "Encounter guide",
+          "url": "https://oldschool.runescape.wiki/w/The_Gauntlet/Strategies"
+        }
+      ],
+      "videos": [],
+      "bossSource": "https://oldschool.runescape.wiki/w/The_Gauntlet/Strategies",
+      "wilderness": false
+    },
+    {
+      "key": "corrupted-gauntlet",
+      "main": [],
+      "extra": [
+        98,
+        99,
+        101,
+        102,
+        105
+      ],
+      "tasks": [
+        {
+          "id": 98,
+          "name": "Corrupted Gauntlet Veteran",
+          "condition": "Finish Corrupted Gauntlet five times.",
+          "tip": "Practice with two perfected weapons, usable armour and adequate fish. Continue to five clears on already-unlocked accounts.",
+          "plan": "Unsafe for Hardcore; only when repeats are proven.",
+          "sources": [
+            {
+              "label": "Exact task / Wiki",
+              "url": "https://oldschool.runescape.wiki/w/Corrupted_Gauntlet_Veteran"
+            }
+          ],
+          "effort": 10
+        },
+        {
+          "id": 99,
+          "name": "Corrupted Gauntlet Master",
+          "condition": "Finish Corrupted Gauntlet ten times.",
+          "tip": "Continue after five on standard successful clears.",
+          "plan": "Reserve if doing CG naturally.",
+          "sources": [
+            {
+              "label": "Exact task / Wiki",
+              "url": "https://oldschool.runescape.wiki/w/Corrupted_Gauntlet_Master"
+            }
+          ],
+          "effort": 20
+        },
+        {
+          "id": 101,
+          "name": "3, 2, 1 - Mage",
+          "condition": "Beat Corrupted Hunllef without off-prayer damage.",
+          "tip": "Track its regular hit pattern, swap on correct cues and prioritise protection over finishing an attack.",
+          "plan": "Stacks with #102.",
+          "sources": [
+            {
+              "label": "Exact task / Wiki",
+              "url": "https://oldschool.runescape.wiki/w/3%2C_2%2C_1_-_Mage"
+            }
+          ],
+          "effort": 9
+        },
+        {
+          "id": 102,
+          "name": "Perfect Corrupted Hunllef",
+          "condition": "Defeat Corrupted Hunllef with zero listed floor/tornado/stomp/off-prayer hits and valid attack styles only.",
+          "tip": "Maintain deliberate weapon and overhead switches, use open tiles and stop attacking to reposition when necessary.",
+          "plan": "Harder version of #112, reserve only.",
+          "sources": [
+            {
+              "label": "Exact task / Wiki",
+              "url": "https://oldschool.runescape.wiki/w/Perfect_Corrupted_Hunllef"
+            }
+          ],
+          "effort": 9
+        },
+        {
+          "id": 105,
+          "name": "Corrupted Warrior",
+          "condition": "Finish Corrupted Hunllef wearing full perfected corrupted armour.",
+          "tip": "Prep materials in time for all three pieces, wear full tier 3 at finish and balance food/weapon budget.",
+          "plan": "Separate long prep from speed goals.",
+          "sources": [
+            {
+              "label": "Exact task / Wiki",
+              "url": "https://oldschool.runescape.wiki/w/Corrupted_Warrior"
+            }
+          ],
+          "effort": 9
+        }
+      ],
+      "label": "Corrupted Gauntlet",
+      "title": "Corrupted Gauntlet",
+      "kind": "Boss",
+      "requirements": {
+        "quests": [
+          "Song of the Elves"
+        ]
+      },
+      "recommended": {
+        "ranged": 80,
+        "magic": 80,
+        "prayer": 43
+      },
+      "minutes": 120,
+      "intro": [
+        "High combat, fast prep, safe weapon swaps, food and in-game potions."
+      ],
+      "steps": [
+        "Song of the Elves and at least one regular clear for Corrupted access. All gear provided inside.",
+        "Learn normal first. Corrupted raises the pace and resource planning demands. Only add constraints after stable clears."
+      ],
+      "sources": [
+        {
+          "label": "Encounter guide",
+          "url": "https://oldschool.runescape.wiki/w/The_Gauntlet/Strategies"
+        }
+      ],
+      "videos": [],
+      "bossSource": "https://oldschool.runescape.wiki/w/The_Gauntlet/Strategies",
+      "wilderness": false
+    },
+    {
+      "key": "zalcano",
+      "main": [],
+      "extra": [
+        330,
+        331,
+        329,
+        328
+      ],
+      "tasks": [
+        {
+          "id": 330,
+          "name": "Team Player",
+          "condition": "Receive imbued tephra from a destroyed golem.",
+          "tip": "Keep the golem alive long enough to prepare enough imbued ammo. Throw it at the golem rather than spending all on Zalcano, then pick up the drop. Smaller groups make the attempt easier to set up.",
+          "plan": "Ordinary boss KC is unnecessary for this room action; see task-specific trigger.",
+          "sources": [
+            {
+              "label": "Exact task / Wiki",
+              "url": "https://oldschool.runescape.wiki/w/Team_Player"
+            }
+          ],
+          "effort": 9
+        },
+        {
+          "id": 331,
+          "name": "The Spurned Hero",
+          "condition": "Kill Zalcano with the most damage dealt by you.",
+          "tip": "Use effective pickaxe and tephra cycles with a suitable eligible small group or solo. Hold the highest eligible total through final completion.",
+          "plan": "Avoid assuming guaranteed MVP in a large public world.",
+          "sources": [
+            {
+              "label": "Exact task / Wiki",
+              "url": "https://oldschool.runescape.wiki/w/The_Spurned_Hero"
+            }
+          ],
+          "effort": 9
+        },
+        {
+          "id": 329,
+          "name": "Perfect Zalcano",
+          "condition": "Complete five consecutive Zalcano kills without leaving or hitting listed hazards.",
+          "tip": "Step out of rock impact markers and red symbols, keep clear as she powers up, and stay inside between kills. Start a new streak if damaged by a listed hazard.",
+          "plan": "Consecutive track is separate from total KC. Choose the steadier group.",
+          "sources": [
+            {
+              "label": "Exact task / Wiki",
+              "url": "https://oldschool.runescape.wiki/w/Perfect_Zalcano"
+            }
+          ],
+          "effort": 9
+        },
+        {
+          "id": 328,
+          "name": "Zalcano Veteran",
+          "condition": "Record 25 Zalcano kills.",
+          "tip": "Participate through each exposed phase, contribute enough for the kill and replenish food between runs.",
+          "plan": "Do after usual progression toward crystal resources unless close to the goal.",
+          "sources": [
+            {
+              "label": "Exact task / Wiki",
+              "url": "https://oldschool.runescape.wiki/w/Zalcano_Veteran"
+            }
+          ],
+          "effort": 50
+        }
+      ],
+      "label": "Zalcano",
+      "title": "Zalcano",
+      "kind": "Boss",
+      "requirements": {
+        "quests": [
+          "Song of the Elves"
+        ]
+      },
+      "recommended": {
+        "mining": 70,
+        "hitpoints": 65
+      },
+      "minutes": 75,
+      "intro": [
+        "Best pickaxe, food and teleport. Learn to check active participation and credit."
+      ],
+      "steps": [
+        "Song of the Elves, Prifddinas and suitable teammates. Quest requires 70 Agility, Construction, Farming, Herblore, Hunter, Mining, Smithing, Woodcutting.",
+        "Mine tephra, refine, imbue and throw, then mine Zalcano while she is down. Step off symbols, dodge rock impacts and stand clear of power-ups."
+      ],
+      "sources": [
+        {
+          "label": "Encounter guide",
+          "url": "https://oldschool.runescape.wiki/w/Zalcano/Strategies"
+        }
+      ],
+      "videos": [],
+      "bossSource": "https://oldschool.runescape.wiki/w/Zalcano/Strategies",
+      "wilderness": false
+    },
+    {
+      "key": "mimic",
+      "main": [],
+      "extra": [
+        176
+      ],
+      "tasks": [
+        {
+          "id": 176,
+          "name": "Mimic Veteran",
+          "condition": "Kill a Mimic.",
+          "tip": "Enable the casket option before clue opening, enter the fight from an owned Mimic, deal damage while avoiding additional enemies and finish before attempts run out.",
+          "plan": "A closed elite clue is not a guaranteed Mimic. Use only as available.",
+          "sources": [
+            {
+              "label": "Exact task / Wiki",
+              "url": "https://oldschool.runescape.wiki/w/Mimic_Veteran"
+            }
+          ],
+          "effort": 9
+        }
+      ],
+      "label": "The Mimic",
+      "title": "The Mimic",
+      "kind": "Boss",
+      "requirements": {},
+      "recommended": {
+        "hitpoints": 65
+      },
+      "minutes": 15,
+      "intro": [
+        "Working damage, food and prayer. Review attempt and reclaim rules before opening."
+      ],
+      "steps": [
+        "Enable Mimics at Strange Casket, Watson’s house. Eligible elite/master casket can contain a Mimic. Availability is chance-based.",
+        "Enter from the casket, avoid unnecessary minions, keep attacking and finish before wasting limited attempts."
+      ],
+      "sources": [
+        {
+          "label": "Encounter guide",
+          "url": "https://oldschool.runescape.wiki/w/The_Mimic/Strategies"
+        }
+      ],
+      "videos": [],
+      "bossSource": "https://oldschool.runescape.wiki/w/The_Mimic/Strategies",
+      "wilderness": false
+    },
+    {
+      "key": "vorkath",
+      "main": [],
+      "extra": [
+        271,
+        273,
+        268
+      ],
+      "tasks": [
+        {
+          "id": 271,
+          "name": "Zombie Destroyer",
+          "condition": "Kill the zombified spawn without Crumble Undead.",
+          "tip": "Use a valid alternative attack method in the spawn phase, time it on the freeze, and avoid letting it explode near you.",
+          "plan": "Use a separate run from routine safety practice.",
+          "sources": [
+            {
+              "label": "Exact task / Wiki",
+              "url": "https://oldschool.runescape.wiki/w/Zombie_Destroyer"
+            }
+          ],
+          "effort": 9
+        },
+        {
+          "id": 273,
+          "name": "Stick 'em With the Pointy End",
+          "condition": "Kill Vorkath with melee weapons exclusively.",
+          "tip": "Use a viable melee setup and active dragonfire protection while dealing player damage with approved kit. Verify treatment of spawn-specific actions in the task page.",
+          "plan": "Reserve if your existing plan is melee Vorkath.",
+          "sources": [
+            {
+              "label": "Exact task / Wiki",
+              "url": "https://oldschool.runescape.wiki/w/Stick_%27em_With_the_Pointy_End"
+            }
+          ],
+          "effort": 9
+        },
+        {
+          "id": 268,
+          "name": "Vorkath Veteran",
+          "condition": "Accumulate 50 Vorkath kills.",
+          "tip": "Continue ordinary kills after DS2, bank as needed. Group with natural assembler or loot goals when already pursuing it.",
+          "plan": "Do not add DS2 solely for this.",
+          "sources": [
+            {
+              "label": "Exact task / Wiki",
+              "url": "https://oldschool.runescape.wiki/w/Vorkath_Veteran"
+            }
+          ],
+          "effort": 9
+        }
+      ],
+      "label": "Vorkath",
+      "title": "Vorkath",
+      "kind": "Boss",
+      "requirements": {
+        "quests": [
+          "Dragon Slayer II"
+        ]
+      },
+      "recommended": {
+        "attack": 75,
+        "ranged": 75,
+        "prayer": 43
+      },
+      "minutes": 45,
+      "intro": [
+        "Dragonfire protection, melee/ranged damage, high-healing food, compatible ammo, Crumble Undead except for the deliberate alternate spawn task."
+      ],
+      "steps": [
+        "Dragon Slayer II and Ungael. Progress there if already aligned with account goals.",
+        "Step from fireball. After freeze deal with spawn. Steer through acid while continuously walking and avoid attacks where chosen method requires."
+      ],
+      "sources": [
+        {
+          "label": "Encounter guide",
+          "url": "https://oldschool.runescape.wiki/w/Vorkath/Strategies"
+        }
+      ],
+      "videos": [],
+      "bossSource": "https://oldschool.runescape.wiki/w/Vorkath/Strategies",
+      "wilderness": false
+    },
+    {
+      "key": "nightmare",
+      "main": [],
+      "extra": [
+        183
+      ],
+      "tasks": [
+        {
+          "id": 183,
+          "name": "Nightmare Adept",
+          "condition": "Defeat The Nightmare once.",
+          "tip": "Join an eligible learner group or mass and make active credited contributions. Deal with totems and avoid the boss’s most dangerous specials before finishing.",
+          "plan": "Phosani’s Nightmare is a different activity and should not be substituted without explicit game credit.",
+          "sources": [
+            {
+              "label": "Exact task / Wiki",
+              "url": "https://oldschool.runescape.wiki/w/Nightmare_Adept"
+            }
+          ],
+          "effort": 9,
+          "minimumParty": 2
+        }
+      ],
+      "label": "The Nightmare",
+      "title": "The Nightmare",
+      "kind": "Boss",
+      "requirements": {
+        "quests": [
+          "Priest in Peril"
+        ]
+      },
+      "recommended": {
+        "attack": 75,
+        "magic": 65,
+        "prayer": 43
+      },
+      "minutes": 30,
+      "intro": [
+        "Crush melee, Magic for totems, food and prayer. Bring only what you can use fluently."
+      ],
+      "steps": [
+        "Slepe in Morytania; use Priest in Peril walking route or eligible Port Phasmatys boat. Verify group entry and kill credit.",
+        "Prepare for attacks by reading the three cues, step clear of flowers/shadows/charge and use Magic on totems. Meet active contribution requirement if choosing a mass."
+      ],
+      "sources": [
+        {
+          "label": "Encounter guide",
+          "url": "https://oldschool.runescape.wiki/w/The_Nightmare/Strategies"
+        }
+      ],
+      "videos": [],
+      "bossSource": "https://oldschool.runescape.wiki/w/The_Nightmare/Strategies",
+      "wilderness": false
+    },
+    {
+      "key": "maggot-king",
+      "main": [],
+      "extra": [
+        637
+      ],
+      "tasks": [
+        {
+          "id": 637,
+          "name": "Maggot Squasher",
+          "condition": "Defeat the Maggot King for eligible kill credit.",
+          "tip": "Use a reliable post-quest attempt. Delete healing larvae promptly, keep out of the bile, avoid projectiles and use melee punish windows.",
+          "plan": "Count first clear. Further task timing or 25 KC is only a reserve if already farming it.",
+          "sources": [
+            {
+              "label": "Exact task / Wiki",
+              "url": "https://oldschool.runescape.wiki/w/Maggot_Squasher"
+            }
+          ],
+          "effort": 9
+        }
+      ],
+      "label": "Maggot King",
+      "title": "Maggot King",
+      "kind": "Boss",
+      "requirements": {
+        "quests": [
+          "The Blood Moon Rises"
+        ]
+      },
+      "recommended": {
+        "attack": 75,
+        "ranged": 70,
+        "prayer": 43
+      },
+      "minutes": 25,
+      "intro": [
+        "Ranged for flying larvae, melee for punish windows, food and poison mitigation."
+      ],
+      "steps": [
+        "The Blood Moon Rises for post-quest fight in Vampyrium. Major unlock, favour only if already open or actively progressing that quest.",
+        "Remove larvae before landing, step off poison/bile and carrion impacts, use melee punish window when prompted and finish a post-quest kill."
+      ],
+      "sources": [
+        {
+          "label": "Encounter guide",
+          "url": "https://oldschool.runescape.wiki/w/Maggot_King/Strategies"
+        }
+      ],
+      "videos": [],
+      "bossSource": "https://oldschool.runescape.wiki/w/Maggot_King/Strategies",
+      "wilderness": false
+    },
+    {
+      "key": "wild-kbd",
+      "main": [],
+      "extra": [
+        164,
+        165,
+        166,
+        162,
+        167,
+        163
+      ],
+      "tasks": [
+        {
+          "id": 164,
+          "name": "Claw Clipper",
+          "condition": "Defeat King Black Dragon with Protect from Melee active.",
+          "tip": "Use appropriate melee-spacing strategy and keep protection toggled at the kill while maintaining separate dragonfire mitigation.",
+          "plan": "Can share a stab/potion/shield kill.",
+          "sources": [
+            {
+              "label": "Exact task / Wiki",
+              "url": "https://oldschool.runescape.wiki/w/Claw_Clipper"
+            }
+          ],
+          "effort": 9
+        },
+        {
+          "id": 165,
+          "name": "Hide Penetration",
+          "condition": "Defeat King Black Dragon using an eligible stab weapon.",
+          "tip": "Bring usable stab gear, attack with the intended style and check credit. Backup ranged is a separate run if restriction would fail.",
+          "plan": "Pairs with #164/#166 on a suitably protected attempt.",
+          "sources": [
+            {
+              "label": "Exact task / Wiki",
+              "url": "https://oldschool.runescape.wiki/w/Hide_Penetration"
+            }
+          ],
+          "effort": 9
+        },
+        {
+          "id": 166,
+          "name": "Antifire Protection",
+          "condition": "Kill KBD while an antifire dose is active and anti-dragon shield is equipped.",
+          "tip": "Drink a qualifying antifire dose, wear the shield and complete the kill before the buff expires. Protect from Melee alone cannot substitute for it.",
+          "plan": "Antifire potion production is a gate for the Iron setup. Other KBD CAs can be separated if unavailable.",
+          "sources": [
+            {
+              "label": "Exact task / Wiki",
+              "url": "https://oldschool.runescape.wiki/w/Antifire_Protection"
+            }
+          ],
+          "effort": 9
+        },
+        {
+          "id": 162,
+          "name": "King Black Dragon Novice",
+          "condition": "Accumulate ten King Black Dragon kills.",
+          "tip": "Use suitable protection and repeat normal kills. A private ten-kill run can qualify simultaneously.",
+          "plan": "No round trip out until #167 is credited.",
+          "sources": [
+            {
+              "label": "Exact task / Wiki",
+              "url": "https://oldschool.runescape.wiki/w/King_Black_Dragon_Novice"
+            }
+          ],
+          "effort": 20
+        },
+        {
+          "id": 167,
+          "name": "Who Is the King Now?",
+          "condition": "Kill King Black Dragon 10 times without leaving its private instance.",
+          "tip": "Enter private, establish protection, and sustain ten kills with potion, food and ammo margins. Complete #164–166 while safe and keep the session open.",
+          "plan": "Normal/public lair does not qualify. Wilderness approach risk remains.",
+          "sources": [
+            {
+              "label": "Exact task / Wiki",
+              "url": "https://oldschool.runescape.wiki/w/Who_Is_the_King_Now%3F"
+            }
+          ],
+          "effort": 20
+        },
+        {
+          "id": 163,
+          "name": "King Black Dragon Champion",
+          "condition": "Accumulate 25 King Black Dragon kills.",
+          "tip": "Continue conventional kills after the ten objective. Maintain potions, shield and supply checks across trips.",
+          "plan": "Repeat only while approach risk and points are worth it.",
+          "sources": [
+            {
+              "label": "Exact task / Wiki",
+              "url": "https://oldschool.runescape.wiki/w/King_Black_Dragon_Champion"
+            }
+          ],
+          "effort": 50
+        }
+      ],
+      "label": "King Black Dragon",
+      "title": "King Black Dragon",
+      "kind": "Boss",
+      "requirements": {},
+      "recommended": {
+        "ranged": 65,
+        "attack": 65,
+        "prayer": 43
+      },
+      "minutes": 85,
+      "intro": [
+        "Anti-dragon shield and antifire, stab weapon if aiming to stack, food, prayer, poison protection and exit teleport."
+      ],
+      "steps": [
+        "Deep Wilderness approach through Lava Maze lever. Lair itself is outside PvP. Use signposted private instance and pay fee for #167.",
+        "Maintain both protections and plan ten uninterrupted kills with sufficient supplies. Pot/shield, stab and melee prayer can share a kill where suitable."
+      ],
+      "sources": [
+        {
+          "label": "Encounter guide",
+          "url": "https://oldschool.runescape.wiki/w/King_Black_Dragon/Strategies"
+        }
+      ],
+      "videos": [],
+      "bossSource": "https://oldschool.runescape.wiki/w/King_Black_Dragon/Strategies",
+      "wilderness": true
+    },
+    {
+      "key": "wild-chaos",
+      "main": [],
+      "extra": [
+        59,
+        60,
+        57,
+        58
+      ],
+      "tasks": [
+        {
+          "id": 59,
+          "name": "Hoarder",
+          "condition": "Kill the Chaos Elemental without it unequipping any items.",
+          "tip": "Fill the inventory with useful items or food leaving a container so the projectile cannot remove gear, or use a clean lure that prevents attacks altogether.",
+          "plan": "Check the state after eating. Empty slots can invalidate this even when HP is high.",
+          "sources": [
+            {
+              "label": "Exact task / Wiki",
+              "url": "https://oldschool.runescape.wiki/w/Hoarder"
+            }
+          ],
+          "effort": 9
+        },
+        {
+          "id": 60,
+          "name": "The Flincher",
+          "condition": "Earn a Chaos Elemental kill without damage from its attacks.",
+          "tip": "Lure with line-of-sight breaks, use the documented safe tile or flinch spot, and wait between hits. First contact must also remain clean.",
+          "plan": "A damage-free boss kill does not prevent danger from PKers.",
+          "sources": [
+            {
+              "label": "Exact task / Wiki",
+              "url": "https://oldschool.runescape.wiki/w/The_Flincher"
+            }
+          ],
+          "effort": 9
+        },
+        {
+          "id": 57,
+          "name": "Chaos Elemental Adept",
+          "condition": "Accumulate 10 Chaos Elemental kills.",
+          "tip": "Use your chosen lure or safe repeatable setup on quiet worlds. Stop or leave on an interrupted trip, then continue the cumulative count.",
+          "plan": "Can stack #59/#60 and later #58 in the same grind.",
+          "sources": [
+            {
+              "label": "Exact task / Wiki",
+              "url": "https://oldschool.runescape.wiki/w/Chaos_Elemental_Adept"
+            }
+          ],
+          "effort": 20
+        },
+        {
+          "id": 58,
+          "name": "Chaos Elemental Veteran",
+          "condition": "Accumulate 25 Chaos Elemental kills.",
+          "tip": "Follow the ordinary clean strategy and finish remaining cumulative KC after the ten milestone.",
+          "plan": "Recheck downtime and PK exposure at 10; no need to keep a streak.",
+          "sources": [
+            {
+              "label": "Exact task / Wiki",
+              "url": "https://oldschool.runescape.wiki/w/Chaos_Elemental_Veteran"
+            }
+          ],
+          "effort": 50
+        }
+      ],
+      "label": "Chaos Elemental",
+      "title": "Chaos Elemental",
+      "kind": "Boss",
+      "requirements": {},
+      "recommended": {
+        "ranged": 60,
+        "prayer": 43
+      },
+      "minutes": 70,
+      "intro": [
+        "Disposable ranged or a cheap flinch weapon, food that leaves occupied containers as appropriate, prayer and an escape plan."
+      ],
+      "steps": [
+        "Deep Wilderness west of Rogues’ Castle. The resource-area obstacle or documented tree lure breaks line of sight.",
+        "Lure with line-of-sight breaks. To flinch, step out, hit once, step behind cover and wait until the indicator clears. For perfection, the lure itself must avoid boss damage."
+      ],
+      "sources": [
+        {
+          "label": "Encounter guide",
+          "url": "https://oldschool.runescape.wiki/w/Chaos_Elemental/Strategies"
+        }
+      ],
+      "videos": [],
+      "bossSource": "https://oldschool.runescape.wiki/w/Chaos_Elemental/Strategies",
+      "wilderness": true
+    },
+    {
+      "key": "wild-scorpia",
+      "main": [],
+      "extra": [
+        221,
+        220,
+        218,
+        219
+      ],
+      "tasks": [
+        {
+          "id": 221,
+          "name": "Guardians No More",
+          "condition": "Kill Scorpia while leaving both guardians alive.",
+          "tip": "When they spawn, separate/freeze them away from Scorpia rather than damaging them to death. Finish the boss before the heals stall the attempt.",
+          "plan": "Compatible with #220 if positioning and spell selection cover both.",
+          "sources": [
+            {
+              "label": "Exact task / Wiki",
+              "url": "https://oldschool.runescape.wiki/w/Guardians_No_More"
+            }
+          ],
+          "effort": 9
+        },
+        {
+          "id": 220,
+          "name": "I Can't Reach That",
+          "condition": "Kill Scorpia without her damaging you.",
+          "tip": "Freeze outside her melee range and keep her path from you through the fight. Check the task-specific damage source after finishing.",
+          "plan": "Poison and nearby NPCs matter to survival even if the CA tracks Scorpia only.",
+          "sources": [
+            {
+              "label": "Exact task / Wiki",
+              "url": "https://oldschool.runescape.wiki/w/I_Can%27t_Reach_That"
+            }
+          ],
+          "effort": 9
+        },
+        {
+          "id": 218,
+          "name": "Scorpia Adept",
+          "condition": "Accumulate ten Scorpia kills.",
+          "tip": "Use the proper freeze rotation and protect against other threats while banking or leaving when unsafe. Keep the multi-Wilderness risk opt-in.",
+          "plan": "Can intersect #220/#221 and subsequent #219.",
+          "sources": [
+            {
+              "label": "Exact task / Wiki",
+              "url": "https://oldschool.runescape.wiki/w/Scorpia_Adept"
+            }
+          ],
+          "effort": 20
+        },
+        {
+          "id": 219,
+          "name": "Scorpia Veteran",
+          "condition": "Accumulate 25 Scorpia kills.",
+          "tip": "Continue the standard freeze fight across visits. Skip this if PK interruptions or rune usage are costly.",
+          "plan": "Finish ten first. No need to stay in one trip.",
+          "sources": [
+            {
+              "label": "Exact task / Wiki",
+              "url": "https://oldschool.runescape.wiki/w/Scorpia_Veteran"
+            }
+          ],
+          "effort": 50
+        }
+      ],
+      "label": "Scorpia",
+      "title": "Scorpia",
+      "kind": "Boss",
+      "requirements": {},
+      "recommended": {
+        "magic": 70,
+        "prayer": 43
+      },
+      "minutes": 90,
+      "intro": [
+        "Freeze runes, Magic gear, antipoison, food and prayer. Bring enough casts for guardians."
+      ],
+      "steps": [
+        "Scorpion Pit in deep multi-Wilderness. Use only a risk kit and an intended escape path.",
+        "Hold Scorpia outside melee reach. Keep guardians frozen away from her while finishing #221. Abandon immediately if a PKer approaches."
+      ],
+      "sources": [
+        {
+          "label": "Encounter guide",
+          "url": "https://oldschool.runescape.wiki/w/Scorpia/Strategies"
+        }
+      ],
+      "videos": [],
+      "bossSource": "https://oldschool.runescape.wiki/w/Scorpia/Strategies",
+      "wilderness": true
+    },
+    {
+      "key": "wild-callisto",
+      "main": [],
+      "extra": [
+        42
+      ],
+      "tasks": [
+        {
+          "id": 42,
+          "name": "Callisto Adept",
+          "condition": "Earn 10 eligible Callisto kills.",
+          "tip": "Use a ready, eligible group for full Callisto or confirm that the lower variant counts before committing. Freeze and move as appropriate and verify KC after the first kill.",
+          "plan": "Credit and access for singles variant require a fresh check per task. Wilderness opt-in.",
+          "sources": [
+            {
+              "label": "Exact task / Wiki",
+              "url": "https://oldschool.runescape.wiki/w/Callisto_Adept"
+            }
+          ],
+          "effort": 20
+        }
+      ],
+      "label": "Callisto or Artio",
+      "title": "Callisto or Artio",
+      "kind": "Boss",
+      "requirements": {},
+      "recommended": {
+        "magic": 70,
+        "prayer": 43
+      },
+      "minutes": 65,
+      "intro": [
+        "Cheap ranged/Magic, freeze runes for the chosen approach, food, prayer and escape option. Verify spell style and escape level limits."
+      ],
+      "steps": [
+        "The full boss is in multi-Wilderness and needs the Medium Wilderness Diary. Artio is the singles-plus option and needs the Hard Wilderness Diary. Both count for the named KC task.",
+        "Freeze and move according to current attack cues. Leave when interrupted. Confirm actual task KC before grinding any variant."
+      ],
+      "sources": [
+        {
+          "label": "Encounter guide",
+          "url": "https://oldschool.runescape.wiki/w/Callisto/Strategies"
+        }
+      ],
+      "videos": [],
+      "bossSource": "https://oldschool.runescape.wiki/w/Callisto/Strategies",
+      "wilderness": true
+    },
+    {
+      "key": "wild-venenatis",
+      "main": [],
+      "extra": [
+        264
+      ],
+      "tasks": [
+        {
+          "id": 264,
+          "name": "Venenatis Adept",
+          "condition": "Accumulate ten eligible Venenatis kills.",
+          "tip": "Use multi boss with competent eligible support and verify exact task credit before relying on Spindel. Keep cheap crush and immediate retreat planned.",
+          "plan": "Dangerous optional route; treat kill count across trips.",
+          "sources": [
+            {
+              "label": "Exact task / Wiki",
+              "url": "https://oldschool.runescape.wiki/w/Venenatis_Adept"
+            }
+          ],
+          "effort": 20
+        }
+      ],
+      "label": "Venenatis or Spindel",
+      "title": "Venenatis or Spindel",
+      "kind": "Boss",
+      "requirements": {},
+      "recommended": {
+        "attack": 65,
+        "prayer": 43
+      },
+      "minutes": 70,
+      "intro": [
+        "Budget crush, eligible protection, food, restores and escape."
+      ],
+      "steps": [
+        "The full boss is in multi-Wilderness and needs the Medium Wilderness Diary. Spindel is the singles-plus option and needs the Hard Wilderness Diary. Both count for the named KC task.",
+        "Learn web placement and avoid pathing under the boss. Check credited boss/task counter before repeating 10."
+      ],
+      "sources": [
+        {
+          "label": "Encounter guide",
+          "url": "https://oldschool.runescape.wiki/w/Venenatis/Strategies"
+        }
+      ],
+      "videos": [],
+      "bossSource": "https://oldschool.runescape.wiki/w/Venenatis/Strategies",
+      "wilderness": true
+    },
+    {
+      "key": "wild-vetion",
+      "main": [],
+      "extra": [
+        266
+      ],
+      "tasks": [
+        {
+          "id": 266,
+          "name": "Vet'ion Adept",
+          "condition": "Accumulate ten eligible Vet’ion kills.",
+          "tip": "Prioritise lightning and hellhound phases. Confirm named or explicitly qualifying variant before committing, using repeated short trips.",
+          "plan": "Opt in only. Plan an immediate escape if the cave becomes contested.",
+          "sources": [
+            {
+              "label": "Exact task / Wiki",
+              "url": "https://oldschool.runescape.wiki/w/Vet%27ion_Adept"
+            }
+          ],
+          "effort": 20
+        }
+      ],
+      "label": "Vet’ion or Calvar’ion",
+      "title": "Vet’ion or Calvar’ion",
+      "kind": "Boss",
+      "requirements": {},
+      "recommended": {
+        "attack": 65,
+        "prayer": 43
+      },
+      "minutes": 65,
+      "intro": [
+        "Cheap crush, prayer, food and escape. Rare Wilderness weapon not required."
+      ],
+      "steps": [
+        "The full boss is in multi-Wilderness and needs the Medium Wilderness Diary. Calvar’ion is the singles-plus option and needs the Hard Wilderness Diary. Both count for the named KC task.",
+        "Step off lightning shadows, kill hellhounds in immune phase and move away for shield bash. Repeat after transformation."
+      ],
+      "sources": [
+        {
+          "label": "Encounter guide",
+          "url": "https://oldschool.runescape.wiki/w/Vet%27ion/Strategies"
+        }
+      ],
+      "videos": [],
+      "bossSource": "https://oldschool.runescape.wiki/w/Vet%27ion/Strategies",
+      "wilderness": true
+    }
+  ],
+  "kitProfiles": {
+    "skotizo": [
+      {
+        "label": "Chinchompas for the finishing hit",
+        "role": "required_task",
+        "minimum": 1,
+        "unit": "items",
+        "notes": "Catch grey chinchompas at 53 Hunter or buy a tradeable type. Confirm the Ranged level for the type you throw.",
+        "any_of_ids": [
+          10033,
+          10034,
+          11959
+        ],
+        "task_ids": [
+          50
+        ]
+      }
+    ],
+    "moons": [
+      {
+        "label": "Your target Moon’s matching reward weapon",
+        "role": "required_task",
+        "minimum": 1,
+        "unit": "items",
+        "notes": "Blood: dual macuahuitl. Blue: blue moon spear. Eclipse: eclipse atlatl. Use your existing drop or a main purchase.",
+        "task_ids": [
+          533
+        ],
+        "manualCheck": true
+      }
+    ],
+    "chambers": [
+      {
+        "label": "Eligible party for this room method",
+        "role": "required_task",
+        "minimum": 1,
+        "unit": "items",
+        "notes": "Confirm a group that can do the selected room. Most basic rooms have solo methods in the checklist.",
+        "task_ids": [
+          302,
+          303,
+          304,
+          307,
+          308,
+          309,
+          310,
+          312
+        ],
+        "manualCheck": true
+      }
+    ],
+    "theatre": [
+      {
+        "label": "Dragon or crystal halberd and special energy",
+        "role": "required_task",
+        "minimum": 1,
+        "unit": "items",
+        "notes": "Dragon requires Regicide, 60 Attack and 30 Strength. A charged crystal halberd requires Hard Western Provinces Diary, 70 Attack, 35 Strength and 50 Agility. Land the special attack as the final hit.",
+        "task_ids": [
+          389
+        ],
+        "manualCheck": true
+      },
+      {
+        "label": "At least two eligible players for this task",
+        "role": "required_task",
+        "minimum": 1,
+        "unit": "items",
+        "notes": "Confirm the other player can meet the room’s shared condition. The rest of Entry can be played solo.",
+        "task_ids": [
+          391,
+          395
+        ],
+        "manualCheck": true
+      }
+    ],
+    "huey": [
+      {
+        "label": "At least three players for vulnerability",
+        "role": "required_task",
+        "minimum": 1,
+        "unit": "items",
+        "notes": "Plan one protection prayer each and finish while the braziers are lit.",
+        "task_ids": [
+          572
+        ],
+        "manualCheck": true
+      },
+      {
+        "label": "Two wearable Hueycoatl armour pieces",
+        "role": "required_task",
+        "minimum": 1,
+        "unit": "items",
+        "notes": "Confirm two pieces, with 70 Ranged to wear them. Main accounts may buy usable pieces. Ironmen can use acquired hides and unlocks.",
+        "task_ids": [
+          575
+        ],
+        "manualCheck": true
+      },
+      {
+        "label": "Eligible repeated-kill team",
+        "role": "required_task",
+        "minimum": 1,
+        "unit": "items",
+        "notes": "Use a group for this guide’s method. For #571, five personal perfect kills on one visit count even with imperfect kills in between. For #576, confirm the group’s repeat pace.",
+        "task_ids": [
+          571,
+          576
+        ],
+        "manualCheck": true
+      }
+    ],
+    "toa": [
+      {
+        "label": "Usable melee stab weapon",
+        "role": "recommended",
+        "minimum": 1,
+        "unit": "items",
+        "notes": "Keris partisan from Beneath Cursed Sands needs 65 Attack. A usable dragon or rune stab weapon is a budget alternative when appropriate.",
+        "group": "basic_melee"
+      },
+      {
+        "label": "Ranged weapon and compatible ammo",
+        "role": "recommended",
+        "minimum": 1,
+        "unit": "items",
+        "notes": "Use a rune crossbow with usable bolts or an owned shortbow and arrows.",
+        "group": "ranged_weapon"
+      },
+      {
+        "label": "Magic weapon and runes",
+        "role": "recommended",
+        "minimum": 1,
+        "unit": "items",
+        "notes": "Bring both a weapon and a usable spell or charged staff.",
+        "group": "basic_elemental_staff"
+      },
+      {
+        "label": "Pickaxe for Het’s seal",
+        "role": "required_task",
+        "minimum": 1,
+        "unit": "items",
+        "notes": "Use a suitable pickaxe. The point also needs the seal broken in one exposure at 150 or above.",
+        "group": "ordinary_pickaxe",
+        "task_ids": [
+          432
+        ]
+      },
+      {
+        "label": "Healing food and prayer restoration",
+        "role": "recommended",
+        "minimum": 1,
+        "unit": "items",
+        "notes": "Set the budget to suit your kit and difficulty. Bring emergency healing, and allow Helpful Spirit supplies while learning.",
+        "manualCheck": true
+      }
+    ],
+    "shellbane": [
+      {
+        "label": "Active Gryphon Slayer assignment",
+        "role": "required_task",
+        "minimum": 1,
+        "unit": "items",
+        "notes": "Repeat kills require an assignment. Recheck your remaining kills before entering. An elite clue directing you here allows one kill.",
+        "manualCheck": true
+      },
+      {
+        "label": "Tortugan shield (cape slot)",
+        "role": "required_strategy",
+        "minimum": 1,
+        "unit": "items",
+        "notes": "Obtain this untradeable shield during Troubled Tortugans. It works with the separate heavy worn gear check.",
+        "any_of_ids": [
+          31398
+        ],
+        "task_ids": [
+          627,
+          629
+        ]
+      },
+      {
+        "label": "At least 40 kg of worn gear",
+        "role": "required_strategy",
+        "minimum": 1,
+        "unit": "items",
+        "notes": "Equip the Tortugan shield and your heavy kit. Check the weight with an empty inventory before packing.",
+        "task_ids": [
+          627,
+          629
+        ],
+        "task_setup": true
+      },
+      {
+        "label": "Light worn gear below 40 kg",
+        "role": "required_task",
+        "minimum": 1,
+        "unit": "items",
+        "notes": "Equip your light kit. Check that the worn weight is below 40 kg with an empty inventory before packing.",
+        "task_ids": [
+          631
+        ],
+        "task_setup": true
+      },
+      {
+        "label": "Food and prayer for the streak",
+        "role": "recommended",
+        "minimum": 12,
+        "unit": "items",
+        "notes": "Start with ample food and resupply between planned streaks. The player’s measured pace determines the real quantity.",
+        "group": "food"
+      }
+    ],
+    "mad-angel": [
+      {
+        "label": "Magic weapon, runes and healing food",
+        "role": "recommended",
+        "minimum": 1,
+        "unit": "items",
+        "notes": "Use a spell you can cast and enough food for a practice kill. Ship access and quest items are detailed in the walkthrough.",
+        "group": "basic_elemental_staff"
+      }
+    ],
+    "guardian": [
+      {
+        "label": "Active eligible gargoyle assignment",
+        "role": "required_strategy",
+        "minimum": 1,
+        "unit": "items",
+        "notes": "Confirm a task and enough remaining kills. Slayer level alone does not establish eligibility.",
+        "manualCheck": true
+      },
+      {
+        "label": "Brittle key or previously unlocked rooftop",
+        "role": "required_strategy",
+        "minimum": 1,
+        "unit": "items",
+        "notes": "Kill ordinary gargoyles on task at 75 Slayer to obtain the key. If the roof is already unlocked, confirm access here.",
+        "manualCheck": true
+      },
+      {
+        "label": "Rock hammer",
+        "role": "required_strategy",
+        "minimum": 1,
+        "unit": "items",
+        "notes": "Buy from a Slayer master. Confirm an accepted smash alternative manually if already owned.",
+        "any_of_ids": [
+          4162
+        ]
+      },
+      {
+        "label": "Ranged ammo, melee switch and healing supplies",
+        "role": "recommended",
+        "minimum": 1,
+        "unit": "items",
+        "notes": "Use an already owned rune crossbow or shortbow and an adequate melee weapon, plus food and prayer potions.",
+        "manualCheck": true
+      }
+    ],
+    "prime": [
+      {
+        "label": "Waterbirth door access",
+        "role": "required_strategy",
+        "minimum": 1,
+        "unit": "items",
+        "notes": "Bring a pet rock and rune thrownaxe for solo, or confirm the partner door method or a valid unlock. Bring an extra axe for the bounce attempt.",
+        "manualCheck": true
+      },
+      {
+        "label": "Melee, Magic and ranged swaps",
+        "role": "recommended",
+        "minimum": 1,
+        "unit": "items",
+        "notes": "Bring enough ammo, runes, prayer and poison protection, and start with short staggered trips.",
+        "manualCheck": true
+      },
+      {
+        "label": "Rune thrownaxes for the bounced special",
+        "role": "required_task",
+        "minimum": 1,
+        "unit": "items",
+        "notes": "Requires 40 Ranged. Set the final bounce up from Rex onto Prime, and carry a separate axe for the dungeon door.",
+        "any_of_ids": [
+          805
+        ],
+        "task_ids": [
+          200
+        ]
+      }
+    ],
+    "supreme": [
+      {
+        "label": "Waterbirth door access",
+        "role": "required_strategy",
+        "minimum": 1,
+        "unit": "items",
+        "notes": "Bring a pet rock and rune thrownaxe for solo, or confirm the partner door method or a valid unlock. Bring an extra axe for the bounce attempt.",
+        "manualCheck": true
+      },
+      {
+        "label": "Melee, Magic and ranged swaps",
+        "role": "recommended",
+        "minimum": 1,
+        "unit": "items",
+        "notes": "Bring enough ammo, runes, prayer and poison protection, and start with short staggered trips.",
+        "manualCheck": true
+      }
+    ],
+    "zulrah": [
+      {
+        "label": "Zul-Andra access through Regicide",
+        "role": "required_strategy",
+        "minimum": 1,
+        "unit": "items",
+        "notes": "Reach the quest stage that opens access or complete Regicide. Confirm the partial-stage unlock manually if needed.",
+        "quest": "Regicide",
+        "manualCheck": true
+      },
+      {
+        "label": "Ranged and Magic switches, venom plan and food",
+        "role": "recommended",
+        "minimum": 1,
+        "unit": "items",
+        "notes": "Use your strongest available corresponding styles. Ironmen can use a rune crossbow and elemental or Iban’s magic. Bring recoils for ordinary practice.",
+        "manualCheck": true
+      },
+      {
+        "label": "Area damage for three snakelings",
+        "role": "required_task",
+        "minimum": 1,
+        "unit": "items",
+        "notes": "Bring usable chins or a verified multi-target spell. Remove recoil or other automatic kills for the attempt.",
+        "task_ids": [
+          228
+        ],
+        "manualCheck": true
+      }
+    ],
+    "kq": [
+      {
+        "label": "Two ropes unless the relevant access is unlocked",
+        "role": "required_strategy",
+        "minimum": 1,
+        "unit": "items",
+        "notes": "Check shortcuts and diary unlocks. Confirm the ropes or current permanent access before leaving.",
+        "manualCheck": true
+      },
+      {
+        "label": "Defence-lowering special attack",
+        "role": "required_task",
+        "minimum": 1,
+        "unit": "items",
+        "notes": "Bone dagger special after Death to the Dorgeshuun (30 Attack) is one budget option. An owned valid defence-reducing weapon can replace it.",
+        "task_ids": [
+          159
+        ],
+        "manualCheck": true
+      },
+      {
+        "label": "Crush, a ranged switch, antipoison and healing",
+        "role": "recommended",
+        "minimum": 1,
+        "unit": "items",
+        "notes": "Use food and both attack styles. A dragon mace needs Heroes’ Quest and 60 Attack. Budget alternatives are available.",
+        "manualCheck": true
+      }
+    ],
+    "kraken": [
+      {
+        "label": "Eligible cave kraken assignment",
+        "role": "required_strategy",
+        "minimum": 1,
+        "unit": "items",
+        "notes": "Confirm the active task and number remaining. Streaks need at least 25 or 50 eligible kills.",
+        "manualCheck": true
+      },
+      {
+        "label": "Private instance fee",
+        "role": "required_task",
+        "minimum": 25000,
+        "unit": "coins",
+        "notes": "Bring 25,000 coins to Kraken Cove. Leave only after the intended streak is credited.",
+        "any_of_ids": [
+          995
+        ],
+        "task_ids": [
+          170,
+          171
+        ]
+      },
+      {
+        "label": "Magic charges or runes and food",
+        "role": "recommended",
+        "minimum": 1,
+        "unit": "items",
+        "notes": "Use a working Magic setup and replenish beforehand. A stamina attempt is limited by supplies.",
+        "manualCheck": true
+      }
+    ],
+    "sire": [
+      {
+        "label": "Abyssal Nexus access and eligible assignment",
+        "role": "required_strategy",
+        "minimum": 1,
+        "unit": "items",
+        "notes": "Use Enter the Abyss or fairy ring DIP. Confirm abyssal demon or compatible boss assignment at 85 Slayer.",
+        "manualCheck": true
+      },
+      {
+        "label": "Melee, ranged and optional Shadow spell",
+        "role": "recommended",
+        "minimum": 1,
+        "unit": "items",
+        "notes": "Ranged for the respiratory systems and melee for Sire. Bring antidote, food and restores.",
+        "manualCheck": true
+      }
+    ],
+    "demonic": [
+      {
+        "label": "Demonbane weapon for the final hit",
+        "role": "required_task",
+        "minimum": 1,
+        "unit": "items",
+        "notes": "Use Silverlight or Darklight when suitable, or charged Arclight if available. Verify the weapon’s use requirements.",
+        "task_ids": [
+          75
+        ],
+        "manualCheck": true
+      },
+      {
+        "label": "Two usable styles and supplies",
+        "role": "recommended",
+        "minimum": 1,
+        "unit": "items",
+        "notes": "Bring ranged, melee, ammo, food and prayer. Budget swaps are viable with correct mechanics.",
+        "manualCheck": true
+      }
+    ],
+    "tormented": [
+      {
+        "label": "Two usable combat styles and supplies",
+        "role": "recommended",
+        "minimum": 1,
+        "unit": "items",
+        "notes": "Use a melee weapon and rune crossbow or suitable Magic, with food, prayer and ammunition.",
+        "manualCheck": true
+      }
+    ],
+    "muspah": [
+      {
+        "label": "Ranged kit, Prayer drain and supplies",
+        "role": "recommended",
+        "minimum": 1,
+        "unit": "items",
+        "notes": "Sapphire bolts (e) with a compatible crossbow and Smite (52 Prayer) are useful for the shield, or confirm another supported drain setup.",
+        "manualCheck": true
+      },
+      {
+        "label": "Three distinct applicable Prayer-drain sources",
+        "role": "required_task",
+        "minimum": 1,
+        "unit": "items",
+        "notes": "Confirm the third source beyond Smite and sapphire bolts (e) before choosing this reserve.",
+        "task_ids": [
+          482
+        ],
+        "manualCheck": true
+      }
+    ],
+    "gauntlet": [
+      {
+        "label": "Collect weapons, armour, fish and potion ingredients inside",
+        "role": "provided_on_site",
+        "minimum": 1,
+        "unit": "items",
+        "notes": ""
+      }
+    ],
+    "corrupted-gauntlet": [
+      {
+        "label": "Normal Gauntlet clear",
+        "role": "required_strategy",
+        "minimum": 1,
+        "unit": "items",
+        "notes": "Confirm one successful normal clear to unlock Corrupted.",
+        "manualCheck": true
+      },
+      {
+        "label": "Collect your combat kit inside",
+        "role": "provided_on_site",
+        "minimum": 1,
+        "unit": "items",
+        "notes": ""
+      }
+    ],
+    "zalcano": [
+      {
+        "label": "Pickaxe and healing",
+        "role": "recommended",
+        "minimum": 1,
+        "unit": "items",
+        "notes": "Join a suitable group, bring food and keep the correct contribution level for personal KC.",
+        "group": "ordinary_pickaxe"
+      }
+    ],
+    "mimic": [
+      {
+        "label": "Available Mimic casket",
+        "role": "required_strategy",
+        "minimum": 1,
+        "unit": "items",
+        "notes": "Enable the option at Watson’s and confirm you own an actual Mimic. Clue caskets do not guarantee a roll.",
+        "manualCheck": true
+      }
+    ],
+    "vorkath": [
+      {
+        "label": "Usable dragonfire protection and ammo",
+        "role": "recommended",
+        "minimum": 1,
+        "unit": "items",
+        "notes": "Maintain dragonfire mitigation for your setup and use a compatible weapon, food, and Crumble Undead when the task allows.",
+        "manualCheck": true
+      }
+    ],
+    "nightmare": [
+      {
+        "label": "Eligible learners for a first kill",
+        "role": "required_strategy",
+        "minimum": 1,
+        "unit": "items",
+        "notes": "Confirm a suitable party or mass and do the required active damage for your account type.",
+        "manualCheck": true
+      }
+    ],
+    "maggot-king": [
+      {
+        "label": "Ranged and melee kit, poison plan and food",
+        "role": "recommended",
+        "minimum": 1,
+        "unit": "items",
+        "notes": "Use ranged to kill larvae before they land and melee when the punish window opens.",
+        "manualCheck": true
+      }
+    ],
+    "wild-kbd": [
+      {
+        "label": "Antifire potion and anti-dragon shield",
+        "role": "required_task",
+        "minimum": 1,
+        "unit": "items",
+        "notes": "Have both the active qualifying dose and equipped shield at the kill. An Ironman can make a standard potion at 69 Herblore or use a verified source.",
+        "task_ids": [
+          166
+        ],
+        "manualCheck": true
+      },
+      {
+        "label": "Private instance access for ten consecutive kills",
+        "role": "required_task",
+        "minimum": 1,
+        "unit": "items",
+        "notes": "Bring sufficient coins, dragonfire protection and food. This challenge must be done in a private room.",
+        "task_ids": [
+          167
+        ],
+        "manualCheck": true
+      },
+      {
+        "label": "Minimize carried value and verify an exit",
+        "role": "recommended",
+        "minimum": 1,
+        "unit": "items",
+        "notes": "Check teleport level and PvP risk before travel. Keep food and a valid escape instead of preserving a streak under attack.",
+        "manualCheck": true
+      }
+    ],
+    "wild-callisto": [
+      {
+        "label": "Required Wilderness Diary for chosen variant",
+        "role": "required_strategy",
+        "minimum": 1,
+        "unit": "items",
+        "notes": "Full multi boss requires Medium Wilderness Diary. Singles-plus variant requires Hard Wilderness Diary. Confirm the credited boss and safe escape route.",
+        "manualCheck": true
+      },
+      {
+        "label": "Minimize carried value and verify an exit",
+        "role": "recommended",
+        "minimum": 1,
+        "unit": "items",
+        "notes": "Check teleport level and PvP risk before travel. Keep food and a valid escape instead of preserving a streak under attack.",
+        "manualCheck": true
+      }
+    ],
+    "wild-venenatis": [
+      {
+        "label": "Required Wilderness Diary for chosen variant",
+        "role": "required_strategy",
+        "minimum": 1,
+        "unit": "items",
+        "notes": "Full multi boss requires Medium Wilderness Diary. Singles-plus variant requires Hard Wilderness Diary. Confirm the credited boss and safe escape route.",
+        "manualCheck": true
+      },
+      {
+        "label": "Minimize carried value and verify an exit",
+        "role": "recommended",
+        "minimum": 1,
+        "unit": "items",
+        "notes": "Check teleport level and PvP risk before travel. Keep food and a valid escape instead of preserving a streak under attack.",
+        "manualCheck": true
+      }
+    ],
+    "wild-vetion": [
+      {
+        "label": "Required Wilderness Diary for chosen variant",
+        "role": "required_strategy",
+        "minimum": 1,
+        "unit": "items",
+        "notes": "Full multi boss requires Medium Wilderness Diary. Singles-plus variant requires Hard Wilderness Diary. Confirm the credited boss and safe escape route.",
+        "manualCheck": true
+      },
+      {
+        "label": "Minimize carried value and verify an exit",
+        "role": "recommended",
+        "minimum": 1,
+        "unit": "items",
+        "notes": "Check teleport level and PvP risk before travel. Keep food and a valid escape instead of preserving a streak under attack.",
+        "manualCheck": true
+      }
+    ],
+    "wild-chaos": [
+      {
+        "label": "Minimize carried value and verify an exit",
+        "role": "recommended",
+        "minimum": 1,
+        "unit": "items",
+        "notes": "Check teleport level and PvP risk before travel. Keep food and a valid escape instead of preserving a streak under attack.",
+        "manualCheck": true
+      }
+    ],
+    "wild-scorpia": [
+      {
+        "label": "Minimize carried value and verify an exit",
+        "role": "recommended",
+        "minimum": 1,
+        "unit": "items",
+        "notes": "Check teleport level and PvP risk before travel. Keep food and a valid escape instead of preserving a streak under attack.",
+        "manualCheck": true
+      }
+    ]
+  },
+  "itemEntries": {
+    "10033": {
+      "id": 10033,
+      "name": "Chinchompa",
+      "equipable": true,
+      "equipment_slot": "weapon",
+      "two_handed": false,
+      "equipment_bonuses": null,
+      "stackable": true,
+      "wear_requirements": {
+        "Ranged": 45
+      },
+      "wear_quests": [],
+      "requirements_verified": true,
+      "noted_ids": [],
+      "tags": [],
+      "sources": [
+        "https://oldschool.runescape.wiki/w/Chinchompa"
+      ],
+      "wiki_page": "Chinchompa"
+    },
+    "10034": {
+      "id": 10034,
+      "name": "Red chinchompa",
+      "equipable": true,
+      "equipment_slot": "weapon",
+      "two_handed": false,
+      "equipment_bonuses": null,
+      "stackable": true,
+      "wear_requirements": {
+        "Ranged": 55
+      },
+      "wear_quests": [],
+      "requirements_verified": true,
+      "noted_ids": [],
+      "tags": [],
+      "sources": [
+        "https://oldschool.runescape.wiki/w/Red_chinchompa"
+      ],
+      "wiki_page": "Red_chinchompa"
+    },
+    "11959": {
+      "id": 11959,
+      "name": "Black chinchompa",
+      "equipable": true,
+      "equipment_slot": "weapon",
+      "two_handed": false,
+      "equipment_bonuses": null,
+      "stackable": true,
+      "wear_requirements": {
+        "Ranged": 65
+      },
+      "wear_quests": [],
+      "requirements_verified": true,
+      "noted_ids": [],
+      "tags": [],
+      "sources": [
+        "https://oldschool.runescape.wiki/w/Black_chinchompa"
+      ],
+      "wiki_page": "Black_chinchompa"
+    },
+    "4162": {
+      "id": 4162,
+      "name": "Rock hammer",
+      "equipable": false,
+      "equipment_slot": null,
+      "two_handed": false,
+      "equipment_bonuses": null,
+      "stackable": false,
+      "wear_requirements": {},
+      "wear_quests": [],
+      "requirements_verified": true,
+      "noted_ids": [],
+      "tags": [],
+      "sources": [
+        "https://oldschool.runescape.wiki/w/Rock_hammer"
+      ],
+      "wiki_page": "Rock_hammer"
+    },
+    "31398": {
+      "id": 31398,
+      "name": "Tortugan shield",
+      "equipable": true,
+      "equipment_slot": "cape",
+      "two_handed": false,
+      "equipment_bonuses": null,
+      "stackable": false,
+      "wear_requirements": {},
+      "wear_quests": [
+        "Troubled Tortugans"
+      ],
+      "requirements_verified": true,
+      "noted_ids": [],
+      "tags": [],
+      "sources": [
+        "https://oldschool.runescape.wiki/w/Tortugan_shield"
+      ],
+      "wiki_page": "Tortugan_shield"
+    },
+    "995": {
+      "id": 995,
+      "name": "Coins",
+      "equipable": false,
+      "equipment_slot": null,
+      "two_handed": false,
+      "equipment_bonuses": null,
+      "stackable": true,
+      "wear_requirements": {},
+      "wear_quests": [],
+      "requirements_verified": true,
+      "noted_ids": [],
+      "tags": [],
+      "sources": [
+        "https://oldschool.runescape.wiki/w/Coins"
+      ],
+      "wiki_page": "Coins"
+    }
+  },
+  "preparation": [
+    {
+      "text": "Work from your current point total toward 436. Finish reasonable unfinished tasks at open encounters before starting a long skill, quest or equipment grind.",
+      "sources": []
+    },
+    {
+      "text": "The Hard guide shares completed achievements with Medium. Unlocks in Requirements & kit identify the needed quest, skill, item or entry condition. An unobserved check can be confirmed manually after inspecting it in game.",
+      "sources": []
+    },
+    {
+      "text": "Standard protection prayers, affordable melee/ranged/Magic, healing food, prayer restoration, ammunition and an exit teleport are reusable. Main accounts may purchase tradeable supplies. Ironman accounts can use quest rewards, shops, farming, fishing and ordinary Slayer drops.",
+      "sources": [
+        {
+          "label": "Ironman combat and gear",
+          "url": "https://oldschool.runescape.wiki/w/Ironman_Guide/PvM"
+        }
+      ]
+    },
+    {
+      "text": "Do not assume party, assignment, private room, an occupied deathbank, player-owned grown crops or bank items from an unavailable check. Replace speed and special-kit attempts with other available points when appropriate.",
+      "sources": []
+    },
+    {
+      "text": "Claim Ghommal’s hilt 3 on a members’ world from Ghommal or Laidee Gnonock outside the Warriors’ Guild once the game confirms at least 436 points.",
+      "sources": [
+        {
+          "label": "Hard rewards",
+          "url": "https://oldschool.runescape.wiki/w/Combat_Achievements/Hard#Rewards"
+        }
+      ]
+    }
+  ]
+}

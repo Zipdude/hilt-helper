@@ -35,6 +35,7 @@ import com.ironmanhilt.core.Planner;
 import com.ironmanhilt.core.ProgressEngine;
 import com.ironmanhilt.core.ReadinessEngine;
 import com.ironmanhilt.core.RiskPolicy;
+import com.ironmanhilt.core.RewardGoal;
 import com.ironmanhilt.core.RouteStyle;
 import com.ironmanhilt.storage.LocalFiles;
 import com.ironmanhilt.storage.ProgressStore;
@@ -46,7 +47,6 @@ import java.io.IOException;
 import java.io.Reader;
 import java.time.Instant;
 import java.util.Arrays;
-import java.util.Set;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.function.Consumer;
 import javax.inject.Inject;
@@ -61,7 +61,6 @@ import net.runelite.api.events.StatChanged;
 import net.runelite.api.events.VarbitChanged;
 import net.runelite.api.events.WidgetLoaded;
 import net.runelite.api.gameval.InterfaceID;
-import net.runelite.api.gameval.InventoryID;
 import net.runelite.client.Notifier;
 import net.runelite.client.callback.ClientThread;
 import net.runelite.client.config.RuneScapeProfileType;
@@ -76,7 +75,7 @@ import net.runelite.client.util.Filepath;
 import net.runelite.client.util.ImageUtil;
 
 @PluginDescriptor(name = "Hilt Helper", internalName = "ironman-hilt-guide",
-					description = "Combat Achievement routes for all account types with Ironman-friendly preparation",
+					description = "Medium and Hard Combat Achievement routes to Ghommal's hilt 2 and hilt 3.",
 					tags = {"ironman", "combat", "achievements", "guide"})
 public final class IronmanHiltPlugin extends Plugin implements GuidePanel.Actions
 {
@@ -296,14 +295,8 @@ public final class IronmanHiltPlugin extends Plugin implements GuidePanel.Action
 			return;
 		}
 		// Capture bank updates immediately, even if the bank closes before the next refresh.
-		collector.observeContainer(event.getContainerId(), event.getItemContainer());
+		bankRefreshPending |= collector.observeContainer(event.getContainerId(), event.getItemContainer());
 		dirty = true;
-		if (event.getContainerId() == InventoryID.BANK && live != null &&
-			!live.containers.containsKey("bank") && collector.lastBank() != null)
-		{
-			// Schedule the first bank check without the ordinary inventory-event delay.
-			bankRefreshPending = true;
-		}
 	}
 
 	@Subscribe public void onWidgetLoaded(WidgetLoaded event)
@@ -326,9 +319,9 @@ public final class IronmanHiltPlugin extends Plugin implements GuidePanel.Action
 			return;
 		}
 		sessionTicks++;
-		if (ticks % 5 == 0 && HesporiPatch.enabled(state))
+		if (ticks % 5 == 0)
 		{
-			updateHesporiReminder();
+			updateHesporiPatch();
 		}
 		if (sessionTicks < 3 || loading || transaction || ticks - lastCollect < 2)
 		{
@@ -432,21 +425,22 @@ public final class IronmanHiltPlugin extends Plugin implements GuidePanel.Action
 		}, failure -> loadFailed(lifetime, session, key));
 	}
 
-	private void updateHesporiReminder()
+	private void updateHesporiPatch()
 	{
-		if (!canChange() || state.skipped("hespori"))
+		if (!canChange())
 		{
 			return;
 		}
-		Set<Integer> complete = progress.knownCompleted(state);
-		if (complete.containsAll(catalogue.routeIds(catalogue.activity("hespori"), true)))
+		int observed = collector.hesporiPatch();
+		boolean reminders = HesporiPatch.enabled(state);
+		if ((observed < 0 && !reminders) || !planner.hasUnfinishedHespori(state, live))
 		{
 			return;
 		}
 		Instant now = Instant.now();
-		boolean changed = HesporiPatch.observe(state, collector.hesporiPatch(), now);
+		boolean changed = HesporiPatch.observe(state, observed, now);
 		HesporiPatch.Status patch = HesporiPatch.status(state, now);
-		if (patch.canNotify() && !patch.name().equals(ReadinessEngine.str(state.data, "hesporiNotice", "")))
+		if (reminders && patch.canNotify() && !patch.name().equals(ReadinessEngine.str(state.data, "hesporiNotice", "")))
 		{
 			state.data.addProperty("hesporiNotice", patch.name());
 			changed = true;
@@ -595,10 +589,10 @@ public final class IronmanHiltPlugin extends Plugin implements GuidePanel.Action
 		}
 		int id = state.screenTask();
 		String activity = catalogue.owner(id);
-		if (!available || activity == null || state.routeChoice() == null || state.skipped(activity) ||
+		if (!available || !catalogue.includes(id, state.rewardGoal()) || state.routeChoice() == null || state.skipped(activity) ||
 			state.knownIds("skipTaskIDs", catalogue.tasks.keySet()).contains(id) ||
 			progress.knownCompleted(state).contains(id) || (RiskPolicy.wilderness(activity) && !state.wildernessEnabled()) ||
-			(catalogue.groupOption(activity) && state.routeChoice() != RouteStyle.GROUP))
+			(catalogue.needsGroup(id, state.rewardGoal()) && state.routeChoice() != RouteStyle.GROUP))
 		{
 			overlay.clear();
 			return;
@@ -685,13 +679,25 @@ public final class IronmanHiltPlugin extends Plugin implements GuidePanel.Action
 			}
 		});
 	}
+	@Override public void selectGuide(RewardGoal goal)
+	{
+		mutate(s ->
+		{
+			s.data.addProperty("guideGoal", goal.key);
+			if (!catalogue.includes(s.screenTask(), goal) ||
+				(catalogue.needsGroup(s.screenTask(), goal) && s.routeChoice() != RouteStyle.GROUP))
+			{
+				s.data.remove("screenTask");
+			}
+		});
+	}
+
 	@Override public void routeStyle(RouteStyle choice)
 	{
 		mutate(s ->
 		{
 			s.data.addProperty("routeStyle", choice.key);
-			String active = catalogue.owner(s.screenTask());
-			if (active != null && catalogue.groupOption(active) && choice == RouteStyle.SOLO)
+			if (catalogue.needsGroup(s.screenTask(), s.rewardGoal()) && choice == RouteStyle.SOLO)
 			{
 				s.data.remove("screenTask");
 			}
@@ -710,7 +716,7 @@ public final class IronmanHiltPlugin extends Plugin implements GuidePanel.Action
 			{
 				s.data.remove("screenTask");
 			}
-			else if (catalogue.owner(id) != null && !progress.knownCompleted(s).contains(id))
+			else if (catalogue.includes(id, s.rewardGoal()) && !progress.knownCompleted(s).contains(id))
 			{
 				s.data.addProperty("screenTask", id);
 			}

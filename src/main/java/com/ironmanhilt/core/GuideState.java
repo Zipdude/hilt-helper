@@ -88,6 +88,15 @@ public final class GuideState
 	{
 		return RouteStyle.from(ReadinessEngine.str(data, "routeStyle", ""));
 	}
+	public RewardGoal selectedGuide()
+	{
+		return RewardGoal.from(ReadinessEngine.str(data, "guideGoal", ""));
+	}
+	public RewardGoal rewardGoal()
+	{
+		RewardGoal selected = selectedGuide();
+		return selected == null ? RewardGoal.MEDIUM : selected;
+	}
 	public int screenTask()
 	{
 		return data.has("screenTask") ? data.get("screenTask").getAsInt() : -1;
@@ -197,10 +206,12 @@ public final class GuideState
 		{
 			throw new IllegalArgumentException("Invalid Wilderness preference");
 		}
-		if (o.has("rewardGoal") &&
-			(!isString(o.get("rewardGoal")) || o.get("rewardGoal").getAsString().length() > 32))
+		for (String key : new String[] {"rewardGoal", "guideGoal"})
 		{
-			throw new IllegalArgumentException("Invalid reward goal");
+			if (o.has(key) && (!isString(o.get(key)) || o.get(key).getAsString().length() > 32))
+			{
+				throw new IllegalArgumentException("Invalid reward goal");
+			}
 		}
 		if (o.has("pinnedActivity") &&
 			(!isString(o.get("pinnedActivity")) || o.get("pinnedActivity").getAsString().length() > 90))

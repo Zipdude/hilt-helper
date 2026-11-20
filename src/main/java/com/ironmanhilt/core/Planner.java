@@ -54,16 +54,42 @@ public final class Planner
 		progress = p;
 		readiness = r;
 	}
+	public int currentPoints(GuideState state, LiveSnapshot live)
+	{
+		return state.rewardGoal() == RewardGoal.HARD && live != null && live.ca.valid ?
+			live.ca.gamePoints : progress.total(state);
+	}
+
+	public Set<Integer> completedForGuide(GuideState state, LiveSnapshot live)
+	{
+		return state.rewardGoal() == RewardGoal.HARD && live != null && live.ca.valid ?
+			live.ca.completed : progress.knownCompleted(state);
+	}
+
+	public boolean hasUnfinishedHespori(GuideState state, LiveSnapshot live)
+	{
+		if (state.skipped("hespori"))
+		{
+			return false;
+		}
+		Set<Integer> complete = completedForGuide(state, live);
+		Set<Integer> skipped = state.knownIds("skipTaskIDs", catalogue.tasks.keySet());
+		return catalogue.routeIds(catalogue.activity("hespori"), true, state.rewardGoal()).stream()
+			.anyMatch(id -> !complete.contains(id) && !skipped.contains(id));
+	}
+
 	public Next next(GuideState state, LiveSnapshot live)
 	{
 		return next(state, live, plan(state, live));
 	}
 	public Next next(GuideState state, LiveSnapshot live, List<Entry> route)
 	{
-		int deficit = Math.max(0, catalogue.threshold - progress.total(state));
+		RewardGoal goal = state.rewardGoal();
+		int threshold = catalogue.threshold(goal);
+		int deficit = Math.max(0, threshold - currentPoints(state, live));
 		if (deficit == 0)
 		{
-			if (live != null && live.ca.valid && live.ca.gamePoints < catalogue.threshold)
+			if (live != null && live.ca.valid && live.ca.gamePoints < threshold)
 			{
 				return new Next(
 					null, "Review the saved point total",
@@ -72,7 +98,7 @@ public final class Planner
 			}
 			if (live == null || !live.mode.supported() || !live.ca.valid)
 			{
-				return new Next(null, "Check Medium reward eligibility in game",
+				return new Next(null, "Check " + goal.label + " reward eligibility in game",
 					"Saved points reach this goal, but current game evidence is unavailable. Refresh or re-log before claiming the reward.",
 					Collections.emptyList(), 0);
 			}
@@ -81,7 +107,7 @@ public final class Planner
 				return new Next(null, "Claim your hilt on a members’ world",
 					"Speak to Ghommal or Laidee Gnonock by the Warriors’ Guild.", Collections.emptyList(), 0);
 			}
-			return new Next(null, "Claim Ghommal’s hilt 2",
+			return new Next(null, "Claim " + goal.reward,
 							"Point target reached. Speak to Ghommal or Laidee Gnonock by the Warriors’ Guild.",
 							Collections.emptyList(), 0);
 		}
@@ -95,7 +121,9 @@ public final class Planner
 			return new Next(
 				null, "Review alternatives and skips",
 				deficit +
-					" points remain. Restore a skipped task, confirm an available reserve, or enable Wilderness activities only if you choose that risk.",
+					(goal == RewardGoal.HARD
+						? " points remain. Check available activities for unlocks and kit, or review the reserve tasks."
+						: " points remain. Restore a skipped task, confirm an available reserve, or enable Wilderness activities only if you choose that risk."),
 				Collections.emptyList(), 0);
 		}
 		Entry entry = route.get(0);
@@ -114,7 +142,9 @@ public final class Planner
 
 	public Route planRoute(GuideState state, LiveSnapshot live, RouteStyle style)
 	{
-		int deficit = Math.max(0, catalogue.threshold - progress.total(state));
+		RewardGoal goal = state.rewardGoal();
+		int threshold = catalogue.threshold(goal);
+		int deficit = Math.max(0, threshold - currentPoints(state, live));
 		if (live == null || !live.mode.supported())
 		{
 			return new Route(List.of(), List.of(), Map.of(), Map.of(), 0, 0, 0);
@@ -123,15 +153,15 @@ public final class Planner
 		List<Integer> taskPool = new ArrayList<>();
 		Map<String, List<String>> groupChecks = new LinkedHashMap<>();
 		Map<Integer, String> blockedTasks = new LinkedHashMap<>();
-		Set<Integer> done = progress.knownCompleted(state);
+		Set<Integer> done = completedForGuide(state, live);
 		Set<Integer> skipped = state.knownIds("skipTaskIDs", catalogue.tasks.keySet());
 		Set<Integer> available = new HashSet<>();
 		int prepared = 0;
 		boolean withGroup = style == RouteStyle.GROUP;
-		for (JsonObject activity : catalogue.activities)
+		for (JsonObject activity : catalogue.activities(goal))
 		{
 			String key = activity.get("key").getAsString();
-			boolean group = catalogue.groupOption(key);
+			boolean group = catalogue.groupOption(key, goal);
 			if (state.skipped(key) || RiskPolicy.wilderness(key) && !state.wildernessEnabled() || group && !withGroup)
 			{
 				continue;
@@ -139,13 +169,17 @@ public final class Planner
 			boolean keyAccess = permanentKeyAccess(key, done);
 			List<String> gates = access(key, state, live, keyAccess);
 			gates.addAll(strategy(key, state, live));
+			if (goal == RewardGoal.HARD && RiskPolicy.groupHardcoreRisk(key, live.mode))
+			{
+				gates.add("This attempt can cost a group life. Choose a safer activity for the suggested route.");
+			}
 			for (boolean reserve : new boolean[] {false, true})
 			{
 				List<Integer> ids = new ArrayList<>();
 				List<String> taskChecks = new ArrayList<>();
-				for (int id : catalogue.routeIds(activity, reserve))
+				for (int id : catalogue.routeIds(activity, reserve, goal))
 				{
-					if (done.contains(id) || skipped.contains(id))
+					if (done.contains(id) || skipped.contains(id) || catalogue.needsGroup(id, goal) && !withGroup)
 					{
 						continue;
 					}
@@ -202,14 +236,31 @@ public final class Planner
 					}
 				}
 				// A planned main task can show future unlock work. A reserve needs its access first.
-				if (!ids.isEmpty() && (ready || !reserve && !group))
+				if (!ids.isEmpty() && (ready || !reserve && !group) &&
+					!(goal == RewardGoal.HARD && RiskPolicy.groupHardcoreRisk(key, live.mode)))
 				{
-					candidates.add(entry);
+					if (goal == RewardGoal.HARD && ready && !entry.kitBlockers.isEmpty())
+					{
+						List<Integer> readyIds = new ArrayList<>(ids);
+						readyIds.removeAll(entry.kitBlockers.keySet());
+						if (!readyIds.isEmpty())
+						{
+							candidates.add(candidate(activity, key, readyIds, gates, keyAccess, reserve, state, live));
+						}
+						else if (!reserve)
+						{
+							candidates.add(entry);
+						}
+					}
+					else
+					{
+						candidates.add(entry);
+					}
 				}
 			}
 		}
 		String pinned = ReadinessEngine.str(state.data, "pinnedActivity", "");
-		candidates.sort(Comparator.comparingInt((Entry e) -> priority(e, pinned))
+		candidates.sort(Comparator.comparingInt((Entry e) -> priority(e, pinned, goal))
 							.thenComparingInt(e -> catalogue.activity(e.key).has("starter") ? 0 : 1)
 							.thenComparing(Comparator.comparingDouble((Entry e) -> e.score).reversed())
 							.thenComparing(e -> e.key));
@@ -246,9 +297,21 @@ public final class Planner
 		return new Route(out, taskPool, groupChecks, blockedTasks, catalogue.points(available), prepared, planned);
 	}
 
-	private int priority(Entry entry, String pinned)
+	private int priority(Entry entry, String pinned, RewardGoal goal)
 	{
-		boolean group = catalogue.groupOption(entry.key);
+		boolean group = catalogue.groupOption(entry.key, goal);
+		if (goal == RewardGoal.HARD)
+		{
+			if (!entry.gates.isEmpty() || !entry.requiredKit.isEmpty())
+			{
+				return 4;
+			}
+			if (RiskPolicy.wilderness(entry.key))
+			{
+				return 3;
+			}
+			return entry.key.equals(pinned) ? -1 : 0;
+		}
 		if (!group && entry.key.equals(pinned))
 		{
 			return -1;
@@ -294,7 +357,9 @@ public final class Planner
 		JsonObject effort = catalogue.route().getAsJsonObject("effort");
 		for (int id : ids)
 		{
-			minutes += effort.has(String.valueOf(id)) ? effort.get(String.valueOf(id)).getAsDouble() : 10;
+			JsonObject rule = catalogue.rule(id);
+			minutes += rule.has("effort") ? rule.get("effort").getAsDouble() :
+				effort.has(String.valueOf(id)) ? effort.get(String.valueOf(id)).getAsDouble() : 10;
 		}
 		List<String> kitChecks = new ArrayList<>(), requiredKit = new ArrayList<>();
 		Map<Integer, String> kitBlockers = new LinkedHashMap<>();
@@ -303,7 +368,8 @@ public final class Planner
 		{
 			JsonObject req = kit.get(i).getAsJsonObject();
 			String role = ReadinessEngine.str(req, "role", "");
-			if (role.equals("optional_upgrade") || role.equals("convenience") || coveredByKeyUnlock(req, keyAccess))
+			if (role.equals("optional_upgrade") || role.equals("convenience") ||
+				ReadinessEngine.taskSetup(req) || coveredByKeyUnlock(req, keyAccess))
 			{
 				continue;
 			}
@@ -447,7 +513,7 @@ public final class Planner
 	{
 		List<String> checks = new ArrayList<>();
 		JsonObject activity = catalogue.activity(key);
-		JsonArray quests = activity.getAsJsonArray("strategyQuests");
+		JsonArray quests = strategyQuests(key, state);
 		if (quests != null)
 		{
 			for (JsonElement value : quests)
@@ -491,11 +557,58 @@ public final class Planner
 		}
 		return checks;
 	}
+	private JsonArray strategyQuests(String key, GuideState state)
+	{
+		return state.rewardGoal() == RewardGoal.HARD && key.equals("theatre") ?
+			null : catalogue.activity(key).getAsJsonArray("strategyQuests");
+	}
+
+	private JsonObject taskRequirements(int id)
+	{
+		JsonObject rule = catalogue.rule(id);
+		if (rule != null && rule.has("requirements"))
+		{
+			return rule.getAsJsonObject("requirements");
+		}
+		return catalogue.route().getAsJsonObject("extraReq").getAsJsonObject(String.valueOf(id));
+	}
+
+	public List<String> requirementSummary(int id, GuideState state)
+	{
+		String key = catalogue.owner(id);
+		JsonObject req = catalogue.activity(key).getAsJsonObject("requirements");
+		JsonObject task = taskRequirements(id);
+		Set<String> quests = new LinkedHashSet<>();
+		for (JsonArray source : new JsonArray[] {req.getAsJsonArray("quests"), strategyQuests(key, state),
+			task == null ? null : task.getAsJsonArray("quests")})
+		{
+			if (source != null)
+			{
+				source.forEach(q -> quests.add(q.getAsString()));
+			}
+		}
+		List<String> lines = new ArrayList<>();
+		if (!quests.isEmpty())
+		{
+			lines.add("Quests · " + String.join(", ", quests));
+		}
+		JsonObject levels = req.getAsJsonObject("levels");
+		if (levels != null)
+		{
+			levels.entrySet().forEach(e -> lines.add(e.getValue().getAsInt() + " " + e.getKey() + " for access"));
+		}
+		JsonArray level = task == null ? null : task.getAsJsonArray("level");
+		if (level != null)
+		{
+			lines.add(level.get(1).getAsInt() + " " + level.get(0).getAsString() + " for this task");
+		}
+		return lines;
+	}
+
 	public List<String> taskGates(int id, GuideState state, LiveSnapshot live)
 	{
 		List<String> gates = new ArrayList<>();
-		JsonObject extras = catalogue.route().getAsJsonObject("extraReq");
-		JsonObject req = extras.getAsJsonObject(String.valueOf(id));
+		JsonObject req = taskRequirements(id);
 		if (req == null)
 		{
 			return gates;
@@ -555,7 +668,7 @@ public final class Planner
 				for (JsonElement element : resources)
 				{
 					String token = element.getAsString();
-					if (!keyAccess || !("giant-key".equals(token) || "mossy-key".equals(token)))
+					if (!"hespori".equals(token) && (!keyAccess || !("giant-key".equals(token) || "mossy-key".equals(token))))
 					{
 						resourceTasks.computeIfAbsent(token, ignored -> new LinkedHashSet<>()).addAll(ids);
 					}
@@ -574,8 +687,12 @@ public final class Planner
 		}
 
 		List<ItemRequirement> resources = new ArrayList<>();
-		resourceTasks.forEach((token, tasks) -> resources.add(new ItemRequirement(
-			readiness.token(token, state, live, at), List.copyOf(tasks), true, readiness.tokenRequirement(token))));
+		resourceTasks.forEach((token, tasks) ->
+		{
+			JsonObject definition = readiness.tokenRequirement(token);
+			resources.add(new ItemRequirement(readiness.token(token, state, live, at), List.copyOf(tasks), true,
+				definition, definition == null ? "items" : "", token));
+		});
 		List<ItemRequirement> kitRows = new ArrayList<>();
 		JsonArray kit = catalogue.kit(key);
 		for (int index = 0; index < kit.size(); index++)
@@ -584,6 +701,7 @@ public final class Planner
 			String role = ReadinessEngine.str(req, "role", "");
 			boolean required = requiredKitRole(role);
 			if ((!required && !role.equals("recommended") && !role.equals("provided_on_site")) ||
+				ReadinessEngine.taskSetup(req) ||
 				coveredByKeyUnlock(req, keyAccess) || dismissedKitCheck(state, key, index))
 			{
 				continue;
@@ -606,12 +724,13 @@ public final class Planner
 				{
 					resources.remove(i);
 					ReadinessEngine.Check result = required && gate.check.ready() ? check : gate.check;
-					check = new ReadinessEngine.Check(check.label, result.status, result.detail, result.amount);
+					check = new ReadinessEngine.Check(check.label, result.status, result.detail, result.amount, result.fromBank);
 					required = true;
 					break;
 				}
 			}
-			kitRows.add(new ItemRequirement(check, List.copyOf(affected), required, req));
+			kitRows.add(new ItemRequirement(check, List.copyOf(affected), required, req,
+				req.has("manualCheck") ? "overrides" : "", key + ":" + index));
 		}
 		resources.addAll(kitRows);
 		return resources;
@@ -644,14 +763,18 @@ public final class Planner
 		public final ReadinessEngine.Check check;
 		public final List<Integer> taskIds;
 		public final boolean required;
+		public final String correctionCategory, correctionKey;
 		private final JsonObject definition;
 
-		private ItemRequirement(ReadinessEngine.Check check, List<Integer> taskIds, boolean required, JsonObject definition)
+		private ItemRequirement(ReadinessEngine.Check check, List<Integer> taskIds, boolean required,
+			JsonObject definition, String correctionCategory, String correctionKey)
 		{
 			this.check = check;
 			this.taskIds = taskIds;
 			this.required = required;
 			this.definition = definition;
+			this.correctionCategory = correctionCategory;
+			this.correctionKey = correctionKey;
 		}
 
 		public String quantity()
@@ -695,19 +818,18 @@ public final class Planner
 				byActivity.computeIfAbsent(catalogue.owner(id), ignored -> new HashSet<>()).add(id);
 			}
 		}
-		JsonObject extras = catalogue.route().getAsJsonObject("extraReq");
 		for (Map.Entry<String, Set<Integer>> entry : byActivity.entrySet())
 		{
 			String key = entry.getKey(), label = catalogue.label(key);
 			JsonObject activity = catalogue.activity(key);
 			JsonObject access = activity.getAsJsonObject("requirements");
 			result.quests(access.getAsJsonArray("quests"), label, state, live, false);
-			result.quests(activity.getAsJsonArray("strategyQuests"), label, state, live, true);
+			result.quests(strategyQuests(key, state), label, state, live, true);
 			result.levels(access.getAsJsonObject("levels"), label, state, live);
 			result.levels(activity.getAsJsonObject("strategyLevels"), label, state, live);
 			for (int id : entry.getValue())
 			{
-				JsonObject task = extras.getAsJsonObject(String.valueOf(id));
+				JsonObject task = taskRequirements(id);
 				if (task == null)
 				{
 					continue;

@@ -26,6 +26,7 @@ package com.ironmanhilt.core;
 import com.google.gson.JsonObject;
 import java.time.Instant;
 import java.time.temporal.ChronoUnit;
+import net.runelite.api.gameval.ItemID;
 
 /** Local patch observations and a conservative estimate between visits. */
 public final class HesporiPatch
@@ -36,7 +37,8 @@ public final class HesporiPatch
 		EMPTY("Last seen empty. Plant a Hespori seed to start another attempt."),
 		GROWING("Last seen growing. Return after the next growth cycles."),
 		CHECK("Hespori may be grown. Check the cave before planning a kill."),
-		GROWN("Full growth observed. Check the cave to fight Hespori or clear and replant a defeated crop.");
+		GROWN("Full growth observed. Visit the cave to fight Hespori."),
+		DEFEATED("Hespori was defeated. Harvest the crop and replant.");
 
 		public final String detail;
 
@@ -52,6 +54,7 @@ public final class HesporiPatch
 	}
 
 	private static final int GROWTH_MINUTES = 640;
+	static final int SEED_ID = ItemID.HESPORI_SEED;
 
 	private HesporiPatch()
 	{
@@ -81,6 +84,65 @@ public final class HesporiPatch
 			}
 		}
 		return stage;
+	}
+
+	public static String checklist(GuideState state, LiveSnapshot live, Instant now)
+	{
+		Status patch = status(state, now);
+		LiveSnapshot.Container bank = live == null ? null : live.observedBank();
+		LiveSnapshot.Container inventory = live == null ? null : live.observedItems("inventory", now);
+		long banked = seeds(bank), carried = seeds(inventory);
+		boolean overlap = live != null && !live.bankObservedThisSession() && banked > 0 && carried > 0;
+		long stock = overlap ? Math.max(banked, carried) : banked + carried;
+		long futureAttempts = stock + (patch == Status.GROWING || patch == Status.GROWN ? 1 : 0);
+		String status;
+		switch (patch)
+		{
+			case GROWING:
+				status = "Growing";
+				break;
+			case GROWN:
+				status = "Full growth seen. Visit the cave to fight.";
+				break;
+			case DEFEATED:
+				status = "Defeated. Harvest the crop. " + replant(live, bank, inventory, carried, banked);
+				break;
+			case EMPTY:
+				status = "Empty. " + replant(live, bank, inventory, carried, banked);
+				break;
+			default:
+				status = "Check the patch";
+				break;
+		}
+		String quantities = (banked == 0 ? "" : " · " + banked + (banked == 1 ? " banked seed" : " banked seeds"))
+			+ (carried == 0 ? "" : " · " + carried + (carried == 1 ? " carried seed" : " carried seeds"));
+		String attempts = futureAttempts == 0 ? "" : " · " + (overlap ? "at least " : "") + futureAttempts
+			+ (futureAttempts == 1 ? " future attempt covered" : " future attempts covered");
+		return "Hespori · " + status + quantities + attempts;
+	}
+
+	private static String replant(LiveSnapshot live, LiveSnapshot.Container bank,
+		LiveSnapshot.Container inventory, long carried, long banked)
+	{
+		if (carried > 0)
+		{
+			return "Replant with a carried seed.";
+		}
+		if (banked > 0)
+		{
+			return "Withdraw a seed and replant.";
+		}
+		if (live != null && live.mode.bankAllowed() && bank == null)
+		{
+			return "Check your bank for a seed.";
+		}
+		return inventory == null ? "Check your carried seeds." : "You need a Hespori seed to replant.";
+	}
+
+	private static long seeds(LiveSnapshot.Container container)
+	{
+		return container == null ? 0 : container.items.stream().filter(item -> item.id == SEED_ID)
+			.mapToLong(item -> item.quantity).sum();
 	}
 
 	public static boolean observe(GuideState state, int value, Instant now)
@@ -120,9 +182,13 @@ public final class HesporiPatch
 		{
 			return Status.GROWING;
 		}
-		if (value == 7 || value == 8)
+		if (value == 7)
 		{
 			return Status.GROWN;
+		}
+		if (value == 8)
+		{
+			return Status.DEFEATED;
 		}
 		return Status.UNKNOWN;
 	}

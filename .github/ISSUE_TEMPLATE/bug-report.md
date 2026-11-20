@@ -19,4 +19,5 @@ about: Report a problem with Hilt Helper
 - Hilt Helper version
 - RuneLite version
 - Account type
+- Medium or Hard guide
 - Solo or group route

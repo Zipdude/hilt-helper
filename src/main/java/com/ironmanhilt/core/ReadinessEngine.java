@@ -33,22 +33,28 @@ import java.util.Collection;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 import java.util.Set;
 
-/** Conservative item evidence. Independent container snapshots are never added together. */
+/** Compare owned kit and carried supplies without double-counting moved quantities. */
 public final class ReadinessEngine
 {
 	public static final String READY = "Ready", ALTERNATIVE = "Alternative available", UNKNOWN = "Needs checking",
 								MISSING = "Missing", SHORT = "Short", MANUAL = "Manually confirmed",
 								PROVIDED = "Collect there", UNUSED = "Not needed for selected tasks";
+	private static final String AMMUNITION = "ammo_compatible_with_selected_weapon";
 	public static final String FIRST_BANK_CHECK = "Open your bank once to check owned items.";
+	private static final String REFRESH_BANK = "Open your bank to confirm the current total with your carried supplies.";
 	private final GuideCatalog catalogue;
 	private final Map<Integer, Set<Integer>> notedIds = new HashMap<>();
 	private final Set<Integer> spellRawIds;
+	private final Set<Integer> elementalStaffIds;
 	private final Set<Integer> guideItemIds;
+	private final Set<Integer> hardItemIds;
+	private final Set<Integer> rangedWeaponIds;
 	public ReadinessEngine(GuideCatalog c)
 	{
 		catalogue = c;
@@ -57,8 +63,9 @@ public final class ReadinessEngine
 			notedIds.computeIfAbsent(entry.getValue().getAsInt(), id -> new HashSet<>())
 				.add(Integer.parseInt(entry.getKey()));
 		}
-		Set<Integer> spellItems = new HashSet<>(ints(c.items.getAsJsonObject("groups")
+		elementalStaffIds = new HashSet<>(ints(c.items.getAsJsonObject("groups")
 			.getAsJsonArray("basic_elemental_staff")));
+		Set<Integer> spellItems = new HashSet<>(elementalStaffIds);
 		for (Map.Entry<String, JsonElement> spell : c.items.getAsJsonObject("spells").entrySet())
 		{
 			for (String id : spell.getValue().getAsJsonObject().getAsJsonObject("runes_per_cast").keySet())
@@ -78,10 +85,18 @@ public final class ReadinessEngine
 		}
 		guideItemIds = withNotes(itemIds);
 		guideItemIds.addAll(spellRawIds);
+		guideItemIds.add(HesporiPatch.SEED_ID);
+		hardItemIds = withNotes(c.hardItemIds);
+		Set<Integer> ranged = new HashSet<>();
+		for (String id : c.items.getAsJsonObject("ammo_compatibility").keySet())
+		{
+			ranged.add(Integer.parseInt(id));
+		}
+		rangedWeaponIds = withNotes(ranged);
 	}
-	public boolean usesItem(int id)
+	public boolean usesItem(int id, RewardGoal goal)
 	{
-		return guideItemIds.contains(id);
+		return guideItemIds.contains(id) && (goal == RewardGoal.HARD || !hardItemIds.contains(id));
 	}
 	private Set<Integer> withNotes(Set<Integer> ids)
 	{
@@ -109,7 +124,16 @@ public final class ReadinessEngine
 		{
 			return new Check(label, PROVIDED, str(req, "notes", "Pick up the tools at the activity."), 0);
 		}
-		Check automatic = automatic(activity, req, state, live, now);
+		if (taskSetup(req))
+		{
+			return new Check(label, "Check for this attempt", str(req, "notes", "Check your equipped gear."), 0);
+		}
+		Check automatic = req.has("resource_token") ?
+			token(req.get("resource_token").getAsString(), state, live, now) : automatic(activity, req, state, live, now);
+		if (!automatic.ready() && req.has("on_site"))
+		{
+			return new Check(label, PROVIDED, req.get("on_site").getAsString(), 0);
+		}
 		JsonObject overrides = state.object("overrides");
 		JsonElement entry = overrides.get(activity + ":" + index);
 		if (entry == null || !entry.isJsonObject())
@@ -122,7 +146,7 @@ public final class ReadinessEngine
 		{
 			return new Check(label, MISSING, "Manual correction · " + date, 0);
 		}
-		if (status.equals("Not required"))
+		if (status.equals("Not required") && !req.has("manualCheck"))
 		{
 			return new Check(label, MANUAL, "Manually marked not required · " + date, 0);
 		}
@@ -149,16 +173,27 @@ public final class ReadinessEngine
 			{
 				return new Check(label, UNKNOWN, "Saved manual ownership; usable requirements still need checking", 0);
 			}
-			return new Check(label, MANUAL, "Manual correction · " + date, -1);
+			String detail = req.has("manualCheck") ? "Manual confirmation · " : "Manual correction · ";
+			return new Check(label, MANUAL, detail + date, -1);
 		}
 		return automatic;
 	}
+
+	public static boolean taskSetup(JsonObject req)
+	{
+		return yes(req, "task_setup");
+	}
+
 	private Check automatic(String activity, JsonObject req, GuideState state, LiveSnapshot live, Instant now)
 	{
 		String label = str(req, "label", "Preparation");
 		if (live == null || !live.mode.supported())
 		{
 			return new Check(label, UNKNOWN, "Log in on a standard-world account", 0);
+		}
+		if (req.has("quest") && Boolean.TRUE.equals(quest(req.get("quest").getAsString(), state, live)))
+		{
+			return new Check(label, READY, "Quest completion establishes access.", 1);
 		}
 		if (req.has("spell") || req.has("spells_any"))
 		{
@@ -169,40 +204,24 @@ public final class ReadinessEngine
 			return new Check(label, UNKNOWN, "Confirm Wilderness level, teleblock and teleport restrictions in game.",
 								0);
 		}
-		Set<Integer> ids = wanted(req);
-		if (str(req, "predicate", "").equals("ammo_compatible_with_selected_weapon"))
+		if (str(req, "predicate", "").equals(AMMUNITION))
 		{
-			LiveSnapshot.Container equipment = live.observedItems("equipment", now);
-			Integer weapon = null;
-			if (equipment != null)
-			{
-				for (LiveSnapshot.Item row : equipment.items)
-				{
-					if (row.slot == 3)
-					{
-						weapon = row.id;
-					}
-				}
-			}
-			JsonObject ammo =
-				weapon == null
-					? null
-					: catalogue.items.getAsJsonObject("ammo_compatibility").getAsJsonObject(String.valueOf(weapon));
-			if (ammo == null)
-			{
-				return new Check(
-					label, UNKNOWN,
-					"Equip the intended ranged weapon; its ammunition pairing must be in the verified catalogue.", 0);
-			}
-			ids.addAll(ints(ammo.getAsJsonArray("allowed_base_ids")));
+			return ammunition(activity, req, state, live, now);
 		}
+		Set<Integer> ids = wanted(req);
 		if (ids.isEmpty())
 		{
 			return new Check(label, UNKNOWN, "Confirm this strategy condition in game.", 0);
 		}
 		LiveSnapshot.Container bank = live.observedBank();
 		Set<Integer> rawIds = bank != null && bank.items.size() > 64 ? withNotes(ids) : null;
-		int best = 0;
+		boolean distinct = yes(req, "distinct_equipment_slots");
+		String unit = str(req, "unit", "items");
+		boolean doses = unit.equals("doses");
+		GearSlots ownedSlots = distinct ? new GearSlots() : null;
+		GearSlots carriedSlots = distinct ? new GearSlots() : null;
+		GearSlots wornSlots = distinct ? new GearSlots() : null;
+		Map<Integer, Integer> carriedStock = new HashMap<>(), bankStock = new HashMap<>();
 		boolean primary = false, blocked = false;
 		String reason = "";
 		for (String location : locations(live))
@@ -212,9 +231,8 @@ public final class ReadinessEngine
 			{
 				continue;
 			}
-			int count = 0;
-			Set<Integer> slots = new HashSet<>();
-			boolean locationPrimary = false, twoHanded = false;
+			boolean banked = location.equals("bank");
+			Map<Integer, Integer> stock = banked ? bankStock : carriedStock;
 			for (LiveSnapshot.Item row : c.items)
 			{
 				if (rawIds != null && !rawIds.contains(row.id))
@@ -232,7 +250,7 @@ public final class ReadinessEngine
 					blocked = true;
 					continue;
 				}
-				if (id != row.id && !location.equals("bank"))
+				if (id != row.id && !banked)
 				{
 					blocked = true;
 					reason = "Noted inventory items are not usable supplies";
@@ -245,46 +263,63 @@ public final class ReadinessEngine
 					reason = gate;
 					continue;
 				}
-				int multiplier = str(req, "unit", "").equals("doses") ? integer(item, "doses_per_item", 0) : 1;
-				if (yes(req, "distinct_equipment_slots"))
+				int multiplier = doses ? integer(item, "doses_per_item", 0) : 1;
+				if (distinct)
 				{
-					if (item.has("equipment_slot") && !item.get("equipment_slot").isJsonNull())
+					ownedSlots.add(item);
+					if (!banked)
 					{
-						slots.add(item.get("equipment_slot").getAsInt());
+						carriedSlots.add(item);
 					}
-					twoHanded |= yes(item, "two_handed");
+					if (location.equals("equipment"))
+					{
+						wornSlots.add(item);
+					}
 				}
 				else
 				{
-					count = (int)Math.min(Integer.MAX_VALUE, (long)count + (long)row.quantity * multiplier);
+					int amount = (int)Math.min(Integer.MAX_VALUE, (long)row.quantity * multiplier);
+					stock.merge(id, amount, ReadinessEngine::addQuantity);
 				}
 				if (!req.has("primary_ids") || ints(req.getAsJsonArray("primary_ids")).contains(id))
 				{
-					locationPrimary = true;
+					primary = true;
 				}
-			}
-			if (yes(req, "distinct_equipment_slots"))
-			{
-				if (twoHanded && slots.contains(3))
-				{
-					slots.remove(5);
-				}
-				count = slots.size();
-			}
-			if (count > best || count == best && locationPrimary)
-			{
-				best = count;
-				primary = locationPrimary;
 			}
 		}
 		int needed = integer(req, "minimum", 1);
+		boolean currentBank = live.bankObservedThisSession();
+		int best, carried;
+		String quantity;
+		if (distinct)
+		{
+			best = ownedSlots.count();
+			carried = carriedSlots.count();
+			quantity = best + " / " + needed + " equipment slots";
+			if (best >= needed)
+			{
+				boolean fromBank = carried < needed;
+				String action = wornSlots.count() >= needed ? "Required pieces are equipped."
+					: fromBank ? "Withdraw the remaining pieces and equip the outfit for this task."
+						: "Equip the matching pieces for this task.";
+				return new Check(label, READY, quantity + " available. " + action, best, fromBank);
+			}
+		}
+		else
+		{
+			carried = total(carriedStock);
+			// A potion from a saved bank scan may now be carried as a different dose variant.
+			best = doses && !currentBank ? Math.max(carried, total(bankStock)) :
+				total(combinedStock(carriedStock, bankStock, currentBank));
+			quantity = best + " / " + needed + " " + unit;
+		}
 		if (best >= needed)
 		{
-			return new Check(label, primary ? READY : ALTERNATIVE,
-								best + " / " + needed + " " + str(req, "unit", "items") + " in one observed location. " +
-									(yes(req, "distinct_equipment_slots") ? "Wear the distinct slots together."
-																		: "Withdraw banked supplies before attempting."),
-								best);
+			boolean fromBank = carried < needed;
+			String detail = fromBank ? quantity + (carried == 0 ? " in your last bank scan." : " across your bank and carried supplies.")
+				+ " Withdraw before attempting."
+				: carried + " / " + needed + " " + unit + " on hand.";
+			return new Check(label, primary ? READY : ALTERNATIVE, detail, best, fromBank);
 		}
 		if (req.has("alternatives"))
 		{
@@ -324,8 +359,105 @@ public final class ReadinessEngine
 		{
 			return new Check(label, UNKNOWN, missingEvidenceReason(live), best);
 		}
-		return new Check(label, best > 0 ? SHORT : MISSING, best + " / " + needed + " " + str(req, "unit", "items"),
-							best);
+		if (!distinct && !currentBank && addQuantity(carried, total(bankStock)) >= needed)
+		{
+			return new Check(label, UNKNOWN, REFRESH_BANK, best);
+		}
+		return new Check(label, best > 0 ? SHORT : MISSING, quantity, best);
+	}
+
+	private static int addQuantity(int a, int b)
+	{
+		return (int)Math.min(Integer.MAX_VALUE, (long)a + b);
+	}
+
+	private static int total(Map<Integer, Integer> stock)
+	{
+		return stock.values().stream().reduce(0, ReadinessEngine::addQuantity);
+	}
+
+	private static Map<Integer, Integer> combinedStock(Map<Integer, Integer> carried, Map<Integer, Integer> bank,
+		boolean currentBank)
+	{
+		Map<Integer, Integer> stock = new HashMap<>(carried);
+		// A previous session's bank might still list copies since withdrawn to the inventory.
+		bank.forEach((id, amount) -> stock.merge(id, amount, currentBank ? ReadinessEngine::addQuantity : Math::max));
+		return stock;
+	}
+
+	private Check ammunition(String activity, JsonObject req, GuideState state, LiveSnapshot live, Instant now)
+	{
+		String label = str(req, "label", "Ammunition");
+		JsonObject compatibility = catalogue.items.getAsJsonObject("ammo_compatibility");
+		Set<Integer> seen = new HashSet<>();
+		Check best = null;
+		for (String location : List.of("equipment", "inventory", "bank"))
+		{
+			LiveSnapshot.Container container = live.observedItems(location, now);
+			if (container == null)
+			{
+				continue;
+			}
+			for (LiveSnapshot.Item row : container.items)
+			{
+				if (row.quantity <= 0 || !rangedWeaponIds.contains(row.id))
+				{
+					continue;
+				}
+				int id = base(row.id);
+				JsonObject pairing = compatibility.getAsJsonObject(String.valueOf(id));
+				JsonObject weapon = pairing == null ? null : item(id);
+				if (weapon == null || id != row.id && !location.equals("bank") ||
+					!seen.add(id) || gate(weapon, req, state, live) != null)
+				{
+					continue;
+				}
+				JsonObject ammo = req.deepCopy();
+				ammo.remove("predicate");
+				ammo.add("any_of_ids", pairing.getAsJsonArray("allowed_base_ids"));
+				ammo.addProperty("unit", "shots");
+				Check supplies = automatic(activity, ammo, state, live, now);
+				String weaponName = weapon.get("name").getAsString();
+				String detail = weaponName + " · " + supplies.detail;
+				if (supplies.ready() && location.equals("bank") && !supplies.fromBank)
+				{
+					detail += " Withdraw your " + weaponName.toLowerCase(Locale.ROOT) + " before attempting.";
+				}
+				Check match = new Check(label, supplies.status, detail,
+					supplies.amount, supplies.ready() && (supplies.fromBank || location.equals("bank")));
+				if (match.ready())
+				{
+					return match;
+				}
+				if (best == null || match.amount > best.amount)
+				{
+					best = match;
+				}
+			}
+		}
+		return best == null ?
+			new Check(label, UNKNOWN, "Check ammunition for the ranged weapon you plan to bring.", 0) : best;
+	}
+
+	private static final class GearSlots
+	{
+		private final Set<Integer> occupied = new HashSet<>();
+		private boolean oneHandedWeapon;
+
+		void add(JsonObject item)
+		{
+			int slot = integer(item, "equipment_slot", -1);
+			if (slot >= 0)
+			{
+				occupied.add(slot);
+				oneHandedWeapon |= slot == 3 && !yes(item, "two_handed");
+			}
+		}
+
+		int count()
+		{
+			return occupied.size() - (!oneHandedWeapon && occupied.contains(3) && occupied.contains(5) ? 1 : 0);
+		}
 	}
 	private Check spells(String activity, JsonObject req, GuideState state, LiveSnapshot live, Instant now)
 	{
@@ -351,9 +483,57 @@ public final class ReadinessEngine
 				options.add(s.getAsString());
 			}
 		}
-		int best = 0;
-		String name = "", failure = "";
-		boolean alternative = false, combo = false, uncertainStaff = false;
+		Map<Integer, Integer> carried = new HashMap<>(), bank = new HashMap<>();
+		Map<Set<Integer>, Boolean> staffs = new LinkedHashMap<>();
+		staffs.put(Collections.emptySet(), true);
+		boolean combo = false, uncertainStaff = false;
+		for (String location : locations(live))
+		{
+			LiveSnapshot.Container container = live.observedItems(location, now);
+			if (container == null)
+			{
+				continue;
+			}
+			boolean banked = location.equals("bank");
+			for (LiveSnapshot.Item row : container.items)
+			{
+				if (row.quantity <= 0 || !spellRawIds.contains(row.id))
+				{
+					continue;
+				}
+				int id = base(row.id);
+				if (id != row.id && !banked)
+				{
+					continue;
+				}
+				if (elementalStaffIds.contains(id))
+				{
+					JsonObject staff = item(id);
+					if (staff != null && gate(staff, new JsonObject(), state, live) == null)
+					{
+						staffs.merge(staffRunes(staff), !banked, Boolean::logicalOr);
+					}
+					else
+					{
+						uncertainStaff = true;
+					}
+				}
+				else
+				{
+					(banked ? bank : carried).merge(id, row.quantity, ReadinessEngine::addQuantity);
+					combo |= id >= 4694 && id <= 4699;
+				}
+			}
+		}
+
+		boolean currentBank = live.bankObservedThisSession();
+		Map<Integer, Integer> owned = combinedStock(carried, bank, currentBank);
+		Map<Integer, Integer> upper = currentBank ? owned : combinedStock(carried, bank, true);
+		SpellSupply best = new SpellSupply("", 0, false), onHand = best;
+		int possible = 0;
+		String failure = "";
+		boolean usableSpell = false;
+		Integer magic = level("magic", state, live);
 		for (String spellName : options)
 		{
 			JsonObject spell = catalogue.items.getAsJsonObject("spells").getAsJsonObject(spellName);
@@ -361,152 +541,129 @@ public final class ReadinessEngine
 			{
 				continue;
 			}
-			Integer magic = level("magic", state, live);
-			if (magic == null || magic < spell.get("magic").getAsInt())
+			int requiredMagic = spell.get("magic").getAsInt();
+			if (magic == null || magic < requiredMagic)
 			{
-				failure = "Needs Magic " + spell.get("magic").getAsInt() + " for " + spellName;
+				failure = "Needs Magic " + requiredMagic + " for " + spellName;
 				continue;
 			}
-			Map<Integer, Integer> costs = new HashMap<>();
-			for (Map.Entry<String, JsonElement> cost : spell.getAsJsonObject("runes_per_cast").entrySet())
+			usableSpell = true;
+			Map<Integer, Integer> costs = spellCosts(activity, spellName, spell);
+			for (Map.Entry<Set<Integer>, Boolean> staff : staffs.entrySet())
 			{
-				costs.put(Integer.parseInt(cost.getKey()), cost.getValue().getAsInt());
-			}
-			// Titans needs both rune budgets at once, including shared death/air runes.
-			if (activity.equals("titans"))
-			{
-				for (JsonElement other : catalogue.kit(activity))
+				Set<Integer> elements = staff.getKey();
+				int available = casts(owned, costs, elements);
+				if (available > best.amount)
 				{
-					JsonObject o = other.getAsJsonObject();
-					if (!o.has("spell") || o.get("spell").getAsString().equals(spellName))
+					best = new SpellSupply(spellName, available, !elements.isEmpty());
+				}
+				if (staff.getValue())
+				{
+					int carriedCasts = casts(carried, costs, elements);
+					if (carriedCasts > onHand.amount)
 					{
-						continue;
-					}
-					JsonObject sp =
-						catalogue.items.getAsJsonObject("spells").getAsJsonObject(o.get("spell").getAsString());
-					if (sp != null)
-					{
-						for (Map.Entry<String, JsonElement> cost : sp.getAsJsonObject("runes_per_cast").entrySet())
-						{
-							costs.merge(Integer.parseInt(cost.getKey()), cost.getValue().getAsInt(), Integer::sum);
-						}
+						onHand = new SpellSupply(spellName, carriedCasts, !elements.isEmpty());
 					}
 				}
-			}
-			for (String location : locations(live))
-			{
-				LiveSnapshot.Container container = live.observedItems(location, now);
-				if (container == null)
+				if (!currentBank)
 				{
-					continue;
-				}
-				Map<Integer, Integer> quantities = new HashMap<>();
-				List<Set<Integer>> staffs = new ArrayList<>();
-				staffs.add(Collections.emptySet());
-				for (LiveSnapshot.Item row : container.items)
-				{
-					if (!spellRawIds.contains(row.id))
-					{
-						continue;
-					}
-					int baseId = base(row.id);
-					if (baseId != row.id && !location.equals("bank"))
-					{
-						continue;
-					}
-					quantities.merge(baseId, row.quantity,
-										(a, b) -> (int)Math.min(Integer.MAX_VALUE, (long)a + b));
-					if (row.id >= 4694 && row.id <= 4699)
-					{
-						combo = true;
-					}
-					JsonObject item = item(baseId);
-					Set<Integer> elements = staffRunes(item);
-					if (item != null && !elements.isEmpty())
-					{
-						if (gate(item, new JsonObject(), state, live) == null)
-						{
-							staffs.add(elements);
-						}
-						else
-						{
-							uncertainStaff = true;
-						}
-					}
-				}
-				// A currently equipped staff can be used with carried or banked runes. Never combine two staffs.
-				LiveSnapshot.Container equip = live.observedItems("equipment", now);
-				if (equip != null)
-				{
-					for (LiveSnapshot.Item row : equip.items)
-					{
-						JsonObject item = item(row.id);
-						if (row.slot == 3 && item != null && gate(item, new JsonObject(), state, live) == null &&
-							!staffRunes(item).isEmpty())
-						{
-							staffs.add(staffRunes(item));
-						}
-					}
-				}
-				for (Set<Integer> staff : staffs)
-				{
-					int casts = Integer.MAX_VALUE;
-					for (Map.Entry<Integer, Integer> cost : costs.entrySet())
-					{
-						if (!staff.contains(cost.getKey()))
-						{
-							casts = Math.min(casts, quantities.getOrDefault(cost.getKey(), 0) / cost.getValue());
-						}
-					}
-					if (casts > best)
-					{
-						best = casts;
-						name = spellName;
-						alternative = !staff.isEmpty();
-					}
+					possible = Math.max(possible, casts(upper, costs, elements));
 				}
 			}
 		}
 		int minimum = integer(req, "minimum", 1);
 		String note = activity.equals("titans") ? "Both elemental budgets counted together. " : "";
-		if (best >= minimum)
+		if (best.amount >= minimum)
 		{
-			return new Check(label, alternative ? ALTERNATIVE : READY,
-								note + name + ": " + best + " / " + minimum +
-									" casts with one usable staff setup. Equip that staff before casting.",
-								best);
+			boolean fromBank = onHand.amount < minimum;
+			SpellSupply supply = fromBank ? best : onHand;
+			String action = fromBank ? " Withdraw the remaining supplies from your bank." : "";
+			if (supply.staff)
+			{
+				action += " Equip the elemental staff for this setup.";
+			}
+			return new Check(label, supply.staff ? ALTERNATIVE : READY,
+				note + supply.spell + " · " + supply.amount + " / " + minimum + " casts available." + action,
+				supply.amount, fromBank);
 		}
-		if (!failure.isEmpty() && best == 0)
+		if (!usableSpell && !failure.isEmpty())
 		{
 			return new Check(label, UNKNOWN, failure, 0);
+		}
+		if (possible >= minimum)
+		{
+			return new Check(label, UNKNOWN, REFRESH_BANK, best.amount);
 		}
 		if (combo || uncertainStaff || !live.completeItemEvidence(now) || live.context.getOrDefault("pouchUnknown", 0) == 1)
 		{
 			return new Check(
 				label, UNKNOWN,
-				combo			 ? "Combination-rune allocation needs checking."
+				combo ? "Combination-rune allocation needs checking."
 				: uncertainStaff ? "An elemental staff was observed, but its usable wear requirements need checking."
 				: live.context.getOrDefault("pouchUnknown", 0) == 1 ? "Held rune pouch contents could not be verified."
-																					: missingEvidenceReason(live),
-				best);
+					: missingEvidenceReason(live),
+				best.amount);
 		}
-		return new Check(label, best > 0 ? SHORT : MISSING,
-							note + best + " / " + minimum + " casts from observed supplies.", best);
+		return new Check(label, best.amount > 0 ? SHORT : MISSING,
+			note + best.amount + " / " + minimum + " casts from observed supplies.", best.amount);
+	}
+
+	private Map<Integer, Integer> spellCosts(String activity, String spellName, JsonObject spell)
+	{
+		Map<Integer, Integer> costs = new HashMap<>();
+		addSpellCosts(costs, spell);
+		// Both Titans spells draw from a single supply of air and death runes.
+		if (activity.equals("titans"))
+		{
+			for (JsonElement other : catalogue.kit(activity))
+			{
+				String otherName = str(other.getAsJsonObject(), "spell", "");
+				JsonObject otherSpell = catalogue.items.getAsJsonObject("spells").getAsJsonObject(otherName);
+				if (!otherName.equals(spellName) && otherSpell != null)
+				{
+					addSpellCosts(costs, otherSpell);
+				}
+			}
+		}
+		return costs;
+	}
+
+	private static void addSpellCosts(Map<Integer, Integer> costs, JsonObject spell)
+	{
+		spell.getAsJsonObject("runes_per_cast").entrySet().forEach(cost ->
+			costs.merge(Integer.parseInt(cost.getKey()), cost.getValue().getAsInt(), Integer::sum));
+	}
+
+	private static int casts(Map<Integer, Integer> stock, Map<Integer, Integer> costs, Set<Integer> staff)
+	{
+		int casts = Integer.MAX_VALUE;
+		for (Map.Entry<Integer, Integer> cost : costs.entrySet())
+		{
+			if (!staff.contains(cost.getKey()))
+			{
+				casts = Math.min(casts, stock.getOrDefault(cost.getKey(), 0) / cost.getValue());
+			}
+		}
+		return casts;
+	}
+
+	private static final class SpellSupply
+	{
+		private final String spell;
+		private final int amount;
+		private final boolean staff;
+
+		private SpellSupply(String spell, int amount, boolean staff)
+		{
+			this.spell = spell;
+			this.amount = amount;
+			this.staff = staff;
+		}
 	}
 	private Set<Integer> staffRunes(JsonObject item)
 	{
 		Set<Integer> ids = new HashSet<>();
-		if (item == null)
-		{
-			return ids;
-		}
 		String name = str(item, "name", "").toLowerCase(Locale.ROOT);
-		// Only the explicitly catalogued ordinary elemental staffs. No charged spell weapon inferred.
-		if (!ints(catalogue.items.getAsJsonObject("groups").getAsJsonArray("basic_elemental_staff"))
-					.contains(item.get("id").getAsInt()))
-		{
-			return ids;
-		}
 		if (name.contains("air"))
 		{
 			ids.add(556);
@@ -585,9 +742,10 @@ public final class ReadinessEngine
 				}
 			}
 		}
-		if (!use && item.has("wear_quests") && item.get("wear_quests").isJsonArray())
+		String quests = use ? "use_quests" : "wear_quests";
+		if (item.has(quests) && item.get(quests).isJsonArray())
 		{
-			for (JsonElement q : item.getAsJsonArray("wear_quests"))
+			for (JsonElement q : item.getAsJsonArray(quests))
 			{
 				if (!Boolean.TRUE.equals(quest(q.getAsString(), state, live)))
 				{
@@ -601,7 +759,7 @@ public final class ReadinessEngine
 	private static boolean useRequirements(JsonObject item, JsonObject req)
 	{
 		String group = str(req, "group", "");
-		return item.has("use_requirements") && (group.contains("axes") || group.contains("pickaxe") ||
+		return !yes(req, "must_equip") && item.has("use_requirements") && (group.contains("axes") || group.contains("pickaxe") ||
 			!yes(item, "equipable"));
 	}
 
@@ -708,6 +866,14 @@ public final class ReadinessEngine
 	public Check token(String token, GuideState state, LiveSnapshot live, Instant now)
 	{
 		String label = resourceLabel(token);
+		if ("hespori".equals(token))
+		{
+			HesporiPatch.Status patch = HesporiPatch.status(state, now);
+			if (patch != HesporiPatch.Status.UNKNOWN)
+			{
+				return new Check(label, patch == HesporiPatch.Status.GROWN ? READY : UNKNOWN, patch.detail, 0);
+			}
+		}
 		if (state.object("items").has(token))
 		{
 			return new Check(label, state.object("items").get(token).getAsBoolean() ? MANUAL : MISSING,
@@ -716,7 +882,11 @@ public final class ReadinessEngine
 		JsonObject req = tokenRequirement(token);
 		if (req == null)
 		{
-			return new Check(label, UNKNOWN, "Check this in game, then use Account & backups → Progress corrections.", 0);
+			if ("hespori".equals(token))
+			{
+				return new Check(label, UNKNOWN, HesporiPatch.Status.UNKNOWN.detail, 0);
+			}
+			return new Check(label, UNKNOWN, "Check this in game before confirming availability.", 0);
 		}
 		return automatic("", req, state, live, now);
 	}
@@ -763,6 +933,15 @@ public final class ReadinessEngine
 			group = "shayzien_tier_five";
 			req.addProperty("minimum", 5);
 			req.addProperty("distinct_equipment_slots", true);
+			break;
+		case "angler":
+			group = "angler_outfit";
+			req.addProperty("minimum", 4);
+			req.addProperty("distinct_equipment_slots", true);
+			break;
+		case "fire-cape":
+			ids.add(6570);
+			ids.add(24223);
 			break;
 		case "huey-earth-supplies":
 			req.addProperty("spell", "Earth Blast");
@@ -847,12 +1026,22 @@ public final class ReadinessEngine
 	{
 		public final String label, status, detail;
 		public final int amount;
+		public final boolean fromBank;
 		public Check(String l, String s, String d, int a)
+		{
+			this(l, s, d, a, false);
+		}
+		public Check(String l, String s, String d, int a, boolean fromBank)
 		{
 			label = l;
 			status = s;
 			detail = d;
 			amount = a;
+			this.fromBank = fromBank;
+		}
+		public String displayStatus()
+		{
+			return fromBank ? "In bank" : status;
 		}
 		public boolean ready()
 		{

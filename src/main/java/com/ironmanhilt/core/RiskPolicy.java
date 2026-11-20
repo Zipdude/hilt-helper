@@ -32,6 +32,13 @@ public final class RiskPolicy
 	{
 		return activity.startsWith("wild-");
 	}
+	public static boolean groupHardcoreRisk(String activity, AccountMode mode)
+	{
+		return mode == AccountMode.HARDCORE_GROUP &&
+				(activity.equals("chambers") || activity.equals("fightcaves") ||
+					activity.equals("theatre") || activity.equals("toa"));
+	}
+
 	public static String advice(String activity, AccountMode mode)
 	{
 		if (wilderness(activity))
@@ -46,13 +53,13 @@ public final class RiskPolicy
 			}
 			if (mode == AccountMode.HARDCORE)
 			{
-				return "Chambers deaths do not remove solo Hardcore status. Learn only the listed room tasks; a full raid is unnecessary.";
+				return "Chambers deaths do not remove solo Hardcore status. Prioritize individual rooms while learning.";
 			}
 			if (mode == AccountMode.GROUP)
 			{
-				return "Raiding outside your group can remove group prestige. The guide only needs selected room tasks.";
+				return "Raiding outside your group can remove group prestige. Check whether your objective needs a full clear.";
 			}
-			return "The route uses selected rooms, not a full raid. Dropped items can be lost on leaving the instance.";
+			return "Room objectives can award before a full clear. Check your task and any dropped items before leaving.";
 		}
 		if ("theatre".equals(activity))
 		{
@@ -65,6 +72,16 @@ public final class RiskPolicy
 				return "An Entry Mode death can end your Hardcore status.";
 			}
 			return "Choose Entry Mode. Check each task for its room or raid completion requirement.";
+		}
+		if ("fightcaves".equals(activity) && mode.hardcore())
+		{
+			return mode == AccountMode.HARDCORE_GROUP
+				? "A Fight Cave death costs a Hardcore Group life."
+				: "Inside the Fight Cave, a death does not end solo Hardcore status.";
+		}
+		if ("toa".equals(activity) && mode.hardcore())
+		{
+			return "Tombs of Amascut can cost Hardcore status or a group life. Review your mode and risk before entering.";
 		}
 		if ("wintertodt".equals(activity))
 		{

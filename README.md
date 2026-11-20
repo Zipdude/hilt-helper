@@ -1,6 +1,6 @@
 # Hilt Helper
 
-A Combat Achievement guide to **Ghommal’s hilt 2** for all standard-world account types. The routes use Ironman-friendly preparation. Choose **Solo** or **With a group**, check your gear and requirements, and work toward the Medium reward at 169 points. The guide stores progress on your computer.
+A Combat Achievement guide for all standard-world account types, with Ironman-friendly routes to **Ghommal’s hilt 2** at 169 points and **Ghommal’s hilt 3** at 436 points. The guide uses your earned achievements to suggest what to work on next.
 
 ## Install
 
@@ -8,12 +8,13 @@ Open **Plugin Hub** in RuneLite, search for **Hilt Helper**, and select **Instal
 
 ## Use the guide
 
-1. Open your bank when prompted so the guide can check your supplies. Ultimate Ironmen use inventory and equipment.
-2. Choose **Solo** for independent activities or **With a group** to include party activities. You can switch under **Route & requirements**.
-3. Open the suggested next task or search the checklist by task, activity, or ID. Use **Requirements & kit** to check what you need. **Walkthrough & sources** has task tips and reference links.
-4. Complete the task in game. The guide follows your Combat Achievement points and advances to the next unfinished objective.
+1. Choose **Medium** or **Hard** when the guide first opens. Use **Change guide** to switch goals using the same account progress.
+2. Choose **Solo** for independent activities or **With a group** to include party activities. Switch routes under **Route & requirements**.
+3. Open your bank when prompted. The guide combines banked, carried, and worn supplies. Ultimate Ironmen use inventory and equipment.
+4. Open the suggested task or search the checklist by name, activity, or ID. **Requirements & kit** shows what to bring or equip. **Walkthrough & sources** has task tips and reference links.
+5. Complete the task in game. The guide follows your Combat Achievement points and advances to the next unfinished objective.
 
-Use **Account & backups** to review your account or export a backup. Restore skipped objectives under **Skipped tasks & activities** in the checklist. The **Read Me** button in the sidebar opens this page.
+Open the **Hespori checklist** to see your last observed patch status, seed supply, and future attempts covered. Visit the cave to record the patch. Enable reminders in the checklist if you want notifications.
 
 ## Filters and dropdowns
 
@@ -24,9 +25,13 @@ Use **Account & backups** to review your account or export a backup. Restore ski
 | **Selected tasks** | The guide’s core tasks for the route. |
 | **Reserve tasks** | Extra objectives you can use to replace tasks in your plan. |
 | **All guide tasks** | The combined list of core and reserve objectives. |
-| **Required & missing items** | The gear and quantities for unfinished tasks. Pick an activity to see its requirements or choose **Show all missing items** to see confirmed shortages across your route. **Needs checking** shows requirements the guide could not confirm. |
+| **Required & missing items** | Gear and supplies for unfinished tasks. **Show all missing items** lists confirmed shortages under **Missing or short** and unresolved requirements under **Needs checking**. Tick **Confirmed available** on manual checks after verifying them in game. |
 
 Open **Filters** to change the activity or task type and to hide completed tasks. **Route & requirements** compares route points, and **Blocked tasks** shows the quest, level, or kit holding up a task.
+
+## Progress and privacy
+
+Account progress and the last personal bank scan stay on your computer. Use **Account & backups** to export a progress backup or review saved preparation corrections. Restore skipped objectives under **Skipped tasks & activities**. Source links open in your browser when selected.
 
 ## Report a bug
 

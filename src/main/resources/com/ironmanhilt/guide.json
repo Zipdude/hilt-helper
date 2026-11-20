@@ -611,7 +611,7 @@
         {
           "id": 355,
           "name": "Dress Like You Mean It",
-          "condition": "Win in a full angler or spirit-angler outfit.",
+          "condition": "Subdue Tempoross wearing four Angler or Spirit Angler pieces. Mixed sets count.",
           "tip": "Use an outfit already owned. Fishing Trawler outfit acquisition is a poor detour for three points.",
           "sources": [
             {
@@ -3645,7 +3645,7 @@
         "Optional solo reserve for existing Farming progression. Weed Whacker, Hespori Adept and Hesporisn’t are separate three-point tasks.",
         "Use the first safe crop for the flower task and a special-attack finish if you have the kit. Hespori Adept takes five successful kills across separate growth cycles.",
         "At 65 Farming, bring a Hespori seed, spade and seed dibber if needed. After a kill, clear or harvest the patch and plant again. A seed in your bank cannot confirm a grown crop.",
-        "Enable the guide’s reminder and visit the cave to start observing the patch. A growth estimate can remind you to check again."
+        "Visit the cave to read your patch. Open the Hespori checklist for its last observed status and your seed supply. Enable reminders for an optional notification when it may be time to check or replant."
       ],
       "steps": [
         "Use an already-grown Hespori at 65 Farming in the Farming Guild’s west cave. Bring a fast ranged weapon and adequate poison protection/food.",
@@ -3859,8 +3859,8 @@
     },
     {
       "key": "fightcaves",
-      "title": "First fire cape",
-      "label": "First fire cape",
+      "title": "Fight Cave",
+      "label": "Fight Cave",
       "kind": "Combat preparation",
       "main": [],
       "extra": [
@@ -3905,7 +3905,6 @@
       "bossSource": "https://oldschool.runescape.wiki/w/TzHaar_Fight_Cave",
       "wilderness": false,
       "strategyLevels": {
-        "ranged": 61,
         "prayer": 43
       }
     },
@@ -5678,7 +5677,6 @@
       "shayzien-armour",
       "dragon-dagger",
       "skotizo-attempts-ready",
-      "hespori-attempts-ready",
       "huey-earth-supplies"
     ],
     "extraReq": {
@@ -5710,7 +5708,6 @@
         "item": "poison-weapon"
       },
       "125": {
-        "item": "hespori",
         "level": [
           "farming",
           65
@@ -5766,9 +5763,6 @@
           "prayer",
           37
         ]
-      },
-      "123": {
-        "item": "hespori-attempts-ready"
       },
       "124": {
         "item": "dragon-dagger",
@@ -6301,7 +6295,6 @@
       "shayzien-armour": "full tier-five Shayzien armour",
       "dragon-dagger": "usable dragon dagger",
       "skotizo-attempts-ready": "enough dark totems for your remaining Skotizo kills",
-      "hespori-attempts-ready": "seeds and time for your remaining Hespori kills",
       "huey-earth-supplies": "earth spells and runes for Hueycoatl"
     }
   },

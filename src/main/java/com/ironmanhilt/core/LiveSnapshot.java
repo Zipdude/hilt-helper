@@ -73,6 +73,12 @@ public final class LiveSnapshot
 		return mode.bankAllowed() ? containers.get("bank") : null;
 	}
 
+	boolean bankObservedThisSession()
+	{
+		Container bank = observedBank();
+		return bank != null && session.equals(bank.session);
+	}
+
 	Container observedItems(String location, Instant now)
 	{
 		if ("bank".equals(location))
@@ -108,7 +114,8 @@ public final class LiveSnapshot
 			!session.equals(other.session) || mode != other.mode || !levels.equals(other.levels) ||
 			!quests.equals(other.quests) || !context.equals(other.context) || ca.valid != other.ca.valid ||
 			ca.gamePoints != other.ca.gamePoints || !ca.message.equals(other.ca.message) ||
-			!ca.completed.equals(other.ca.completed) || !ca.observed.equals(other.ca.observed))
+			!ca.completed.equals(other.ca.completed) || !ca.observed.equals(other.ca.observed) ||
+			bankObservedThisSession() != other.bankObservedThisSession())
 		{
 			return false;
 		}

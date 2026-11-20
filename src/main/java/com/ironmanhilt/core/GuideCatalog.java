@@ -34,12 +34,12 @@ import java.io.Reader;
 import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 import java.util.Set;
-import java.util.HashMap;
-import java.util.Locale;
 import java.util.SortedMap;
 import java.util.TreeMap;
 
@@ -49,6 +49,11 @@ public final class GuideCatalog
 	public final SortedMap<Integer, Task> tasks = new TreeMap<>();
 	public final List<JsonObject> activities = new ArrayList<>();
 	public final JsonObject guide, items;
+	private final JsonObject hardGuide;
+	private final List<JsonObject> hardActivities = new ArrayList<>();
+	private final Map<String, JsonObject> hardExtensions = new HashMap<>();
+	private final Set<Integer> hardTaskIds = new HashSet<>();
+	final Set<Integer> hardItemIds = new HashSet<>();
 	public final int threshold, hardThreshold;
 	private final Map<Integer, JsonObject> rules = new HashMap<>();
 	private final Map<Integer, String> owners = new HashMap<>();
@@ -75,6 +80,29 @@ public final class GuideCatalog
 		}
 		guide = resource(gson, "guide.json");
 		items = resource(gson, "item_catalog.json");
+		hardGuide = resource(gson, "hard_guide.json");
+		for (Map.Entry<String, JsonElement> item : hardGuide.getAsJsonObject("itemEntries").entrySet())
+		{
+			JsonObject registry = items.getAsJsonObject("items");
+			if (registry.has(item.getKey()))
+			{
+				throw new IOException("Duplicate Hard kit item: " + item.getKey());
+			}
+			registry.add(item.getKey(), item.getValue());
+			hardItemIds.add(Integer.parseInt(item.getKey()));
+		}
+		for (Map.Entry<String, JsonElement> kit : hardGuide.getAsJsonObject("kitProfiles").entrySet())
+		{
+			JsonObject profiles = items.getAsJsonObject("boss_profiles");
+			JsonObject profile = profiles.getAsJsonObject(kit.getKey());
+			if (profile == null)
+			{
+				profile = new JsonObject();
+				profile.add("requirements", new JsonArray());
+				profiles.add(kit.getKey(), profile);
+			}
+			profile.getAsJsonArray("requirements").addAll(kit.getValue().getAsJsonArray());
+		}
 		for (JsonElement a : guide.getAsJsonArray("activities"))
 		{
 			activities.add(a.getAsJsonObject());
@@ -98,45 +126,119 @@ public final class GuideCatalog
 			{
 				throw new IOException("Duplicate guide activity: " + key);
 			}
-			Set<Integer> local = new HashSet<>();
-			for (JsonElement value : activity.getAsJsonArray("tasks"))
+			register(activity, routed);
+		}
+		hardActivities.addAll(activities);
+		for (JsonElement value : hardGuide.getAsJsonArray("activities"))
+		{
+			JsonObject extension = value.getAsJsonObject();
+			String key = extension.get("key").getAsString();
+			if (byKey.containsKey(key))
 			{
-				local.add(value.getAsJsonObject().get("id").getAsInt());
-			}
-			Set<Integer> members = new HashSet<>();
-			for (String field : new String[] {"main", "extra"})
-			{
-				for (int id : ReadinessEngine.ints(activity.getAsJsonArray(field)))
+				if (hardExtensions.put(key, extension) != null)
 				{
-					if (!members.add(id) || !routed.add(id))
-					{
-						throw new IOException("Duplicate authored route membership: " + id);
-					}
-					if (field.equals("extra"))
-					{
-						reserves.add(id);
-					}
+					throw new IOException("Duplicate Hard activity: " + key);
 				}
 			}
-			if (!local.equals(members))
+			else
 			{
-				throw new IOException("Authored task and route membership differ");
+				byKey.put(key, extension);
+				hardActivities.add(extension);
 			}
-			for (JsonElement value : activity.getAsJsonArray("tasks"))
+			register(extension, hardTaskIds);
+		}
+		if (!java.util.Collections.disjoint(routed, hardTaskIds))
+		{
+			throw new IOException("Duplicate task between guide resources");
+		}
+	}
+
+	private void register(JsonObject activity, Set<Integer> routed) throws IOException
+	{
+		String key = activity.get("key").getAsString();
+		Set<Integer> members = new HashSet<>();
+		for (String field : new String[] {"main", "extra"})
+		{
+			for (int id : ReadinessEngine.ints(activity.getAsJsonArray(field)))
 			{
-				JsonObject rule = value.getAsJsonObject();
-				int id = rule.get("id").getAsInt();
-				if (!tasks.containsKey(id) || !tasks.get(id).name.equals(rule.get("name").getAsString()) ||
-					rules.put(id, rule) != null)
+				if (!members.add(id) || !routed.add(id))
 				{
-					throw new IOException("Invalid or duplicate authored rule: " + id);
+					throw new IOException("Duplicate authored route membership: " + id);
 				}
-				owners.put(id, key);
-				searchText.put(id, (id + " " + label(key) + " " + rule.get("name").getAsString() + " " +
-					rule.get("condition").getAsString() + " " + rule.get("tip").getAsString()).toLowerCase(Locale.ROOT));
+				if (field.equals("extra"))
+				{
+					reserves.add(id);
+				}
 			}
 		}
+		Set<Integer> local = new HashSet<>();
+		for (JsonElement value : activity.getAsJsonArray("tasks"))
+		{
+			JsonObject rule = value.getAsJsonObject();
+			int id = rule.get("id").getAsInt();
+			if (!local.add(id) || !tasks.containsKey(id) || !tasks.get(id).name.equals(rule.get("name").getAsString()) ||
+				rules.put(id, rule) != null)
+			{
+				throw new IOException("Invalid or duplicate authored rule: " + id);
+			}
+			owners.put(id, key);
+			searchText.put(id, (id + " " + label(key) + " " + rule.get("name").getAsString() + " " +
+				rule.get("condition").getAsString() + " " + rule.get("tip").getAsString()).toLowerCase(Locale.ROOT));
+		}
+		if (!local.equals(members))
+		{
+			throw new IOException("Authored task and route membership differ: " + key);
+		}
+	}
 
+	public int threshold(RewardGoal goal)
+	{
+		return goal == RewardGoal.HARD ? hardThreshold : threshold;
+	}
+
+	public List<JsonObject> activities(RewardGoal goal)
+	{
+		return goal == RewardGoal.HARD ? hardActivities : activities;
+	}
+
+	public boolean includes(int id, RewardGoal goal)
+	{
+		return rules.containsKey(id) && (goal == RewardGoal.HARD || !hardTaskIds.contains(id));
+	}
+
+	public boolean groupOption(String key, RewardGoal goal)
+	{
+		return groupOption(key) && (goal == RewardGoal.MEDIUM || !key.equals("chambers") && !key.equals("theatre"));
+	}
+
+	public boolean needsGroup(int id, RewardGoal goal)
+	{
+		String key = owner(id);
+		JsonObject r = rule(id);
+		return key != null && (groupOption(key, goal) || r.has("minimumParty"));
+	}
+
+	public JsonArray preparation(RewardGoal goal)
+	{
+		return (goal == RewardGoal.HARD ? hardGuide : guide).getAsJsonArray("preparation");
+	}
+
+	public JsonArray steps(JsonObject activity, RewardGoal goal)
+	{
+		JsonObject extension = hardExtensions.get(activity.get("key").getAsString());
+		return goal == RewardGoal.HARD && extension != null && extension.has("steps") ?
+			extension.getAsJsonArray("steps") : activity.getAsJsonArray("steps");
+	}
+
+	public List<Integer> routeIds(JsonObject activity, boolean reserve, RewardGoal goal)
+	{
+		List<Integer> ids = routeIds(activity, reserve);
+		JsonObject extension = hardExtensions.get(activity.get("key").getAsString());
+		if (goal == RewardGoal.HARD && extension != null)
+		{
+			ids.addAll(routeIds(extension, reserve));
+		}
+		return ids;
 	}
 	private static JsonObject resource(Gson gson, String path) throws IOException
 	{
