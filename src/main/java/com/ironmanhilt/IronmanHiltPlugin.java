@@ -75,8 +75,9 @@ import net.runelite.client.util.Filepath;
 import net.runelite.client.util.ImageUtil;
 
 @PluginDescriptor(name = "Hilt Helper", internalName = "ironman-hilt-guide",
-					description = "Medium and Hard Combat Achievement routes to Ghommal's hilt 2 and hilt 3.",
-					tags = {"ironman", "combat", "achievements", "guide"})
+					description = "Track your OSRS Combat Achievements and plan Medium and Hard routes to Ghommal's hilt 2 and hilt 3.",
+					tags = {"ironman", "combat", "achievements", "progression", "guide", "medium", "hard", "hilt",
+						"ca", "cas", "tracker", "planner", "pvm", "ghommal", "osrs", "route", "combat-achievements"})
 public final class IronmanHiltPlugin extends Plugin implements GuidePanel.Actions
 {
 	@Inject private Client client;

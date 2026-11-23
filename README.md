@@ -1,6 +1,6 @@
 # Hilt Helper
 
-A Combat Achievement guide for all standard-world account types, with Ironman-friendly routes to **Ghommal’s hilt 2** at 169 points and **Ghommal’s hilt 3** at 436 points. The guide uses your earned achievements to suggest what to work on next.
+A RuneLite guide and progress tracker for Old School RuneScape (OSRS) Combat Achievements (CAs). It uses the achievements you’ve earned to suggest what to do next toward **Ghommal’s hilt 2** at 169 points (Medium) or **Ghommal’s hilt 3** at 436 points (Hard). Routes support all standard-world account types, with Ironman-friendly preparation.
 
 ## Install
 
