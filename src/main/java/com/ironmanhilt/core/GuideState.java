@@ -97,6 +97,28 @@ public final class GuideState
 		RewardGoal selected = selectedGuide();
 		return selected == null ? RewardGoal.MEDIUM : selected;
 	}
+	public int elitePartySize(String activity)
+	{
+		JsonObject sizes = data.getAsJsonObject("elitePartySizes");
+		return sizes != null && sizes.has(activity) ? sizes.get(activity).getAsInt() : 0;
+	}
+
+	public void elitePartySize(String activity, int size)
+	{
+		if (!data.has("elitePartySizes"))
+		{
+			data.add("elitePartySizes", new JsonObject());
+		}
+		if (size == 0)
+		{
+			data.getAsJsonObject("elitePartySizes").remove(activity);
+		}
+		else
+		{
+			data.getAsJsonObject("elitePartySizes").addProperty(activity, size);
+		}
+	}
+
 	public int screenTask()
 	{
 		return data.has("screenTask") ? data.get("screenTask").getAsInt() : -1;
@@ -162,6 +184,21 @@ public final class GuideState
 			if (o.has(k) && !o.get(k).isJsonObject())
 			{
 				throw new IllegalArgumentException("Invalid " + k);
+			}
+		}
+		if (o.has("elitePartySizes"))
+		{
+			if (!o.get("elitePartySizes").isJsonObject() || o.getAsJsonObject("elitePartySizes").size() > 128)
+			{
+				throw new IllegalArgumentException("Invalid Elite party sizes");
+			}
+			for (Map.Entry<String, JsonElement> entry : o.getAsJsonObject("elitePartySizes").entrySet())
+			{
+				if (!entry.getKey().matches("[a-z0-9-]{1,64}"))
+				{
+					throw new IllegalArgumentException("Invalid Elite activity key");
+				}
+				integer(entry.getValue(), 2, 100);
 			}
 		}
 		if (o.has("username") && (!isString(o.get("username")) || o.get("username").getAsString().length() > 12))

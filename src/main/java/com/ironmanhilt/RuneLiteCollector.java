@@ -32,6 +32,7 @@ import com.ironmanhilt.core.LiveSnapshot;
 import java.time.Instant;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.EnumMap;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
@@ -81,6 +82,7 @@ public final class RuneLiteCollector
 	private static final int[] RELEVANT_VARBITS = {VarbitID.IRONMAN,
 													VarbitID.CA_THRESHOLD_MEDIUM,
 													VarbitID.CA_THRESHOLD_HARD,
+													VarbitID.CA_THRESHOLD_ELITE,
 													VarbitID.CA_POINTS,
 													VarbitID.SPELLBOOK,
 													VarbitID.RUNE_POUCH_TYPE_1,
@@ -95,6 +97,43 @@ public final class RuneLiteCollector
 													VarbitID.RUNE_POUCH_QUANTITY_4,
 													VarbitID.RUNE_POUCH_QUANTITY_5,
 													VarbitID.RUNE_POUCH_QUANTITY_6};
+	// Local game counters and flags used for readiness. They never award achievement points.
+	private static final Map<Integer, String> ACCESS_VARPS = Map.ofEntries(
+		Map.entry(VarPlayerID.TOTAL_ARMADYL_KILLS, "kc:kree-arra"),
+		Map.entry(VarPlayerID.TOTAL_BANDOS_KILLS, "kc:general-graardor"),
+		Map.entry(VarPlayerID.TOTAL_SARADOMIN_KILLS, "kc:commander-zilyana"),
+		Map.entry(VarPlayerID.TOTAL_ZAMORAK_KILLS, "kc:k-ril-tsutsaroth"),
+		Map.entry(VarPlayerID.TOTAL_NEX_KILLS, "kc:nex"),
+		Map.entry(VarPlayerID.TOTAL_YAMA_KILLS, "kc:yama"),
+		Map.entry(VarPlayerID.TOTAL_SNAKEBOSS_KILLS, "kc:zulrah"),
+		Map.entry(VarPlayerID.TOTAL_GARGBOSS_KILLS, "kc:guardian"),
+		Map.entry(VarPlayerID.TOTAL_ZUK_KILLS, "kc:tzkal-zuk"),
+		Map.entry(VarPlayerID.TOTAL_COMPLETED_GAUNTLET, "kc:gauntlet"),
+		Map.entry(VarPlayerID.TOTAL_COMPLETED_GAUNTLET_HM, "kc:corrupted-gauntlet"),
+		Map.entry(VarPlayerID.TOTAL_COMPLETED_THEATREOFBLOOD, "kc:theatre-normal"),
+		Map.entry(VarPlayerID.TOTAL_COMPLETED_THEATREOFBLOOD_HARD, "kc:theatre-hard"));
+	private static final Map<Integer, String> ACCESS_VARBITS = Map.ofEntries(
+		Map.entry(VarbitID.GODWARS_ENTRANCE_ROPE, "gwdRope"),
+		Map.entry(VarbitID.TROLL_ENTERED_STRONGHOLD, "trollAccess"),
+		Map.entry(VarbitID.INFERNO_SACRIFICED_FIRECAPE, "infernoAccess"),
+		Map.entry(VarbitID.GARGBOSS_UNLOCKED_ROOF, "guardianRoof"),
+		Map.entry(VarbitID.CA_THRESHOLD_EASY, "caEasyThreshold"),
+		Map.entry(VarbitID.WILDERNESS_DIARY_MEDIUM_COMPLETE, "wildMedium"),
+		Map.entry(VarbitID.WILDERNESS_DIARY_HARD_COMPLETE, "wildHard"),
+		Map.entry(VarbitID.WILDERNESS_DIARY_ELITE_COMPLETE, "wildElite"),
+		Map.entry(VarbitID.WESTERN_DIARY_HARD_COMPLETE, "westHard"),
+		Map.entry(VarbitID.WESTERN_DIARY_ELITE_COMPLETE, "westElite"));
+	// Game Slayer tables used by RuneLite's built-in Slayer plugin in the pinned client.
+	private static final int SLAYER_TASK_TABLE = 113;
+	private static final int SLAYER_BOSS_TABLE = 116;
+	private static final int BOSS_ASSIGNMENT = 98;
+	private static final Map<Skill, String> TRACKED_BOOSTS =
+		Map.of(Skill.MAGIC, "boostedMagic", Skill.FARMING, "boostedFarming", Skill.SLAYER, "boostedSlayer",
+			Skill.AGILITY, "boostedAgility", Skill.STRENGTH, "boostedStrength");
+	private static final Set<String> TRACKED_ASSIGNMENTS = Set.of(
+		"callisto", "venenatis", "vetion", "gargoyles", "grotesqueguardians", "hellhounds", "cerberus",
+		"hydra", "hydras", "alchemicalhydra", "smokedevils", "thermonuclearsmokedevil", "cavekraken", "kraken",
+		"abyssaldemons", "abyssalsire", "spiders", "araxytes", "araxxor", "shellbanegryphons", "shellbanegryphon");
 	private final Client client;
 	private final GuideCatalog catalogue;
 	private final CaDecoder decoder;
@@ -108,6 +147,7 @@ public final class RuneLiteCollector
 	private final Set<Integer> relevantVarps = new HashSet<>();
 	private Map<String, String> questCache = new HashMap<>();
 	private Map<String, Integer> levelCache = new HashMap<>();
+	private final Map<Skill, Integer> lastBoosts = new EnumMap<>(Skill.class);
 	public RuneLiteCollector(Client client, GuideCatalog catalogue)
 	{
 		this.client = client;
@@ -125,6 +165,7 @@ public final class RuneLiteCollector
 		lastWords = null;
 		questCache.clear();
 		levelCache.clear();
+		lastBoosts.clear();
 		wasInHesporiCave = false;
 	}
 	public String session()
@@ -213,6 +254,7 @@ public final class RuneLiteCollector
 				lastWords = null;
 				questCache.clear();
 				levelCache.clear();
+				lastBoosts.clear();
 			}
 			observedAccountKey = key;
 			refreshLevels = true;
@@ -296,6 +338,15 @@ public final class RuneLiteCollector
 		CaDecoder.Result ca = CaDecoder.Result.unavailable("Waiting for the account type");
 		if (mode.supported())
 		{
+			observeAccess(context);
+			try
+			{
+				context.put("caEliteThreshold", client.getServerVarbitValue(VarbitID.CA_THRESHOLD_ELITE));
+			}
+			catch (RuntimeException ex)
+			{
+				// Elite reward eligibility is unknown. The task bits and points can still be valid.
+			}
 			try
 			{
 				if (cacheTasks == null)
@@ -340,6 +391,95 @@ public final class RuneLiteCollector
 		}
 		return new LiveSnapshot(key, name, session, mode, now, levelCache, questCache, containers, ca, context);
 	}
+	private void observeAccess(Map<String, Integer> context)
+	{
+		ACCESS_VARPS.forEach((id, key) ->
+		{
+			try
+			{
+				int value = client.getServerVarpValue(id);
+				if (value >= 0)
+				{
+					context.put(key, value);
+				}
+			}
+			catch (RuntimeException ex)
+			{
+				// This check can use other current account evidence.
+			}
+		});
+		ACCESS_VARBITS.forEach((id, key) ->
+		{
+			try
+			{
+				int value = client.getServerVarbitValue(id);
+				if (value >= 0)
+				{
+					context.put(key, value);
+				}
+			}
+			catch (RuntimeException ex)
+			{
+				// Leave an unavailable flag unknown.
+			}
+		});
+		TRACKED_BOOSTS.forEach((skill, key) -> observeBoost(skill, key, context));
+		observeSlayer(context);
+	}
+
+	private void observeBoost(Skill skill, String key, Map<String, Integer> context)
+	{
+		try
+		{
+			int level = client.getBoostedSkillLevel(skill);
+			lastBoosts.put(skill, level);
+			if (level > 0)
+			{
+				context.put(key, level);
+			}
+		}
+		catch (RuntimeException ex)
+		{
+			// The real level remains available.
+		}
+	}
+
+	private void observeSlayer(Map<String, Integer> context)
+	{
+		try
+		{
+			int remaining = client.getVarpValue(VarPlayerID.SLAYER_COUNT);
+			if (remaining <= 0)
+			{
+				context.put("slayerObserved", 1);
+				return;
+			}
+			int type = client.getVarpValue(VarPlayerID.SLAYER_TARGET);
+			boolean boss = type == BOSS_ASSIGNMENT;
+			List<Integer> rows = boss ? client.getDBRowsByValue(SLAYER_BOSS_TABLE, 1, 0,
+				client.getVarbitValue(VarbitID.SLAYER_TARGET_BOSSID)) : client.getDBRowsByValue(SLAYER_TASK_TABLE, 0, 0, type);
+			if (rows == null || rows.size() != 1)
+			{
+				return;
+			}
+			int row = rows.get(0);
+			if (boss)
+			{
+				row = (Integer) client.getDBTableField(row, 4, 0)[0];
+			}
+			String name = ((String) client.getDBTableField(row, 10, 0)[0]).toLowerCase(Locale.ROOT).replaceAll("[^a-z]", "");
+			if (TRACKED_ASSIGNMENTS.contains(name))
+			{
+				context.put((boss ? "bossSlayer:" : "slayer:") + name, 1);
+			}
+			context.put("slayerObserved", 1);
+		}
+		catch (RuntimeException ex)
+		{
+			// A changed or unavailable Slayer row leaves the current assignment unknown.
+		}
+	}
+
 	private LiveSnapshot.Container container(int id, Instant now)
 	{
 		ItemContainer c = client.getItemContainer(id);
@@ -444,15 +584,37 @@ public final class RuneLiteCollector
 			VarbitComposition definition = client.getVarbit(id);
 			if (definition == null)
 			{
+				if (id == VarbitID.CA_THRESHOLD_ELITE)
+				{
+					continue;
+				}
 				relevantVarps.clear();
 				return;
 			}
 			relevantVarps.add(definition.getIndex());
 		}
+		for (int id : ACCESS_VARBITS.keySet())
+		{
+			VarbitComposition definition = client.getVarbit(id);
+			if (definition != null)
+			{
+				relevantVarps.add(definition.getIndex());
+			}
+		}
+		relevantVarps.addAll(ACCESS_VARPS.keySet());
+		relevantVarps.add(VarPlayerID.SLAYER_COUNT);
+		relevantVarps.add(VarPlayerID.SLAYER_TARGET);
+		VarbitComposition bossAssignment = client.getVarbit(VarbitID.SLAYER_TARGET_BOSSID);
+		if (bossAssignment != null)
+		{
+			relevantVarps.add(bossAssignment.getIndex());
+		}
 	}
 	public boolean relevantVariable(int varp, int varbit)
 	{
-		if (achievementVarp(varp) || relevantVarps.contains(varp))
+		if (achievementVarp(varp) || relevantVarps.contains(varp) || ACCESS_VARPS.containsKey(varp) ||
+			ACCESS_VARBITS.containsKey(varbit) || varp == VarPlayerID.SLAYER_COUNT ||
+			varp == VarPlayerID.SLAYER_TARGET || varbit == VarbitID.SLAYER_TARGET_BOSSID)
 		{
 			return true;
 		}
@@ -465,10 +627,11 @@ public final class RuneLiteCollector
 		}
 		return false;
 	}
-	public boolean levelChanged(Skill skill, int level)
+	public boolean levelChanged(Skill skill, int level, int boostedLevel)
 	{
 		String key = skill.getName().toLowerCase(Locale.ROOT).replace(" ", "");
-		return !Objects.equals(levelCache.get(key), level);
+		return !Objects.equals(levelCache.get(key), level) ||
+			TRACKED_BOOSTS.containsKey(skill) && !Objects.equals(lastBoosts.get(skill), boostedLevel);
 	}
 	public static boolean relevantContainer(int id)
 	{

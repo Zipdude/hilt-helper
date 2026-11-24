@@ -26,7 +26,8 @@ package com.ironmanhilt.core;
 public enum RewardGoal
 {
 	MEDIUM("medium", "Medium", "Ghommal’s hilt 2", "https://oldschool.runescape.wiki/w/Ghommal%27s_hilt_2"),
-	HARD("hard", "Hard", "Ghommal’s hilt 3", "https://oldschool.runescape.wiki/w/Ghommal%27s_hilt_3");
+	HARD("hard", "Hard", "Ghommal’s hilt 3", "https://oldschool.runescape.wiki/w/Ghommal%27s_hilt_3"),
+	ELITE("elite", "Elite", "Ghommal’s hilt 4", "https://oldschool.runescape.wiki/w/Ghommal%27s_hilt_4");
 
 	public final String key, label, reward, wiki;
 

@@ -3955,7 +3955,7 @@
           "id": 574,
           "name": "You're a wizard",
           "condition": "Defeat Hueycoatl with all of your damage from earth spells.",
-          "tip": "Use Earth Blast or a stronger earth spell. Other players can use other styles. Turn off sources of recoil damage, and keep enough runes for the whole fight.",
+          "tip": "Use any earth spell you can sustain. Earth Blast or stronger helps in a longer fight. Turn off recoil and bring enough runes.",
           "sources": [
             {
               "label": "You're a wizard",
@@ -5300,7 +5300,7 @@
         "id": 574,
         "name": "You're a wizard",
         "condition": "Defeat Hueycoatl with all of your damage from earth spells.",
-        "tip": "Use Earth Blast or a stronger earth spell. Other players can use other styles. Turn off sources of recoil damage, and keep enough runes for the whole fight.",
+        "tip": "Use any earth spell you can sustain. Earth Blast or stronger helps in a longer fight. Other players can use other styles. Turn off recoil and pack enough casts.",
         "sources": [
           {
             "label": "You're a wizard",
@@ -5775,10 +5775,9 @@
         ]
       },
       "574": {
-        "item": "huey-earth-supplies",
         "level": [
           "magic",
-          53
+          9
         ]
       }
     },
@@ -6295,7 +6294,7 @@
       "shayzien-armour": "full tier-five Shayzien armour",
       "dragon-dagger": "usable dragon dagger",
       "skotizo-attempts-ready": "enough dark totems for your remaining Skotizo kills",
-      "huey-earth-supplies": "earth spells and runes for Hueycoatl"
+      "huey-earth-supplies": "Earth spell supplies"
     }
   },
   "referenceFigures": [

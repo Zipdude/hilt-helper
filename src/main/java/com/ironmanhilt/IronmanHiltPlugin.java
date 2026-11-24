@@ -75,9 +75,11 @@ import net.runelite.client.util.Filepath;
 import net.runelite.client.util.ImageUtil;
 
 @PluginDescriptor(name = "Hilt Helper", internalName = "ironman-hilt-guide",
-					description = "Track your OSRS Combat Achievements and plan Medium and Hard routes to Ghommal's hilt 2 and hilt 3.",
+					description = "Track live OSRS Combat Achievement points and plan solo or group routes to Ghommal's hilts 2-4 " +
+						"(Medium, Hard, Elite) based on your remaining points. Includes a searchable checklist, quest, skill " +
+						"and gear checks, and task walkthroughs.",
 					tags = {"ironman", "combat", "achievements", "progression", "guide", "medium", "hard", "hilt",
-						"ca", "cas", "tracker", "planner", "pvm", "ghommal", "osrs", "route", "combat-achievements"})
+						"ca", "cas", "tracker", "planner", "pvm", "ghommal", "osrs", "route", "combat-achievements", "elite"})
 public final class IronmanHiltPlugin extends Plugin implements GuidePanel.Actions
 {
 	@Inject private Client client;
@@ -275,7 +277,7 @@ public final class IronmanHiltPlugin extends Plugin implements GuidePanel.Action
 
 	@Subscribe public void onStatChanged(StatChanged event)
 	{
-		if (enabled && collector != null && collector.levelChanged(event.getSkill(), event.getLevel()))
+		if (enabled && collector != null && collector.levelChanged(event.getSkill(), event.getLevel(), event.getBoostedLevel()))
 		{
 			dirty = levelsDirty = true;
 		}
@@ -592,15 +594,15 @@ public final class IronmanHiltPlugin extends Plugin implements GuidePanel.Action
 		String activity = catalogue.owner(id);
 		if (!available || !catalogue.includes(id, state.rewardGoal()) || state.routeChoice() == null || state.skipped(activity) ||
 			state.knownIds("skipTaskIDs", catalogue.tasks.keySet()).contains(id) ||
-			progress.knownCompleted(state).contains(id) || (RiskPolicy.wilderness(activity) && !state.wildernessEnabled()) ||
+			planner.completedForGuide(state, live).contains(id) || (RiskPolicy.wilderness(activity) && !state.wildernessEnabled()) ||
 			(catalogue.needsGroup(id, state.rewardGoal()) && state.routeChoice() != RouteStyle.GROUP))
 		{
 			overlay.clear();
 			return;
 		}
-		JsonObject task = catalogue.rule(id);
+		JsonObject task = catalogue.rule(id, state.rewardGoal());
 		String kit = "";
-		for (JsonElement value : catalogue.kit(activity))
+		for (JsonElement value : catalogue.kit(activity, state.rewardGoal()))
 		{
 			JsonObject requirement = value.getAsJsonObject();
 			String role = ReadinessEngine.str(requirement, "role", "");
@@ -705,6 +707,21 @@ public final class IronmanHiltPlugin extends Plugin implements GuidePanel.Action
 		});
 	}
 
+	@Override public void elitePartySize(String activity, int size)
+	{
+		if (size == 0 || size >= 2 && size <= 100)
+		{
+			mutate(s ->
+			{
+				if (s.rewardGoal() == RewardGoal.ELITE)
+				{
+					catalogue.activity(activity, RewardGoal.ELITE);
+					s.elitePartySize(activity, size);
+				}
+			});
+		}
+	}
+
 	@Override public void hesporiReminder(boolean enable)
 	{
 		mutate(s -> s.data.addProperty("hesporiReminder", enable));
@@ -717,7 +734,7 @@ public final class IronmanHiltPlugin extends Plugin implements GuidePanel.Action
 			{
 				s.data.remove("screenTask");
 			}
-			else if (catalogue.includes(id, s.rewardGoal()) && !progress.knownCompleted(s).contains(id))
+			else if (catalogue.includes(id, s.rewardGoal()) && !planner.completedForGuide(s, live).contains(id))
 			{
 				s.data.addProperty("screenTask", id);
 			}

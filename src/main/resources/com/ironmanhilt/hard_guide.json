@@ -1746,7 +1746,7 @@
           "id": 170,
           "name": "Krakan't Hurt Me",
           "condition": "Kill Kraken 25 times in one private-room stay.",
-          "tip": "Pay for the instance, check food, charges and assignment length, then stay inside while each kill is credited. Leave only after confirmation.",
+          "tip": "Use the Private crevice for 25,000 coins. Bring enough charges, food and task kills for the whole streak.",
           "plan": "Stacks #168 and continues to #171 when equipped with sufficient supplies.",
           "sources": [
             {
@@ -1760,7 +1760,7 @@
           "id": 171,
           "name": "Ten-tacles",
           "condition": "Kill Kraken 50 times without leaving a private instance.",
-          "tip": "Enter on an assignment with fifty or more remaining, maintain charges and enough food or eligible sustain for all fifty. Do the tentacle kill early if still needed.",
+          "tip": "Use the Private crevice for 25,000 coins. Bring enough charges, food and task kills for the whole streak.",
           "plan": "Stacks the 20- and 25-kill goals. At 25 leave if continuing would be unsafe.",
           "sources": [
             {
@@ -2849,7 +2849,7 @@
           "id": 167,
           "name": "Who Is the King Now?",
           "condition": "Kill King Black Dragon 10 times without leaving its private instance.",
-          "tip": "Enter private, establish protection, and sustain ten kills with potion, food and ammo margins. Complete #164–166 while safe and keep the session open.",
+          "tip": "Use Private on the KBD lever and pay 50,000 coins. Kill ten without leaving. Bring enough food, potions and ammunition.",
           "plan": "Normal/public lair does not qualify. Wilderness approach risk remains.",
           "sources": [
             {
@@ -3260,7 +3260,12 @@
         "task_ids": [
           533
         ],
-        "manualCheck": true
+        "any_of_ids": [
+          28988,
+          28997,
+          29000
+        ],
+        "ge_option": 29000
       }
     ],
     "chambers": [
@@ -3293,7 +3298,12 @@
         "task_ids": [
           389
         ],
-        "manualCheck": true
+        "any_of_ids": [
+          3204,
+          23987,
+          24125
+        ],
+        "ge_option": 3204
       },
       {
         "label": "At least two eligible players for this task",
@@ -3323,13 +3333,19 @@
       {
         "label": "Two wearable Hueycoatl armour pieces",
         "role": "required_task",
-        "minimum": 1,
+        "minimum": 2,
         "unit": "items",
         "notes": "Confirm two pieces, with 70 Ranged to wear them. Main accounts may buy usable pieces. Ironmen can use acquired hides and unlocks.",
         "task_ids": [
           575
         ],
-        "manualCheck": true
+        "any_of_ids": [
+          30073,
+          30076,
+          30079,
+          30082
+        ],
+        "distinct_equipment_slots": true
       },
       {
         "label": "Eligible repeated-kill team",
@@ -3609,13 +3625,10 @@
       },
       {
         "label": "Private instance fee",
-        "role": "required_task",
+        "role": "attempt_note",
         "minimum": 25000,
         "unit": "coins",
         "notes": "Bring 25,000 coins to Kraken Cove. Leave only after the intended streak is credited.",
-        "any_of_ids": [
-          995
-        ],
         "task_ids": [
           170,
           171
@@ -3658,7 +3671,12 @@
         "task_ids": [
           75
         ],
-        "manualCheck": true
+        "manualCheck": true,
+        "any_of_ids": [
+          2402,
+          6746,
+          19675
+        ]
       },
       {
         "label": "Two usable styles and supplies",
@@ -3693,11 +3711,12 @@
         "role": "required_task",
         "minimum": 1,
         "unit": "items",
-        "notes": "Confirm the third source beyond Smite and sapphire bolts (e) before choosing this reserve.",
+        "notes": "Use three of Smite, enchanted sapphire bolts, Ancient mace and an Arceuus Corruption spell.",
         "task_ids": [
           482
         ],
-        "manualCheck": true
+        "manualCheck": true,
+        "predicate": "muspah-drain"
       }
     ],
     "gauntlet": [
@@ -3742,8 +3761,10 @@
         "role": "required_strategy",
         "minimum": 1,
         "unit": "items",
-        "notes": "Enable the option at Watson’s and confirm you own an actual Mimic. Clue caskets do not guarantee a roll.",
-        "manualCheck": true
+        "notes": "Enable Mimic rewards at Watson’s house before opening eligible elite or master clue caskets. Bring the Mimic itself once you roll it.",
+        "any_of_ids": [
+          23184
+        ]
       }
     ],
     "vorkath": [
@@ -3790,14 +3811,13 @@
       },
       {
         "label": "Private instance access for ten consecutive kills",
-        "role": "required_task",
+        "role": "attempt_note",
         "minimum": 1,
         "unit": "items",
-        "notes": "Bring sufficient coins, dragonfire protection and food. This challenge must be done in a private room.",
+        "notes": "Choose Private at the lever. Budget 50,000 coins, dragonfire protection and food. Stay in the same private room for ten kills.",
         "task_ids": [
           167
-        ],
-        "manualCheck": true
+        ]
       },
       {
         "label": "Minimize carried value and verify an exit",
@@ -3810,12 +3830,13 @@
     ],
     "wild-callisto": [
       {
-        "label": "Required Wilderness Diary for chosen variant",
-        "role": "required_strategy",
+        "label": "Wilderness boss access",
+        "role": "required_access",
         "minimum": 1,
         "unit": "items",
-        "notes": "Full multi boss requires Medium Wilderness Diary. Singles-plus variant requires Hard Wilderness Diary. Confirm the credited boss and safe escape route.",
-        "manualCheck": true
+        "notes": "The multi boss needs the Medium diary. The smaller variant needs the Hard diary. A matching boss assignment can open both.",
+        "manualCheck": true,
+        "access_rule": "wilderness-diary"
       },
       {
         "label": "Minimize carried value and verify an exit",
@@ -3828,12 +3849,13 @@
     ],
     "wild-venenatis": [
       {
-        "label": "Required Wilderness Diary for chosen variant",
-        "role": "required_strategy",
+        "label": "Wilderness boss access",
+        "role": "required_access",
         "minimum": 1,
         "unit": "items",
-        "notes": "Full multi boss requires Medium Wilderness Diary. Singles-plus variant requires Hard Wilderness Diary. Confirm the credited boss and safe escape route.",
-        "manualCheck": true
+        "notes": "The multi boss needs the Medium diary. The smaller variant needs the Hard diary. A matching boss assignment can open both.",
+        "manualCheck": true,
+        "access_rule": "wilderness-diary"
       },
       {
         "label": "Minimize carried value and verify an exit",
@@ -3846,12 +3868,13 @@
     ],
     "wild-vetion": [
       {
-        "label": "Required Wilderness Diary for chosen variant",
-        "role": "required_strategy",
+        "label": "Wilderness boss access",
+        "role": "required_access",
         "minimum": 1,
         "unit": "items",
-        "notes": "Full multi boss requires Medium Wilderness Diary. Singles-plus variant requires Hard Wilderness Diary. Confirm the credited boss and safe escape route.",
-        "manualCheck": true
+        "notes": "The multi boss needs the Medium diary. The smaller variant needs the Hard diary. A matching boss assignment can open both.",
+        "manualCheck": true,
+        "access_rule": "wilderness-diary"
       },
       {
         "label": "Minimize carried value and verify an exit",

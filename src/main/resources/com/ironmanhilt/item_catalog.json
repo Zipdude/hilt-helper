@@ -5658,8 +5658,8 @@
       },
       "stackable": false,
       "wear_requirements": {
-        "Attack": 60,
-        "Strength": 30
+        "attack": 60,
+        "strength": 30
       },
       "wear_quests": [
         "Regicide"
@@ -12965,6 +12965,428 @@
       ],
       "wiki_page": "Diamond_bolts_(e)",
       "wiki_variant": null
+    },
+    "3101": {
+      "id": 3101,
+      "name": "Rune claws",
+      "noted_ids": [
+        3102
+      ],
+      "equipable": true,
+      "equipment_slot": 3,
+      "two_handed": true,
+      "stackable": false,
+      "wear_requirements": {
+        "attack": 40
+      },
+      "wear_quests": [],
+      "requirements_verified": true,
+      "sources": [
+        "https://oldschool.runescape.wiki/w/Rune_claws"
+      ]
+    },
+    "6746": {
+      "id": 6746,
+      "name": "Darklight",
+      "equipable": true,
+      "requirements_verified": true,
+      "sources": [
+        "https://oldschool.runescape.wiki/w/Darklight"
+      ],
+      "equipment_slot": 3,
+      "two_handed": false,
+      "wear_requirements": {}
+    },
+    "9240": {
+      "id": 9240,
+      "name": "Sapphire bolts (e)",
+      "noted_ids": [],
+      "equipable": true,
+      "equipment_slot": 13,
+      "two_handed": false,
+      "stackable": true,
+      "wear_requirements": {
+        "ranged": 31
+      },
+      "wear_quests": [],
+      "requirements_verified": true,
+      "sources": [
+        "https://oldschool.runescape.wiki/w/Sapphire_bolts_(e)"
+      ]
+    },
+    "11061": {
+      "id": 11061,
+      "name": "Ancient mace",
+      "noted_ids": [],
+      "equipable": true,
+      "equipment_slot": 3,
+      "two_handed": false,
+      "stackable": false,
+      "wear_requirements": {
+        "attack": 15,
+        "prayer": 25
+      },
+      "wear_quests": [],
+      "requirements_verified": true,
+      "sources": [
+        "https://oldschool.runescape.wiki/w/Ancient_mace"
+      ]
+    },
+    "11808": {
+      "id": 11808,
+      "name": "Zamorak godsword",
+      "noted_ids": [
+        11809
+      ],
+      "equipable": true,
+      "equipment_slot": 3,
+      "two_handed": true,
+      "stackable": false,
+      "wear_requirements": {
+        "attack": 75
+      },
+      "wear_quests": [],
+      "requirements_verified": true,
+      "sources": [
+        "https://oldschool.runescape.wiki/w/Zamorak_godsword"
+      ]
+    },
+    "13652": {
+      "id": 13652,
+      "name": "Dragon claws",
+      "noted_ids": [
+        13653
+      ],
+      "equipable": true,
+      "equipment_slot": 3,
+      "two_handed": true,
+      "stackable": false,
+      "wear_requirements": {
+        "attack": 60
+      },
+      "wear_quests": [],
+      "requirements_verified": true,
+      "sources": [
+        "https://oldschool.runescape.wiki/w/Dragon_claws"
+      ]
+    },
+    "19675": {
+      "id": 19675,
+      "name": "Arclight",
+      "equipable": true,
+      "requirements_verified": true,
+      "sources": [
+        "https://oldschool.runescape.wiki/w/Arclight"
+      ],
+      "equipment_slot": 3,
+      "two_handed": false,
+      "wear_requirements": {
+        "attack": 75
+      }
+    },
+    "21012": {
+      "id": 21012,
+      "name": "Dragon hunter crossbow",
+      "noted_ids": [
+        21013
+      ],
+      "equipable": true,
+      "equipment_slot": 3,
+      "two_handed": false,
+      "stackable": false,
+      "wear_requirements": {
+        "ranged": 70
+      },
+      "wear_quests": [],
+      "requirements_verified": true,
+      "sources": [
+        "https://oldschool.runescape.wiki/w/Dragon_hunter_crossbow"
+      ]
+    },
+    "21724": {
+      "id": 21724,
+      "name": "Brittle key",
+      "equipable": false,
+      "requirements_verified": true,
+      "sources": [
+        "https://oldschool.runescape.wiki/w/Brittle_key"
+      ]
+    },
+    "21940": {
+      "id": 21940,
+      "name": "Sapphire dragon bolts (e)",
+      "noted_ids": [],
+      "equipable": true,
+      "equipment_slot": 13,
+      "two_handed": false,
+      "stackable": true,
+      "wear_requirements": {
+        "ranged": 64
+      },
+      "wear_quests": [],
+      "requirements_verified": true,
+      "sources": [
+        "https://oldschool.runescape.wiki/w/Sapphire_dragon_bolts_(e)"
+      ]
+    },
+    "22978": {
+      "id": 22978,
+      "name": "Dragon hunter lance",
+      "noted_ids": [
+        22979
+      ],
+      "equipable": true,
+      "equipment_slot": 3,
+      "two_handed": false,
+      "stackable": false,
+      "wear_requirements": {
+        "attack": 78
+      },
+      "wear_quests": [],
+      "requirements_verified": true,
+      "sources": [
+        "https://oldschool.runescape.wiki/w/Dragon_hunter_lance"
+      ]
+    },
+    "23184": {
+      "id": 23184,
+      "name": "Mimic",
+      "equipable": false,
+      "requirements_verified": true,
+      "sources": [
+        "https://oldschool.runescape.wiki/w/Mimic"
+      ]
+    },
+    "23987": {
+      "id": 23987,
+      "name": "Crystal halberd",
+      "noted_ids": [],
+      "equipable": true,
+      "equipment_slot": 3,
+      "two_handed": true,
+      "stackable": false,
+      "wear_requirements": {
+        "attack": 70,
+        "strength": 35,
+        "agility": 50
+      },
+      "wear_quests": [],
+      "requirements_verified": true,
+      "sources": [
+        "https://oldschool.runescape.wiki/w/Crystal_halberd"
+      ],
+      "wear_diary": "westHard"
+    },
+    "24125": {
+      "id": 24125,
+      "name": "Crystal halberd",
+      "noted_ids": [],
+      "equipable": true,
+      "equipment_slot": 3,
+      "two_handed": true,
+      "stackable": false,
+      "wear_requirements": {
+        "attack": 70,
+        "strength": 35,
+        "agility": 50
+      },
+      "wear_quests": [],
+      "requirements_verified": true,
+      "sources": [
+        "https://oldschool.runescape.wiki/w/Crystal_halberd"
+      ],
+      "wear_diary": "westHard"
+    },
+    "25916": {
+      "id": 25916,
+      "name": "Dragon hunter crossbow",
+      "noted_ids": [],
+      "equipable": true,
+      "equipment_slot": 3,
+      "two_handed": false,
+      "stackable": false,
+      "wear_requirements": {
+        "ranged": 70
+      },
+      "wear_quests": [],
+      "requirements_verified": true,
+      "sources": [
+        "https://oldschool.runescape.wiki/w/Dragon_hunter_crossbow"
+      ]
+    },
+    "25918": {
+      "id": 25918,
+      "name": "Dragon hunter crossbow",
+      "noted_ids": [],
+      "equipable": true,
+      "equipment_slot": 3,
+      "two_handed": false,
+      "stackable": false,
+      "wear_requirements": {
+        "ranged": 70
+      },
+      "wear_quests": [],
+      "requirements_verified": true,
+      "sources": [
+        "https://oldschool.runescape.wiki/w/Dragon_hunter_crossbow"
+      ]
+    },
+    "28988": {
+      "id": 28988,
+      "name": "Blue Moon spear",
+      "equipable": true,
+      "requirements_verified": true,
+      "sources": [
+        "https://oldschool.runescape.wiki/w/Blue_Moon_spear"
+      ],
+      "equipment_slot": 3,
+      "two_handed": true,
+      "wear_requirements": {
+        "attack": 70,
+        "magic": 75
+      }
+    },
+    "28997": {
+      "id": 28997,
+      "name": "Dual macuahuitl",
+      "equipable": true,
+      "requirements_verified": true,
+      "sources": [
+        "https://oldschool.runescape.wiki/w/Dual_macuahuitl"
+      ],
+      "equipment_slot": 3,
+      "two_handed": true,
+      "wear_requirements": {
+        "attack": 70,
+        "strength": 75
+      }
+    },
+    "29000": {
+      "id": 29000,
+      "name": "Eclipse atlatl",
+      "equipable": true,
+      "requirements_verified": true,
+      "sources": [
+        "https://oldschool.runescape.wiki/w/Eclipse_atlatl"
+      ],
+      "equipment_slot": 3,
+      "two_handed": true,
+      "wear_requirements": {
+        "attack": 50,
+        "strength": 50,
+        "ranged": 75
+      }
+    },
+    "29577": {
+      "id": 29577,
+      "name": "Burning claws",
+      "equipable": true,
+      "equipment_slot": 3,
+      "two_handed": true,
+      "wear_requirements": {
+        "attack": 60
+      },
+      "requirements_verified": true,
+      "sources": [
+        "https://oldschool.runescape.wiki/w/Burning_claws"
+      ]
+    },
+    "30070": {
+      "id": 30070,
+      "name": "Dragon hunter wand",
+      "noted_ids": [
+        30071
+      ],
+      "equipable": true,
+      "equipment_slot": 3,
+      "two_handed": false,
+      "stackable": false,
+      "wear_requirements": {
+        "magic": 65
+      },
+      "wear_quests": [],
+      "requirements_verified": true,
+      "sources": [
+        "https://oldschool.runescape.wiki/w/Dragon_hunter_wand"
+      ]
+    },
+    "30073": {
+      "id": 30073,
+      "name": "Hueycoatl hide coif",
+      "noted_ids": [
+        30074
+      ],
+      "equipable": true,
+      "equipment_slot": 0,
+      "two_handed": false,
+      "stackable": false,
+      "wear_requirements": {
+        "ranged": 70,
+        "defence": 40
+      },
+      "wear_quests": [],
+      "requirements_verified": true,
+      "sources": [
+        "https://oldschool.runescape.wiki/w/Hueycoatl_hide_coif"
+      ]
+    },
+    "30076": {
+      "id": 30076,
+      "name": "Hueycoatl hide body",
+      "noted_ids": [
+        30077
+      ],
+      "equipable": true,
+      "equipment_slot": 4,
+      "two_handed": false,
+      "stackable": false,
+      "wear_requirements": {
+        "ranged": 70,
+        "defence": 40
+      },
+      "wear_quests": [],
+      "requirements_verified": true,
+      "sources": [
+        "https://oldschool.runescape.wiki/w/Hueycoatl_hide_body"
+      ]
+    },
+    "30079": {
+      "id": 30079,
+      "name": "Hueycoatl hide chaps",
+      "noted_ids": [
+        30080
+      ],
+      "equipable": true,
+      "equipment_slot": 7,
+      "two_handed": false,
+      "stackable": false,
+      "wear_requirements": {
+        "ranged": 70
+      },
+      "wear_quests": [],
+      "requirements_verified": true,
+      "sources": [
+        "https://oldschool.runescape.wiki/w/Hueycoatl_hide_chaps"
+      ]
+    },
+    "30082": {
+      "id": 30082,
+      "name": "Hueycoatl hide vambraces",
+      "noted_ids": [
+        30083
+      ],
+      "equipable": true,
+      "equipment_slot": 9,
+      "two_handed": false,
+      "stackable": false,
+      "wear_requirements": {
+        "ranged": 70
+      },
+      "wear_quests": [],
+      "requirements_verified": true,
+      "sources": [
+        "https://oldschool.runescape.wiki/w/Hueycoatl_hide_vambraces"
+      ]
     }
   },
   "note_to_base": {
@@ -13207,7 +13629,20 @@
     "28212": 28211,
     "28215": 28214,
     "28218": 28217,
-    "28227": 28226
+    "28227": 28226,
+    "3102": 3101,
+    "11809": 11808,
+    "13653": 13652,
+    "21013": 21012,
+    "22979": 22978,
+    "28990": 28988,
+    "28999": 28997,
+    "29002": 29000,
+    "30071": 30070,
+    "30074": 30073,
+    "30077": 30076,
+    "30080": 30079,
+    "30083": 30082
   },
   "groups": {
     "basic_melee": [
@@ -13538,7 +13973,8 @@
         9144,
         11875,
         9242,
-        9243
+        9243,
+        9240
       ],
       "note": "Ordinary bolts up to runite, broad bolts, and the listed enchanted adamant bolts."
     },
@@ -13652,6 +14088,184 @@
         "555": 4
       },
       "source": "https://oldschool.runescape.wiki/w/Snare"
+    },
+    "Earth Strike": {
+      "magic": 9,
+      "spellbook": "standard",
+      "runes_per_cast": {
+        "556": 1,
+        "557": 2,
+        "558": 1
+      },
+      "source": "https://oldschool.runescape.wiki/w/Earth_Strike"
+    },
+    "Earth Bolt": {
+      "magic": 29,
+      "spellbook": "standard",
+      "runes_per_cast": {
+        "556": 2,
+        "557": 3,
+        "562": 1
+      },
+      "source": "https://oldschool.runescape.wiki/w/Earth_Bolt"
+    },
+    "Earth Blast": {
+      "magic": 53,
+      "spellbook": "standard",
+      "runes_per_cast": {
+        "556": 3,
+        "557": 4,
+        "560": 1
+      },
+      "source": "https://oldschool.runescape.wiki/w/Earth_Blast"
+    },
+    "Earth Wave": {
+      "magic": 70,
+      "spellbook": "standard",
+      "runes_per_cast": {
+        "556": 5,
+        "557": 7,
+        "565": 1
+      },
+      "source": "https://oldschool.runescape.wiki/w/Earth_Wave"
+    },
+    "Earth Surge": {
+      "magic": 90,
+      "spellbook": "standard",
+      "runes_per_cast": {
+        "556": 7,
+        "557": 10,
+        "21880": 1
+      },
+      "source": "https://oldschool.runescape.wiki/w/Earth_Surge"
+    },
+    "Fire Strike": {
+      "magic": 13,
+      "spellbook": "standard",
+      "runes_per_cast": {
+        "556": 2,
+        "554": 3,
+        "558": 1
+      },
+      "source": "https://oldschool.runescape.wiki/w/Fire_Strike"
+    },
+    "Fire Bolt": {
+      "magic": 35,
+      "spellbook": "standard",
+      "runes_per_cast": {
+        "556": 3,
+        "554": 4,
+        "562": 1
+      },
+      "source": "https://oldschool.runescape.wiki/w/Fire_Bolt"
+    },
+    "Fire Wave": {
+      "magic": 75,
+      "spellbook": "standard",
+      "runes_per_cast": {
+        "556": 5,
+        "554": 7,
+        "565": 1
+      },
+      "source": "https://oldschool.runescape.wiki/w/Fire_Wave"
+    },
+    "Fire Surge": {
+      "magic": 95,
+      "spellbook": "standard",
+      "runes_per_cast": {
+        "556": 7,
+        "554": 10,
+        "21880": 1
+      },
+      "source": "https://oldschool.runescape.wiki/w/Fire_Surge"
+    },
+    "Entangle": {
+      "magic": 79,
+      "spellbook": "standard",
+      "runes_per_cast": {
+        "561": 4,
+        "557": 5,
+        "555": 5
+      },
+      "source": "https://oldschool.runescape.wiki/w/Entangle"
+    },
+    "Ice Rush": {
+      "magic": 58,
+      "spellbook": "ancient",
+      "runes_per_cast": {
+        "555": 2,
+        "562": 2,
+        "560": 2
+      },
+      "source": "https://oldschool.runescape.wiki/w/Ice_Rush"
+    },
+    "Ice Burst": {
+      "magic": 70,
+      "spellbook": "ancient",
+      "runes_per_cast": {
+        "555": 4,
+        "562": 4,
+        "560": 2
+      },
+      "source": "https://oldschool.runescape.wiki/w/Ice_Burst"
+    },
+    "Ice Blitz": {
+      "magic": 82,
+      "spellbook": "ancient",
+      "runes_per_cast": {
+        "555": 3,
+        "565": 2,
+        "560": 2
+      },
+      "source": "https://oldschool.runescape.wiki/w/Ice_Blitz"
+    },
+    "Ice Barrage": {
+      "magic": 94,
+      "spellbook": "ancient",
+      "runes_per_cast": {
+        "555": 6,
+        "565": 2,
+        "560": 4
+      },
+      "source": "https://oldschool.runescape.wiki/w/Ice_Barrage"
+    },
+    "Vengeance": {
+      "magic": 94,
+      "spellbook": "lunar",
+      "runes_per_cast": {
+        "557": 10,
+        "9075": 4,
+        "560": 2
+      },
+      "source": "https://oldschool.runescape.wiki/w/Vengeance"
+    },
+    "Lesser Corruption": {
+      "magic": 64,
+      "spellbook": "arceuus",
+      "runes_per_cast": {
+        "560": 1,
+        "566": 2
+      },
+      "source": "https://oldschool.runescape.wiki/w/Lesser_Corruption"
+    },
+    "Greater Corruption": {
+      "magic": 85,
+      "spellbook": "arceuus",
+      "runes_per_cast": {
+        "560": 1,
+        "566": 3
+      },
+      "source": "https://oldschool.runescape.wiki/w/Greater_Corruption"
+    },
+    "Resurrect Lesser Ghost": {
+      "magic": 38,
+      "spellbook": "arceuus",
+      "runes_per_cast": {
+        "556": 10,
+        "558": 5,
+        "564": 1
+      },
+      "source": "https://oldschool.runescape.wiki/w/Resurrect_Lesser_Ghost"
     }
   },
   "boss_profiles": {
@@ -14111,7 +14725,7 @@
         },
         {
           "label": "Bind or Snare supplies",
-          "role": "required_task",
+          "role": "recommended",
           "minimum": 20,
           "unit": "casts",
           "spells_any": [
@@ -14933,12 +15547,20 @@
         },
         {
           "label": "Earth spell supplies",
-          "role": "recommended",
-          "minimum": 60,
-          "spell": "Earth Blast",
+          "role": "required_task",
+          "minimum": 1,
           "task_ids": [
             574
-          ]
+          ],
+          "spells_any": [
+            "Earth Strike",
+            "Earth Bolt",
+            "Earth Blast",
+            "Earth Wave",
+            "Earth Surge"
+          ],
+          "notes": "Earth Blast or a stronger earth spell is recommended. Pack enough casts for the full fight.",
+          "resource_token": "huey-earth-supplies"
         }
       ]
     },

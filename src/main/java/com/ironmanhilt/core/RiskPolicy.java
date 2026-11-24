@@ -23,6 +23,8 @@
 	*/
 package com.ironmanhilt.core;
 
+import com.google.gson.JsonObject;
+
 public final class RiskPolicy
 {
 	private RiskPolicy()
@@ -109,6 +111,44 @@ public final class RiskPolicy
 		}
 		return "Follow the exact task rule and bank or escape when needed. Supplies do not guarantee a safe kill.";
 	}
+	public static String eliteBlocker(JsonObject rule, AccountMode mode)
+	{
+		if (!mode.hardcore())
+		{
+			return "";
+		}
+		JsonObject risk = rule.getAsJsonObject("risk");
+		String profile = risk.get("profile").getAsString();
+		if (mode == AccountMode.HARDCORE_GROUP && "safe_hc_unsafe_hcg".equals(profile))
+		{
+			return "This encounter can cost a group life. Browse it in the checklist.";
+		}
+		if ("gauntlet_danger".equals(profile) || "unsafe_raid".equals(profile) ||
+			risk.get("deliberateDamageOrUnprovenMargin").getAsBoolean() ||
+			risk.get("reviewBeforeDefaultOnHardcore").getAsBoolean())
+		{
+			return "Hardcore risk requires review. This task is outside the suggested route.";
+		}
+		return "";
+	}
+
+	public static String eliteAdvice(GuideCatalog catalogue, JsonObject rule, AccountMode mode)
+	{
+		JsonObject risk = rule.getAsJsonObject("risk");
+		JsonObject profile = catalogue.eliteRiskProfiles().getAsJsonObject(risk.get("profile").getAsString());
+		switch (mode)
+		{
+			case HARDCORE:
+				return profile.get("soloHardcore").getAsString();
+			case HARDCORE_GROUP:
+				return profile.get("hardcoreGroup").getAsString();
+			case ULTIMATE:
+				return profile.get("ultimate").getAsString();
+			default:
+				return advice(catalogue.owner(rule.get("id").getAsInt()), mode);
+		}
+	}
+
 	public static double penalty(String activity, AccountMode mode)
 	{
 		if (!mode.hardcore())

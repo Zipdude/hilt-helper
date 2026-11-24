@@ -73,7 +73,7 @@ public final class LiveSnapshot
 		return mode.bankAllowed() ? containers.get("bank") : null;
 	}
 
-	boolean bankObservedThisSession()
+	public boolean bankObservedThisSession()
 	{
 		Container bank = observedBank();
 		return bank != null && session.equals(bank.session);
@@ -104,6 +104,17 @@ public final class LiveSnapshot
 		}
 		Map<String, Container> updated = new HashMap<>(containers);
 		updated.put("bank", bank);
+		return new LiveSnapshot(accountKey, name, session, mode, at, levels, quests, updated, ca, context);
+	}
+
+	LiveSnapshot withoutHistoricalBank()
+	{
+		if (observedBank() == null || bankObservedThisSession())
+		{
+			return this;
+		}
+		Map<String, Container> updated = new HashMap<>(containers);
+		updated.remove("bank");
 		return new LiveSnapshot(accountKey, name, session, mode, at, levels, quests, updated, ca, context);
 	}
 

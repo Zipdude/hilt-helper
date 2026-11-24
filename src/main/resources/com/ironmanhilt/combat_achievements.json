@@ -3933,5 +3933,6 @@
       "points": 6
     }
   ],
-  "hard_threshold": 436
+  "hard_threshold": 436,
+  "elite_threshold": 1100
 }
