@@ -107,7 +107,7 @@ public final class ProgressEngine
 	/** Explicit user correction only. The caller archives the old state before committing this. */
 	public GuideState reconcile(GuideState current, CaDecoder.Result evidence)
 	{
-		if (!evidence.valid || !evidence.observed.equals(catalogue.tasks.keySet()) ||
+		if (!evidence.verifiedFor(current.rewardGoal()) || !evidence.observed.equals(catalogue.tasks.keySet()) ||
 			catalogue.points(evidence.completed) != evidence.gamePoints)
 		{
 			throw new IllegalArgumentException("Full current game evidence required");

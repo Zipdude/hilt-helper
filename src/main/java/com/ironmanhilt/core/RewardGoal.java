@@ -27,7 +27,8 @@ public enum RewardGoal
 {
 	MEDIUM("medium", "Medium", "Ghommal’s hilt 2", "https://oldschool.runescape.wiki/w/Ghommal%27s_hilt_2"),
 	HARD("hard", "Hard", "Ghommal’s hilt 3", "https://oldschool.runescape.wiki/w/Ghommal%27s_hilt_3"),
-	ELITE("elite", "Elite", "Ghommal’s hilt 4", "https://oldschool.runescape.wiki/w/Ghommal%27s_hilt_4");
+	ELITE("elite", "Elite", "Ghommal’s hilt 4", "https://oldschool.runescape.wiki/w/Ghommal%27s_hilt_4"),
+	MASTER("master", "Master", "Ghommal’s hilt 5", "https://oldschool.runescape.wiki/w/Ghommal%27s_hilt_5");
 
 	public final String key, label, reward, wiki;
 
@@ -37,6 +38,11 @@ public enum RewardGoal
 		this.label = label;
 		this.reward = reward;
 		this.wiki = wiki;
+	}
+
+	public boolean advanced()
+	{
+		return this == ELITE || this == MASTER;
 	}
 
 	public static RewardGoal from(String key)

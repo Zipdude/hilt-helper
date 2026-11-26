@@ -34,6 +34,7 @@ import java.io.Reader;
 import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.EnumMap;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.LinkedHashMap;
@@ -50,16 +51,13 @@ public final class GuideCatalog
 	public final SortedMap<Integer, Task> tasks = new TreeMap<>();
 	public final List<JsonObject> activities = new ArrayList<>();
 	public final JsonObject guide, items;
-	private final JsonObject hardGuide, eliteGuide;
-	private final Map<String, JsonObject> eliteActivities = new LinkedHashMap<>();
-	private final Map<Integer, JsonObject> eliteRules = new HashMap<>();
-	private final Map<Integer, String> eliteSearchText = new HashMap<>();
-	private final Map<String, JsonArray> eliteKits = new HashMap<>();
+	private final JsonObject hardGuide;
+	private final Map<RewardGoal, AdvancedGuide> advancedGuides = new EnumMap<>(RewardGoal.class);
 	private final List<JsonObject> hardActivities = new ArrayList<>();
 	private final Map<String, JsonObject> hardExtensions = new HashMap<>();
 	private final Set<Integer> hardTaskIds = new HashSet<>();
 	final Set<Integer> hardItemIds = new HashSet<>();
-	public final int threshold, hardThreshold, eliteThreshold;
+	public final int threshold, hardThreshold, eliteThreshold, masterThreshold;
 	private final Map<Integer, JsonObject> rules = new HashMap<>();
 	private final Map<Integer, String> owners = new HashMap<>();
 	private final Map<String, JsonObject> byKey = new HashMap<>();
@@ -73,6 +71,7 @@ public final class GuideCatalog
 		threshold = catalogue.get("medium_threshold").getAsInt();
 		hardThreshold = catalogue.get("hard_threshold").getAsInt();
 		eliteThreshold = catalogue.get("elite_threshold").getAsInt();
+		masterThreshold = catalogue.get("master_threshold").getAsInt();
 		checkedDate = catalogue.get("verified_date").getAsString();
 		List<String> tiers = List.of("Easy", "Medium", "Hard", "Elite", "Master", "Grandmaster");
 		for (JsonElement value : catalogue.getAsJsonArray("tasks"))
@@ -88,7 +87,6 @@ public final class GuideCatalog
 		guide = resource(gson, "guide.json");
 		items = resource(gson, "item_catalog.json");
 		hardGuide = resource(gson, "hard_guide.json");
-		eliteGuide = resource(gson, "elite_guide.json");
 		for (Map.Entry<String, JsonElement> item : hardGuide.getAsJsonObject("itemEntries").entrySet())
 		{
 			JsonObject registry = items.getAsJsonObject("items");
@@ -159,24 +157,43 @@ public final class GuideCatalog
 		{
 			throw new IOException("Duplicate task between guide resources");
 		}
-		registerElite();
+		registerAdvanced(RewardGoal.ELITE, resource(gson, "elite_guide.json"), 4);
+		JsonObject master = resource(gson, "master_guide.json");
+		registerAdvanced(RewardGoal.MASTER, master, 5);
+		mergeMasterRegistry(master, "spellEntries", "spells");
 	}
 
-	private void registerElite() throws IOException
+	private void mergeMasterRegistry(JsonObject source, String field, String registryKey) throws IOException
 	{
-		int cumulative = tasks.values().stream().filter(t -> t.points <= 4).mapToInt(t -> t.points).sum();
-		if (eliteGuide.get("schema").getAsInt() != 1 || eliteThreshold != cumulative ||
-			eliteGuide.get("threshold").getAsInt() != eliteThreshold)
+		JsonObject registry = items.getAsJsonObject(registryKey);
+		for (Map.Entry<String, JsonElement> row : source.getAsJsonObject(field).entrySet())
 		{
-			throw new IOException("Elite target does not match the bundled catalogue");
-		}
-		for (JsonElement value : eliteGuide.getAsJsonArray("activities"))
-		{
-			JsonObject activity = value.getAsJsonObject();
-			String key = activity.get("key").getAsString();
-			if (eliteActivities.put(key, activity) != null)
+			if (registry.has(row.getKey()))
 			{
-				throw new IOException("Duplicate Elite activity: " + key);
+				throw new IOException("Duplicate Master " + registryKey + " entry: " + row.getKey());
+			}
+			registry.add(row.getKey(), row.getValue());
+		}
+	}
+
+	private void registerAdvanced(RewardGoal goal, JsonObject definition, int rank) throws IOException
+	{
+		int cumulative = tasks.values().stream().filter(t -> t.points <= rank).mapToInt(t -> t.points).sum();
+		if (definition.get("schema").getAsInt() != 1 || threshold(goal) != cumulative ||
+			definition.get("threshold").getAsInt() != cumulative)
+		{
+			throw new IOException(goal.label + " target does not match the bundled catalogue");
+		}
+		AdvancedGuide advanced = new AdvancedGuide(definition);
+		advancedGuides.put(goal, advanced);
+		for (JsonElement value : definition.getAsJsonArray("activities"))
+		{
+			JsonObject rows = value.getAsJsonObject();
+			String key = rows.get("key").getAsString();
+			JsonObject activity = goal == RewardGoal.MASTER ? masterActivity(key, rows) : rows;
+			if (advanced.activities.put(key, activity) != null)
+			{
+				throw new IOException("Duplicate " + goal.label + " activity: " + key);
 			}
 			byKey.putIfAbsent(key, activity);
 			List<Integer> listed = routeIds(activity, false);
@@ -187,53 +204,66 @@ public final class GuideCatalog
 				JsonObject rule = element.getAsJsonObject();
 				int id = rule.get("id").getAsInt();
 				if (!ids.remove(id) || !tasks.containsKey(id) || !tasks.get(id).name.equals(rule.get("name").getAsString()) ||
-					eliteRules.put(id, rule) != null || !owners.getOrDefault(id, key).equals(key) ||
+					advanced.rules.put(id, rule) != null || !owners.getOrDefault(id, key).equals(key) ||
 					!List.of("default", "reserve", "group", "catalogue_only").contains(rule.get("role").getAsString()))
 				{
-					throw new IOException("Invalid Elite rule or shared ownership: " + id);
+					throw new IOException("Invalid advanced rule or shared ownership: " + id);
 				}
 				owners.putIfAbsent(id, key);
-				eliteSearchText.put(id, searchable(key, rule));
+				advanced.search.put(id, searchable(key, rule));
 			}
 			if (!ids.isEmpty() || new HashSet<>(listed).size() != listed.size())
 			{
-				throw new IOException("Invalid Elite membership: " + key);
+				throw new IOException("Invalid advanced membership: " + key);
 			}
 			JsonArray kit = new JsonArray();
 			for (JsonElement element : kit(key))
 			{
-				kit.add(eliteKitCheck(key, activity, element.getAsJsonObject()));
+				JsonObject check = eliteKitCheck(key, activity, element.getAsJsonObject());
+				kit.add(check);
 			}
 			kit.addAll(activity.getAsJsonArray("kitChecks"));
-			eliteKits.put(key, kit);
+			advanced.kits.put(key, kit);
 		}
 		Set<Integer> tripTasks = new HashSet<>();
-		for (JsonElement value : eliteTrips())
+		for (JsonElement value : trips(goal))
 		{
 			JsonObject trip = value.getAsJsonObject();
 			String key = trip.get("activity").getAsString();
 			List<Integer> ids = ReadinessEngine.ints(trip.getAsJsonArray("ids"));
-			if (ids.isEmpty() || !eliteActivities.containsKey(key))
+			if (ids.isEmpty() || !advanced.activities.containsKey(key))
 			{
-				throw new IOException("Invalid Elite visit: " + key);
+				throw new IOException("Invalid advanced visit: " + key);
 			}
 			for (int id : ids)
 			{
-				if (!key.equals(owner(id)) || !eliteRules.containsKey(id) || eliteReference(id) || !tripTasks.add(id))
+				if (!key.equals(owner(id)) || !advanced.rules.containsKey(id) || reference(id, goal) || !tripTasks.add(id))
 				{
-					throw new IOException("Invalid or duplicate Elite visit task: " + id);
+					throw new IOException("Invalid or duplicate advanced visit task: " + id);
 				}
 			}
 		}
 		for (Task task : tasks.values())
 		{
-			boolean authored = eliteRules.containsKey(task.id);
-			if ((!authored && task.points == 4) ||
-				(authored && !eliteReference(task.id) && !tripTasks.contains(task.id)))
+			boolean authored = advanced.rules.containsKey(task.id);
+			if ((!authored && (task.points == rank || goal == RewardGoal.MASTER)) ||
+				(authored && !reference(task.id, goal) && !tripTasks.contains(task.id)))
 			{
-				throw new IOException("Missing Elite task or visit: " + task.id);
+				throw new IOException("Missing advanced task or visit: " + task.id);
 			}
 		}
+	}
+
+	private JsonObject masterActivity(String key, JsonObject rows) throws IOException
+	{
+		JsonObject shared = advancedGuides.get(RewardGoal.ELITE).activities.get(key);
+		if (shared == null)
+		{
+			throw new IOException("Master activity has no canonical owner: " + key);
+		}
+		JsonObject merged = shared.deepCopy();
+		rows.entrySet().forEach(e -> merged.add(e.getKey(), e.getValue()));
+		return merged;
 	}
 
 	private static JsonObject eliteKitCheck(String key, JsonObject activity, JsonObject original)
@@ -353,6 +383,10 @@ public final class GuideCatalog
 
 	public int threshold(RewardGoal goal)
 	{
+		if (goal == RewardGoal.MASTER)
+		{
+			return masterThreshold;
+		}
 		if (goal == RewardGoal.ELITE)
 		{
 			return eliteThreshold;
@@ -362,25 +396,25 @@ public final class GuideCatalog
 
 	public List<JsonObject> activities(RewardGoal goal)
 	{
-		if (goal == RewardGoal.ELITE)
+		if (goal.advanced())
 		{
-			return List.copyOf(eliteActivities.values());
+			return List.copyOf(advancedGuides.get(goal).activities.values());
 		}
 		return goal == RewardGoal.HARD ? hardActivities : activities;
 	}
 
 	public boolean includes(int id, RewardGoal goal)
 	{
-		if (goal == RewardGoal.ELITE)
+		if (goal.advanced())
 		{
-			return eliteRules.containsKey(id);
+			return advancedGuides.get(goal).rules.containsKey(id);
 		}
 		return rules.containsKey(id) && (goal == RewardGoal.HARD || !hardTaskIds.contains(id));
 	}
 
 	public boolean groupOption(String key, RewardGoal goal)
 	{
-		return goal != RewardGoal.ELITE && groupOption(key) &&
+		return !goal.advanced() && groupOption(key) &&
 			(goal == RewardGoal.MEDIUM || !key.equals("chambers") && !key.equals("theatre"));
 	}
 
@@ -391,11 +425,18 @@ public final class GuideCatalog
 		return key != null && r != null && (groupOption(key, goal) || r.has("minimumParty"));
 	}
 
+	public boolean inRouteStyle(int id, RewardGoal goal, RouteStyle style)
+	{
+		JsonObject task = rule(id, goal);
+		return task != null && (!needsGroup(id, goal) || style == RouteStyle.GROUP) &&
+			(style != RouteStyle.RAID_LIGHT || task.has("raidLight") && task.get("raidLight").getAsBoolean());
+	}
+
 	public JsonArray preparation(RewardGoal goal)
 	{
-		if (goal == RewardGoal.ELITE)
+		if (goal.advanced())
 		{
-			return eliteGuide.getAsJsonArray("preparation");
+			return advancedGuides.get(goal).data.getAsJsonArray("preparation");
 		}
 		return (goal == RewardGoal.HARD ? hardGuide : guide).getAsJsonArray("preparation");
 	}
@@ -409,10 +450,10 @@ public final class GuideCatalog
 
 	public List<Integer> routeIds(JsonObject activity, boolean reserve, RewardGoal goal)
 	{
-		if (goal == RewardGoal.ELITE)
+		if (goal.advanced())
 		{
-			JsonObject elite = eliteActivities.get(activity.get("key").getAsString());
-			return elite == null ? new ArrayList<>() : routeIds(elite, reserve);
+			JsonObject authored = advancedGuides.get(goal).activities.get(activity.get("key").getAsString());
+			return authored == null ? new ArrayList<>() : routeIds(authored, reserve);
 		}
 		List<Integer> ids = routeIds(activity, reserve);
 		JsonObject extension = hardExtensions.get(activity.get("key").getAsString());
@@ -457,7 +498,7 @@ public final class GuideCatalog
 	}
 	public JsonObject activity(String key, RewardGoal goal)
 	{
-		return goal == RewardGoal.ELITE && eliteActivities.containsKey(key) ? eliteActivities.get(key) : activity(key);
+		return goal.advanced() ? advancedGuides.get(goal).activities.getOrDefault(key, activity(key)) : activity(key);
 	}
 	public String label(String key)
 	{
@@ -470,28 +511,30 @@ public final class GuideCatalog
 	}
 	public JsonArray kit(String key, RewardGoal goal)
 	{
-		return goal == RewardGoal.ELITE ? eliteKits.getOrDefault(key, new JsonArray()) : kit(key);
+		return goal.advanced() ? advancedGuides.get(goal).kits.getOrDefault(key, new JsonArray()) : kit(key);
 	}
 	public JsonObject rule(int id)
 	{
-		return rules.getOrDefault(id, eliteRules.get(id));
+		return rules.getOrDefault(id, advancedGuides.get(RewardGoal.ELITE).rules.get(id));
 	}
 	public JsonObject rule(int id, RewardGoal goal)
 	{
-		return goal == RewardGoal.ELITE ? eliteRules.get(id) : rules.get(id);
+		return goal.advanced() ? advancedGuides.get(goal).rules.get(id) : rules.get(id);
 	}
-	public boolean eliteReference(int id)
+	public boolean reference(int id, RewardGoal goal)
 	{
-		JsonObject rule = eliteRules.get(id);
-		return rule != null && rule.get("role").getAsString().equals("catalogue_only");
+		JsonObject rule = rule(id, goal);
+		return goal.advanced() && rule != null && rule.get("role").getAsString().equals("catalogue_only");
 	}
-	JsonArray eliteTrips()
+
+	JsonArray trips(RewardGoal goal)
 	{
-		return eliteGuide.getAsJsonArray("trips");
+		return advancedGuides.get(goal).data.getAsJsonArray("trips");
 	}
-	JsonObject eliteRiskProfiles()
+
+	JsonObject riskProfiles(RewardGoal goal)
 	{
-		return eliteGuide.getAsJsonObject("riskProfiles");
+		return advancedGuides.get(goal).data.getAsJsonObject("riskProfiles");
 	}
 	public String owner(int id)
 	{
@@ -503,8 +546,8 @@ public final class GuideCatalog
 	}
 	public boolean reserve(int id, RewardGoal goal)
 	{
-		JsonObject rule = eliteRules.get(id);
-		return goal == RewardGoal.ELITE ? rule != null && rule.get("role").getAsString().equals("reserve") : reserve(id);
+		JsonObject rule = rule(id, goal);
+		return goal.advanced() ? rule != null && rule.get("role").getAsString().equals("reserve") : reserve(id);
 	}
 	public boolean groupOption(String key)
 	{
@@ -516,7 +559,7 @@ public final class GuideCatalog
 	}
 	public boolean matches(int id, String query, RewardGoal goal)
 	{
-		return goal == RewardGoal.ELITE ? eliteSearchText.getOrDefault(id, "").contains(query) : matches(id, query);
+		return goal.advanced() ? advancedGuides.get(goal).search.getOrDefault(id, "").contains(query) : matches(id, query);
 	}
 	public List<Integer> routeIds(JsonObject activity, boolean reserves)
 	{
@@ -526,6 +569,20 @@ public final class GuideCatalog
 	{
 		return guide.getAsJsonObject("originalRoute");
 	}
+	private static final class AdvancedGuide
+	{
+		private final JsonObject data;
+		private final Map<String, JsonObject> activities = new LinkedHashMap<>();
+		private final Map<Integer, JsonObject> rules = new HashMap<>();
+		private final Map<Integer, String> search = new HashMap<>();
+		private final Map<String, JsonArray> kits = new HashMap<>();
+
+		private AdvancedGuide(JsonObject data)
+		{
+			this.data = data;
+		}
+	}
+
 	public static final class Task
 	{
 		public final int id, points;

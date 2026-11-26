@@ -63,7 +63,6 @@ import net.runelite.api.events.WidgetLoaded;
 import net.runelite.api.gameval.InterfaceID;
 import net.runelite.client.Notifier;
 import net.runelite.client.callback.ClientThread;
-import net.runelite.client.config.RuneScapeProfileType;
 import net.runelite.client.eventbus.Subscribe;
 import net.runelite.client.events.RuneScapeProfileChanged;
 import net.runelite.client.plugins.Plugin;
@@ -75,11 +74,9 @@ import net.runelite.client.util.Filepath;
 import net.runelite.client.util.ImageUtil;
 
 @PluginDescriptor(name = "Hilt Helper", internalName = "ironman-hilt-guide",
-					description = "Track live OSRS Combat Achievement points and plan solo or group routes to Ghommal's hilts 2-4 " +
-						"(Medium, Hard, Elite) based on your remaining points. Includes a searchable checklist, quest, skill " +
-						"and gear checks, and task walkthroughs.",
+					description = "Track OSRS Combat Achievements and plan Medium, Hard, Elite and Master routes to Ghommal's hilts 2–5.",
 					tags = {"ironman", "combat", "achievements", "progression", "guide", "medium", "hard", "hilt",
-						"ca", "cas", "tracker", "planner", "pvm", "ghommal", "osrs", "route", "combat-achievements", "elite"})
+						"ca", "cas", "tracker", "planner", "pvm", "ghommal", "osrs", "route", "combat-achievements", "elite", "master"})
 public final class IronmanHiltPlugin extends Plugin implements GuidePanel.Actions
 {
 	@Inject private Client client;
@@ -357,7 +354,7 @@ public final class IronmanHiltPlugin extends Plugin implements GuidePanel.Action
 					resetSession();
 				}
 				live = null;
-				dirty = RuneScapeProfileType.getCurrent(client) == RuneScapeProfileType.STANDARD;
+				dirty = collector.standardWorld();
 				status = dirty ? "" : "Switch to a standard world to use the guide.";
 				publish();
 				return;
@@ -482,7 +479,8 @@ public final class IronmanHiltPlugin extends Plugin implements GuidePanel.Action
 		}
 		state.data.addProperty("username", live.name);
 		state.data.addProperty("mode", live.mode.key);
-		if (live.ca.valid)
+		boolean verified = planner.gameProgressVerified(state.rewardGoal(), live);
+		if (verified)
 		{
 			progress.merge(state, live.ca.completed, live.ca.observed);
 			if (live.ca.completed.contains(state.screenTask()))
@@ -490,11 +488,11 @@ public final class IronmanHiltPlugin extends Plugin implements GuidePanel.Action
 				state.data.remove("screenTask");
 			}
 		}
-		status = live.ca.valid ? "" : "Achievements couldn’t refresh. Try again or log back in.";
+		status = verified ? "" : "Achievements couldn’t refresh. Try again or log back in.";
 		JsonObject observed = new JsonObject();
 		observed.addProperty("at", live.at.toString());
 		observed.addProperty("session", live.session);
-		observed.addProperty("validAchievements", live.ca.valid);
+		observed.addProperty("validAchievements", verified);
 		observed.add("levels", gson.toJsonTree(live.levels));
 		observed.add("quests", gson.toJsonTree(live.quests));
 		state.data.add("nativeLastObservation", observed);
@@ -595,25 +593,13 @@ public final class IronmanHiltPlugin extends Plugin implements GuidePanel.Action
 		if (!available || !catalogue.includes(id, state.rewardGoal()) || state.routeChoice() == null || state.skipped(activity) ||
 			state.knownIds("skipTaskIDs", catalogue.tasks.keySet()).contains(id) ||
 			planner.completedForGuide(state, live).contains(id) || (RiskPolicy.wilderness(activity) && !state.wildernessEnabled()) ||
-			(catalogue.needsGroup(id, state.rewardGoal()) && state.routeChoice() != RouteStyle.GROUP))
+			!catalogue.inRouteStyle(id, state.rewardGoal(), state.routeChoice()))
 		{
 			overlay.clear();
 			return;
 		}
 		JsonObject task = catalogue.rule(id, state.rewardGoal());
-		String kit = "";
-		for (JsonElement value : catalogue.kit(activity, state.rewardGoal()))
-		{
-			JsonObject requirement = value.getAsJsonObject();
-			String role = ReadinessEngine.str(requirement, "role", "");
-			if ((role.equals("required_strategy") || role.equals("required_task")) &&
-				(!requirement.has("task_ids") || ReadinessEngine.ints(requirement.getAsJsonArray("task_ids")).contains(id)))
-			{
-				kit = "Check kit: " + requirement.get("label").getAsString();
-				break;
-			}
-		}
-		overlay.show(task.get("name").getAsString(), task.get("condition").getAsString(), kit);
+		overlay.show(task.get("name").getAsString(), task.get("condition").getAsString());
 	}
 
 	private void renderPending()
@@ -637,7 +623,7 @@ public final class IronmanHiltPlugin extends Plugin implements GuidePanel.Action
 			live != null && live.accountKey.equals(key) && live.session.equals(session) &&
 			client.getGameState() == GameState.LOGGED_IN &&
 			key.equals(Long.toUnsignedString(client.getAccountHash()) + "-standard") &&
-			RuneScapeProfileType.getCurrent(client) == RuneScapeProfileType.STANDARD;
+			collector.standardWorld();
 	}
 
 	private boolean canChange()
@@ -688,7 +674,7 @@ public final class IronmanHiltPlugin extends Plugin implements GuidePanel.Action
 		{
 			s.data.addProperty("guideGoal", goal.key);
 			if (!catalogue.includes(s.screenTask(), goal) ||
-				(catalogue.needsGroup(s.screenTask(), goal) && s.routeChoice() != RouteStyle.GROUP))
+				!catalogue.inRouteStyle(s.screenTask(), goal, s.routeChoice()))
 			{
 				s.data.remove("screenTask");
 			}
@@ -699,23 +685,23 @@ public final class IronmanHiltPlugin extends Plugin implements GuidePanel.Action
 	{
 		mutate(s ->
 		{
-			s.data.addProperty("routeStyle", choice.key);
-			if (catalogue.needsGroup(s.screenTask(), s.rewardGoal()) && choice == RouteStyle.SOLO)
+			s.routeChoice(choice);
+			if (!catalogue.inRouteStyle(s.screenTask(), s.rewardGoal(), s.routeChoice()))
 			{
 				s.data.remove("screenTask");
 			}
 		});
 	}
 
-	@Override public void elitePartySize(String activity, int size)
+	@Override public void confirmPartySize(String activity, int size)
 	{
 		if (size == 0 || size >= 2 && size <= 100)
 		{
 			mutate(s ->
 			{
-				if (s.rewardGoal() == RewardGoal.ELITE)
+				if (s.rewardGoal().advanced() && catalogue.activities(s.rewardGoal()).stream()
+					.anyMatch(a -> activity.equals(a.get("key").getAsString())))
 				{
-					catalogue.activity(activity, RewardGoal.ELITE);
 					s.elitePartySize(activity, size);
 				}
 			});
@@ -838,7 +824,7 @@ public final class IronmanHiltPlugin extends Plugin implements GuidePanel.Action
 		long lifetime = generation;
 		clientThread.invokeLater(() ->
 		{
-			if (!canChange() || generation != lifetime || !live.session.equals(intended) || !live.ca.valid)
+			if (!canChange() || generation != lifetime || !live.session.equals(intended) || !planner.gameProgressVerified(state.rewardGoal(), live))
 			{
 				return;
 			}

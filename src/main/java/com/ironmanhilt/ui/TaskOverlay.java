@@ -27,23 +27,29 @@ import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.FontMetrics;
 import java.awt.Graphics2D;
-import java.awt.Point;
-import java.awt.Rectangle;
-import java.util.Objects;
+import java.util.ArrayList;
+import java.util.List;
+import net.runelite.api.Point;
 import net.runelite.client.plugins.Plugin;
+import net.runelite.client.ui.FontManager;
+import net.runelite.client.ui.overlay.Overlay;
 import net.runelite.client.ui.overlay.OverlayLayer;
-import net.runelite.client.ui.overlay.OverlayPanel;
 import net.runelite.client.ui.overlay.OverlayPosition;
-import net.runelite.client.ui.overlay.components.LineComponent;
+import net.runelite.client.ui.overlay.OverlayUtil;
 
-/** A player-selected note from the guide. Rendering depends only on the note and font. */
-public final class TaskOverlay extends OverlayPanel
+/** The task and its objective, in a compact note that the player can move. */
+public final class TaskOverlay extends Overlay
 {
-	private static final int WIDTH = 224;
-	private static final int PADDING = 7;
+	private static final int MAX_WIDTH = 168;
+	private static final int PADDING = 4;
+	private static final int TOP = 3;
+	private static final Color BACKGROUND = new Color(42, 32, 22, 142);
+	private static final Color TITLE = new Color(250, 222, 156);
+	private static final Color OBJECTIVE = new Color(250, 246, 229);
 	private volatile Note active;
 	private Note laidOut;
-	private FontMetrics metrics;
+	private List<String> heading = List.of(), objective = List.of();
+	private Dimension size;
 
 	public TaskOverlay(Plugin plugin)
 	{
@@ -52,20 +58,14 @@ public final class TaskOverlay extends OverlayPanel
 		setPriority(PRIORITY_LOW);
 		setLayer(OverlayLayer.UNDER_WIDGETS);
 		setResizable(false);
-		setClearChildren(false);
-		panelComponent.setBackgroundColor(new Color(26, 28, 32, 230));
-		panelComponent.setBorder(new Rectangle(PADDING, 5, PADDING, 5));
-		panelComponent.setGap(new Point(0, 1));
-		panelComponent.setPreferredSize(new Dimension(WIDTH, 0));
 	}
 
-	public void show(String title, String objective, String kit)
+	public void show(String title, String objective)
 	{
 		Note current = active;
-		if (current == null || !current.title.equals(title) || !current.objective.equals(objective) ||
-			!current.kit.equals(kit))
+		if (current == null || !current.title.equals(title) || !current.objective.equals(objective))
 		{
-			active = new Note(title, objective, kit);
+			active = new Note(title, objective);
 		}
 	}
 
@@ -74,67 +74,114 @@ public final class TaskOverlay extends OverlayPanel
 		active = null;
 	}
 
-	@Override public Dimension render(Graphics2D graphics)
+	@Override
+	public Dimension render(Graphics2D graphics)
 	{
 		Note note = active;
 		if (note == null)
 		{
-			if (laidOut != null)
-			{
-				panelComponent.getChildren().clear();
-				laidOut = null;
-			}
 			return null;
 		}
-		FontMetrics font = graphics.getFontMetrics();
-		if (note != laidOut || metrics == null || !Objects.equals(metrics.getFont(), font.getFont()))
-		{
-			metrics = font;
-			laidOut = note;
-			panelComponent.getChildren().clear();
-			addLines(note.title, GuidePanel.GOLD, font);
-			addLines(note.objective, GuidePanel.TEXT, font);
-			addLines(note.kit, GuidePanel.MUTED, font);
-		}
-		return super.render(graphics);
-	}
 
-	private void addLines(String value, Color color, FontMetrics font)
-	{
-		StringBuilder line = new StringBuilder();
-		for (String word : value.split("\\s+"))
+		Graphics2D view = (Graphics2D) graphics.create();
+		try
 		{
-			if (line.length() > 0 && font.stringWidth(line + " " + word) > WIDTH - 2 * PADDING)
+			view.setFont(FontManager.getRunescapeSmallFont());
+			FontMetrics font = view.getFontMetrics();
+			if (note != laidOut)
 			{
-				addLine(line.toString(), color);
-				line.setLength(0);
+				layout(note, font);
 			}
-			if (line.length() > 0)
-			{
-				line.append(' ');
-			}
-			line.append(word);
+			// Measure before drawing so the first frame of a changed task uses the correct bounds.
+			view.setColor(BACKGROUND);
+			view.fillRect(0, 0, size.width, size.height);
+			int y = TOP + font.getAscent();
+			y = paintLines(view, heading, TITLE, y, font.getHeight());
+			paintLines(view, objective, OBJECTIVE, y, font.getHeight());
+			return new Dimension(size);
 		}
-		if (line.length() > 0)
+		finally
 		{
-			addLine(line.toString(), color);
+			view.dispose();
 		}
 	}
 
-	private void addLine(String value, Color color)
+	private void layout(Note note, FontMetrics font)
 	{
-		panelComponent.getChildren().add(LineComponent.builder().left(value).leftColor(color).build());
+		heading = wrap(note.title, font, 2);
+		objective = wrap(note.objective, font, 4);
+		int width = 0;
+		for (String line : heading)
+		{
+			width = Math.max(width, font.stringWidth(line));
+		}
+		for (String line : objective)
+		{
+			width = Math.max(width, font.stringWidth(line));
+		}
+		size = new Dimension(width + 2 * PADDING + 2, (heading.size() + objective.size()) * font.getHeight() + 2 * TOP);
+		laidOut = note;
+	}
+
+	private static int paintLines(Graphics2D view, List<String> lines, Color color, int y, int height)
+	{
+		for (String line : lines)
+		{
+			OverlayUtil.renderTextLocation(view, new Point(PADDING, y), line, color);
+			y += height;
+		}
+		return y;
+	}
+
+	private static List<String> wrap(String text, FontMetrics font, int rowLimit)
+	{
+		int width = MAX_WIDTH - 2 * PADDING - 2;
+		List<String> lines = new ArrayList<>();
+		String rest = text.strip();
+		while (!rest.isEmpty() && lines.size() < rowLimit)
+		{
+			String line = fit(rest, font, width);
+			if (line.length() < rest.length() && !Character.isWhitespace(rest.charAt(line.length())))
+			{
+				int space = line.lastIndexOf(' ');
+				if (space > 0)
+				{
+					line = line.substring(0, space);
+				}
+			}
+			rest = rest.substring(line.length()).stripLeading();
+			if (!rest.isEmpty() && lines.size() + 1 == rowLimit)
+			{
+				line = fit(line, font, width - font.stringWidth("...")).stripTrailing() + "...";
+			}
+			lines.add(line);
+		}
+		return lines;
+	}
+
+	private static String fit(String value, FontMetrics font, int width)
+	{
+		int end = 0;
+		while (end < value.length())
+		{
+			int next = end + Character.charCount(value.codePointAt(end));
+			if (end > 0 && font.stringWidth(value.substring(0, next)) > width)
+			{
+				break;
+			}
+			end = next;
+		}
+		return value.substring(0, end);
 	}
 
 	private static final class Note
 	{
-		private final String title, objective, kit;
+		private final String title, objective;
 
-		private Note(String title, String objective, String kit)
+		private Note(String title, String objective)
 		{
 			this.title = title;
 			this.objective = objective;
-			this.kit = kit;
 		}
 	}
 }

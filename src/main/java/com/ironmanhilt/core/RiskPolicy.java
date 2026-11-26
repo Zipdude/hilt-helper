@@ -132,10 +132,10 @@ public final class RiskPolicy
 		return "";
 	}
 
-	public static String eliteAdvice(GuideCatalog catalogue, JsonObject rule, AccountMode mode)
+	public static String advancedAdvice(GuideCatalog catalogue, JsonObject rule, AccountMode mode, RewardGoal goal)
 	{
 		JsonObject risk = rule.getAsJsonObject("risk");
-		JsonObject profile = catalogue.eliteRiskProfiles().getAsJsonObject(risk.get("profile").getAsString());
+		JsonObject profile = catalogue.riskProfiles(goal).getAsJsonObject(risk.get("profile").getAsString());
 		switch (mode)
 		{
 			case HARDCORE:

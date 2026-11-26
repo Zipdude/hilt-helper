@@ -44,6 +44,10 @@ public enum AccountMode
 	{
 		return this != UNKNOWN;
 	}
+	public boolean groupIronman()
+	{
+		return this == GROUP || this == UNRANKED_GROUP || this == HARDCORE_GROUP;
+	}
 	public boolean hardcore()
 	{
 		return this == HARDCORE || this == HARDCORE_GROUP;

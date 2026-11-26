@@ -19,5 +19,5 @@ about: Report a problem with Hilt Helper
 - Hilt Helper version
 - RuneLite version
 - Account type
-- Guide (Medium, Hard, or Elite)
-- Route (Solo or With a group)
+- Guide (Medium, Hard, Elite, or Master)
+- Route (Solo, With a group, or Raid-light)

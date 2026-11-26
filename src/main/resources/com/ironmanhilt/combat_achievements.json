@@ -3934,5 +3934,6 @@
     }
   ],
   "hard_threshold": 436,
-  "elite_threshold": 1100
+  "elite_threshold": 1100,
+  "master_threshold": 1965
 }

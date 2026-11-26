@@ -38,11 +38,20 @@ public final class CaDecoder
 	}
 	public Result decode(List<GuideCatalog.Task> liveTasks, int[] words, int mediumThreshold, int hardThreshold, int gamePoints)
 	{
+		return decode(liveTasks, words, mediumThreshold, hardThreshold, gamePoints, false);
+	}
+
+	public Result decode(List<GuideCatalog.Task> liveTasks, int[] words, int mediumThreshold, int hardThreshold,
+		int gamePoints, boolean groupIronman)
+	{
 		if (mediumThreshold <= 0 || hardThreshold <= 0)
 		{
 			return Result.unavailable("Waiting for server achievement variables");
 		}
-		if (mediumThreshold != catalogue.threshold || hardThreshold != catalogue.hardThreshold)
+		boolean standard = mediumThreshold == catalogue.threshold && hardThreshold == catalogue.hardThreshold;
+		boolean possibleGroupTarget = groupIronman && mediumThreshold <= catalogue.threshold &&
+			hardThreshold <= catalogue.hardThreshold && hardThreshold > mediumThreshold;
+		if (!standard && !possibleGroupTarget)
 		{
 			return Result.unavailable(
 				"The game's reward threshold changed. Catalogue update required; saved progress retained.");
@@ -83,7 +92,8 @@ public final class CaDecoder
 			return Result.unavailable(
 				"Waiting for matching server points and completion flags; saved progress retained.");
 		}
-		return new Result(true, positive, observed, decodedPoints, "655 / 655 task IDs validated");
+		return new Result(standard, positive, observed, decodedPoints,
+			observed.size() + " / " + catalogue.tasks.size() + " task IDs validated");
 	}
 	private static String normal(String s)
 	{
@@ -103,6 +113,12 @@ public final class CaDecoder
 			this.gamePoints = points;
 			this.message = message;
 		}
+		public boolean verifiedFor(RewardGoal goal)
+		{
+			// A plausible group threshold does not alter the legacy guide guards.
+			return valid || goal == RewardGoal.MASTER && gamePoints >= 0;
+		}
+
 		public static Result unavailable(String reason)
 		{
 			return new Result(false, Collections.emptySet(), Collections.emptySet(), -1, reason);

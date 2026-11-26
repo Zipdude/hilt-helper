@@ -54,7 +54,7 @@ final class UnlockChecks
 			case "wilderness-diary":
 				return wilderness(activity, label, live);
 			case "yama":
-				if (killed(live, "yama") || ca(live, 599, 600, 601, 602, 604, 605, 606, 607))
+				if (killed(live, "yama") || ca(state.rewardGoal(), live, 599, 600, 601, 602, 604, 605, 606, 607))
 				{
 					return ready(label, "A Yama kill establishes access.");
 				}
@@ -96,7 +96,7 @@ final class UnlockChecks
 
 	private static ReadinessEngine.Check godWars(String activity, String label, GuideState state, LiveSnapshot live)
 	{
-		if (frozenDoor(state, live) || killed(live, activity) || ca(live, GWD_CA.get(activity)))
+		if (frozenDoor(state, live) || killed(live, activity) || ca(state.rewardGoal(), live, GWD_CA.get(activity)))
 		{
 			return ready(label, "The boss stronghold is accessible from your account progress.");
 		}
@@ -107,7 +107,7 @@ final class UnlockChecks
 			return evidenceStatus(label, level != null, "Reach 70 " + skill + " for this stronghold.");
 		}
 		if (positive(live, "gwdRope") ||
-			GWD_SKILLS.keySet().stream().anyMatch(boss -> killed(live, boss) || ca(live, GWD_CA.get(boss))))
+			GWD_SKILLS.keySet().stream().anyMatch(boss -> killed(live, boss) || ca(state.rewardGoal(), live, GWD_CA.get(boss))))
 		{
 			return ready(label, "The God Wars approach is open and your stronghold level is met.");
 		}
@@ -123,13 +123,13 @@ final class UnlockChecks
 			return ready(label, "The Troll Stronghold approach and your stronghold level are met. Bring a rope on the first trip.");
 		}
 		int easy = live.context.getOrDefault("caEasyThreshold", 0);
-		if (live.ca.valid && easy > 0 && live.ca.gamePoints >= easy)
+		if (live.ca.verifiedFor(state.rewardGoal()) && easy > 0 && live.ca.gamePoints >= easy)
 		{
 			return ready(label, "Ghommal’s hilt can take you to the entrance. Claim it first if needed.");
 		}
 		String route = "Defeat Dad during Troll Stronghold or use Ghommal’s hilt to reach the entrance.";
 		boolean unsupportedApproach = "NOT_STARTED".equals(live.quests.get("Troll Stronghold")) &&
-			live.ca.valid && easy > 0 && live.ca.gamePoints < easy;
+			live.ca.verifiedFor(state.rewardGoal()) && easy > 0 && live.ca.gamePoints < easy;
 		return evidenceStatus(label, unsupportedApproach, route);
 	}
 
@@ -166,7 +166,7 @@ final class UnlockChecks
 	private static boolean frozenDoor(GuideState state, LiveSnapshot live)
 	{
 		return Boolean.TRUE.equals(ReadinessEngine.quest("The Frozen Door", state, live)) ||
-			killed(live, "nex") || ca(live, 410, 411);
+			killed(live, "nex") || ca(state.rewardGoal(), live, 410, 411);
 	}
 
 	private static ReadinessEngine.Check killUnlock(String label, LiveSnapshot live, String detail, String... bosses)
@@ -199,9 +199,9 @@ final class UnlockChecks
 		return evidenceStatus(label, ReadinessEngine.quest(name, state, live) != null, detail);
 	}
 
-	private static boolean ca(LiveSnapshot live, int... ids)
+	private static boolean ca(RewardGoal goal, LiveSnapshot live, int... ids)
 	{
-		if (live.ca.valid)
+		if (live.ca.verifiedFor(goal))
 		{
 			for (int id : ids)
 			{

@@ -26,7 +26,8 @@ package com.ironmanhilt.core;
 public enum RouteStyle
 {
 	SOLO("solo", "Solo"),
-	GROUP("group", "With a group");
+	GROUP("group", "With a group"),
+	RAID_LIGHT("raid-light", "Raid-light");
 
 	public final String key, label;
 

@@ -111,7 +111,11 @@ def hub_text(commit, path):
 
 
 def read_pin():
-    hub_commit = github(f"{HUB}/git/ref/heads/master")["object"]["sha"]
+    # Read the public ref over Git to avoid the anonymous REST API rate limit.
+    hub_ref = "refs/heads/master"
+    hub_commit, ref = git("ls-remote", "--exit-code", f"https://github.com/{HUB}.git", hub_ref).split()
+    if ref != hub_ref or not SHA.fullmatch(hub_commit):
+        raise ValueError("The Plugin Hub branch did not resolve to a full commit SHA")
     marker = properties(hub_text(hub_commit, MARKER))
     commit = marker.get("commit", "")
     if marker.get("repository", "").lower() != f"https://github.com/{REPO.lower()}.git":

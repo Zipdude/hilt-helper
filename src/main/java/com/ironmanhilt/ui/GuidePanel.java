@@ -27,7 +27,6 @@ import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonPrimitive;
-import com.ironmanhilt.core.AccountMode;
 import com.ironmanhilt.core.GuideCatalog;
 import com.ironmanhilt.core.GuideState;
 import com.ironmanhilt.core.HesporiPatch;
@@ -63,6 +62,7 @@ import java.time.Instant;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
+import java.util.EnumMap;
 import java.util.HashSet;
 import java.util.LinkedHashMap;
 import java.util.LinkedHashSet;
@@ -130,7 +130,7 @@ public final class GuidePanel extends PluginPanel
 		default void routeStyle(RouteStyle choice)
 		{
 		}
-		default void elitePartySize(String activity, int size)
+		default void confirmPartySize(String activity, int size)
 		{
 		}
 		default void screenTask(int id)
@@ -177,7 +177,7 @@ public final class GuidePanel extends PluginPanel
 	private Set<Integer> completedIDs = Collections.emptySet(), syncedIDs = Collections.emptySet(),
 							baseIDs = Collections.emptySet(), skippedIDs = Collections.emptySet();
 	private Planner.Route shownRoute;
-	private Planner.Route alternateRoute;
+	private final Map<RouteStyle, Planner.Route> alternateRoutes = new EnumMap<>(RouteStyle.class);
 	private Planner.Unlocks missingUnlocks;
 	private Planner.Next shownNext;
 	private static final int SKIP_PAGE_SIZE = 12;
@@ -214,6 +214,7 @@ public final class GuidePanel extends PluginPanel
 	private boolean taskListExpanded = true;
 	private volatile String shownAccount = "";
 	private String selectedActivity = "", scope = SUGGESTED, query = "", revealAnchor = "";
+	private String gameplayType = "All types";
 	private String routeItemActivity = "";
 	private String focusTarget = "";
 	private Migration.Preview preview;
@@ -376,9 +377,9 @@ public final class GuidePanel extends PluginPanel
 		{
 			if (shownState.routeChoice() != state.routeChoice() || shownState.selectedGuide() != state.selectedGuide())
 			{
-				if (goal == RewardGoal.ELITE || shownState.selectedGuide() == RewardGoal.ELITE)
+				if (goal.advanced() || shownState.rewardGoal().advanced())
 				{
-					preserveEliteChecklist(state);
+					preserveAdvancedChecklist(state);
 				}
 				else
 				{
@@ -394,7 +395,7 @@ public final class GuidePanel extends PluginPanel
 			}
 			shownState = state.copy();
 			shownRoute = planner.planRoute(shownState, available && state.routeChoice() != null ? live : null);
-			alternateRoute = null;
+			alternateRoutes.clear();
 			missingUnlocks = null;
 			shownNext = planner.next(shownState, live, shownRoute.entries);
 			Set<Integer> priorCompleted = completedIDs;
@@ -410,9 +411,9 @@ public final class GuidePanel extends PluginPanel
 				int current = focusedTasks.get(focusedIndex);
 				extendWithSuggestedTasks();
 				int target = catalogue.threshold(state.rewardGoal());
-				boolean verified = goal != RewardGoal.ELITE || planner.hasLiveTarget(goal, live);
+				boolean verified = !goal.advanced() || planner.hasLiveTarget(goal, live);
 				if (this.available && (!priorCompleted.contains(current) && completedIDs.contains(current) &&
-					(goal != RewardGoal.ELITE || live != null && live.ca.valid) ||
+					(!goal.advanced() || planner.gameProgressVerified(goal, live)) ||
 					goal != RewardGoal.MEDIUM && verified && previousTotal < target && shownTotal >= target))
 				{
 					advanceCompletedTask();
@@ -535,6 +536,7 @@ public final class GuidePanel extends PluginPanel
 
 	private void resetChecklist()
 	{
+		gameplayType = "All types";
 		selectedActivity = "";
 		scope = SUGGESTED;
 		query = "";
@@ -557,7 +559,7 @@ public final class GuidePanel extends PluginPanel
 		revealAnchor = "";
 	}
 
-	private void preserveEliteChecklist(GuideState state)
+	private void preserveAdvancedChecklist(GuideState state)
 	{
 		RewardGoal goal = state.rewardGoal();
 		beforeHespori = null;
@@ -573,7 +575,7 @@ public final class GuidePanel extends PluginPanel
 		int selected = focusedTasks.get(focusedIndex);
 		List<Integer> eligible = new ArrayList<>(focusedTasks);
 		eligible.removeIf(id -> !catalogue.includes(id, goal) ||
-			catalogue.needsGroup(id, goal) && state.routeChoice() != RouteStyle.GROUP);
+			!catalogue.inRouteStyle(id, goal, state.routeChoice()));
 		focusedIndex = eligible.indexOf(selected);
 		focusedTasks = focusedIndex < 0 ? List.of() : eligible;
 		if (focusedTasks.isEmpty())
@@ -597,7 +599,7 @@ public final class GuidePanel extends PluginPanel
 		String guideLabel = choosing ? "Combat Achievement guides" : goal.label;
 		if (!choosing && state.routeChoice() != null)
 		{
-			guideLabel += state.routeChoice() == RouteStyle.SOLO ? " · Solo" : " · Group";
+			guideLabel += " · " + (state.routeChoice() == RouteStyle.GROUP ? "Group" : state.routeChoice().label);
 		}
 		heading.add(text(guideLabel, TEXT, 12, false), BorderLayout.CENTER);
 		if (available && !choosing)
@@ -638,11 +640,9 @@ public final class GuidePanel extends PluginPanel
 				bar.setPreferredSize(new Dimension(1, 4));
 				bar.setMaximumSize(new Dimension(Integer.MAX_VALUE, 4));
 				header.add(bar);
-				if (goal == RewardGoal.ELITE && !planner.hasLiveTarget(goal, live))
+				if (goal.advanced() && !planner.hasLiveTarget(goal, live))
 				{
-					String detail = live != null && live.ca.valid ? "Elite target needs a live check." :
-						"Saved progress · refresh for game points.";
-					header.add(text(detail, NEEDS_PREPARATION, 11, false));
+					header.add(text(targetEvidence(goal, live), NEEDS_PREPARATION, 11, false));
 				}
 			}
 		}
@@ -653,7 +653,7 @@ public final class GuidePanel extends PluginPanel
 			{
 				add(text(ReadinessEngine.FIRST_BANK_CHECK, NEEDS_PREPARATION, 12, false));
 			}
-			if (goal == RewardGoal.ELITE && live.observedBank() != null && !live.bankObservedThisSession())
+			if (goal != RewardGoal.MASTER && goal.advanced() && live.observedBank() != null && !live.bankObservedThisSession())
 			{
 				add(text("Open the bank to refresh supplies from your last session.", NEEDS_PREPARATION, 12, false));
 			}
@@ -690,9 +690,24 @@ public final class GuidePanel extends PluginPanel
 		}
 	}
 
+	private String targetEvidence(RewardGoal goal, LiveSnapshot live)
+	{
+		if (!planner.gameProgressVerified(goal, live))
+		{
+			return "Saved progress · refresh for game points.";
+		}
+		if (goal == RewardGoal.MASTER && live.mode.groupIronman())
+		{
+			int reported = live.context.getOrDefault("caMasterThreshold", 0);
+			return reported > 0 ? "Game reports " + reported + ". Check your personal Master target in the rewards tab." :
+				"Check your personal Master target in the rewards tab.";
+		}
+		return goal.label + " target needs a live check.";
+	}
+
 	private boolean hasProgressDifference()
 	{
-		return available && shownLive != null && shownLive.ca.valid &&
+		return available && planner.gameProgressVerified(shownState.rewardGoal(), shownLive) &&
 			(shownTotal != shownLive.ca.gamePoints || !shownLive.ca.completed.containsAll(completedIDs));
 	}
 
@@ -754,7 +769,8 @@ public final class GuidePanel extends PluginPanel
 		JPanel box = card();
 		box.putClientProperty("guideAnchor", "route-picker");
 		box.add(text("Choose a route", TEXT, 16, true));
-		box.add(text("Both routes work for every account type. Switch any time.", MUTED, 12, false));
+		box.add(text(shownState.rewardGoal() == RewardGoal.MASTER ? "Choose a route and switch any time." :
+			"Both routes work for every account type. Switch any time.", MUTED, 12, false));
 		box.add(gap(5));
 		box.add(primaryButton(RouteStyle.SOLO.label + " · recommended",
 			savedAction(() -> chooseRoute(RouteStyle.SOLO))));
@@ -763,6 +779,12 @@ public final class GuidePanel extends PluginPanel
 		box.add(gap(4));
 		box.add(button(RouteStyle.GROUP.label, savedAction(() -> chooseRoute(RouteStyle.GROUP))));
 		box.add(text("Include eligible party tasks when you’re ready.", TEXT, 12, false));
+		if (shownState.rewardGoal() == RewardGoal.MASTER)
+		{
+			box.add(gap(4));
+			box.add(button(RouteStyle.RAID_LIGHT.label, savedAction(() -> chooseRoute(RouteStyle.RAID_LIGHT))));
+			box.add(text("Use solo activities and selected raid rooms. Full raid clears stay out of this route.", TEXT, 12, false));
+		}
 		if (shownState.routeChoice() != null)
 		{
 			box.add(button("Back to guide", () ->
@@ -864,7 +886,7 @@ public final class GuidePanel extends PluginPanel
 			String timing = shownLive != null && shownLive.freeWorld() ? " on a members’ world" : " now";
 			String capacity = ready + " of " + remaining + " remaining points ready" + timing;
 			box.add(text(capacity, ready == remaining ? GREEN : TEXT, 12, true));
-			if (shownState.rewardGoal() == RewardGoal.ELITE)
+			if (shownState.rewardGoal().advanced())
 			{
 				int spare = Math.max(0, shownRoute.preparedPoints - ready);
 				String plan = shownRoute.plannedPoints < remaining ?
@@ -877,25 +899,33 @@ public final class GuidePanel extends PluginPanel
 		{
 			box.add(gap(4));
 			box.add(comboField("Task type", taskTypePicker("route-task-type")));
+			if (shownState.rewardGoal() == RewardGoal.MASTER)
+			{
+				box.add(comboField("Achievement type", gameplayTypePicker("route-achievement-type")));
+			}
 			box.add(text("Unearned points in this filter", MUTED, 12, false));
-			if (shownState.rewardGoal() == RewardGoal.ELITE && !shownRoute.entries.isEmpty())
+			if (shownState.rewardGoal().advanced() && !shownRoute.entries.isEmpty())
 			{
 				long minutes = Math.round(shownRoute.entries.stream().mapToDouble(e -> e.minutes).sum());
 				box.add(text("About " + minutes + " active min for suggested visits. Training and party waits vary.", MUTED, 11, false));
 			}
 			RouteStyle current = shownState.routeChoice();
-			if (alternateRoute == null)
+			boolean master = shownState.rewardGoal() == RewardGoal.MASTER;
+			List<RouteStyle> styles = master ? List.of(RouteStyle.SOLO, RouteStyle.GROUP, RouteStyle.RAID_LIGHT) :
+				List.of(RouteStyle.SOLO, RouteStyle.GROUP);
+			for (RouteStyle style : styles)
 			{
-				alternateRoute = planner.planRoute(shownState, shownLive,
-					current == RouteStyle.SOLO ? RouteStyle.GROUP : RouteStyle.SOLO);
-			}
-			for (RouteStyle style : RouteStyle.values())
-			{
-				PointTally points = pointTally(style == current ? shownRoute : alternateRoute);
+				Planner.Route route = style == current ? shownRoute : alternateRoutes.computeIfAbsent(style,
+					choice -> planner.planRoute(shownState, shownLive, choice));
+				PointTally points = pointTally(route);
 				box.add(text(style.label, style == current ? GOLD : TEXT, 12, true));
 				box.add(text(points.unlocked + " unlocked pts · " + points.locked + " locked pts", TEXT, 12, false));
+				if (master && points.waiting > 0)
+				{
+					box.add(text(points.waiting + " pts awaiting a party", MUTED, 11, false));
+				}
 			}
-			if (shownState.rewardGoal() == RewardGoal.ELITE && !shownRoute.groupChecks.isEmpty())
+			if (shownState.rewardGoal().advanced() && !shownRoute.groupChecks.isEmpty())
 			{
 				box.add(text("Set the party size from a group task’s card when your team is ready.", MUTED, 11, false));
 			}
@@ -1003,7 +1033,7 @@ public final class GuidePanel extends PluginPanel
 	private void allMissingRouteItems(JPanel box)
 	{
 		box.add(text("Required items for unfinished tasks. Open a task to see what to bring or wear.", MUTED, 12, false));
-		boolean elite = shownState.rewardGoal() == RewardGoal.ELITE;
+		boolean elite = shownState.rewardGoal().advanced();
 		Map<String, List<Integer>> byActivity = tasksByActivity(shownRoute.taskPool);
 		Set<Integer> visibleShortages = elite ? new HashSet<>(scopedRouteTasks(shownRoute)) : Set.of();
 		if (byActivity.isEmpty())
@@ -1028,7 +1058,7 @@ public final class GuidePanel extends PluginPanel
 			List<Planner.ItemRequirement> requirements = planner.itemRequirements(key, tasks, shownState, shownLive);
 			if (elite)
 			{
-				for (Planner.ItemRequirement access : planner.eliteAccessChecks(key, tasks, shownState, shownLive))
+				for (Planner.ItemRequirement access : planner.advancedAccessChecks(key, tasks, shownState, shownLive))
 				{
 					if (access.required && !access.correctionCategory.isEmpty() &&
 						(ReadinessEngine.UNKNOWN.equals(access.check.status) || ReadinessEngine.MANUAL.equals(access.check.status)))
@@ -1259,11 +1289,15 @@ public final class GuidePanel extends PluginPanel
 
 	private PointTally pointTally(Planner.Route route)
 	{
-		int unlocked = 0, locked = 0;
+		int unlocked = 0, locked = 0, waiting = 0;
 		for (int id : scopedRouteTasks(route))
 		{
 			int points = catalogue.tasks.get(id).points;
-			if (route.blockedTasks.containsKey(id))
+			if (route.partyWaiting.contains(id))
+			{
+				waiting += points;
+			}
+			else if (route.blockedTasks.containsKey(id))
 			{
 				locked += points;
 			}
@@ -1272,16 +1306,24 @@ public final class GuidePanel extends PluginPanel
 				unlocked += points;
 			}
 		}
-		return new PointTally(unlocked, locked);
+		if (scope.equals(SUGGESTED) && shownState.rewardGoal() == RewardGoal.MASTER)
+		{
+			waiting = catalogue.points(route.partyWaiting.stream().filter(this::matchesGameplayType)
+				.filter(id -> selectedActivity.isEmpty() || selectedActivity.equals(catalogue.owner(id)))
+				.filter(id -> query.isEmpty() || catalogue.matches(id, query, RewardGoal.MASTER))
+				.collect(java.util.stream.Collectors.toList()));
+		}
+		return new PointTally(unlocked, locked, waiting);
 	}
 
 	private static final class PointTally
 	{
-		private final int unlocked, locked;
-		private PointTally(int unlocked, int locked)
+		private final int unlocked, locked, waiting;
+		private PointTally(int unlocked, int locked, int waiting)
 		{
 			this.unlocked = unlocked;
 			this.locked = locked;
+			this.waiting = waiting;
 		}
 	}
 
@@ -1588,6 +1630,10 @@ public final class GuidePanel extends PluginPanel
 		header.add(comboField("Activity", activities));
 		header.add(gap(3));
 		header.add(comboField("Task type", taskTypePicker("checklist-task-type")));
+		if (shownState.rewardGoal() == RewardGoal.MASTER)
+		{
+			header.add(comboField("Achievement type", gameplayTypePicker("checklist-achievement-type")));
+		}
 		JCheckBox hide = checkbox("Hide completed tasks", hideCompleted);
 		hide.addActionListener(e ->
 		{
@@ -1610,6 +1656,26 @@ public final class GuidePanel extends PluginPanel
 			redraw();
 		});
 		return scopes;
+	}
+
+	private JComboBox<String> gameplayTypePicker(String name)
+	{
+		JComboBox<String> choices = choice(name, "Achievement type",
+			new String[] {"All types", "Kill Count", "Mechanical", "Perfection", "Restriction", "Speed", "Stamina"});
+		choices.setSelectedItem(gameplayType);
+		choices.addActionListener(event ->
+		{
+			gameplayType = (String) choices.getSelectedItem();
+			resetListPositions();
+			redraw();
+		});
+		return choices;
+	}
+
+	private boolean matchesGameplayType(int id)
+	{
+		return shownState.rewardGoal() != RewardGoal.MASTER || "All types".equals(gameplayType) ||
+			gameplayType.equals(catalogue.rule(id, RewardGoal.MASTER).get("type").getAsString());
 	}
 
 	private static JComboBox<String> choice(String name, String accessibleName, String[] values)
@@ -1659,7 +1725,7 @@ public final class GuidePanel extends PluginPanel
 		List<Integer> pool = scope.equals(SUGGESTED) ? plannedTasks(route, selectedActivity) : route.taskPool;
 		for (int id : pool)
 		{
-			if ((!selectedActivity.isEmpty() && !selectedActivity.equals(catalogue.owner(id))) ||
+			if (!matchesGameplayType(id) || (!selectedActivity.isEmpty() && !selectedActivity.equals(catalogue.owner(id))) ||
 				(!query.isEmpty() && !catalogue.matches(id, query, shownState.rewardGoal())) ||
 				(scope.equals(SELECTED) && catalogue.reserve(id, shownState.rewardGoal())) || (scope.equals(RESERVES) && !catalogue.reserve(id, shownState.rewardGoal())))
 			{
@@ -1691,7 +1757,10 @@ public final class GuidePanel extends PluginPanel
 				}
 			}
 		}
-		ids.removeIf(id -> shownState.rewardGoal() == RewardGoal.ELITE && catalogue.eliteReference(id) && !scope.equals(ALL) ||
+		ids.removeIf(id -> !matchesGameplayType(id) ||
+			shownState.rewardGoal().advanced() && catalogue.reference(id, shownState.rewardGoal()) && !scope.equals(ALL) ||
+			shownState.rewardGoal() == RewardGoal.MASTER && scope.equals(SELECTED) &&
+				!catalogue.inRouteStyle(id, RewardGoal.MASTER, shownState.routeChoice()) ||
 			hideCompleted && completedIDs.contains(id) ||
 			!query.isEmpty() && !catalogue.matches(id, query, shownState.rewardGoal()) ||
 			scope.equals(SUGGESTED) && shownRoute.blockedTasks.containsKey(id));
@@ -1701,14 +1770,14 @@ public final class GuidePanel extends PluginPanel
 	private void blockedTasks()
 	{
 		List<Integer> ids = scopedRouteTasks(shownRoute);
-		if (shownState.rewardGoal() == RewardGoal.ELITE && scope.equals(SUGGESTED) &&
-			shownTotal < catalogue.eliteThreshold)
+		if (shownState.rewardGoal().advanced() && scope.equals(SUGGESTED) &&
+			shownTotal < catalogue.threshold(shownState.rewardGoal()))
 		{
 			Set<Integer> relevant = new LinkedHashSet<>(ids);
 			for (int id : shownRoute.blockedTasks.keySet())
 			{
-				if ((selectedActivity.isEmpty() || selectedActivity.equals(catalogue.owner(id))) &&
-					(query.isEmpty() || catalogue.matches(id, query, RewardGoal.ELITE)))
+				if (matchesGameplayType(id) && (selectedActivity.isEmpty() || selectedActivity.equals(catalogue.owner(id))) &&
+					(query.isEmpty() || catalogue.matches(id, query, shownState.rewardGoal())))
 				{
 					relevant.add(id);
 				}
@@ -1721,9 +1790,14 @@ public final class GuidePanel extends PluginPanel
 		{
 			return;
 		}
+		if (shownState.rewardGoal() == RewardGoal.MASTER)
+		{
+			masterBlockedTasks(ids);
+			return;
+		}
 		JPanel section = card();
 		section.putClientProperty("guideAnchor", "blocked-tasks");
-		boolean elite = shownState.rewardGoal() == RewardGoal.ELITE;
+		boolean elite = shownState.rewardGoal().advanced();
 		String title = elite ? "Missing requirements" : "Blocked tasks";
 		section.add(disclosure(title + " · " + ids.size(), blockedExpanded, () ->
 		{
@@ -1737,6 +1811,36 @@ public final class GuidePanel extends PluginPanel
 				"Open a task to see what to unlock or bring.";
 			section.add(text(help, MUTED, 12, false));
 			section.add(taskList(ids, TaskOrigin.BLOCKED));
+		}
+		add(gap(5));
+		add(section);
+	}
+
+	private void masterBlockedTasks(List<Integer> ids)
+	{
+		JPanel section = card();
+		section.putClientProperty("guideAnchor", "blocked-tasks");
+		section.add(disclosure("Tasks to prepare · " + ids.size(), blockedExpanded, () ->
+		{
+			blockedExpanded = !blockedExpanded;
+			revealAnchor = "blocked-tasks";
+			redraw();
+		}));
+		if (blockedExpanded)
+		{
+			Map<String, List<Integer>> groups = new LinkedHashMap<>();
+			for (int id : ids)
+			{
+				String title = shownRoute.partyWaiting.contains(id) ? "Awaiting a party" :
+					shownRoute.attemptWaiting.contains(id) ? "Attempt setup" :
+					shownRoute.uncheckedTasks.contains(id) ? "Needs checking" : "Missing requirements";
+				groups.computeIfAbsent(title, name -> new ArrayList<>()).add(id);
+			}
+			groups.forEach((name, members) ->
+			{
+				section.add(text(name, GOLD, 12, true));
+				section.add(taskList(members, TaskOrigin.BLOCKED));
+			});
 		}
 		add(gap(5));
 		add(section);
@@ -2114,7 +2218,7 @@ public final class GuidePanel extends PluginPanel
 
 	private String taskType(int id)
 	{
-		if (shownState.rewardGoal() == RewardGoal.ELITE && catalogue.eliteReference(id))
+		if (shownState.rewardGoal().advanced() && catalogue.reference(id, shownState.rewardGoal()))
 		{
 			return "Reference";
 		}
@@ -2172,7 +2276,7 @@ public final class GuidePanel extends PluginPanel
 	{
 		int next = nextTaskIndex(focusedIndex + 1);
 		if (!shownNext.ids.isEmpty() && (next == focusedTasks.size() ||
-			shownState.rewardGoal() == RewardGoal.ELITE && returnOrigin == TaskOrigin.PRIMARY))
+			shownState.rewardGoal().advanced() && returnOrigin == TaskOrigin.PRIMARY))
 		{
 			next = focusedTasks.indexOf(shownNext.ids.get(0));
 		}
@@ -2242,7 +2346,7 @@ public final class GuidePanel extends PluginPanel
 		return catalogue.includes(id, shownState.rewardGoal()) && !completedIDs.contains(id) &&
 			!skippedIDs.contains(id) && !shownState.skipped(key) &&
 			(!RiskPolicy.wilderness(key) || shownState.wildernessEnabled()) &&
-			(!catalogue.needsGroup(id, shownState.rewardGoal()) || shownState.routeChoice() == RouteStyle.GROUP);
+			catalogue.inRouteStyle(id, shownState.rewardGoal(), shownState.routeChoice());
 	}
 
 	private void selectFocusedTask(int index)
@@ -2334,7 +2438,7 @@ public final class GuidePanel extends PluginPanel
 		boolean complete = completedIDs.contains(id), skipped = skippedIDs.contains(id);
 		if (complete)
 		{
-			String evidence = syncedIDs.contains(id) ? (live != null && live.ca.valid && live.ca.completed.contains(id)
+			String evidence = syncedIDs.contains(id) ? (planner.gameProgressVerified(goal, live) && live.ca.completed.contains(id)
 				? "Complete" : "Previously completed") : "Completion saved";
 			box.add(text(evidence, GREEN, 12, true));
 		}
@@ -2342,7 +2446,7 @@ public final class GuidePanel extends PluginPanel
 		{
 			box.add(text(skipped ? "Task skipped" : "Activity skipped", GOLD, 12, true));
 		}
-		if (!complete && goal == RewardGoal.ELITE && (live == null || !live.ca.valid))
+		if (!complete && goal.advanced() && !planner.gameProgressVerified(goal, live))
 		{
 			box.add(text("Game completion unknown", MUTED, 11, false));
 		}
@@ -2388,16 +2492,16 @@ public final class GuidePanel extends PluginPanel
 		{
 			box.add(text(tip, MUTED, 12, false));
 		}
-		String risk = live == null ? "" : goal == RewardGoal.ELITE ?
-			RiskPolicy.eliteAdvice(catalogue, rule, live.mode) : RiskPolicy.advice(key, live.mode);
+		String risk = live == null ? "" : goal.advanced() ?
+			RiskPolicy.advancedAdvice(catalogue, rule, live.mode, goal) : RiskPolicy.advice(key, live.mode);
 		boolean showRisk = live != null && (RiskPolicy.wilderness(key) || live.mode.hardcore());
 		if (showRisk)
 		{
 			box.add(text(risk, GOLD, 12, false));
 		}
-		if (goal == RewardGoal.ELITE && !complete)
+		if (goal.advanced() && !complete)
 		{
-			addEliteAttemptSummary(box, id, rule, state, live);
+			addAdvancedAttemptSummary(box, id, rule, state, live);
 		}
 		add(box);
 		if (canTrackTask(id))
@@ -2421,9 +2525,9 @@ public final class GuidePanel extends PluginPanel
 				}
 			}
 			addRequirements(content, requirements);
-			if (goal == RewardGoal.ELITE)
+			if (goal.advanced())
 			{
-				eliteTaskPreparation(content, rule, key, state, live);
+				advancedTaskPreparation(content, rule, key, state, live);
 			}
 			if (!showRisk && !risk.isEmpty())
 			{
@@ -2446,7 +2550,7 @@ public final class GuidePanel extends PluginPanel
 			{
 				content.add(text(rule.get("plan").getAsString(), MUTED, 12, false));
 			}
-			if (goal == RewardGoal.ELITE)
+			if (goal.advanced())
 			{
 				content.add(text(rule.get("attempts").getAsString(), MUTED, 11, false));
 				if (rule.has("attemptNotes"))
@@ -2483,21 +2587,32 @@ public final class GuidePanel extends PluginPanel
 				content.add(button(skipped ? "Restore task to route" : "Skip this task",
 					savedAction(() -> actions.skipTask(id, !skipped))));
 			}
-			JCheckBox check = checkbox("Confirm completion manually", complete);
-			check.setEnabled(!syncedIDs.contains(id) && !baseIDs.contains(id));
-			check.setToolTipText("Confirm only after the game awards this task");
-			Runnable change = savedAction(() -> actions.manual(id, check.isSelected()));
-			check.addActionListener(event -> change.run());
-			content.add(check);
+			if (goal == RewardGoal.MASTER)
+			{
+				content.add(text("Task completion comes from the game’s Combat Achievement record.", MUTED, 11, false));
+			}
+			else
+			{
+				JCheckBox check = checkbox("Confirm completion manually", complete);
+				check.setEnabled(!syncedIDs.contains(id) && !baseIDs.contains(id));
+				check.setToolTipText("Confirm only after the game awards this task");
+				Runnable change = savedAction(() -> actions.manual(id, check.isSelected()));
+				check.addActionListener(event -> change.run());
+				content.add(check);
+			}
 		});
 	}
 
-	private void addEliteAttemptSummary(JPanel box, int id, JsonObject rule, GuideState state, LiveSnapshot live)
+	private void addAdvancedAttemptSummary(JPanel box, int id, JsonObject rule, GuideState state, LiveSnapshot live)
 	{
-		String party = planner.elitePartyBlocker(id, state, state.routeChoice());
+		String party = planner.partyBlocker(id, state, state.routeChoice());
 		if (!party.isEmpty())
 		{
 			box.add(text(party, MUTED, 11, false));
+		}
+		if (state.routeChoice() == RouteStyle.RAID_LIGHT && !rule.get("raidLight").getAsBoolean())
+		{
+			box.add(text("This task uses a full raid. Choose Solo or With a group to plan it.", MUTED, 11, false));
 		}
 		if (rule.has("practiceRecommended"))
 		{
@@ -2514,7 +2629,7 @@ public final class GuidePanel extends PluginPanel
 		}
 	}
 
-	private void eliteTaskPreparation(JPanel panel, JsonObject rule, String key, GuideState state, LiveSnapshot live)
+	private void advancedTaskPreparation(JPanel panel, JsonObject rule, String key, GuideState state, LiveSnapshot live)
 	{
 		JsonObject party = rule.getAsJsonObject("party");
 		JsonObject mode = rule.getAsJsonObject("mode");
@@ -2529,10 +2644,10 @@ public final class GuidePanel extends PluginPanel
 			if (state.routeChoice() == RouteStyle.GROUP)
 			{
 				int size = state.elitePartySize(key);
-				panel.add(button(size == 0 ? "Confirm party size…" : "Party size " + size + " · change…", () -> editEliteParty(key)));
+				panel.add(button(size == 0 ? "Confirm party size…" : "Party size " + size + " · change…", () -> editParty(key)));
 			}
 		}
-		if (live != null && (live.mode == AccountMode.GROUP || live.mode == AccountMode.HARDCORE_GROUP) &&
+		if (live != null && live.mode.groupIronman() &&
 			party.get("prestigeRestrictedToOwnGroup").getAsBoolean())
 		{
 			panel.add(text("Use your own group to preserve prestige. Check your personal contribution.", GOLD, 11, false));
@@ -2541,15 +2656,27 @@ public final class GuidePanel extends PluginPanel
 		{
 			panel.add(text(note.getAsString(), MUTED, 12, false));
 		}
+		if (state.rewardGoal() == RewardGoal.MASTER)
+		{
+			if (mode.has("minimumEffectiveRaidLevel"))
+			{
+				panel.add(text("Effective raid level " + mode.get("minimumEffectiveRaidLevel").getAsInt() + " or higher.",
+					MUTED, 11, false));
+			}
+			for (JsonElement note : catalogue.activity(key, state.rewardGoal()).getAsJsonArray("sharedKitNotes"))
+			{
+				panel.add(text(note.getAsString(), MUTED, 12, false));
+			}
+		}
 	}
 
-	private void editEliteParty(String key)
+	private void editParty(String key)
 	{
 		String intended = session();
 		int size = shownState.elitePartySize(key);
 		Object answer = JOptionPane.showInputDialog(this,
 			"Enter how many eligible players will attempt this activity. Use 0 when the party is unknown.",
-			"Elite party size", JOptionPane.PLAIN_MESSAGE, null, null, String.valueOf(size));
+			shownState.rewardGoal().label + " party size", JOptionPane.PLAIN_MESSAGE, null, null, String.valueOf(size));
 		if (answer == null || !stillCurrent(intended))
 		{
 			return;
@@ -2557,7 +2684,7 @@ public final class GuidePanel extends PluginPanel
 		String value = answer.toString().trim();
 		if (value.matches("0|[2-9]|[1-9][0-9]|100"))
 		{
-			actions.elitePartySize(key, Integer.parseInt(value));
+			actions.confirmPartySize(key, Integer.parseInt(value));
 		}
 		else
 		{
@@ -2674,7 +2801,7 @@ public final class GuidePanel extends PluginPanel
 			{
 				box.add(requirementConfirmation("overrides", correctionKey, result.label, ReadinessEngine.MANUAL.equals(result.status)));
 			}
-			else if (!manual && state.rewardGoal() != RewardGoal.ELITE && !setupCheck &&
+			else if (!manual && !state.rewardGoal().advanced() && !setupCheck &&
 				!ReadinessEngine.PROVIDED.equals(result.status) && (!attemptAccess || manual))
 			{
 				String correction = attemptAccess ? "Confirm attempt setup…" :
@@ -2710,7 +2837,7 @@ public final class GuidePanel extends PluginPanel
 							source.get("url").getAsString()));
 		}
 		box.add(link("Boss guide on the Wiki", activity.get("bossSource").getAsString()));
-		if (shownState.rewardGoal() != RewardGoal.ELITE && catalogue.guide.getAsJsonArray("referenceFigures").size() > 0)
+		if (!shownState.rewardGoal().advanced() && catalogue.guide.getAsJsonArray("referenceFigures").size() > 0)
 		{
 			box.add(button("Open reference image source…", this::showFigures));
 		}
@@ -2901,7 +3028,7 @@ public final class GuidePanel extends PluginPanel
 	}
 	private void reviewReconciliation()
 	{
-		if (shownLive == null || !shownLive.ca.valid)
+		if (!planner.gameProgressVerified(shownState.rewardGoal(), shownLive))
 		{
 			return;
 		}
@@ -3037,7 +3164,7 @@ public final class GuidePanel extends PluginPanel
 			if (correctionsExpanded || hasProgressDifference())
 			{
 				JButton reconcile = button("Review saved vs game points…", this::reviewReconciliation);
-				reconcile.setEnabled(live.ca.valid);
+				reconcile.setEnabled(planner.gameProgressVerified(state.rewardGoal(), live));
 				box.add(reconcile);
 			}
 			if (correctionsExpanded)

@@ -159,7 +159,11 @@ public final class ReadinessEngine
 		}
 		if ((req.has("access_rule") || req.has("slayer_assignments")) && !UNKNOWN.equals(automatic.status))
 		{
-			return automatic;
+			if (!yes(req, "manual_alternative") || automatic.ready())
+			{
+				return automatic;
+			}
+			automatic = new Check(label, UNKNOWN, str(req, "manualCheck", automatic.detail), 0);
 		}
 		JsonObject overrides = state.object("overrides");
 		JsonElement entry = overrides.get(checkKey(activity, index, req));
@@ -179,7 +183,7 @@ public final class ReadinessEngine
 		}
 		if (status.equals("Owned"))
 		{
-			if (eliteGroup(state, live) && (!wanted(req).isEmpty() || req.has("spell") || req.has("spells_any") ||
+			if (advancedGroup(state, live) && (!wanted(req).isEmpty() || req.has("spell") || req.has("spells_any") ||
 				AMMUNITION.equals(str(req, "predicate", ""))))
 			{
 				return automatic;
@@ -223,7 +227,7 @@ public final class ReadinessEngine
 		{
 			return new Check(label, UNKNOWN, "Log in on a standard-world account", 0);
 		}
-		if (req.has("unlock_ids") && live.ca.valid &&
+		if (req.has("unlock_ids") && live.ca.verifiedFor(state.rewardGoal()) &&
 			!Collections.disjoint(ints(req.getAsJsonArray("unlock_ids")), live.ca.completed))
 		{
 			return new Check(label, READY, "A verified game completion establishes access.", 1);
@@ -253,6 +257,13 @@ public final class ReadinessEngine
 			Set<String> names = new HashSet<>();
 			req.getAsJsonArray("slayer_assignments").forEach(name -> names.add(name.getAsString()));
 			return UnlockChecks.assignment(label, names, live);
+		}
+		if (req.has("assignment_remaining"))
+		{
+			int remaining = live.context.getOrDefault("slayerRemaining", -1);
+			int required = req.get("assignment_remaining").getAsInt();
+			return remaining >= required ? new Check(label, READY, "The assignment count covers this visit.", remaining) :
+				new Check(label, UNKNOWN, str(req, "manualCheck", "Check how many kills remain."), remaining);
 		}
 		if ("muspah-drain".equals(str(req, "predicate", "")))
 		{
@@ -1069,11 +1080,9 @@ public final class ReadinessEngine
 		return live != null && state.rewardGoal() == RewardGoal.ELITE ? live.withoutHistoricalBank() : live;
 	}
 
-	private static boolean eliteGroup(GuideState state, LiveSnapshot live)
+	private static boolean advancedGroup(GuideState state, LiveSnapshot live)
 	{
-		return state.rewardGoal() == RewardGoal.ELITE && live != null &&
-			(live.mode == AccountMode.GROUP || live.mode == AccountMode.UNRANKED_GROUP ||
-				live.mode == AccountMode.HARDCORE_GROUP);
+		return state.rewardGoal().advanced() && live != null && live.mode.groupIronman();
 	}
 
 	public Check token(String token, GuideState state, LiveSnapshot live, Instant now)
@@ -1095,7 +1104,7 @@ public final class ReadinessEngine
 			}
 		}
 		JsonObject req = tokenRequirement(token);
-		if (state.object("items").has(token) && (!eliteGroup(state, live) || req == null ||
+		if (state.object("items").has(token) && (!advancedGroup(state, live) || req == null ||
 			!state.object("items").get(token).getAsBoolean()))
 		{
 			return new Check(label, state.object("items").get(token).getAsBoolean() ? MANUAL : MISSING,

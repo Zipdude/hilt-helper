@@ -53,18 +53,21 @@ final class ElitePlanner
 		{
 			return new Planner.Route(List.of(), List.of(), Map.of(), Map.of(), 0, 0, 0);
 		}
-		int gap = Math.max(0, catalogue.eliteThreshold - planner.currentPoints(state, live));
+		RewardGoal goal = state.rewardGoal();
+		boolean master = goal == RewardGoal.MASTER;
+		int gap = Math.max(0, catalogue.threshold(goal) - planner.currentPoints(state, live));
 		Set<Integer> done = planner.completedForGuide(state, live);
-		Map<String, Integer> counters = live.ca.valid ? observedCounters(live.ca.completed) : Map.of();
+		Map<String, Integer> counters = observedCounters(goal, live);
 		Set<Integer> skipped = state.knownIds("skipTaskIDs", catalogue.tasks.keySet());
-		boolean group = style == RouteStyle.GROUP;
 		List<Integer> pool = new ArrayList<>();
+		Set<Integer> unchecked = new HashSet<>(), missing = new HashSet<>();
+		Set<Integer> partyWaiting = new HashSet<>(), attemptWaiting = new HashSet<>();
 		Map<Integer, String> blockers = new LinkedHashMap<>();
 		Map<String, List<String>> teamChecks = new LinkedHashMap<>();
 		Map<String, List<String>> access = new HashMap<>();
 		List<Visit> candidates = new ArrayList<>();
 		int prepared = 0, available = 0;
-		for (JsonElement value : catalogue.eliteTrips())
+		for (JsonElement value : catalogue.trips(goal))
 		{
 			JsonObject trip = value.getAsJsonObject();
 			String activity = trip.get("activity").getAsString();
@@ -77,18 +80,23 @@ final class ElitePlanner
 			Set<Integer> waiting = new HashSet<>();
 			for (int id : ids)
 			{
-				JsonObject rule = catalogue.rule(id, RewardGoal.ELITE);
-				if (done.contains(id) || skipped.contains(id) || catalogue.needsGroup(id, RewardGoal.ELITE) && !group ||
+				JsonObject rule = catalogue.rule(id, goal);
+				if (done.contains(id) || skipped.contains(id) || !catalogue.inRouteStyle(id, goal, style) ||
 					!RiskPolicy.eliteBlocker(rule, live.mode).isEmpty())
 				{
 					continue;
 				}
 				pool.add(id);
 				eligible.add(id);
-				String party = planner.elitePartyBlocker(id, state, style);
+				String party = planner.partyBlocker(id, state, style);
 				if (!party.isEmpty())
 				{
 					waiting.add(id);
+					if (master)
+					{
+						partyWaiting.add(id);
+						blockers.put(id, party);
+					}
 					List<String> checks = teamChecks.computeIfAbsent(activity, ignored -> new ArrayList<>());
 					if (!checks.contains(party))
 					{
@@ -112,21 +120,42 @@ final class ElitePlanner
 				List<String> task = planner.taskGates(id, state, live);
 				if (!shared.isEmpty() || !task.isEmpty())
 				{
-					blockers.put(id, shared.isEmpty() ? task.get(0) : shared.get(0));
+					if (master)
+					{
+						shared.forEach(gate -> recordBlocker(id, gate, gate.startsWith("Confirm "), blockers, unchecked, missing));
+						task.forEach(gate -> recordBlocker(id, gate, gate.startsWith("Confirm "), blockers, unchecked, missing));
+					}
+					else
+					{
+						blockers.put(id, shared.isEmpty() ? task.get(0) : shared.get(0));
+					}
 				}
 			}
-			for (Planner.ItemRequirement accessCheck : planner.eliteAccessChecks(activity, eligible, state, live))
+			for (Planner.ItemRequirement accessCheck : planner.advancedAccessChecks(activity, eligible, state, live))
 			{
 				if (!accessCheck.check.ready())
 				{
 					if (accessCheck.required)
 					{
 						String status = Planner.kitStatus(accessCheck.check);
-						accessCheck.taskIds.forEach(id -> blockers.putIfAbsent(id, status));
+						if (master)
+						{
+							accessCheck.taskIds.forEach(id -> recordBlocker(id, status,
+								ReadinessEngine.UNKNOWN.equals(accessCheck.check.status), blockers, unchecked, missing));
+						}
+						else
+						{
+							accessCheck.taskIds.forEach(id -> blockers.putIfAbsent(id, status));
+						}
 					}
 					else
 					{
 						waiting.addAll(accessCheck.taskIds);
+						if (master)
+						{
+							attemptWaiting.addAll(accessCheck.taskIds);
+							accessCheck.taskIds.forEach(id -> blockers.putIfAbsent(id, Planner.kitStatus(accessCheck.check)));
+						}
 					}
 				}
 			}
@@ -151,7 +180,15 @@ final class ElitePlanner
 				if (!item.check.ready())
 				{
 					String status = Planner.kitStatus(item.check);
-					item.taskIds.forEach(id -> blockers.putIfAbsent(id, status));
+					if (master)
+					{
+						item.taskIds.forEach(id -> recordBlocker(id, status, ReadinessEngine.UNKNOWN.equals(item.check.status),
+							blockers, unchecked, missing));
+					}
+					else
+					{
+						item.taskIds.forEach(id -> blockers.putIfAbsent(id, status));
+					}
 				}
 			}
 			List<Integer> ready = new ArrayList<>(), practice = new ArrayList<>(), future = new ArrayList<>();
@@ -160,6 +197,10 @@ final class ElitePlanner
 			{
 				if (waiting.contains(id))
 				{
+					if (master && !partyWaiting.contains(id) && (!reserve || !missing.contains(id) && !unchecked.contains(id)))
+					{
+						future.add(id);
+					}
 					continue;
 				}
 				if (blockers.containsKey(id))
@@ -171,25 +212,28 @@ final class ElitePlanner
 				}
 				else
 				{
-					JsonObject rule = catalogue.rule(id, RewardGoal.ELITE);
+					JsonObject rule = catalogue.rule(id, goal);
 					(rule.has("practiceRecommended") ? practice : ready).add(id);
 					prepared += catalogue.tasks.get(id).points;
 				}
 			}
-			addVisit(candidates, trip, ready, ids.size(), false, false, bankItems, counters);
-			addVisit(candidates, trip, practice, ids.size(), false, true, bankItems, counters);
-			addVisit(candidates, trip, future, ids.size(), true, false, bankItems, counters);
+			addVisit(candidates, trip, goal, ready, ids.size(), false, false, bankItems, counters);
+			addVisit(candidates, trip, goal, practice, ids.size(), false, true, bankItems, counters);
+			addVisit(candidates, trip, goal, future, ids.size(), true, false, bankItems, counters);
 		}
+		unchecked.removeAll(missing);
 		List<Planner.Entry> route = new ArrayList<>();
 		int planned = 0;
 		Set<String> used = new HashSet<>();
 		String pinned = ReadinessEngine.str(state.data, "pinnedActivity", "");
 		while (planned < gap && !candidates.isEmpty())
 		{
+			int plannedSoFar = planned;
 			// Re-evaluate marginal cost after each visit so an already-planned setup only counts once.
 			Visit next = candidates.stream().min(Comparator
 				.comparingInt((Visit v) -> priority(v, pinned))
-				.thenComparingDouble(v -> v.minutes(used, live.mode, v.ids.size()) / v.points)
+				.thenComparingDouble(v -> estimatedMinutes(v, used, live.mode, v.ids, counters, goal) /
+					(master ? Math.min(v.points, gap - plannedSoFar) : v.points))
 				.thenComparingInt(v -> v.phase)
 				.thenComparingInt(v -> v.ids.get(0))).orElseThrow();
 			candidates.remove(next);
@@ -212,7 +256,15 @@ final class ElitePlanner
 					visitBlockers.put(id, blockers.get(id));
 				}
 			}
-			double minutes = next.minutes(used, live.mode, ids.size());
+			double minutes = estimatedMinutes(next, used, live.mode, ids, counters, goal);
+			if (master)
+			{
+				// The cost model can reuse credited kill progress. Only the game can set an earned task flag.
+				for (int id : ids)
+				{
+					mergeCounter(catalogue.rule(id, goal), counters);
+				}
+			}
 			route.add(new Planner.Entry(next.activity, ids, points, List.copyOf(visitBlockers.values()),
 				List.of(), List.of(), visitBlockers, minutes, points / minutes, next.reserve));
 			used.add(next.activity);
@@ -222,40 +274,106 @@ final class ElitePlanner
 			}
 			planned += points;
 		}
-		return new Planner.Route(route, pool, teamChecks, blockers, available, prepared, planned);
+		return new Planner.Route(route, pool, teamChecks, blockers, available, prepared, planned, unchecked, partyWaiting, attemptWaiting);
 	}
 
-	private void addVisit(List<Visit> visits, JsonObject trip, List<Integer> ids, int originalCount, boolean future,
-		boolean practice, Set<Integer> bankItems, Map<String, Integer> counters)
+	private static void recordBlocker(int id, String reason, boolean unknown, Map<Integer, String> blockers,
+		Set<Integer> unchecked, Set<Integer> missing)
 	{
-		if (!ids.isEmpty())
+		if (unknown)
 		{
-			visits.add(new Visit(trip, ids, catalogue.points(ids), originalCount, future, practice,
-				!Collections.disjoint(ids, bankItems), remainingEffort(ids, counters)));
+			unchecked.add(id);
+			blockers.putIfAbsent(id, reason);
+		}
+		else
+		{
+			if (missing.add(id))
+			{
+				blockers.put(id, reason);
+			}
 		}
 	}
 
-	private Map<String, Integer> observedCounters(Set<Integer> completed)
+	private void addVisit(List<Visit> visits, JsonObject trip, RewardGoal goal, List<Integer> ids, int originalCount,
+		boolean future, boolean practice, Set<Integer> bankItems, Map<String, Integer> counters)
+	{
+		if (!ids.isEmpty())
+		{
+			double oldEstimate = goal == RewardGoal.ELITE ? remainingEffort(ids, counters, goal) : 0;
+			visits.add(new Visit(trip, ids, catalogue.points(ids), originalCount, future, practice,
+				!Collections.disjoint(ids, bankItems), oldEstimate));
+		}
+	}
+
+	private Map<String, Integer> observedCounters(RewardGoal goal, LiveSnapshot live)
 	{
 		Map<String, Integer> counters = new HashMap<>();
-		for (int id : completed)
+		if (live.ca.verifiedFor(goal))
 		{
-			JsonObject rule = catalogue.rule(id, RewardGoal.ELITE);
-			if (rule != null && rule.has("counter"))
+			for (int id : live.ca.completed)
 			{
-				JsonObject counter = rule.getAsJsonObject("counter");
-				counters.merge(counter.get("key").getAsString(), counter.get("target").getAsInt(), Math::max);
+				mergeCounter(catalogue.rule(id, goal), counters);
+			}
+		}
+		if (goal == RewardGoal.MASTER)
+		{
+			for (int id : catalogue.tasks.keySet())
+			{
+				JsonObject counter = catalogue.rule(id, goal).getAsJsonObject("counter");
+				if (counter != null && counter.has("observedKey"))
+				{
+					int total = live.context.getOrDefault(counter.get("observedKey").getAsString(), 0);
+					counters.merge(counter.get("key").getAsString(), total, Math::max);
+				}
 			}
 		}
 		return counters;
 	}
 
-	private double remainingEffort(List<Integer> ids, Map<String, Integer> counters)
+	private static void mergeCounter(JsonObject rule, Map<String, Integer> counters)
+	{
+		if (rule != null && rule.has("counter"))
+		{
+			JsonObject counter = rule.getAsJsonObject("counter");
+			int value = counter.get("target").getAsInt();
+			counters.merge(counter.get("key").getAsString(), value, Math::max);
+			if (counter.has("includes"))
+			{
+				counter.getAsJsonArray("includes").forEach(key -> counters.merge(key.getAsString(), value, Math::max));
+			}
+		}
+	}
+
+	private double estimatedMinutes(Visit visit, Set<String> used, AccountMode mode, List<Integer> ids,
+		Map<String, Integer> counters, RewardGoal goal)
+	{
+		if (goal == RewardGoal.ELITE)
+		{
+			return visit.minutes(used, mode, ids.size());
+		}
+		double effort = 2;
+		for (int id : ids)
+		{
+			JsonObject rule = catalogue.rule(id, goal);
+			JsonArray range = rule.getAsJsonArray("effort");
+			JsonObject counter = rule.getAsJsonObject("counter");
+			int units = counter == null ? 1 : Math.max(1, counter.get("target").getAsInt() -
+				counters.getOrDefault(counter.get("key").getAsString(), 0));
+			effort = Math.max(effort, units * (range.get(0).getAsDouble() + range.get(1).getAsDouble()) / 2);
+		}
+		if (!used.contains(visit.activity) && ids.stream().anyMatch(id -> catalogue.needsGroup(id, goal)))
+		{
+			effort += 15;
+		}
+		return effort + visit.setupMinutes(used, mode);
+	}
+
+	private double remainingEffort(List<Integer> ids, Map<String, Integer> counters, RewardGoal goal)
 	{
 		double worst = 0.25;
 		for (int id : ids)
 		{
-			JsonObject counter = catalogue.rule(id, RewardGoal.ELITE).getAsJsonObject("counter");
+			JsonObject counter = catalogue.rule(id, goal).getAsJsonObject("counter");
 			if (counter == null)
 			{
 				return 1;
@@ -315,12 +433,18 @@ final class ElitePlanner
 			unlockMinutes = value.get("unlockMinutes").getAsInt();
 			reserve = value.get("role").getAsString().equals("reserve");
 			JsonArray minutes = value.getAsJsonArray("minutes");
-			attemptMinutes = remainingEffort * (minutes.get(0).getAsInt() + minutes.get(1).getAsInt()) / 2.0;
+			attemptMinutes = minutes == null ? 0 :
+				remainingEffort * (minutes.get(0).getAsInt() + minutes.get(1).getAsInt()) / 2.0;
 		}
 
 		private double minutes(Set<String> used, AccountMode mode, int taskCount)
 		{
-			double cost = Math.max(2, attemptMinutes * Math.max(0.5, (double) taskCount / originalCount));
+			return Math.max(2, attemptMinutes * Math.max(0.5, (double) taskCount / originalCount)) + setupMinutes(used, mode);
+		}
+
+		private double setupMinutes(Set<String> used, AccountMode mode)
+		{
+			double cost = 0;
 			if (!used.contains(activity))
 			{
 				cost += bank ? 7 : 4;

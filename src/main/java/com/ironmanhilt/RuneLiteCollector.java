@@ -29,6 +29,7 @@ import com.ironmanhilt.core.AccountMode;
 import com.ironmanhilt.core.CaDecoder;
 import com.ironmanhilt.core.GuideCatalog;
 import com.ironmanhilt.core.LiveSnapshot;
+import com.ironmanhilt.core.RewardGoal;
 import java.time.Instant;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -83,6 +84,7 @@ public final class RuneLiteCollector
 													VarbitID.CA_THRESHOLD_MEDIUM,
 													VarbitID.CA_THRESHOLD_HARD,
 													VarbitID.CA_THRESHOLD_ELITE,
+													VarbitID.CA_THRESHOLD_MASTER,
 													VarbitID.CA_POINTS,
 													VarbitID.SPELLBOOK,
 													VarbitID.RUNE_POUCH_TYPE_1,
@@ -105,6 +107,14 @@ public final class RuneLiteCollector
 		Map.entry(VarPlayerID.TOTAL_ZAMORAK_KILLS, "kc:k-ril-tsutsaroth"),
 		Map.entry(VarPlayerID.TOTAL_NEX_KILLS, "kc:nex"),
 		Map.entry(VarPlayerID.TOTAL_YAMA_KILLS, "kc:yama"),
+		Map.entry(VarPlayerID.TOTAL_VORKATH_KILLS, "kc:vorkath"),
+		Map.entry(VarPlayerID.TOTAL_HYDRABOSS_KILLS, "kc:alchemical-hydra"),
+		Map.entry(VarPlayerID.TOTAL_HESPORI_KILLS, "kc:hespori"),
+		Map.entry(VarPlayerID.TOTAL_NIGHTMARE_KILLS, "kc:nightmare"),
+		Map.entry(VarPlayerID.TOTAL_NIGHTMARE_CHALLENGE_KILLS, "kc:phosani"),
+		Map.entry(VarPlayerID.TOTAL_MUSPAH_KILLS, "kc:muspah"),
+		Map.entry(VarPlayerID.TOTAL_ARAXXOR_KILLS, "kc:araxxor"),
+		Map.entry(VarPlayerID.TOTAL_MAGGOT_KING_KILLS, "kc:maggot-king"),
 		Map.entry(VarPlayerID.TOTAL_SNAKEBOSS_KILLS, "kc:zulrah"),
 		Map.entry(VarPlayerID.TOTAL_GARGBOSS_KILLS, "kc:guardian"),
 		Map.entry(VarPlayerID.TOTAL_ZUK_KILLS, "kc:tzkal-zuk"),
@@ -144,6 +154,8 @@ public final class RuneLiteCollector
 	private List<GuideCatalog.Task> cacheTasks;
 	private int[] lastWords;
 	private CaDecoder.Result lastCa;
+	private int lastMediumThreshold, lastHardThreshold;
+	private AccountMode lastCaMode;
 	private final Set<Integer> relevantVarps = new HashSet<>();
 	private Map<String, String> questCache = new HashMap<>();
 	private Map<String, Integer> levelCache = new HashMap<>();
@@ -189,7 +201,7 @@ public final class RuneLiteCollector
 	{
 		if (containerId != InventoryID.BANK || changed == null || client.getGameState() != GameState.LOGGED_IN ||
 			client.getAccountHash() == 0 || client.getAccountHash() == -1 ||
-			RuneScapeProfileType.getCurrent(client) != RuneScapeProfileType.STANDARD ||
+			!standardWorld() ||
 			!AccountMode.fromVarbit(client.getVarbitValue(VarbitID.IRONMAN)).bankAllowed())
 		{
 			return false;
@@ -198,6 +210,12 @@ public final class RuneLiteCollector
 		bankAccountKey = Long.toUnsignedString(client.getAccountHash()) + "-standard";
 		return true;
 	}
+	boolean standardWorld()
+	{
+		return RuneScapeProfileType.getCurrent(client) == RuneScapeProfileType.STANDARD &&
+			!client.getWorldType().contains(WorldType.HARDCORE_MAIN);
+	}
+
 	public LiveSnapshot collect(boolean refreshRequirements)
 	{
 		return collect(refreshRequirements, refreshRequirements);
@@ -232,7 +250,7 @@ public final class RuneLiteCollector
 		{
 			return null;
 		}
-		if (RuneScapeProfileType.getCurrent(client) != RuneScapeProfileType.STANDARD)
+		if (!standardWorld())
 		{
 			return null;
 		}
@@ -339,14 +357,8 @@ public final class RuneLiteCollector
 		if (mode.supported())
 		{
 			observeAccess(context);
-			try
-			{
-				context.put("caEliteThreshold", client.getServerVarbitValue(VarbitID.CA_THRESHOLD_ELITE));
-			}
-			catch (RuntimeException ex)
-			{
-				// Elite reward eligibility is unknown. The task bits and points can still be valid.
-			}
+			observeRewardThreshold(context, "caEliteThreshold", VarbitID.CA_THRESHOLD_ELITE);
+			observeRewardThreshold(context, "caMasterThreshold", VarbitID.CA_THRESHOLD_MASTER);
 			try
 			{
 				if (cacheTasks == null)
@@ -365,19 +377,22 @@ public final class RuneLiteCollector
 				context.put("caHardThreshold", hardThreshold);
 				context.put("caServerPoints", points);
 				context.put("caLiveTaskCount", cacheTasks.size());
-				if (lastCa != null && lastCa.valid && threshold == catalogue.threshold && hardThreshold == catalogue.hardThreshold &&
-					points == lastCa.gamePoints &&
+				if (lastCa != null && lastCa.verifiedFor(RewardGoal.MASTER) && mode == lastCaMode &&
+					threshold == lastMediumThreshold && hardThreshold == lastHardThreshold && points == lastCa.gamePoints &&
 					Arrays.equals(words, lastWords))
 				{
 					ca = lastCa;
 				}
 				else
 				{
-					ca = decoder.decode(cacheTasks, words, threshold, hardThreshold, points);
+					ca = decoder.decode(cacheTasks, words, threshold, hardThreshold, points, mode.groupIronman());
 				}
 				lastCa = ca;
 				lastWords = words;
-				if (!ca.valid)
+				lastMediumThreshold = threshold;
+				lastHardThreshold = hardThreshold;
+				lastCaMode = mode;
+				if (!ca.verifiedFor(RewardGoal.MASTER))
 				{
 					cacheTasks = null;
 				}
@@ -391,6 +406,18 @@ public final class RuneLiteCollector
 		}
 		return new LiveSnapshot(key, name, session, mode, now, levelCache, questCache, containers, ca, context);
 	}
+	private void observeRewardThreshold(Map<String, Integer> context, String key, int id)
+	{
+		try
+		{
+			context.put(key, client.getServerVarbitValue(id));
+		}
+		catch (RuntimeException ex)
+		{
+			// The individual target can be unavailable even when the task flags match.
+		}
+	}
+
 	private void observeAccess(Map<String, Integer> context)
 	{
 		ACCESS_VARPS.forEach((id, key) ->
@@ -449,6 +476,7 @@ public final class RuneLiteCollector
 		try
 		{
 			int remaining = client.getVarpValue(VarPlayerID.SLAYER_COUNT);
+			context.put("slayerRemaining", remaining);
 			if (remaining <= 0)
 			{
 				context.put("slayerObserved", 1);
@@ -584,7 +612,7 @@ public final class RuneLiteCollector
 			VarbitComposition definition = client.getVarbit(id);
 			if (definition == null)
 			{
-				if (id == VarbitID.CA_THRESHOLD_ELITE)
+				if (id == VarbitID.CA_THRESHOLD_ELITE || id == VarbitID.CA_THRESHOLD_MASTER)
 				{
 					continue;
 				}

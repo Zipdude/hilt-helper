@@ -86,8 +86,27 @@ public final class GuideState
 	}
 	public RouteStyle routeChoice()
 	{
-		return RouteStyle.from(ReadinessEngine.str(data, "routeStyle", ""));
+		RouteStyle shared = RouteStyle.from(ReadinessEngine.str(data, "routeStyle", ""));
+		if (selectedGuide() != RewardGoal.MASTER)
+		{
+			return shared == RouteStyle.RAID_LIGHT ? RouteStyle.SOLO : shared;
+		}
+		RouteStyle master = RouteStyle.from(ReadinessEngine.str(data, "masterRouteStyle", ""));
+		return master == null ? RouteStyle.SOLO : master;
 	}
+
+	public void routeChoice(RouteStyle route)
+	{
+		if (rewardGoal() == RewardGoal.MASTER)
+		{
+			data.addProperty("masterRouteStyle", route.key);
+		}
+		else if (route != RouteStyle.RAID_LIGHT)
+		{
+			data.addProperty("routeStyle", route.key);
+		}
+	}
+
 	public RewardGoal selectedGuide()
 	{
 		return RewardGoal.from(ReadinessEngine.str(data, "guideGoal", ""));
@@ -255,9 +274,12 @@ public final class GuideState
 		{
 			throw new IllegalArgumentException("Invalid followed activity");
 		}
-		if (o.has("routeStyle") && (!isString(o.get("routeStyle")) || o.get("routeStyle").getAsString().length() > 32))
+		for (String key : new String[] {"routeStyle", "masterRouteStyle"})
 		{
-			throw new IllegalArgumentException("Invalid route choice");
+			if (o.has(key) && (!isString(o.get(key)) || o.get(key).getAsString().length() > 32))
+			{
+				throw new IllegalArgumentException("Invalid route choice");
+			}
 		}
 		if (o.has("screenTask"))
 		{
