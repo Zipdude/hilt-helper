@@ -1102,6 +1102,38 @@ public final class IronmanHiltPlugin extends Plugin implements GuidePanel.Action
 		});
 	}
 
+	@Override public void resetProgress()
+	{
+		String intended = intendedSession();
+		long lifetime = generation;
+		clientThread.invokeLater(() ->
+		{
+			if (!canChange() || generation != lifetime || !live.session.equals(intended))
+			{
+				return;
+			}
+			String key = activeKey, name = live.name, session = live.session;
+			GuideState next = GuideState.empty();
+			LiveSnapshot.Container bank = collector.lastBank();
+			ProgressStore storage = store;
+			String failureMessage = "Couldn’t reset saved guide progress. Try again.";
+			transaction = true;
+			io.execute(() ->
+			{
+				try
+				{
+					storage.save(key, name, next, bank, false);
+					finishTransaction(lifetime, session, key, next,
+						"Guide progress reset. Choose a guide to start again.", false);
+				}
+				catch (IOException | RuntimeException failure)
+				{
+					transactionFailed(lifetime, session, key, failureMessage);
+				}
+			}, failure -> transactionFailed(lifetime, session, key, failureMessage));
+		});
+	}
+
 	@Override public void clearCorrections()
 	{
 		mutate(s ->

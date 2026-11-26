@@ -118,6 +118,9 @@ public final class GuidePanel extends PluginPanel
 		void exportFile(Filepath file);
 		void undoImport();
 		void clearCorrections();
+		default void resetProgress()
+		{
+		}
 		default void skipTask(int id, boolean skip)
 		{
 		}
@@ -377,7 +380,7 @@ public final class GuidePanel extends PluginPanel
 		{
 			if (shownState.routeChoice() != state.routeChoice() || shownState.selectedGuide() != state.selectedGuide())
 			{
-				if (goal.advanced() || shownState.rewardGoal().advanced())
+				if (state.selectedGuide() != null && (goal.advanced() || shownState.rewardGoal().advanced()))
 				{
 					preserveAdvancedChecklist(state);
 				}
@@ -386,6 +389,13 @@ public final class GuidePanel extends PluginPanel
 					resetChecklist();
 					anchor = null;
 					scroll = new Point();
+				}
+				if (state.selectedGuide() == null && state.routeChoice() == null)
+				{
+					choosingRoute = showingSkipped = false;
+					routeExpanded = correctionsExpanded = hideCompleted = false;
+					preview = null;
+					associationConfirmed = false;
 				}
 				choosingGuide = false;
 				if (state.routeChoice() != null && focusedTasks.isEmpty())
@@ -594,27 +604,39 @@ public final class GuidePanel extends PluginPanel
 		JPanel header = card();
 		header.putClientProperty("guideAnchor", "start");
 		header.add(text(choosing ? "Hilt Helper" : goal.reward, choosing ? TEXT : GOLD, 18, true));
-		JPanel heading = new JPanel(new BorderLayout(4, 0));
-		heading.setOpaque(false);
 		String guideLabel = choosing ? "Combat Achievement guides" : goal.label;
 		if (!choosing && state.routeChoice() != null)
 		{
 			guideLabel += " · " + (state.routeChoice() == RouteStyle.GROUP ? "Group" : state.routeChoice().label);
 		}
-		heading.add(text(guideLabel, TEXT, 12, false), BorderLayout.CENTER);
+		header.add(text(guideLabel, TEXT, 12, false));
 		if (available && !choosing)
 		{
-			JButton change = button("Change guide", () ->
+			JPanel controls = new JPanel(new GridLayout(1, 2, 5, 0));
+			controls.setOpaque(false);
+			JButton changeGuide = button("Change guide", () ->
 			{
 				choosingGuide = true;
+				choosingRoute = false;
 				revealAnchor = "guide-picker";
 				focusTarget = "guide-medium";
 				redraw();
 			});
-			change.setName("change-guide");
-			heading.add(change, BorderLayout.EAST);
+			changeGuide.setName("change-guide");
+			controls.add(changeGuide);
+			if (state.routeChoice() != null)
+			{
+				controls.add(button("Change route", () ->
+				{
+					choosingRoute = true;
+					revealAnchor = "route-picker";
+					focusTarget = RouteStyle.SOLO.label + " · recommended";
+					redraw();
+				}));
+			}
+			controls.setMaximumSize(new Dimension(Integer.MAX_VALUE, controls.getPreferredSize().height));
+			header.add(controls);
 		}
-		header.add(heading);
 		int target = catalogue.threshold(goal);
 		int remaining = Math.max(0, target - shownTotal);
 		if (live != null && live.mode.supported())
@@ -929,14 +951,6 @@ public final class GuidePanel extends PluginPanel
 			{
 				box.add(text("Set the party size from a group task’s card when your team is ready.", MUTED, 11, false));
 			}
-			box.add(button("Change route", () ->
-			{
-				choosingRoute = true;
-				revealAnchor = "route-picker";
-				focusTarget = RouteStyle.SOLO.label + " · recommended";
-				redraw();
-			}));
-			box.add(gap(6));
 			routeItems(box);
 			box.add(gap(6));
 			box.add(text("Quests & levels to work on", GOLD, 13, true));
@@ -3144,6 +3158,10 @@ public final class GuidePanel extends PluginPanel
 		rollback.setEnabled(available);
 		box.add(rollback);
 
+		JButton reset = button("Reset guide progress…", savedAction(this::confirmReset));
+		reset.setEnabled(available);
+		box.add(reset);
+
 		if (available)
 		{
 			box.add(gap(8));
@@ -3225,6 +3243,21 @@ public final class GuidePanel extends PluginPanel
 			stillCurrent(intended))
 		{
 			actions.clearCorrections();
+		}
+	}
+
+	private void confirmReset()
+	{
+		String intended = session();
+		String[] choices = {"Reset guide", "Cancel"};
+		int choice = JOptionPane.showOptionDialog(this,
+			"Reset Hilt Helper for " + shownLive.name + "?\n\n" +
+				"This clears the guide, route, skips, corrections, and manually saved or imported progress.\n" +
+				"Achievements earned in game will sync again. Export a backup first to keep your saved progress.",
+			"Reset guide progress", JOptionPane.OK_CANCEL_OPTION, JOptionPane.WARNING_MESSAGE, null, choices, choices[1]);
+		if (choice == JOptionPane.OK_OPTION && stillCurrent(intended))
+		{
+			actions.resetProgress();
 		}
 	}
 

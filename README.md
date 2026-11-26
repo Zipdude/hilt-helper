@@ -18,7 +18,7 @@ Open **Plugin Hub** in RuneLite, search for **Hilt Helper**, and select **Instal
 ## Plan and complete tasks
 
 1. Choose **Medium**, **Hard**, **Elite**, or **Master**. Use **Change guide** to switch goals. Progress, skips, and preparation are shared across guides.
-2. Choose **Solo** for independent activities or **With a group** to include party activities. The Master guide also offers **Raid-light**, which keeps full-raid clears out of its suggested plan. Use **Route & requirements** to change routes and compare available and locked points. Elite and Master can suggest solo alternatives while you wait for a party.
+2. Choose **Solo** for independent activities or **With a group** to include party activities. The Master guide also offers **Raid-light**, which keeps full-raid clears out of its suggested plan. Use **Change route** next to **Change guide** to switch routes. Open **Route & requirements** to compare available and locked points. Elite and Master can suggest solo alternatives while you wait for a party.
 3. Open the suggested task or search the checklist by task name, rule, boss, or in-game ID. **Requirements & kit** shows what to bring and which unlocks you need. For tasks that ask for a team size, use **Confirm party size…** there once your team is ready. Open **Walkthrough & sources** for attempt tips and links to fuller guides.
 4. Complete the task in game. The sidebar updates your points and advances to the next unfinished objective. At the verified target, it shows how to claim the selected reward at the Warriors’ Guild.
 
@@ -56,6 +56,8 @@ Game task IDs, completion flags, and points are checked against the achievement 
 Group Ironman players may have a personal Master target. If Hilt Helper asks you to check it, open the in-game Combat Achievements rewards tab. The guide uses the standard 1,965 points for planning while the personal target needs verification.
 
 Progress and your last personal bank scan stay on your computer. **Account & backups** supports exporting and restoring profiles, importing from the older HTML guide, and reviewing saved progress against the game. Task and source links open in your browser when selected.
+
+To start over on the active account, open **Account & backups → Reset guide progress**. Confirm to clear the saved guide, route, skips, corrections, and manual or imported progress. Game-earned achievements sync again. Use **Export progress backup** first to keep a copy.
 
 ## Report a bug
 
