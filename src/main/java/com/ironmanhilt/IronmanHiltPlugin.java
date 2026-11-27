@@ -74,7 +74,7 @@ import net.runelite.client.util.Filepath;
 import net.runelite.client.util.ImageUtil;
 
 @PluginDescriptor(name = "Hilt Helper", internalName = "ironman-hilt-guide",
-					description = "Track OSRS Combat Achievements and plan Medium, Hard, Elite and Master routes to Ghommal's hilts 2–5.",
+					description = "Track OSRS Combat Achievements and plan routes from Medium to Grandmaster and Ghommal's hilts 2–6.",
 					tags = {"ironman", "combat", "achievements", "progression", "guide", "medium", "hard", "hilt",
 						"ca", "cas", "tracker", "planner", "pvm", "ghommal", "osrs", "route", "combat-achievements", "elite", "master"})
 public final class IronmanHiltPlugin extends Plugin implements GuidePanel.Actions
@@ -301,9 +301,18 @@ public final class IronmanHiltPlugin extends Plugin implements GuidePanel.Action
 
 	@Subscribe public void onWidgetLoaded(WidgetLoaded event)
 	{
-		if (enabled && event.getGroupId() == InterfaceID.BANKMAIN && live != null && live.mode.bankAllowed())
+		if (!enabled)
+		{
+			return;
+		}
+		if (event.getGroupId() == InterfaceID.BANKMAIN && live != null && live.mode.bankAllowed())
 		{
 			dirty = bankRefreshPending = true;
+		}
+		if (event.getGroupId() == InterfaceID.CA_REWARDS)
+		{
+			dirty = true;
+			lastCollect = Math.min(lastCollect, ticks - 10);
 		}
 	}
 
@@ -593,6 +602,7 @@ public final class IronmanHiltPlugin extends Plugin implements GuidePanel.Action
 		if (!available || !catalogue.includes(id, state.rewardGoal()) || state.routeChoice() == null || state.skipped(activity) ||
 			state.knownIds("skipTaskIDs", catalogue.tasks.keySet()).contains(id) ||
 			planner.completedForGuide(state, live).contains(id) || (RiskPolicy.wilderness(activity) && !state.wildernessEnabled()) ||
+			state.rewardGoal() == RewardGoal.GRANDMASTER && !planner.grandmaster(state, live).required.contains(id) ||
 			!catalogue.inRouteStyle(id, state.rewardGoal(), state.routeChoice()))
 		{
 			overlay.clear();
@@ -720,7 +730,8 @@ public final class IronmanHiltPlugin extends Plugin implements GuidePanel.Action
 			{
 				s.data.remove("screenTask");
 			}
-			else if (catalogue.includes(id, s.rewardGoal()) && !planner.completedForGuide(s, live).contains(id))
+			else if (catalogue.includes(id, s.rewardGoal()) && !planner.completedForGuide(s, live).contains(id) &&
+				(s.rewardGoal() != RewardGoal.GRANDMASTER || planner.grandmaster(s, live).required.contains(id)))
 			{
 				s.data.addProperty("screenTask", id);
 			}

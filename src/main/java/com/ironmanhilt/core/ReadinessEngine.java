@@ -157,6 +157,11 @@ public final class ReadinessEngine
 					"Buy or withdraw " + gear.get("name").getAsString() + " before the attempt.", automatic.amount, false, true);
 			}
 		}
+		boolean manualAmmunition = AMMUNITION.equals(str(req, "predicate", "")) && yes(req, "manual_alternative");
+		if (manualAmmunition && !automatic.ready())
+		{
+			automatic = new Check(label, UNKNOWN, str(req, "manualCheck", automatic.detail), automatic.amount);
+		}
 		if ((req.has("access_rule") || req.has("slayer_assignments")) && !UNKNOWN.equals(automatic.status))
 		{
 			if (!yes(req, "manual_alternative") || automatic.ready())
@@ -183,8 +188,8 @@ public final class ReadinessEngine
 		}
 		if (status.equals("Owned"))
 		{
-			if (advancedGroup(state, live) && (!wanted(req).isEmpty() || req.has("spell") || req.has("spells_any") ||
-				AMMUNITION.equals(str(req, "predicate", ""))))
+			if (advancedGroup(state, live) && !manualAmmunition && (!wanted(req).isEmpty() || req.has("spell") ||
+				req.has("spells_any") || AMMUNITION.equals(str(req, "predicate", ""))))
 			{
 				return automatic;
 			}
@@ -505,8 +510,17 @@ public final class ReadinessEngine
 	private Check ammunition(String activity, JsonObject req, GuideState state, LiveSnapshot live, Instant now)
 	{
 		String label = str(req, "label", "Ammunition");
-		JsonObject compatibility = catalogue.items.getAsJsonObject("ammo_compatibility");
+		JsonObject scopedPairs = req.getAsJsonObject("weapon_ammo_pairs");
+		JsonObject compatibility = scopedPairs == null ? catalogue.items.getAsJsonObject("ammo_compatibility") : scopedPairs;
+		Set<Integer> eligibleWeapons = rangedWeaponIds;
+		if (scopedPairs != null)
+		{
+			Set<Integer> ids = new HashSet<>();
+			scopedPairs.keySet().forEach(id -> ids.add(Integer.parseInt(id)));
+			eligibleWeapons = withNotes(ids);
+		}
 		Set<Integer> seen = new HashSet<>();
+		String unusableWeapon = "";
 		Check best = null;
 		for (String location : List.of("equipment", "inventory", "bank"))
 		{
@@ -517,16 +531,21 @@ public final class ReadinessEngine
 			}
 			for (LiveSnapshot.Item row : container.items)
 			{
-				if (row.quantity <= 0 || !rangedWeaponIds.contains(row.id))
+				if (row.quantity <= 0 || !eligibleWeapons.contains(row.id))
 				{
 					continue;
 				}
 				int id = base(row.id);
 				JsonObject pairing = compatibility.getAsJsonObject(String.valueOf(id));
 				JsonObject weapon = pairing == null ? null : item(id);
-				if (weapon == null || id != row.id && !location.equals("bank") ||
-					!seen.add(id) || gate(weapon, req, state, live) != null)
+				if (weapon == null || id != row.id && !location.equals("bank") || !seen.add(id))
 				{
+					continue;
+				}
+				String gate = gate(weapon, req, state, live);
+				if (gate != null)
+				{
+					unusableWeapon = gate;
 					continue;
 				}
 				JsonObject ammo = req.deepCopy();
@@ -543,7 +562,7 @@ public final class ReadinessEngine
 				JsonArray ids = new JsonArray();
 				allowed.forEach(ids::add);
 				ammo.add("any_of_ids", ids);
-				ammo.addProperty("unit", "shots");
+				ammo.addProperty("unit", str(req, "unit", "shots"));
 				Check supplies = automatic(activity, ammo, state, live, now);
 				String weaponName = weapon.get("name").getAsString();
 				String detail = weaponName + " · " + supplies.detail;
@@ -563,8 +582,23 @@ public final class ReadinessEngine
 				}
 			}
 		}
-		return best == null ?
-			new Check(label, UNKNOWN, "Check ammunition for the ranged weapon you plan to bring.", 0) : best;
+		if (best != null)
+		{
+			return best;
+		}
+		if (scopedPairs != null)
+		{
+			if (!unusableWeapon.isEmpty())
+			{
+				return new Check(label, UNKNOWN, unusableWeapon, 0);
+			}
+			if (live.completeItemEvidence(now))
+			{
+				return new Check(label, MISSING, "No usable matching weapon was found.", 0);
+			}
+			return new Check(label, UNKNOWN, missingEvidenceReason(live), 0);
+		}
+		return new Check(label, UNKNOWN, "Check ammunition for the ranged weapon you plan to bring.", 0);
 	}
 
 	private Check prayerDrainSources(String activity, JsonObject req, GuideState state, LiveSnapshot live, Instant now)

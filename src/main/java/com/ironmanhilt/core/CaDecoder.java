@@ -31,10 +31,16 @@ import java.util.Set;
 /** Cache IDs come from struct parameter 1306, never from display or list order. */
 public final class CaDecoder
 {
+	public static final int COMPLETION_WORDS = 21;
 	private final GuideCatalog catalogue;
+	private final int[] knownMasks = new int[COMPLETION_WORDS];
 	public CaDecoder(GuideCatalog catalogue)
 	{
 		this.catalogue = catalogue;
+		for (int id : catalogue.tasks.keySet())
+		{
+			knownMasks[id / Integer.SIZE] |= 1 << (id % Integer.SIZE);
+		}
 	}
 	public Result decode(List<GuideCatalog.Task> liveTasks, int[] words, int mediumThreshold, int hardThreshold, int gamePoints)
 	{
@@ -56,7 +62,7 @@ public final class CaDecoder
 			return Result.unavailable(
 				"The game's reward threshold changed. Catalogue update required; saved progress retained.");
 		}
-		if (words == null || words.length != 21)
+		if (words == null || words.length != COMPLETION_WORDS)
 		{
 			return Result.unavailable("Achievement bit blocks are unavailable");
 		}
@@ -64,7 +70,15 @@ public final class CaDecoder
 		{
 			return Result.unavailable("Live task catalogue changed or is unavailable; saved progress retained.");
 		}
+		for (int i = 0; i < words.length; i++)
+		{
+			if ((words[i] & ~knownMasks[i]) != 0)
+			{
+				return Result.unavailable("A task flag is outside the known catalogue; saved progress retained.");
+			}
+		}
 		Set<Integer> observed = new LinkedHashSet<>(), positive = new LinkedHashSet<>();
+		boolean groupRulesVerified = true;
 		for (GuideCatalog.Task task : liveTasks)
 		{
 			if (task == null || task.name == null || task.tier == null)
@@ -77,7 +91,8 @@ public final class CaDecoder
 			{
 				return Result.unavailable("Live task ID/name/tier validation failed; saved progress retained.");
 			}
-			if ((words[task.id / 32] & (1 << (task.id % 32))) != 0)
+			groupRulesVerified &= expected.gimExclusion == task.gimExclusion;
+			if ((words[task.id / Integer.SIZE] & (1 << (task.id % Integer.SIZE))) != 0)
 			{
 				positive.add(task.id);
 			}
@@ -92,7 +107,7 @@ public final class CaDecoder
 			return Result.unavailable(
 				"Waiting for matching server points and completion flags; saved progress retained.");
 		}
-		return new Result(standard, positive, observed, decodedPoints,
+		return new Result(standard, groupRulesVerified, positive, observed, decodedPoints,
 			observed.size() + " / " + catalogue.tasks.size() + " task IDs validated");
 	}
 	private static String normal(String s)
@@ -101,13 +116,15 @@ public final class CaDecoder
 	}
 	public static final class Result
 	{
-		public final boolean valid;
+		public final boolean valid, groupRulesVerified;
 		public final Set<Integer> completed, observed;
 		public final int gamePoints;
 		public final String message;
-		private Result(boolean valid, Set<Integer> completed, Set<Integer> observed, int points, String message)
+		private Result(boolean valid, boolean groupRulesVerified, Set<Integer> completed, Set<Integer> observed,
+			int points, String message)
 		{
 			this.valid = valid;
+			this.groupRulesVerified = groupRulesVerified;
 			this.completed = Collections.unmodifiableSet(new LinkedHashSet<>(completed));
 			this.observed = Collections.unmodifiableSet(new LinkedHashSet<>(observed));
 			this.gamePoints = points;
@@ -116,12 +133,12 @@ public final class CaDecoder
 		public boolean verifiedFor(RewardGoal goal)
 		{
 			// A plausible group threshold does not alter the legacy guide guards.
-			return valid || goal == RewardGoal.MASTER && gamePoints >= 0;
+			return valid || goal.supportsRaidLight() && gamePoints >= 0;
 		}
 
 		public static Result unavailable(String reason)
 		{
-			return new Result(false, Collections.emptySet(), Collections.emptySet(), -1, reason);
+			return new Result(false, false, Collections.emptySet(), Collections.emptySet(), -1, reason);
 		}
 	}
 }

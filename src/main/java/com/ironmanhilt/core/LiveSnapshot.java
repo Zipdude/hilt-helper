@@ -124,7 +124,8 @@ public final class LiveSnapshot
 		if (other == null || !accountKey.equals(other.accountKey) || !name.equals(other.name) ||
 			!session.equals(other.session) || mode != other.mode || !levels.equals(other.levels) ||
 			!quests.equals(other.quests) || !context.equals(other.context) || ca.valid != other.ca.valid ||
-			ca.gamePoints != other.ca.gamePoints || !ca.message.equals(other.ca.message) ||
+			ca.gamePoints != other.ca.gamePoints || ca.groupRulesVerified != other.ca.groupRulesVerified ||
+			!ca.message.equals(other.ca.message) ||
 			!ca.completed.equals(other.ca.completed) || !ca.observed.equals(other.ca.observed) ||
 			bankObservedThisSession() != other.bankObservedThisSession())
 		{

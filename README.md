@@ -1,6 +1,8 @@
 # Hilt Helper
 
-Hilt Helper tracks your Old School RuneScape Combat Achievements in RuneLite. It suggests routes to Ghommal’s hilts 2–5 using your completed tasks, remaining points, and account unlocks.
+Hilt Helper tracks your Old School RuneScape Combat Achievements in RuneLite. It suggests routes to Ghommal’s hilts 2–6 using your completed tasks, remaining points, and account unlocks.
+
+This branch contains the 0.8.0 Grandmaster source. The Plugin Hub listing shows the version available to install.
 
 | Guide | Reward | Standard points |
 | --- | --- | ---: |
@@ -8,8 +10,9 @@ Hilt Helper tracks your Old School RuneScape Combat Achievements in RuneLite. It
 | Hard | Ghommal’s hilt 3 | 436 |
 | Elite | Ghommal’s hilt 4 | 1,100 |
 | Master | Ghommal’s hilt 5 | 1,965 |
+| Grandmaster | Ghommal’s hilt 6 | 2,697 |
 
-The Master checklist covers all 655 achievements in the bundled catalogue, including 173 Master-ranked tasks. The route can recommend unfinished achievements from any tier. [Release history](https://github.com/Zipdude/hilt-helper/releases)
+The Grandmaster checklist covers all 655 achievements in the bundled catalogue, including 122 Grandmaster-ranked tasks. It tracks the unfinished tasks you need across every tier. [Release history](https://github.com/Zipdude/hilt-helper/releases)
 
 ## Install
 
@@ -17,12 +20,12 @@ Open **Plugin Hub** in RuneLite, search for **Hilt Helper**, and select **Instal
 
 ## Plan and complete tasks
 
-1. Choose **Medium**, **Hard**, **Elite**, or **Master**. Use **Change guide** to switch goals. Progress, skips, and preparation are shared across guides.
-2. Choose **Solo** for independent activities or **With a group** to include party activities. The Master guide also offers **Raid-light**, which keeps full-raid clears out of its suggested plan. Use **Change route** next to **Change guide** to switch routes. Open **Route & requirements** to compare available and locked points. Elite and Master can suggest solo alternatives while you wait for a party.
+1. Choose a guide from **Medium** through **Grandmaster**. Use **Change guide** to switch goals. Progress, skips, and preparation are shared across guides.
+2. Choose **Solo** for independent activities or **With a group** to include party activities. Master and Grandmaster also offer **Raid-light** for solo activities and selected raid rooms. Use **Change route** next to **Change guide** to switch routes. Open **Route & requirements** to compare available and locked points. Elite, Master, and Grandmaster can suggest solo tasks while you wait for a party.
 3. Open the suggested task or search the checklist by task name, rule, boss, or in-game ID. **Requirements & kit** shows what to bring and which unlocks you need. For tasks that ask for a team size, use **Confirm party size…** there once your team is ready. Open **Walkthrough & sources** for attempt tips and links to fuller guides.
-4. Complete the task in game. The sidebar updates your points and advances to the next unfinished objective. At the verified target, it shows how to claim the selected reward at the Warriors’ Guild.
+4. Complete the task in game. The sidebar updates your points and advances to the next unfinished objective. For Grandmaster, confirm reward availability in **Combat Achievements → Rewards**.
 
-The guide supports mains, regular and Hardcore Ironmen, Ultimate Ironmen, and ranked, unranked, and Hardcore Group Ironmen. Item guidance reflects what the account can use or obtain. Open **Task options** to skip a task or activity and allow the route to find replacements. **Skipped tasks & activities** lets you restore them. Wilderness tasks enter the route only when you opt in, and the guide shows relevant account-mode risks.
+The guide supports mains, regular and Hardcore Ironmen, Ultimate Ironmen, and ranked, unranked, and Hardcore Group Ironmen. Item guidance reflects what the account can use or obtain. Open **Task options** to skip a task or activity and allow the route to find replacements. **Skipped tasks & activities** lets you restore them. In Grandmaster, skipped tasks still count toward the required checklist. Wilderness tasks enter the route only when you opt in, and the guide shows relevant account-mode risks.
 
 ## Checklist and preparation
 
@@ -32,8 +35,10 @@ The guide supports mains, regular and Hardcore Ironmen, Ultimate Ironmen, and ra
 | **Selected tasks** | The guide’s core objectives. |
 | **Reserve tasks** | Extra tasks you can swap into your plan. |
 | **All guide tasks** | The guide’s full checklist. Use **Filters** to choose an activity or hide completed tasks. |
-| **Missing requirements** (Elite and Master) or **Blocked tasks** (Medium and Hard) | Tasks that still need an item, quest, level, or access unlock. |
+| **Tasks to prepare** (Master and Grandmaster), **Missing requirements** (Elite), or **Blocked tasks** (Medium and Hard) | Tasks awaiting preparation. Master and Grandmaster can show party and attempt setup separately from missing requirements. |
 | **Required & missing items** | Required gear and supplies. **Show all missing items** groups shortages, checks you can confirm, and saved confirmations. |
+
+In **Grandmaster**, select **Filters → Task type → All guide tasks** to filter by **Task status**, including required unfinished, deferred, and group-exempt tasks.
 
 Open your bank when prompted. The guide checks observed personal bank, inventory, equipment, and held rune pouch contents. Ultimate Ironmen use carried and equipped supplies. Group players get credit for supplies in their own containers. A saved bank scan can prompt you to reopen the bank if the guide cannot verify a combined quantity. Common tradeable supplies for mains appear as restock instructions when appropriate.
 
@@ -54,6 +59,8 @@ Open the **Hespori checklist** to see the last observed patch status, seed stock
 Game task IDs, completion flags, and points are checked against the achievement catalogue. Boss kills, items, and manual preparation checks help plan your next task. The reward prompt follows verified game progress. If the game catalogue changes, the guide retains saved progress while it waits for compatible game data.
 
 Group Ironman players may have a personal Master target. If Hilt Helper asks you to check it, open the in-game Combat Achievements rewards tab. The guide uses the standard 1,965 points for planning while the personal target needs verification.
+
+In **Grandmaster**, Group Ironmen can open **Combat Achievements → Rewards** to check their personal target and roster exemptions. Use the task card to confirm the party you’ll attempt the encounter with.
 
 Progress and your last personal bank scan stay on your computer. **Account & backups** supports exporting and restoring profiles, importing from the older HTML guide, and reviewing saved progress against the game. Task and source links open in your browser when selected.
 

@@ -87,19 +87,20 @@ public final class GuideState
 	public RouteStyle routeChoice()
 	{
 		RouteStyle shared = RouteStyle.from(ReadinessEngine.str(data, "routeStyle", ""));
-		if (selectedGuide() != RewardGoal.MASTER)
+		RewardGoal goal = rewardGoal();
+		if (!goal.supportsRaidLight())
 		{
 			return shared == RouteStyle.RAID_LIGHT ? RouteStyle.SOLO : shared;
 		}
-		RouteStyle master = RouteStyle.from(ReadinessEngine.str(data, "masterRouteStyle", ""));
-		return master == null ? RouteStyle.SOLO : master;
+		RouteStyle selected = RouteStyle.from(ReadinessEngine.str(data, goal.key + "RouteStyle", ""));
+		return selected == null ? RouteStyle.SOLO : selected;
 	}
 
 	public void routeChoice(RouteStyle route)
 	{
-		if (rewardGoal() == RewardGoal.MASTER)
+		if (rewardGoal().supportsRaidLight())
 		{
-			data.addProperty("masterRouteStyle", route.key);
+			data.addProperty(rewardGoal().key + "RouteStyle", route.key);
 		}
 		else if (route != RouteStyle.RAID_LIGHT)
 		{
@@ -274,7 +275,7 @@ public final class GuideState
 		{
 			throw new IllegalArgumentException("Invalid followed activity");
 		}
-		for (String key : new String[] {"routeStyle", "masterRouteStyle"})
+		for (String key : new String[] {"routeStyle", "masterRouteStyle", "grandmasterRouteStyle"})
 		{
 			if (o.has(key) && (!isString(o.get(key)) || o.get(key).getAsString().length() > 32))
 			{

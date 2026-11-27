@@ -68,7 +68,15 @@ public final class Planner
 
 	public boolean gameProgressVerified(RewardGoal goal, LiveSnapshot live)
 	{
-		return live != null && live.mode.supported() && live.ca.verifiedFor(goal);
+		return live != null && live.mode.supported() && live.ca.verifiedFor(goal) &&
+			(goal != RewardGoal.GRANDMASTER ||
+				live.context.getOrDefault("caGameBuild", 0) == catalogue.grandmasterGameBuild);
+	}
+
+	public GrandmasterLedger grandmaster(GuideState state, LiveSnapshot live)
+	{
+		boolean verified = gameProgressVerified(RewardGoal.GRANDMASTER, live);
+		return new GrandmasterLedger(catalogue, live, verified ? live.ca.completed : progress.knownCompleted(state), verified);
 	}
 
 	public boolean hasLiveTarget(RewardGoal goal, LiveSnapshot live)
@@ -76,6 +84,10 @@ public final class Planner
 		if (!gameProgressVerified(goal, live))
 		{
 			return false;
+		}
+		if (goal == RewardGoal.GRANDMASTER)
+		{
+			return new GrandmasterLedger(catalogue, live, live.ca.completed, true).targetVerified;
 		}
 		if (goal == RewardGoal.MASTER)
 		{
@@ -104,9 +116,34 @@ public final class Planner
 	public Next next(GuideState state, LiveSnapshot live, List<Entry> route)
 	{
 		RewardGoal goal = state.rewardGoal();
+		if (goal == RewardGoal.GRANDMASTER)
+		{
+			GrandmasterLedger ledger = grandmaster(state, live);
+			if (ledger.rewardAvailable())
+			{
+				return new Next(null, "Review your Grandmaster reward",
+					"Your current ledger is complete. Confirm the reward in Combat Achievements → Rewards.", List.of(), 0);
+			}
+			if (ledger.rewardCollected())
+			{
+				return new Next(null, "Grandmaster complete", "Your current achievement ledger is complete.", List.of(), 0);
+			}
+			if (route.isEmpty() || ledger.pointsAtTargetWithOpenTasks())
+			{
+				String title = ledger.required.isEmpty() || !ledger.targetVerified ?
+					"Check Grandmaster rewards" : "Review remaining tasks";
+				String detail = ledger.evidence();
+				if (detail.isEmpty())
+				{
+					detail = ledger.required.isEmpty() ? "Check the Rewards tab on a standard members’ world." :
+						"Open All guide tasks to review requirements, skipped tasks and party bookings.";
+				}
+				return new Next(null, title, detail, List.of(), 0);
+			}
+		}
 		int threshold = catalogue.threshold(goal);
 		int deficit = Math.max(0, threshold - currentPoints(state, live));
-		if (deficit == 0)
+		if (goal != RewardGoal.GRANDMASTER && deficit == 0)
 		{
 			if (gameProgressVerified(goal, live) && live.ca.gamePoints < threshold)
 			{
@@ -437,6 +474,11 @@ public final class Planner
 
 	public String partyBlocker(int id, GuideState state, RouteStyle style)
 	{
+		return partyBlocker(id, state, style, null);
+	}
+
+	public String partyBlocker(int id, GuideState state, RouteStyle style, LiveSnapshot live)
+	{
 		RewardGoal goal = state.rewardGoal();
 		if (!goal.advanced() || !catalogue.needsGroup(id, goal))
 		{
@@ -449,7 +491,18 @@ public final class Planner
 		int size = state.elitePartySize(catalogue.owner(id));
 		String scale = minimum == maximum ? "exactly " + minimum : maximum == 100 ?
 			"at least " + minimum : minimum + "–" + maximum;
-		if (style != RouteStyle.GROUP)
+		if (goal == RewardGoal.GRANDMASTER && live != null && live.mode == AccountMode.HARDCORE_GROUP &&
+			party.get("prestigeRestrictedToOwnGroup").getAsBoolean() &&
+			live.context.getOrDefault("caGroupMember", 0) == 1)
+		{
+			int roster = live.context.getOrDefault("caGroupSize", 0);
+			if (roster >= 2 && roster <= 5 && (size > roster || minimum > roster))
+			{
+				return "Confirm " + scale + " eligible players in your Hardcore Group.";
+			}
+		}
+		if (style != RouteStyle.GROUP && !(goal == RewardGoal.GRANDMASTER && style == RouteStyle.RAID_LIGHT &&
+			catalogue.inRouteStyle(id, goal, style)))
 		{
 			return "Choose the Group route for this task. Party of " + scale + ".";
 		}
@@ -578,7 +631,7 @@ public final class Planner
 					readiness.token(token, state, live, live == null ? java.time.Instant.now() : live.at);
 				if (!c.ready())
 				{
-					gates.add((state.rewardGoal() == RewardGoal.MASTER && ReadinessEngine.UNKNOWN.equals(c.status)
+					gates.add((state.rewardGoal().supportsRaidLight() && ReadinessEngine.UNKNOWN.equals(c.status)
 						? "Confirm " : "Prepare ") + c.label + ". " + c.detail);
 				}
 			}
@@ -647,7 +700,7 @@ public final class Planner
 		{
 			return rule.getAsJsonObject("requirements");
 		}
-		return state.rewardGoal() == RewardGoal.MASTER ? null :
+		return state.rewardGoal().supportsRaidLight() ? null :
 			catalogue.route().getAsJsonObject("extraReq").getAsJsonObject(String.valueOf(id));
 	}
 
@@ -728,7 +781,7 @@ public final class Planner
 				Boolean complete = ReadinessEngine.quest(quest, state, live);
 				if (!Boolean.TRUE.equals(complete))
 				{
-					String action = state.rewardGoal() == RewardGoal.MASTER ?
+					String action = state.rewardGoal().supportsRaidLight() ?
 						(complete == null ? "Confirm " : "Complete ") : "Complete or confirm ";
 					gates.add(action + quest + " for this task.");
 				}
@@ -1070,6 +1123,8 @@ public final class Planner
 		public final List<Integer> taskPool;
 		public final Map<String, List<String>> groupChecks;
 		public final Map<Integer, String> blockedTasks;
+		public final Map<Integer, String> deferredTasks;
+		public final GrandmasterLedger grandmaster;
 		public final Set<Integer> uncheckedTasks, partyWaiting, attemptWaiting;
 		public final int availablePoints, preparedPoints, plannedPoints;
 
@@ -1084,6 +1139,15 @@ public final class Planner
 			Map<Integer, String> blockedTasks, int availablePoints, int preparedPoints, int plannedPoints,
 			Set<Integer> uncheckedTasks, Set<Integer> partyWaiting, Set<Integer> attemptWaiting)
 		{
+			this(entries, taskPool, groupChecks, blockedTasks, availablePoints, preparedPoints, plannedPoints,
+				uncheckedTasks, partyWaiting, attemptWaiting, null, Map.of());
+		}
+
+		Route(List<Entry> entries, List<Integer> taskPool, Map<String, List<String>> groupChecks,
+			Map<Integer, String> blockedTasks, int availablePoints, int preparedPoints, int plannedPoints,
+			Set<Integer> uncheckedTasks, Set<Integer> partyWaiting, Set<Integer> attemptWaiting,
+			GrandmasterLedger grandmaster, Map<Integer, String> deferredTasks)
+		{
 			this.uncheckedTasks = Set.copyOf(uncheckedTasks);
 			this.partyWaiting = Set.copyOf(partyWaiting);
 			this.attemptWaiting = Set.copyOf(attemptWaiting);
@@ -1093,6 +1157,8 @@ public final class Planner
 			groupChecks.forEach((key, lines) -> checks.put(key, List.copyOf(lines)));
 			this.groupChecks = Collections.unmodifiableMap(checks);
 			this.blockedTasks = Collections.unmodifiableMap(new LinkedHashMap<>(blockedTasks));
+			this.deferredTasks = Map.copyOf(deferredTasks);
+			this.grandmaster = grandmaster;
 			this.availablePoints = availablePoints;
 			this.preparedPoints = preparedPoints;
 			this.plannedPoints = plannedPoints;

@@ -121,13 +121,24 @@ public final class RuneLiteCollector
 		Map.entry(VarPlayerID.TOTAL_COMPLETED_GAUNTLET, "kc:gauntlet"),
 		Map.entry(VarPlayerID.TOTAL_COMPLETED_GAUNTLET_HM, "kc:corrupted-gauntlet"),
 		Map.entry(VarPlayerID.TOTAL_COMPLETED_THEATREOFBLOOD, "kc:theatre-normal"),
-		Map.entry(VarPlayerID.TOTAL_COMPLETED_THEATREOFBLOOD_HARD, "kc:theatre-hard"));
+		Map.entry(VarPlayerID.TOTAL_COMPLETED_THEATREOFBLOOD_HARD, "kc:theatre-hard"),
+		Map.entry(VarPlayerID.TOTAL_COMPLETED_XERICCHAMBERS, "kc:chambers"),
+		Map.entry(VarPlayerID.TOTAL_COMPLETED_XERICCHAMBERS_CHALLENGE, "kc:chambers-cm"),
+		Map.entry(VarPlayerID.TOTAL_COMPLETED_TOMBSOFAMASCUT_EXPERT, "kc:toa-expert"),
+		Map.entry(VarPlayerID.TOTAL_SOL_KILLS, "kc:sol-heredit"),
+		Map.entry(VarPlayerID.TOTAL_GRYPHON_BOSS_KILLS, "kc:shellbane"),
+		Map.entry(VarPlayerID.TOTAL_MAD_ANGEL_KILLS, "kc:mad-angel"));
 	private static final Map<Integer, String> ACCESS_VARBITS = Map.ofEntries(
 		Map.entry(VarbitID.GODWARS_ENTRANCE_ROPE, "gwdRope"),
 		Map.entry(VarbitID.TROLL_ENTERED_STRONGHOLD, "trollAccess"),
 		Map.entry(VarbitID.INFERNO_SACRIFICED_FIRECAPE, "infernoAccess"),
 		Map.entry(VarbitID.GARGBOSS_UNLOCKED_ROOF, "guardianRoof"),
 		Map.entry(VarbitID.CA_THRESHOLD_EASY, "caEasyThreshold"),
+		Map.entry(VarbitID.CA_THRESHOLD_GRANDMASTER, "caGrandmasterThreshold"),
+		Map.entry(VarbitID.CA_TIER_STATUS_GRANDMASTER, "caGrandmasterStatus"),
+		Map.entry(VarbitID.GIM_GROUPSIZE, "caGroupSize"),
+		Map.entry(VarbitID.GIM_I_AM_MEMBER, "caGroupMember"),
+		Map.entry(VarbitID.GIM_IS_PRESTIGED, "caGroupPrestige"),
 		Map.entry(VarbitID.WILDERNESS_DIARY_MEDIUM_COMPLETE, "wildMedium"),
 		Map.entry(VarbitID.WILDERNESS_DIARY_HARD_COMPLETE, "wildHard"),
 		Map.entry(VarbitID.WILDERNESS_DIARY_ELITE_COMPLETE, "wildElite"),
@@ -155,6 +166,8 @@ public final class RuneLiteCollector
 	private int[] lastWords;
 	private CaDecoder.Result lastCa;
 	private int lastMediumThreshold, lastHardThreshold;
+	private int cacheRevision;
+	private List<Integer> rewardsObserved = List.of();
 	private AccountMode lastCaMode;
 	private final Set<Integer> relevantVarps = new HashSet<>();
 	private Map<String, String> questCache = new HashMap<>();
@@ -175,6 +188,7 @@ public final class RuneLiteCollector
 		cacheTasks = null;
 		lastCa = null;
 		lastWords = null;
+		rewardsObserved = List.of();
 		questCache.clear();
 		levelCache.clear();
 		lastBoosts.clear();
@@ -270,6 +284,7 @@ public final class RuneLiteCollector
 				cacheTasks = null;
 				lastCa = null;
 				lastWords = null;
+				rewardsObserved = List.of();
 				questCache.clear();
 				levelCache.clear();
 				lastBoosts.clear();
@@ -357,13 +372,17 @@ public final class RuneLiteCollector
 		if (mode.supported())
 		{
 			observeAccess(context);
+			observeGrandmasterContext(context, mode);
 			observeRewardThreshold(context, "caEliteThreshold", VarbitID.CA_THRESHOLD_ELITE);
 			observeRewardThreshold(context, "caMasterThreshold", VarbitID.CA_THRESHOLD_MASTER);
 			try
 			{
-				if (cacheTasks == null)
+				int revision = context.get("caGameBuild");
+				if (cacheTasks == null || cacheRevision != revision)
 				{
 					cacheTasks = readCacheTasks();
+					cacheRevision = revision;
+					lastCa = null;
 				}
 				int[] words = new int[CA_VARPS.length];
 				for (int i = 0; i < words.length; i++)
@@ -405,6 +424,31 @@ public final class RuneLiteCollector
 			}
 		}
 		return new LiveSnapshot(key, name, session, mode, now, levelCache, questCache, containers, ca, context);
+	}
+
+	private void observeGrandmasterContext(Map<String, Integer> context, AccountMode mode)
+	{
+		int revision = client.getRevision();
+		context.put("caGameBuild", revision);
+		int target = context.getOrDefault("caGrandmasterThreshold", 0);
+		List<Integer> scope = List.of(revision, mode.ordinal(), target, context.getOrDefault("caGroupSize", 0),
+			context.getOrDefault("caGroupMember", 0), context.getOrDefault("caGroupPrestige", 0),
+			context.getOrDefault("membersWorld", 0));
+		Widget rewards = client.getWidget(InterfaceID.CaRewards.FRAME);
+		if (target > 0 && rewards != null && !rewards.isHidden())
+		{
+			rewardsObserved = scope;
+		}
+		else if (!scope.equals(rewardsObserved))
+		{
+			rewardsObserved = List.of();
+		}
+		context.put("caRewardsObserved", scope.equals(rewardsObserved) ? 1 : 0);
+		// The lower bound remains safe on clients whose first counter already includes the variant.
+		context.put("kc:chambers-combined", Math.max(context.getOrDefault("kc:chambers", 0),
+			context.getOrDefault("kc:chambers-cm", 0)));
+		context.put("kc:theatre-combined", Math.max(context.getOrDefault("kc:theatre-normal", 0),
+			context.getOrDefault("kc:theatre-hard", 0)));
 	}
 	private void observeRewardThreshold(Map<String, Integer> context, String key, int id)
 	{
@@ -596,7 +640,7 @@ public final class RuneLiteCollector
 			{
 				StructComposition struct = client.getStructComposition(structID);
 				tasks.add(new GuideCatalog.Task(struct.getIntValue(1306), struct.getStringValue(1308), tiers[tier],
-												tier + 1));
+					tier + 1, struct.getIntValue(1425)));
 			}
 		}
 		return tasks;

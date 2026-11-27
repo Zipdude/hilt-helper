@@ -3935,5 +3935,7 @@
   ],
   "hard_threshold": 436,
   "elite_threshold": 1100,
-  "master_threshold": 1965
+  "master_threshold": 1965,
+  "task_count": 655,
+  "grandmaster_threshold": 2697
 }
