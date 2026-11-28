@@ -25,6 +25,7 @@ package com.ironmanhilt.core;
 
 public enum RewardGoal
 {
+	EASY("easy", "Easy", "Ghommal’s hilt 1", "https://oldschool.runescape.wiki/w/Ghommal%27s_hilt_1"),
 	MEDIUM("medium", "Medium", "Ghommal’s hilt 2", "https://oldschool.runescape.wiki/w/Ghommal%27s_hilt_2"),
 	HARD("hard", "Hard", "Ghommal’s hilt 3", "https://oldschool.runescape.wiki/w/Ghommal%27s_hilt_3"),
 	ELITE("elite", "Elite", "Ghommal’s hilt 4", "https://oldschool.runescape.wiki/w/Ghommal%27s_hilt_4"),
@@ -43,7 +44,12 @@ public enum RewardGoal
 
 	public boolean advanced()
 	{
-		return this == ELITE || supportsRaidLight();
+		return this == EASY || this == ELITE || supportsRaidLight();
+	}
+
+	public boolean detailedPreparation()
+	{
+		return this == EASY || supportsRaidLight();
 	}
 
 	public boolean supportsRaidLight()

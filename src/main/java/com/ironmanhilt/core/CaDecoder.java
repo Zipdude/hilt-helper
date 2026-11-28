@@ -55,13 +55,25 @@ public final class CaDecoder
 			return Result.unavailable("Waiting for server achievement variables");
 		}
 		boolean standard = mediumThreshold == catalogue.threshold && hardThreshold == catalogue.hardThreshold;
-		boolean possibleGroupTarget = groupIronman && mediumThreshold <= catalogue.threshold &&
+		boolean possibleGroupTarget = groupIronman && mediumThreshold > 0 && mediumThreshold <= catalogue.threshold &&
 			hardThreshold <= catalogue.hardThreshold && hardThreshold > mediumThreshold;
 		if (!standard && !possibleGroupTarget)
 		{
 			return Result.unavailable(
 				"The game's reward threshold changed. Catalogue update required; saved progress retained.");
 		}
+		return decodeFlags(liveTasks, words, gamePoints, standard);
+	}
+
+	public Result decodeSnapshot(List<GuideCatalog.Task> liveTasks, int[] words, int mediumThreshold, int hardThreshold,
+		int gamePoints)
+	{
+		return decodeFlags(liveTasks, words, gamePoints,
+			mediumThreshold == catalogue.threshold && hardThreshold == catalogue.hardThreshold);
+	}
+
+	private Result decodeFlags(List<GuideCatalog.Task> liveTasks, int[] words, int gamePoints, boolean standard)
+	{
 		if (words == null || words.length != COMPLETION_WORDS)
 		{
 			return Result.unavailable("Achievement bit blocks are unavailable");
@@ -133,7 +145,7 @@ public final class CaDecoder
 		public boolean verifiedFor(RewardGoal goal)
 		{
 			// A plausible group threshold does not alter the legacy guide guards.
-			return valid || goal.supportsRaidLight() && gamePoints >= 0;
+			return valid || goal.detailedPreparation() && gamePoints >= 0;
 		}
 
 		public static Result unavailable(String reason)

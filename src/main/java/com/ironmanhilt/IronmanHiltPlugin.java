@@ -74,7 +74,7 @@ import net.runelite.client.util.Filepath;
 import net.runelite.client.util.ImageUtil;
 
 @PluginDescriptor(name = "Hilt Helper", internalName = "ironman-hilt-guide",
-					description = "Track OSRS Combat Achievements and plan routes from Medium to Grandmaster and Ghommal's hilts 2–6.",
+					description = "Plan Combat Achievements from Easy through Grandmaster using your live progress and tier preparation.",
 					tags = {"ironman", "combat", "achievements", "progression", "guide", "medium", "hard", "hilt",
 						"ca", "cas", "tracker", "planner", "pvm", "ghommal", "osrs", "route", "combat-achievements", "elite", "master"})
 public final class IronmanHiltPlugin extends Plugin implements GuidePanel.Actions
@@ -114,9 +114,16 @@ public final class IronmanHiltPlugin extends Plugin implements GuidePanel.Action
 	private GuideState publishedState;
 	private boolean viewQueued;
 
+	static BufferedImage sidebarIcon()
+	{
+		BufferedImage sprite = ImageUtil.loadImageResource(IronmanHiltPlugin.class, "hilt-icon.png");
+		// Fit the visible sprite to RuneLite's 16-pixel tab and lift the dark details.
+		BufferedImage fitted = ImageUtil.resizeImage(sprite.getSubimage(1, 1, 31, 31), 16, 16);
+		return ImageUtil.luminanceOffset(fitted, 30);
+	}
+
 	@Override protected void startUp() throws Exception
 	{
-		BufferedImage icon = ImageUtil.loadImageResource(IronmanHiltPlugin.class, "hilt-icon.png");
 		catalogue = new GuideCatalog(gson);
 		progress = new ProgressEngine(catalogue);
 		readiness = new ReadinessEngine(catalogue);
@@ -134,7 +141,7 @@ public final class IronmanHiltPlugin extends Plugin implements GuidePanel.Action
 		taskOverlay = new TaskOverlay(this);
 		overlayManager.add(taskOverlay);
 		navigation =
-			NavigationButton.builder().tooltip("Hilt Helper").icon(icon).priority(7).panel(panel).build();
+			NavigationButton.builder().tooltip("Hilt Helper").icon(sidebarIcon()).priority(7).panel(panel).build();
 		toolbar.addNavigation(navigation);
 		clientThread.invokeLater(() ->
 		{
@@ -488,7 +495,7 @@ public final class IronmanHiltPlugin extends Plugin implements GuidePanel.Action
 		}
 		state.data.addProperty("username", live.name);
 		state.data.addProperty("mode", live.mode.key);
-		boolean verified = planner.gameProgressVerified(state.rewardGoal(), live);
+		boolean verified = live.ca.gamePoints >= 0;
 		if (verified)
 		{
 			progress.merge(state, live.ca.completed, live.ca.observed);
@@ -574,9 +581,10 @@ public final class IronmanHiltPlugin extends Plugin implements GuidePanel.Action
 		{
 			publishedState = state.copy();
 		}
-		publishTaskNote(available);
+		GuideState automatic = planner.automatic(available ? publishedState : GuideState.empty(), live);
+		publishTaskNote(available, automatic);
 		String notice = saveFailed ? "Couldn’t save progress. Export a backup while the guide retries." : message;
-		ViewUpdate view = new ViewUpdate(generation, available ? publishedState : GuideState.empty(), live, status,
+		ViewUpdate view = new ViewUpdate(generation, automatic, live, status,
 			notice, available);
 		synchronized (this)
 		{
@@ -590,7 +598,7 @@ public final class IronmanHiltPlugin extends Plugin implements GuidePanel.Action
 		SwingUtilities.invokeLater(this::renderPending);
 	}
 
-	private void publishTaskNote(boolean available)
+	private void publishTaskNote(boolean available, GuideState view)
 	{
 		TaskOverlay overlay = taskOverlay;
 		if (overlay == null)
@@ -599,16 +607,16 @@ public final class IronmanHiltPlugin extends Plugin implements GuidePanel.Action
 		}
 		int id = state.screenTask();
 		String activity = catalogue.owner(id);
-		if (!available || !catalogue.includes(id, state.rewardGoal()) || state.routeChoice() == null || state.skipped(activity) ||
-			state.knownIds("skipTaskIDs", catalogue.tasks.keySet()).contains(id) ||
-			planner.completedForGuide(state, live).contains(id) || (RiskPolicy.wilderness(activity) && !state.wildernessEnabled()) ||
-			state.rewardGoal() == RewardGoal.GRANDMASTER && !planner.grandmaster(state, live).required.contains(id) ||
-			!catalogue.inRouteStyle(id, state.rewardGoal(), state.routeChoice()))
+		if (!available || !catalogue.includes(id, view.contentGoal()) || view.skipped(activity) ||
+			view.knownIds("skipTaskIDs", catalogue.tasks.keySet()).contains(id) ||
+			planner.completedForGuide(view, live).contains(id) || RiskPolicy.wilderness(activity) && !view.wildernessEnabled() ||
+			view.milestones().grandmaster.exempt.contains(id) ||
+			!planner.eligibleRouteStyle(id, view, view.routeChoice()) || !planner.worldBlocker(id, view, live).isEmpty())
 		{
 			overlay.clear();
 			return;
 		}
-		JsonObject task = catalogue.rule(id, state.rewardGoal());
+		JsonObject task = catalogue.rule(id, view.contentGoal());
 		overlay.show(task.get("name").getAsString(), task.get("condition").getAsString());
 	}
 
@@ -709,13 +717,19 @@ public final class IronmanHiltPlugin extends Plugin implements GuidePanel.Action
 		{
 			mutate(s ->
 			{
-				if (s.rewardGoal().advanced() && catalogue.activities(s.rewardGoal()).stream()
-					.anyMatch(a -> activity.equals(a.get("key").getAsString())))
-				{
-					s.elitePartySize(activity, size);
-				}
+				catalogue.activity(activity);
+				s.confirmParty(activity, size, live.session);
 			});
 		}
+	}
+
+	@Override public void routePreferences(boolean soloOnly, boolean deferFullRaids)
+	{
+		mutate(s ->
+		{
+			s.data.addProperty("soloOnly", soloOnly);
+			s.data.addProperty("deferFullRaids", deferFullRaids);
+		});
 	}
 
 	@Override public void hesporiReminder(boolean enable)
@@ -730,8 +744,7 @@ public final class IronmanHiltPlugin extends Plugin implements GuidePanel.Action
 			{
 				s.data.remove("screenTask");
 			}
-			else if (catalogue.includes(id, s.rewardGoal()) && !planner.completedForGuide(s, live).contains(id) &&
-				(s.rewardGoal() != RewardGoal.GRANDMASTER || planner.grandmaster(s, live).required.contains(id)))
+			else if (catalogue.includes(id, RewardGoal.GRANDMASTER) && !(live.ca.gamePoints >= 0 && live.ca.completed.contains(id)))
 			{
 				s.data.addProperty("screenTask", id);
 			}
@@ -835,7 +848,7 @@ public final class IronmanHiltPlugin extends Plugin implements GuidePanel.Action
 		long lifetime = generation;
 		clientThread.invokeLater(() ->
 		{
-			if (!canChange() || generation != lifetime || !live.session.equals(intended) || !planner.gameProgressVerified(state.rewardGoal(), live))
+			if (!canChange() || generation != lifetime || !live.session.equals(intended) || live.ca.gamePoints < 0)
 			{
 				return;
 			}
@@ -1110,38 +1123,6 @@ public final class IronmanHiltPlugin extends Plugin implements GuidePanel.Action
 				},
 				failure
 				-> transactionFailed(lifetime, session, key, "Rollback could not start; saved progress was retained."));
-		});
-	}
-
-	@Override public void resetProgress()
-	{
-		String intended = intendedSession();
-		long lifetime = generation;
-		clientThread.invokeLater(() ->
-		{
-			if (!canChange() || generation != lifetime || !live.session.equals(intended))
-			{
-				return;
-			}
-			String key = activeKey, name = live.name, session = live.session;
-			GuideState next = GuideState.empty();
-			LiveSnapshot.Container bank = collector.lastBank();
-			ProgressStore storage = store;
-			String failureMessage = "Couldn’t reset saved guide progress. Try again.";
-			transaction = true;
-			io.execute(() ->
-			{
-				try
-				{
-					storage.save(key, name, next, bank, false);
-					finishTransaction(lifetime, session, key, next,
-						"Guide progress reset. Choose a guide to start again.", false);
-				}
-				catch (IOException | RuntimeException failure)
-				{
-					transactionFailed(lifetime, session, key, failureMessage);
-				}
-			}, failure -> transactionFailed(lifetime, session, key, failureMessage));
 		});
 	}
 

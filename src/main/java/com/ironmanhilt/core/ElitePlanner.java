@@ -32,6 +32,7 @@ import java.util.Comparator;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.LinkedHashMap;
+import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -50,8 +51,11 @@ final class ElitePlanner
 	Planner.Route plan(GuideState state, LiveSnapshot live, RouteStyle style)
 	{
 		RewardGoal goal = state.rewardGoal();
+		RewardGoal guide = state.contentGoal();
+		boolean automatic = state.automatic();
+		Map<Integer, GuideCatalog.RouteOrder> milestoneOrder = automatic ? catalogue.milestoneOrder(goal) : Map.of();
 		GrandmasterLedger finalLedger = goal == RewardGoal.GRANDMASTER ? planner.grandmaster(state, live) : null;
-		if (live == null || !live.mode.supported())
+		if (live == null || !live.mode.supported() || automatic && !state.milestones().progressVerified)
 		{
 			if (finalLedger != null)
 			{
@@ -61,10 +65,16 @@ final class ElitePlanner
 			return new Planner.Route(List.of(), List.of(), Map.of(), Map.of(), 0, 0, 0);
 		}
 		boolean finishesAll = finalLedger != null;
-		boolean lateGuide = goal.supportsRaidLight();
-		int gap = Math.max(0, catalogue.threshold(goal) - planner.currentPoints(state, live));
+		boolean detailedPreparation = guide.detailedPreparation();
+		int target = automatic ? state.milestones().target().target : catalogue.threshold(goal);
+		int gap = Math.max(0, target - planner.currentPoints(state, live));
 		Set<Integer> done = planner.completedForGuide(state, live);
-		Map<String, Integer> counters = observedCounters(goal, live);
+		Map<String, Integer> counters = observedCounters(guide, live);
+		Set<String> experienced = new HashSet<>();
+		if (automatic)
+		{
+			done.forEach(id -> experienced.add(catalogue.owner(id)));
+		}
 		Set<Integer> skipped = state.knownIds("skipTaskIDs", catalogue.tasks.keySet());
 		List<Integer> pool = new ArrayList<>();
 		Set<Integer> unchecked = new HashSet<>(), missing = new HashSet<>();
@@ -74,14 +84,16 @@ final class ElitePlanner
 		Map<String, List<String>> teamChecks = new LinkedHashMap<>();
 		Map<String, List<String>> access = new HashMap<>();
 		List<Visit> candidates = new ArrayList<>();
+		Set<Integer> restocking = new HashSet<>();
 		int prepared = 0, available = 0;
-		for (JsonElement value : catalogue.trips(goal))
+		for (JsonElement value : automatic ? catalogue.automaticTrips() : catalogue.trips(guide))
 		{
 			JsonObject trip = value.getAsJsonObject();
 			String activity = trip.get("activity").getAsString();
+			boolean familiar = experienced.contains(activity) || live.context.getOrDefault("kc:" + activity, 0) > 0;
 			boolean activitySkipped = state.skipped(activity);
 			boolean wildernessDeferred = RiskPolicy.wilderness(activity) && !state.wildernessEnabled();
-			if (!finishesAll && (activitySkipped || wildernessDeferred))
+			if (!automatic && !finishesAll && (activitySkipped || wildernessDeferred))
 			{
 				continue;
 			}
@@ -90,13 +102,13 @@ final class ElitePlanner
 			Set<Integer> waiting = new HashSet<>();
 			for (int id : ids)
 			{
-				JsonObject rule = catalogue.rule(id, goal);
+				JsonObject rule = catalogue.rule(id, guide);
 				if (done.contains(id) || finishesAll && !finalLedger.required.contains(id))
 				{
 					continue;
 				}
 				boolean skippedTask = activitySkipped || skipped.contains(id);
-				boolean inStyle = catalogue.inRouteStyle(id, goal, style);
+				boolean inStyle = planner.eligibleRouteStyle(id, state, style);
 				String risk = RiskPolicy.eliteBlocker(rule, live.mode);
 				if (finishesAll && live.mode.hardcore() &&
 					rule.getAsJsonObject("risk").get("deliberateDamageOrUnprovenMargin").getAsBoolean())
@@ -105,7 +117,7 @@ final class ElitePlanner
 				}
 				if (skippedTask || wildernessDeferred || !inStyle || !risk.isEmpty())
 				{
-					if (finishesAll)
+					if (finishesAll || automatic)
 					{
 						if (skippedTask)
 						{
@@ -119,25 +131,36 @@ final class ElitePlanner
 						{
 							deferred.put(id, risk);
 						}
-						else if (style == RouteStyle.SOLO)
+						else if (style == RouteStyle.SOLO && catalogue.needsGroup(id, guide))
 						{
 							partyWaiting.add(id);
 							blockers.put(id, planner.partyBlocker(id, state, style, live));
 						}
 						else
 						{
-							deferred.put(id, "Full raid deferred · use Solo or With a group to schedule it.");
+							deferred.put(id, automatic ? "Full raid deferred · allow it in Route preferences." :
+								"Full raid deferred · use Solo or With a group to schedule it.");
 						}
 					}
 					continue;
 				}
-				pool.add(id);
+				if (!automatic || milestoneOrder.containsKey(id))
+				{
+					pool.add(id);
+				}
 				eligible.add(id);
 				String party = planner.partyBlocker(id, state, style, live);
+				String world = planner.worldBlocker(id, state, live);
+				if (!world.isEmpty())
+				{
+					waiting.add(id);
+					attemptWaiting.add(id);
+					blockers.put(id, world);
+				}
 				if (!party.isEmpty())
 				{
 					waiting.add(id);
-					if (lateGuide)
+					if (detailedPreparation)
 					{
 						partyWaiting.add(id);
 						blockers.put(id, party);
@@ -168,7 +191,7 @@ final class ElitePlanner
 				List<String> task = planner.taskGates(id, state, live);
 				if (!shared.isEmpty() || !task.isEmpty())
 				{
-					if (lateGuide)
+					if (detailedPreparation)
 					{
 						shared.forEach(gate -> recordBlocker(id, gate, gate.startsWith("Confirm "), blockers, unchecked, missing));
 						task.forEach(gate -> recordBlocker(id, gate, gate.startsWith("Confirm "), blockers, unchecked, missing));
@@ -186,7 +209,7 @@ final class ElitePlanner
 					if (accessCheck.required)
 					{
 						String status = Planner.kitStatus(accessCheck.check);
-						if (lateGuide)
+						if (detailedPreparation)
 						{
 							accessCheck.taskIds.forEach(id -> recordBlocker(id, status,
 								ReadinessEngine.UNKNOWN.equals(accessCheck.check.status), blockers, unchecked, missing));
@@ -199,7 +222,7 @@ final class ElitePlanner
 					else
 					{
 						waiting.addAll(accessCheck.taskIds);
-						if (lateGuide)
+						if (detailedPreparation)
 						{
 							attemptWaiting.addAll(accessCheck.taskIds);
 							accessCheck.taskIds.forEach(id -> blockers.putIfAbsent(id, Planner.kitStatus(accessCheck.check)));
@@ -209,7 +232,7 @@ final class ElitePlanner
 			}
 			for (int id : eligible)
 			{
-				if (!blockers.containsKey(id))
+				if (!blockers.containsKey(id) && (!automatic || milestoneOrder.containsKey(id)))
 				{
 					available += catalogue.tasks.get(id).points;
 				}
@@ -219,6 +242,10 @@ final class ElitePlanner
 			{
 				if (!item.required)
 				{
+					if (automatic && item.restockNeeded())
+					{
+						restocking.addAll(item.taskIds);
+					}
 					continue;
 				}
 				if (item.check.fromBank)
@@ -228,7 +255,7 @@ final class ElitePlanner
 				if (!item.check.ready())
 				{
 					String status = Planner.kitStatus(item.check);
-					if (lateGuide)
+					if (detailedPreparation)
 					{
 						item.taskIds.forEach(id -> recordBlocker(id, status, ReadinessEngine.UNKNOWN.equals(item.check.status),
 							blockers, unchecked, missing));
@@ -243,9 +270,15 @@ final class ElitePlanner
 			boolean reserve = trip.get("role").getAsString().equals("reserve");
 			for (int id : eligible)
 			{
+				GuideCatalog.RouteOrder order = milestoneOrder.get(id);
+				if (automatic && order == null)
+				{
+					continue;
+				}
 				if (waiting.contains(id))
 				{
-					if (lateGuide && !partyWaiting.contains(id) && (!reserve || !missing.contains(id) && !unchecked.contains(id)))
+					if (!automatic && goal != RewardGoal.EASY && detailedPreparation && !partyWaiting.contains(id) &&
+						(!reserve || !missing.contains(id) && !unchecked.contains(id)))
 					{
 						future.add(id);
 					}
@@ -253,35 +286,45 @@ final class ElitePlanner
 				}
 				if (blockers.containsKey(id))
 				{
-					if (!reserve || finishesAll)
+					if (!(automatic ? order.reserve : reserve) || finishesAll)
 					{
 						future.add(id);
 					}
 				}
 				else
 				{
-					JsonObject rule = catalogue.rule(id, goal);
-					(rule.has("practiceRecommended") ? practice : ready).add(id);
-					prepared += catalogue.tasks.get(id).points;
+					JsonObject rule = catalogue.rule(id, guide);
+					boolean needsPractice = automatic ? !familiar &&
+						(rule.has("practiceRecommended") || catalogue.tasks.get(id).points >= 4) :
+						goal != RewardGoal.EASY && rule.has("practiceRecommended");
+					(needsPractice ? practice : ready).add(id);
+					if (!restocking.contains(id))
+					{
+						prepared += catalogue.tasks.get(id).points;
+					}
 				}
 			}
-			addVisit(candidates, trip, goal, ready, ids.size(), false, false, bankItems, counters);
-			addVisit(candidates, trip, goal, practice, ids.size(), false, true, bankItems, counters);
-			addVisit(candidates, trip, goal, future, ids.size(), true, false, bankItems, counters);
+			addVisits(candidates, trip, guide, ready, ids.size(), false, false, bankItems, counters, milestoneOrder);
+			addVisits(candidates, trip, guide, practice, ids.size(), false, true, bankItems, counters, milestoneOrder);
+			addVisits(candidates, trip, guide, future, ids.size(), true, false, bankItems, counters, milestoneOrder);
 		}
 		unchecked.removeAll(missing);
 		List<Planner.Entry> route = new ArrayList<>();
+		Map<String, SupplyUse> suppliesUsed = new HashMap<>();
 		int planned = 0;
 		Set<String> used = new HashSet<>();
 		String pinned = ReadinessEngine.str(state.data, "pinnedActivity", "");
-		while ((finishesAll || planned < gap) && !candidates.isEmpty())
+		while ((finishesAll || planned < gap) && !candidates.isEmpty() && (!automatic || route.size() < 12))
 		{
 			int plannedSoFar = planned;
+			int region = planned == 0 ? live.context.getOrDefault("region", -1) : -1;
 			// Re-evaluate marginal cost after each visit so an already-planned setup only counts once.
-			Visit next = candidates.stream().min(Comparator
+			Visit next = automatic ? automaticVisit(candidates, live, pinned, used, counters, restocking,
+				finishesAll ? 0 : gap - plannedSoFar, region) : candidates.stream().min(Comparator
 				.comparingInt((Visit v) -> priority(v, pinned))
+				.thenComparingInt(v -> goal == RewardGoal.EASY ? easyOrder(v, counters, gap - plannedSoFar, live.mode, region) : 0)
 				.thenComparingDouble(v -> estimatedMinutes(v, used, live.mode, v.ids, counters, goal) /
-					(goal == RewardGoal.MASTER ? Math.min(v.points, gap - plannedSoFar) : v.points))
+					(goal == RewardGoal.MASTER || goal == RewardGoal.EASY ? Math.min(v.points, gap - plannedSoFar) : v.points))
 				.thenComparingInt(v -> v.phase)
 				.thenComparingInt(v -> v.ids.get(0))).orElseThrow();
 			candidates.remove(next);
@@ -304,17 +347,20 @@ final class ElitePlanner
 					visitBlockers.put(id, blockers.get(id));
 				}
 			}
-			double minutes = estimatedMinutes(next, used, live.mode, ids, counters, goal);
-			if (lateGuide)
+			double minutes = automatic ? automaticMinutes(next, ids, used, live.mode, counters, region, restocking) :
+				estimatedMinutes(next, used, live.mode, ids, counters, guide);
+			String reason = automatic ? automaticReason(next, live, region, counters) : "";
+			List<String> supplyChecks = automatic ? visitSupplies(next.activity, ids, state, live, suppliesUsed) : List.of();
+			if (detailedPreparation)
 			{
 				// The cost model can reuse credited kill progress. Only the game can set an earned task flag.
 				for (int id : ids)
 				{
-					mergeCounter(catalogue.rule(id, goal), counters);
+					mergeCounter(catalogue.rule(id, guide), counters);
 				}
 			}
 			route.add(new Planner.Entry(next.activity, ids, points, List.copyOf(visitBlockers.values()),
-				List.of(), List.of(), visitBlockers, minutes, points / minutes, next.reserve));
+				supplyChecks, List.of(), visitBlockers, minutes, points / minutes, next.reserve, reason));
 			used.add(next.activity);
 			if (next.future)
 			{
@@ -323,7 +369,66 @@ final class ElitePlanner
 			planned += points;
 		}
 		return new Planner.Route(route, pool, teamChecks, blockers, available, prepared, planned,
-			unchecked, partyWaiting, attemptWaiting, finalLedger, deferred);
+			unchecked, partyWaiting, attemptWaiting, finalLedger, deferred, restocking);
+	}
+
+	private List<String> visitSupplies(String activity, List<Integer> ids, GuideState state, LiveSnapshot live,
+		Map<String, SupplyUse> used)
+	{
+		Set<String> checks = new LinkedHashSet<>();
+		Map<String, SupplyUse> visit = new LinkedHashMap<>();
+		for (Planner.ItemRequirement item : planner.itemRequirements(activity, ids, state, live))
+		{
+			if (item.restockNeeded())
+			{
+				checks.add(item.check.label + " · " + item.check.detail);
+			}
+			String pool = item.supplyPool();
+			if (!pool.isEmpty() && item.check.ready() && item.check.amount > 0)
+			{
+				SupplyUse use = new SupplyUse(item.supplyRecipe(activity, pool), item.minimum(), item.check.amount);
+				// Objectives that share a visit may use the same attempts to meet a cumulative minimum.
+				visit.merge(pool, use, (a, b) -> new SupplyUse(a.recipe.equals(b.recipe) ? a.recipe : "",
+					Math.max(a.minimum, b.minimum), Math.min(a.stock, b.stock)));
+			}
+		}
+		visit.forEach((pool, use) ->
+		{
+			SupplyUse earlier = used.get(pool);
+			if (earlier == null)
+			{
+				used.put(pool, use);
+			}
+			else if (use.recipe.isEmpty() || !earlier.recipe.equals(use.recipe))
+			{
+				checks.add("Recheck " + pool.toLowerCase(java.util.Locale.ROOT) + " after the earlier visit.");
+				used.put(pool, new SupplyUse("", 0, 0));
+			}
+			else
+			{
+				int minimum = earlier.minimum + use.minimum;
+				int stock = Math.min(earlier.stock, use.stock);
+				if (minimum > stock)
+				{
+					checks.add(pool + " · restock before this visit (" + minimum + " across visits, " + stock + " observed).");
+				}
+				used.put(pool, new SupplyUse(use.recipe, minimum, stock));
+			}
+		});
+		return List.copyOf(checks);
+	}
+
+	private static final class SupplyUse
+	{
+		private final String recipe;
+		private final int minimum, stock;
+
+		private SupplyUse(String recipe, int minimum, int stock)
+		{
+			this.recipe = recipe;
+			this.minimum = minimum;
+			this.stock = stock;
+		}
 	}
 
 	private static void recordBlocker(int id, String reason, boolean unknown, Map<Integer, String> blockers,
@@ -343,14 +448,35 @@ final class ElitePlanner
 		}
 	}
 
+	private void addVisits(List<Visit> visits, JsonObject trip, RewardGoal goal, List<Integer> ids, int originalCount,
+		boolean future, boolean practice, Set<Integer> bankItems, Map<String, Integer> counters,
+		Map<Integer, GuideCatalog.RouteOrder> milestoneOrder)
+	{
+		if (milestoneOrder.isEmpty())
+		{
+			addVisit(visits, trip, goal, ids, originalCount, future, practice, bankItems, counters, null);
+			return;
+		}
+		Map<Integer, List<Integer>> byPhase = new LinkedHashMap<>();
+		for (int id : ids)
+		{
+			byPhase.computeIfAbsent(milestoneOrder.get(id).priority(), ignored -> new ArrayList<>()).add(id);
+		}
+		for (List<Integer> group : byPhase.values())
+		{
+			addVisit(visits, trip, goal, group, originalCount, future, practice, bankItems, counters,
+				milestoneOrder.get(group.get(0)));
+		}
+	}
+
 	private void addVisit(List<Visit> visits, JsonObject trip, RewardGoal goal, List<Integer> ids, int originalCount,
-		boolean future, boolean practice, Set<Integer> bankItems, Map<String, Integer> counters)
+		boolean future, boolean practice, Set<Integer> bankItems, Map<String, Integer> counters, GuideCatalog.RouteOrder order)
 	{
 		if (!ids.isEmpty())
 		{
 			double oldEstimate = goal == RewardGoal.ELITE ? remainingEffort(ids, counters, goal) : 0;
 			Visit visit = new Visit(trip, ids, catalogue.points(ids), originalCount, future, practice,
-				!Collections.disjoint(ids, bankItems), oldEstimate);
+				!Collections.disjoint(ids, bankItems), oldEstimate, order);
 			if (goal == RewardGoal.GRANDMASTER)
 			{
 				for (int id : ids)
@@ -385,11 +511,12 @@ final class ElitePlanner
 				mergeCounter(catalogue.rule(id, goal), counters);
 			}
 		}
-		if (goal.supportsRaidLight())
+		if (goal.detailedPreparation())
 		{
 			for (int id : catalogue.tasks.keySet())
 			{
-				JsonObject counter = catalogue.rule(id, goal).getAsJsonObject("counter");
+				JsonObject rule = catalogue.rule(id, goal);
+				JsonObject counter = rule == null ? null : rule.getAsJsonObject("counter");
 				if (counter != null && counter.has("observedKey"))
 				{
 					int total = live.context.getOrDefault(counter.get("observedKey").getAsString(), 0);
@@ -417,11 +544,17 @@ final class ElitePlanner
 	private double estimatedMinutes(Visit visit, Set<String> used, AccountMode mode, List<Integer> ids,
 		Map<String, Integer> counters, RewardGoal goal)
 	{
+		return estimatedMinutes(visit, used, mode, ids, counters, goal, false);
+	}
+
+	private double estimatedMinutes(Visit visit, Set<String> used, AccountMode mode, List<Integer> ids,
+		Map<String, Integer> counters, RewardGoal goal, boolean usePrefix)
+	{
 		if (goal == RewardGoal.ELITE)
 		{
 			return visit.minutes(used, mode, ids.size());
 		}
-		if (goal == RewardGoal.GRANDMASTER)
+		if (goal == RewardGoal.GRANDMASTER && !usePrefix)
 		{
 			// Grandmaster schedules each whole visit. Read the task effort once per plan.
 			double effort = visit.fixedEffort;
@@ -495,19 +628,165 @@ final class ElitePlanner
 		return visit.practice ? 2 : 1;
 	}
 
+	private Visit automaticVisit(List<Visit> candidates, LiveSnapshot live, String pinned, Set<String> used,
+		Map<String, Integer> counters, Set<Integer> restocking, int gap, int region)
+	{
+		Comparator<Visit> readiness = Comparator
+			.comparingInt((Visit v) -> live.freeWorld() && !v.future && v.ids.stream().anyMatch(i -> i == 120 || i == 121) ?
+				3 : v.practice ? 2 : priority(v, pinned))
+			.thenComparingInt(v -> gap > 0 && gap <= 8 && v.regions.contains(region) && nearCounter(v.ids.get(0), counters) ?
+				0 : 1)
+			.thenComparingInt(v -> v.phase)
+			.thenComparing(v -> v.reserve);
+		Comparator<Visit> order = readiness
+			.thenComparingDouble(v -> automaticMinutes(v, visitPrefix(v, gap), used, live.mode, counters, region, restocking) /
+				(gap == 0 ? v.points : Math.min(v.points, gap)))
+			.thenComparingInt(v -> v.phase)
+			.thenComparingInt(v -> v.ids.get(0));
+		Visit preferred = candidates.stream().min(order).orElseThrow();
+		if (gap == 0 || gap > 12 || preferred.future || preferred.activity.equals(pinned) ||
+			(preferred.regions.contains(region) && nearCounter(preferred.ids.get(0), counters)))
+		{
+			return preferred;
+		}
+
+		List<Visit> shortlist = candidates.stream().filter(v -> readiness.compare(v, preferred) == 0)
+			.sorted(order).limit(8).collect(java.util.stream.Collectors.toList());
+		Visit bestFinish = preferred;
+		double bestTime = Double.POSITIVE_INFINITY;
+		for (Visit first : shortlist)
+		{
+			double minutes = automaticMinutes(first, visitPrefix(first, gap), used, live.mode, counters, region, restocking);
+			int missing = gap - first.points;
+			if (missing > 0)
+			{
+				Set<String> nextSetup = new HashSet<>(used);
+				nextSetup.add(first.activity);
+				Map<String, Integer> nextCounters = new HashMap<>(counters);
+				first.ids.forEach(id -> mergeCounter(catalogue.rule(id, RewardGoal.GRANDMASTER), nextCounters));
+				double second = shortlist.stream().filter(v -> v != first && v.points >= missing)
+					.mapToDouble(v -> automaticMinutes(v, visitPrefix(v, missing), nextSetup, live.mode, nextCounters, -1, restocking))
+					.min().orElse(Double.POSITIVE_INFINITY);
+				minutes += second;
+			}
+			if (minutes < bestTime)
+			{
+				bestFinish = first;
+				bestTime = minutes;
+			}
+		}
+		return bestFinish;
+	}
+
+	private List<Integer> visitPrefix(Visit visit, int gap)
+	{
+		if (gap == 0 || visit.points <= gap)
+		{
+			return visit.ids;
+		}
+		int points = 0;
+		int length = 0;
+		while (points < gap)
+		{
+			points += catalogue.tasks.get(visit.ids.get(length++)).points;
+		}
+		return visit.ids.subList(0, length);
+	}
+
+	private double automaticMinutes(Visit visit, List<Integer> ids, Set<String> used, AccountMode mode,
+		Map<String, Integer> counters, int region, Set<Integer> restocking)
+	{
+		// The point planner can use a prefix, so a longer counter at the end of the visit is not charged early.
+		double minutes = estimatedMinutes(visit, used, mode, ids, counters, RewardGoal.GRANDMASTER, true);
+		if (!used.contains(visit.activity) && visit.regions.contains(region))
+		{
+			minutes -= 3;
+		}
+		if (!Collections.disjoint(ids, restocking))
+		{
+			minutes += 4;
+		}
+		return Math.max(1, minutes);
+	}
+
+	private boolean nearCounter(int id, Map<String, Integer> counters)
+	{
+		JsonObject counter = catalogue.rule(id, RewardGoal.GRANDMASTER).getAsJsonObject("counter");
+		return counter != null && counter.get("target").getAsInt() > 1 &&
+			counter.get("target").getAsInt() - counters.getOrDefault(counter.get("key").getAsString(), 0) == 1;
+	}
+
+	private String automaticReason(Visit visit, LiveSnapshot live, int region, Map<String, Integer> counters)
+	{
+		if (visit.future)
+		{
+			return "Review the preparation needed for this visit.";
+		}
+		if (visit.practice)
+		{
+			return "Start with a practice attempt here. Open the walkthrough for the objective’s setup.";
+		}
+		if (live.freeWorld() && visit.ids.stream().anyMatch(i -> i == 120 || i == 121))
+		{
+			return "Use the free-world Demonic Ruins method. This visit enters the Wilderness.";
+		}
+		if (nearCounter(visit.ids.get(0), counters))
+		{
+			return "Your observed counter is one attempt from this objective.";
+		}
+		if (visit.regions.contains(region))
+		{
+			return "This objective is nearby and its preparation checks are met.";
+		}
+		if (visit.bank)
+		{
+			return "Your bank has supplies for this visit. Check what to bring.";
+		}
+		return visit.ids.size() > 1 ? "These objectives can share a visit with your current setup." :
+			"This objective fits your current unlocks and supplies.";
+	}
+
+	private int easyOrder(Visit visit, Map<String, Integer> counters, int remaining, AccountMode mode, int region)
+	{
+		if (mode.hardcore() && visit.activity.equals("tempoross"))
+		{
+			return -1;
+		}
+		if (remaining <= 8)
+		{
+			boolean nearby = region >= 0 && visit.regions.contains(region);
+			JsonObject counter = catalogue.rule(visit.ids.get(0), RewardGoal.EASY).getAsJsonObject("counter");
+			int units = counter == null ? 1 : counter.get("target").getAsInt() -
+				counters.getOrDefault(counter.get("key").getAsString(), 0);
+			if (counter != null && counter.get("target").getAsInt() > 1 && units == 1)
+			{
+				return nearby ? 0 : 1;
+			}
+			if (remaining <= 2 && units <= 1 && nearby)
+			{
+				return 2;
+			}
+			if (remaining <= 2 && units > 1 && visit.reserve)
+			{
+				return visit.phase + 200;
+			}
+		}
+		return visit.phase + (visit.reserve ? 100 : 0);
+	}
+
 	private static final class Visit
 	{
 		private final String activity, profile;
 		private final int phase, points, originalCount, unlockMinutes;
 		private final double attemptMinutes;
 		private final boolean reserve, future, practice, bank;
-		private final List<Integer> ids;
+		private final List<Integer> ids, regions;
 		private final List<CounterEffort> counterEffort = new ArrayList<>();
 		private double fixedEffort = 2;
 		private boolean groupEffort;
 
 		private Visit(JsonObject value, List<Integer> ids, int points, int originalCount, boolean future, boolean practice,
-			boolean bank, double remainingEffort)
+			boolean bank, double remainingEffort, GuideCatalog.RouteOrder order)
 		{
 			this.ids = ids;
 			this.points = points;
@@ -517,9 +796,10 @@ final class ElitePlanner
 			this.bank = bank;
 			activity = value.get("activity").getAsString();
 			profile = value.get("profile").getAsString();
-			phase = value.get("phase").getAsInt();
-			unlockMinutes = value.get("unlockMinutes").getAsInt();
-			reserve = value.get("role").getAsString().equals("reserve");
+			phase = order == null ? value.get("phase").getAsInt() : order.phase;
+			regions = ReadinessEngine.ints(value.getAsJsonArray("regions"));
+			unlockMinutes = order == null ? value.get("unlockMinutes").getAsInt() : order.unlockMinutes;
+			reserve = order == null ? value.get("role").getAsString().equals("reserve") : order.reserve;
 			JsonArray minutes = value.getAsJsonArray("minutes");
 			attemptMinutes = minutes == null ? 0 :
 				remainingEffort * (minutes.get(0).getAsInt() + minutes.get(1).getAsInt()) / 2.0;

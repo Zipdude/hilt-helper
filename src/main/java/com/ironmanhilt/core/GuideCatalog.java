@@ -53,11 +53,13 @@ public final class GuideCatalog
 	public final JsonObject guide, items;
 	private final JsonObject hardGuide;
 	private final Map<RewardGoal, AdvancedGuide> advancedGuides = new EnumMap<>(RewardGoal.class);
+	private final JsonArray automaticTrips = new JsonArray();
+	private final Map<RewardGoal, Map<Integer, RouteOrder>> milestoneOrders = new EnumMap<>(RewardGoal.class);
 	private final List<JsonObject> hardActivities = new ArrayList<>();
 	private final Map<String, JsonObject> hardExtensions = new HashMap<>();
 	private final Set<Integer> hardTaskIds = new HashSet<>();
 	final Set<Integer> hardItemIds = new HashSet<>();
-	public final int threshold, hardThreshold, eliteThreshold, masterThreshold, grandmasterThreshold;
+	public final int easyThreshold, threshold, hardThreshold, eliteThreshold, masterThreshold, grandmasterThreshold;
 	public final int grandmasterGameBuild;
 	private final Map<Integer, JsonObject> rules = new HashMap<>();
 	private final Map<Integer, String> owners = new HashMap<>();
@@ -69,6 +71,7 @@ public final class GuideCatalog
 	public GuideCatalog(Gson gson) throws IOException
 	{
 		JsonObject catalogue = resource(gson, "combat_achievements.json");
+		easyThreshold = catalogue.get("easy_threshold").getAsInt();
 		threshold = catalogue.get("medium_threshold").getAsInt();
 		hardThreshold = catalogue.get("hard_threshold").getAsInt();
 		eliteThreshold = catalogue.get("elite_threshold").getAsInt();
@@ -169,6 +172,288 @@ public final class GuideCatalog
 		mergeRegistry(grandmaster, "itemEntries", "items");
 		mergeRegistry(grandmaster, "notedEntries", "note_to_base");
 		registerAdvanced(RewardGoal.GRANDMASTER, grandmasterDefinition(grandmaster), 6);
+		JsonObject easy = resource(gson, "easy_guide.json");
+		mergeRegistry(easy, "itemEntries", "items");
+		mergeRegistry(easy, "spellEntries", "spells");
+		registerAdvanced(RewardGoal.EASY, easyDefinition(easy), 1);
+		buildAutomaticCatalogue(easy);
+		buildMilestoneOrders();
+	}
+
+	private void buildMilestoneOrders()
+	{
+		Map<String, Integer> mediumPhases = new HashMap<>();
+		JsonArray phases = route().getAsJsonArray("phases");
+		for (int phase = 0; phase < phases.size(); phase++)
+		{
+			for (JsonElement boss : phases.get(phase).getAsJsonObject().getAsJsonArray("bosses"))
+			{
+				mediumPhases.put(boss.getAsString(), phase + 1);
+			}
+		}
+		Map<Integer, RouteOrder> elite = tripOrders(RewardGoal.ELITE);
+		Map<Integer, RouteOrder> previous = Map.of();
+		for (RewardGoal goal : RewardGoal.values())
+		{
+			Map<Integer, RouteOrder> order = goal.advanced() ? tripOrders(goal) : new HashMap<>();
+			if (!goal.advanced())
+			{
+				for (JsonObject activity : activities(goal))
+				{
+					String key = activity.get("key").getAsString();
+					int phase = mediumPhases.getOrDefault(key, phases.size() + 1);
+					for (boolean reserve : new boolean[] {false, true})
+					{
+						for (int id : routeIds(activity, reserve, goal))
+						{
+							RouteOrder later = elite.get(id);
+							int unlock = later == null ? 12 : later.unlockMinutes;
+							// The Hard expansion follows the familiar Medium work. Its crossover visits have reviewed Elite phases.
+							int chapter = goal == RewardGoal.HARD && !includes(id, RewardGoal.MEDIUM) && later != null ?
+								phases.size() + later.phase : phase;
+							order.put(id, new RouteOrder(chapter, reserve, unlock));
+						}
+					}
+				}
+			}
+			// Bring earlier reviewed alternatives forward when a later research route omits them.
+			previous.forEach(order::putIfAbsent);
+			previous = Map.copyOf(order);
+			milestoneOrders.put(goal, previous);
+		}
+	}
+
+	private Map<Integer, RouteOrder> tripOrders(RewardGoal goal)
+	{
+		Map<Integer, RouteOrder> index = new HashMap<>();
+		for (JsonElement value : trips(goal))
+		{
+			JsonObject trip = value.getAsJsonObject();
+			RouteOrder order = new RouteOrder(trip.get("phase").getAsInt(), trip.get("role").getAsString().equals("reserve"),
+				trip.get("unlockMinutes").getAsInt());
+			for (int id : ReadinessEngine.ints(trip.getAsJsonArray("ids")))
+			{
+				index.put(id, order);
+			}
+		}
+		return index;
+	}
+
+	Map<Integer, RouteOrder> milestoneOrder(RewardGoal goal)
+	{
+		return milestoneOrders.get(goal);
+	}
+
+	static final class RouteOrder
+	{
+		final int phase, unlockMinutes;
+		final boolean reserve;
+
+		RouteOrder(int phase, boolean reserve, int unlockMinutes)
+		{
+			this.phase = phase;
+			this.reserve = reserve;
+			this.unlockMinutes = unlockMinutes;
+		}
+
+		int priority()
+		{
+			return phase * 2 + (reserve ? 1 : 0);
+		}
+	}
+
+	private void buildAutomaticCatalogue(JsonObject early) throws IOException
+	{
+		AdvancedGuide full = advancedGuides.get(RewardGoal.GRANDMASTER);
+		JsonObject updates = early.getAsJsonObject("taskUpdates");
+		for (Map.Entry<String, JsonElement> row : updates.entrySet())
+		{
+			int id = Integer.parseInt(row.getKey());
+			JsonObject rule = full.rules.get(id);
+			JsonObject checked = row.getValue().getAsJsonObject();
+			for (String field : List.of("condition", "tip", "kitNotes", "world", "counter", "effort", "requirements", "party"))
+			{
+				if (checked.has(field))
+				{
+					rule.add(field, checked.get(field));
+				}
+			}
+			if (id == 523)
+			{
+				rule.getAsJsonObject("requirements").remove("item");
+			}
+			if (Set.of(35, 36, 129, 130).contains(id))
+			{
+				// The available encounter kill counts cannot establish chest-opening progress.
+				rule.remove("counter");
+			}
+			full.search.put(id, searchable(owner(id), rule));
+		}
+		for (JsonElement row : early.getAsJsonArray("activities"))
+		{
+			JsonObject update = row.getAsJsonObject();
+			String key = update.get("key").getAsString();
+			JsonObject activity = full.activities.get(key);
+			if (key.equals("obor") || key.equals("bryophyta"))
+			{
+				activity.getAsJsonObject("requirements").remove("items");
+			}
+			reconcileKit(full.kits.get(key), update);
+			if (update.getAsJsonArray("sharedKitNotes").size() > 0)
+			{
+				for (JsonElement note : update.getAsJsonArray("sharedKitNotes"))
+				{
+					JsonArray shared = activity.getAsJsonArray("sharedKitNotes");
+					if (!shared.contains(note))
+					{
+						shared.add(note);
+					}
+				}
+			}
+		}
+		Set<Integer> assigned = new HashSet<>();
+		Map<String, JsonArray> regions = new HashMap<>();
+		for (JsonElement row : early.getAsJsonArray("trips"))
+		{
+			JsonObject visit = row.getAsJsonObject();
+			String key = visit.get("activity").getAsString();
+			regions.put(key, visit.getAsJsonArray("regions"));
+			List<Integer> ids = ReadinessEngine.ints(visit.getAsJsonArray("ids"));
+			if ("brutus".equals(key) && ids.contains(632) && ids.contains(636))
+			{
+				// A clean first clear can award both flags. The naked kill has a separate setup.
+				addAutomaticTrip(visit, List.of(632, 636), assigned, regions.get(key));
+				ids.removeAll(List.of(632, 636));
+			}
+			// These objectives need different rounds or methods even when they share a trip.
+			for (int separate : List.of(284, 40, 598, 635))
+			{
+				if (ids.remove(Integer.valueOf(separate)))
+				{
+					addAutomaticTrip(visit, List.of(separate), assigned, regions.get(key));
+				}
+			}
+			addAutomaticTrip(visit, ids, assigned, regions.get(key));
+		}
+		for (JsonElement row : full.data.getAsJsonArray("trips"))
+		{
+			JsonObject visit = row.getAsJsonObject();
+			List<Integer> ids = ReadinessEngine.ints(visit.getAsJsonArray("ids"));
+			ids.removeAll(assigned);
+			addAutomaticTrip(visit, ids, assigned, regions.get(visit.get("activity").getAsString()));
+		}
+		if (!assigned.equals(tasks.keySet()))
+		{
+			throw new IOException("Automatic visits must cover each task once");
+		}
+	}
+
+	private static void reconcileKit(JsonArray checks, JsonObject update)
+	{
+		Map<String, JsonObject> replacements = new LinkedHashMap<>();
+		for (JsonElement value : update.getAsJsonArray("kitChecks"))
+		{
+			JsonObject check = value.getAsJsonObject();
+			replacements.put(check.get("label").getAsString(), check);
+		}
+		for (int i = 0; i < checks.size(); i++)
+		{
+			JsonObject original = checks.get(i).getAsJsonObject();
+			String label = original.get("label").getAsString();
+			JsonObject replacement = replacements.remove(label);
+			if (replacement != null)
+			{
+				JsonObject check = replacement.deepCopy();
+				if (original.has("check_key"))
+				{
+					check.add("check_key", original.get("check_key"));
+				}
+				checks.set(i, check);
+			}
+			else if (containsLabel(update, "omitLegacyChecks", label))
+			{
+				original.add("task_ids", new JsonArray());
+			}
+			else if (containsLabel(update, "legacySuggestedChecks", label))
+			{
+				original.addProperty("role", "recommended");
+			}
+		}
+		replacements.values().forEach(checks::add);
+	}
+
+	private void addAutomaticTrip(JsonObject source, List<Integer> ids, Set<Integer> assigned, JsonArray regions)
+		throws IOException
+	{
+		if (ids.isEmpty())
+		{
+			return;
+		}
+		JsonObject visit = source.deepCopy();
+		JsonArray members = new JsonArray();
+		for (int id : ids)
+		{
+			if (!source.get("activity").getAsString().equals(owner(id)) || !assigned.add(id))
+			{
+				throw new IOException("Invalid automatic visit task: " + id);
+			}
+			members.add(id);
+		}
+		visit.add("ids", members);
+		if (regions != null)
+		{
+			visit.add("regions", regions);
+		}
+		automaticTrips.add(visit);
+	}
+
+	JsonArray automaticTrips()
+	{
+		return automaticTrips;
+	}
+
+	private JsonObject easyDefinition(JsonObject authored) throws IOException
+	{
+		AdvancedGuide master = advancedGuides.get(RewardGoal.MASTER);
+		JsonArray activities = new JsonArray();
+		JsonObject patches = authored.getAsJsonObject("taskUpdates");
+		Set<String> remaining = new HashSet<>(patches.keySet());
+		for (JsonElement value : authored.getAsJsonArray("activities"))
+		{
+			JsonObject visit = value.getAsJsonObject();
+			String key = visit.get("key").getAsString();
+			JsonObject shared = master.activities.get(key);
+			if (shared == null)
+			{
+				throw new IOException("Easy activity has no canonical owner: " + key);
+			}
+			JsonObject activity = shared.deepCopy();
+			visit.entrySet().forEach(field -> activity.add(field.getKey(), field.getValue()));
+			List<Integer> selected = routeIds(activity, false);
+			selected.addAll(routeIds(activity, true));
+			JsonArray tasks = new JsonArray();
+			for (int id : selected)
+			{
+				String taskId = Integer.toString(id);
+				JsonObject rule = master.rules.get(id);
+				if (!key.equals(owner(id)) || rule == null || !remaining.remove(taskId))
+				{
+					throw new IOException("Invalid Easy task override: " + id);
+				}
+				JsonObject task = rule.deepCopy();
+				patches.getAsJsonObject(taskId).entrySet().forEach(field -> task.add(field.getKey(), field.getValue()));
+				tasks.add(task);
+			}
+			activity.add("tasks", tasks);
+			activities.add(activity);
+		}
+		if (!remaining.isEmpty())
+		{
+			throw new IOException("Unlisted Easy task overrides: " + remaining);
+		}
+		authored.add("activities", activities);
+		authored.add("riskProfiles", master.data.getAsJsonObject("riskProfiles"));
+		return authored;
 	}
 
 	private int cumulativePoints(int rank)
@@ -443,6 +728,10 @@ public final class GuideCatalog
 
 	public int threshold(RewardGoal goal)
 	{
+		if (goal == RewardGoal.EASY)
+		{
+			return easyThreshold;
+		}
 		if (goal == RewardGoal.GRANDMASTER)
 		{
 			return grandmasterThreshold;

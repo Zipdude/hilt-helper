@@ -6299,6 +6299,8 @@
   },
   "referenceFigures": [
     {
+      "label": "Barrows travel map",
+      "activities": ["barrows"],
       "caption": "Travel reference. BKR, BIP and shortcuts shown have their own unlocks; use the walking route if those are unavailable. This is not a mound-layout map. Source: OSRS Wiki / Jagex game media .",
       "alt": "Annotated map of travel routes to Barrows",
       "sources": [
@@ -6311,6 +6313,8 @@
       "originalAsset": "images/reference-2cc507dc9799.png"
     },
     {
+      "label": "Barrows tunnel safespot",
+      "activities": ["barrows"],
       "caption": "A closed tunnel door can obstruct a melee brother. It does not stop Ahrim or Karil’s ranged attacks. Source: OSRS Wiki / Jagex game media .",
       "alt": "A Barrows melee brother blocked by a closed tunnel door",
       "sources": [
@@ -6323,6 +6327,8 @@
       "originalAsset": "images/reference-c84f70d620f8.png"
     },
     {
+      "label": "Waterbirth Dungeon map",
+      "activities": ["rex", "prime", "supreme"],
       "caption": "Follow the connected yellow routes through the overlapping floors. The 81/85 Agility shortcuts are optional. Expand to inspect the final ladder. Source: OSRS Wiki / Jagex game media .",
       "alt": "Waterbirth Island dungeon routes and ladder connections",
       "sources": [
@@ -6335,6 +6341,8 @@
       "originalAsset": "images/reference-c37f0a08f814.png"
     },
     {
+      "label": "Dagannoth Rex lure and safespot",
+      "activities": ["rex"],
       "caption": "Actual lure sequence and rock position. Camera is rotated: right of this image is north. Do not use the picture as an unrotated compass map. Source: OSRS Wiki / Jagex game media .",
       "alt": "Annotated Dagannoth Rex eastern coastal lure and safespot",
       "sources": [

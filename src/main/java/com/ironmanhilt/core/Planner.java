@@ -54,14 +54,29 @@ public final class Planner
 		progress = p;
 		readiness = r;
 	}
+
+	public GuideState automatic(GuideState state, LiveSnapshot live)
+	{
+		return state.automatic(new Milestones(catalogue, state, live, progress.total(state)),
+			live == null ? "" : live.session);
+	}
+
 	public int currentPoints(GuideState state, LiveSnapshot live)
 	{
+		if (state.automatic())
+		{
+			return state.milestones().points;
+		}
 		return state.rewardGoal() != RewardGoal.MEDIUM && gameProgressVerified(state.rewardGoal(), live) ?
 			live.ca.gamePoints : progress.total(state);
 	}
 
 	public Set<Integer> completedForGuide(GuideState state, LiveSnapshot live)
 	{
+		if (state.automatic())
+		{
+			return Milestones.verified(live) ? live.ca.completed : state.knownIds("syncIDs", catalogue.tasks.keySet());
+		}
 		return state.rewardGoal() != RewardGoal.MEDIUM && gameProgressVerified(state.rewardGoal(), live) ?
 			live.ca.completed : progress.knownCompleted(state);
 	}
@@ -69,12 +84,22 @@ public final class Planner
 	public boolean gameProgressVerified(RewardGoal goal, LiveSnapshot live)
 	{
 		return live != null && live.mode.supported() && live.ca.verifiedFor(goal) &&
+			(goal != RewardGoal.EASY || live.context.getOrDefault("caEasyThreshold", 0) == catalogue.easyThreshold) &&
 			(goal != RewardGoal.GRANDMASTER ||
 				live.context.getOrDefault("caGameBuild", 0) == catalogue.grandmasterGameBuild);
 	}
 
+	public boolean gameProgressVerified(GuideState state, LiveSnapshot live)
+	{
+		return state.automatic() ? state.milestones().progressVerified : gameProgressVerified(state.rewardGoal(), live);
+	}
+
 	public GrandmasterLedger grandmaster(GuideState state, LiveSnapshot live)
 	{
+		if (state.automatic())
+		{
+			return state.milestones().grandmaster;
+		}
 		boolean verified = gameProgressVerified(RewardGoal.GRANDMASTER, live);
 		return new GrandmasterLedger(catalogue, live, verified ? live.ca.completed : progress.knownCompleted(state), verified);
 	}
@@ -97,6 +122,43 @@ public final class Planner
 		return goal != RewardGoal.ELITE || live.context.getOrDefault("caEliteThreshold", 0) == catalogue.eliteThreshold;
 	}
 
+	public boolean easyCollected(LiveSnapshot live)
+	{
+		return easyRewardStatus(live) == 2;
+	}
+
+	private int easyRewardStatus(LiveSnapshot live)
+	{
+		if (!hasLiveTarget(RewardGoal.EASY, live) || live.ca.gamePoints < catalogue.easyThreshold ||
+			live.context.getOrDefault("membersWorld", 0) != 1 ||
+			live.context.getOrDefault("caEasyRewardsObserved", 0) != 1)
+		{
+			return 0;
+		}
+		return live.context.getOrDefault("caEasyStatus", 0);
+	}
+
+	private Next easyReward(LiveSnapshot live)
+	{
+		if (hasLiveTarget(RewardGoal.EASY, live) && live.freeWorld())
+		{
+			return new Next(null, "Claim your hilt on a members’ world",
+				"Visit Ghommal or Laidee Gnonock outside the Warriors’ Guild after hopping.", List.of(), 0);
+		}
+		switch (easyRewardStatus(live))
+		{
+			case 1:
+				return new Next(null, "Claim Ghommal’s hilt 1",
+					"Bring two free inventory spaces to Ghommal or Laidee Gnonock outside the Warriors’ Guild.", List.of(), 0);
+			case 2:
+				return new Next(null, "Easy reward collected",
+					"Continue to Medium with the points you’ve already earned.", List.of(), 0);
+			default:
+				return new Next(null, "Check Easy rewards in game",
+					"Open Combat Achievements → Rewards on a standard members’ world to verify your reward.", List.of(), 0);
+		}
+	}
+
 	public boolean hasUnfinishedHespori(GuideState state, LiveSnapshot live)
 	{
 		if (state.skipped("hespori"))
@@ -105,8 +167,8 @@ public final class Planner
 		}
 		Set<Integer> complete = completedForGuide(state, live);
 		Set<Integer> skipped = state.knownIds("skipTaskIDs", catalogue.tasks.keySet());
-		return catalogue.routeIds(catalogue.activity("hespori"), true, state.rewardGoal()).stream()
-			.anyMatch(id -> !complete.contains(id) && !skipped.contains(id));
+		return catalogue.tasks.keySet().stream()
+			.anyMatch(id -> "hespori".equals(catalogue.owner(id)) && !complete.contains(id) && !skipped.contains(id));
 	}
 
 	public Next next(GuideState state, LiveSnapshot live)
@@ -115,6 +177,10 @@ public final class Planner
 	}
 	public Next next(GuideState state, LiveSnapshot live, List<Entry> route)
 	{
+		if (state.automatic())
+		{
+			return automaticNext(state, live, route);
+		}
 		RewardGoal goal = state.rewardGoal();
 		if (goal == RewardGoal.GRANDMASTER)
 		{
@@ -143,6 +209,10 @@ public final class Planner
 		}
 		int threshold = catalogue.threshold(goal);
 		int deficit = Math.max(0, threshold - currentPoints(state, live));
+		if (goal == RewardGoal.EASY && deficit == 0)
+		{
+			return easyReward(live);
+		}
 		if (goal != RewardGoal.GRANDMASTER && deficit == 0)
 		{
 			if (gameProgressVerified(goal, live) && live.ca.gamePoints < threshold)
@@ -177,6 +247,18 @@ public final class Planner
 			return new Next(null, "Log in on a standard world", "Saved progress stays separate for each account.",
 							Collections.emptyList(), 0);
 		}
+		if (goal == RewardGoal.EASY && deficit == threshold && !state.skipped("brutus") &&
+			!state.ids("skipTaskIDs").contains(632) &&
+			!Boolean.TRUE.equals(ReadinessEngine.quest("The Ides of Milk", state, live)))
+		{
+			return new Next("brutus", "Start The Ides of Milk",
+				"Talk to Cassius at the Lumbridge pond to unlock Brutus.", List.of(632), 0);
+		}
+		if (goal == RewardGoal.EASY && route.isEmpty() && live.freeWorld())
+		{
+			return new Next(null, "Continue on a members’ world",
+				"Up to 27 points can be earned in free worlds. Check the remaining Easy tasks after hopping.", List.of(), 0);
+		}
 		if (route.isEmpty())
 		{
 			return new Next(
@@ -192,9 +274,99 @@ public final class Planner
 			entry.gates.isEmpty() ? "Review your kit and the first task." : entry.gates.get(0));
 		return new Next(entry.key, catalogue.label(entry.key), action, entry.ids, entry.gain);
 	}
+
+	private Next automaticNext(GuideState state, LiveSnapshot live, List<Entry> route)
+	{
+		Milestones milestones = state.milestones();
+		if (!milestones.progressVerified)
+		{
+			return new Next(null, "Check game progress", "Refresh your progress on a standard world.", List.of(), 0);
+		}
+		if (milestones.next == RewardGoal.GRANDMASTER && milestones.grandmaster.required.isEmpty() &&
+			milestones.grandmaster.unresolved.isEmpty())
+		{
+			String title = milestones.target().status == Milestones.Status.COLLECTED ?
+				"Grandmaster complete" : "Review your Grandmaster reward";
+			return new Next(null, title, "Check Combat Achievements → Rewards for your reward status.", List.of(), 0);
+		}
+		if (!route.isEmpty())
+		{
+			Entry visit = route.get(0);
+			int id = visit.ids.get(0);
+			if (id == 632 && milestones.points == 0 &&
+				!Boolean.TRUE.equals(ReadinessEngine.quest("The Ides of Milk", state, live)))
+			{
+				return new Next("brutus", "Start The Ides of Milk",
+					"Talk to Cassius at the Lumbridge pond to unlock Brutus.", List.of(id), 0);
+			}
+			String detail = visit.kitBlockers.getOrDefault(id, visit.kitChecks.isEmpty() ? visit.reason : visit.kitChecks.get(0));
+			return new Next(visit.key, catalogue.label(visit.key), detail, visit.ids, visit.gain);
+		}
+		if (live.freeWorld())
+		{
+			return new Next(null, "Review free-world options",
+				"Open Preparation for available methods, or use a members’ world for the next target.", List.of(), 0);
+		}
+		return new Next(null, "Review preparation",
+			"Check the next unlock, party setup, or deferred tasks in Preparation.", List.of(), 0);
+	}
+
 	public List<Entry> plan(GuideState state, LiveSnapshot live)
 	{
 		return planRoute(state, live).entries;
+	}
+
+	/** Start with the exact suggested route, then show the remaining options for each milestone. */
+	public List<Integer> checklistOrder(Route route, GuideState state, Set<Integer> completed)
+	{
+		RewardGoal goal = state.rewardGoal();
+		Map<Integer, Integer> stage = new LinkedHashMap<>();
+		Map<Integer, GuideCatalog.RouteOrder> research = new LinkedHashMap<>();
+		for (RewardGoal milestone : RewardGoal.values())
+		{
+			if (milestone.ordinal() < goal.ordinal())
+			{
+				continue;
+			}
+			catalogue.milestoneOrder(milestone).forEach((id, order) ->
+			{
+				stage.putIfAbsent(id, milestone.ordinal());
+				research.putIfAbsent(id, order);
+			});
+		}
+		Set<Integer> eligible = new HashSet<>(route.taskPool);
+		Set<Integer> result = new LinkedHashSet<>();
+		route.entries.forEach(visit -> result.addAll(visit.ids));
+		List<Integer> remaining = new ArrayList<>(catalogue.tasks.keySet());
+		remaining.removeAll(result);
+		remaining.sort(Comparator.comparingInt((Integer id) -> completed.contains(id) ? 1 : 0)
+			.thenComparingInt(id -> stage.getOrDefault(id, RewardGoal.values().length))
+			.thenComparingInt(id -> checklistReadiness(id, route, eligible))
+			.thenComparingInt(id -> research.containsKey(id) ? research.get(id).priority() : Integer.MAX_VALUE)
+			.thenComparingInt(id -> catalogue.tasks.get(id).points)
+			.thenComparingInt(Integer::intValue));
+		result.addAll(remaining);
+		return List.copyOf(result);
+	}
+
+	private static int checklistReadiness(int id, Route route, Set<Integer> eligible)
+	{
+		if (!eligible.contains(id))
+		{
+			return 2;
+		}
+		return route.blockedTasks.containsKey(id) || route.restockTasks.contains(id) ? 1 : 0;
+	}
+
+	public List<Integer> tierPreparationTasks(Route route)
+	{
+		if (route.grandmaster == null)
+		{
+			return route.taskPool;
+		}
+		Set<Integer> pending = new LinkedHashSet<>(route.taskPool);
+		pending.addAll(route.grandmaster.required);
+		return List.copyOf(pending);
 	}
 
 	public Route planRoute(GuideState state, LiveSnapshot live)
@@ -205,7 +377,7 @@ public final class Planner
 	public Route planRoute(GuideState state, LiveSnapshot live, RouteStyle style)
 	{
 		RewardGoal goal = state.rewardGoal();
-		if (goal.advanced())
+		if (state.automatic() || goal.advanced())
 		{
 			return new ElitePlanner(catalogue, this).plan(state, live, style);
 		}
@@ -400,7 +572,7 @@ public final class Planner
 	private List<String> groupTaskKitChecks(String key, int id, GuideState state, LiveSnapshot live)
 	{
 		List<String> checks = new ArrayList<>();
-		JsonArray kit = catalogue.kit(key, state.rewardGoal());
+		JsonArray kit = catalogue.kit(key, state.contentGoal());
 		for (int i = 0; i < kit.size(); i++)
 		{
 			JsonObject req = kit.get(i).getAsJsonObject();
@@ -429,7 +601,7 @@ public final class Planner
 		}
 		List<String> kitChecks = new ArrayList<>(), requiredKit = new ArrayList<>();
 		Map<Integer, String> kitBlockers = new LinkedHashMap<>();
-		JsonArray kit = catalogue.kit(key, state.rewardGoal());
+		JsonArray kit = catalogue.kit(key, state.contentGoal());
 		for (int i = 0; i < kit.size(); i++)
 		{
 			JsonObject req = kit.get(i).getAsJsonObject();
@@ -479,7 +651,7 @@ public final class Planner
 
 	public String partyBlocker(int id, GuideState state, RouteStyle style, LiveSnapshot live)
 	{
-		RewardGoal goal = state.rewardGoal();
+		RewardGoal goal = state.contentGoal();
 		if (!goal.advanced() || !catalogue.needsGroup(id, goal))
 		{
 			return "";
@@ -488,32 +660,69 @@ public final class Planner
 		JsonObject party = rule.getAsJsonObject("party");
 		int minimum = rule.get("minimumParty").getAsInt();
 		int maximum = party.get("max").isJsonNull() ? 100 : party.get("max").getAsInt();
-		int size = state.elitePartySize(catalogue.owner(id));
+		int size = state.confirmedPartySize(catalogue.owner(id));
 		String scale = minimum == maximum ? "exactly " + minimum : maximum == 100 ?
 			"at least " + minimum : minimum + "–" + maximum;
-		if (goal == RewardGoal.GRANDMASTER && live != null && live.mode == AccountMode.HARDCORE_GROUP &&
+		if ((goal == RewardGoal.GRANDMASTER || goal == RewardGoal.EASY) && live != null &&
+			(live.mode == AccountMode.HARDCORE_GROUP || state.automatic() && live.mode.groupIronman() &&
+				live.context.getOrDefault("caGroupPrestige", 0) == 1) &&
 			party.get("prestigeRestrictedToOwnGroup").getAsBoolean() &&
 			live.context.getOrDefault("caGroupMember", 0) == 1)
 		{
 			int roster = live.context.getOrDefault("caGroupSize", 0);
 			if (roster >= 2 && roster <= 5 && (size > roster || minimum > roster))
 			{
-				return "Confirm " + scale + " eligible players in your Hardcore Group.";
+				return "Confirm " + scale + " eligible players in your own group.";
 			}
 		}
 		if (style != RouteStyle.GROUP && !(goal == RewardGoal.GRANDMASTER && style == RouteStyle.RAID_LIGHT &&
 			catalogue.inRouteStyle(id, goal, style)))
 		{
-			return "Choose the Group route for this task. Party of " + scale + ".";
+			return state.automatic() ? "Allow party activities in Route preferences. Party of " + scale + "." :
+				"Choose the Group route for this task. Party of " + scale + ".";
 		}
 		return size >= minimum && size <= maximum ? "" : "Confirm a party of " + scale + " eligible players.";
+	}
+
+	public String worldBlocker(int id, GuideState state, LiveSnapshot live)
+	{
+		if (live == null || !state.automatic() && state.rewardGoal() != RewardGoal.EASY)
+		{
+			return "";
+		}
+		JsonObject rule = catalogue.rule(id, state.contentGoal());
+		if (rule == null)
+		{
+			return "";
+		}
+		String world = ReadinessEngine.str(rule, "world", state.automatic() ? "standard-members" : "");
+		if (live.freeWorld() && world.equals("standard-members"))
+		{
+			return "Use a members’ world for this attempt.";
+		}
+		if (!live.freeWorld() && world.equals("standard-f2p-required"))
+		{
+			return "Use a free world for this attempt.";
+		}
+		if (live.freeWorld() && (id == 120 || id == 121) && (!state.wildernessEnabled() || live.mode.hardcore()))
+		{
+			return "Use the members’ Kourend method, or opt in to the Wilderness method on an eligible account.";
+		}
+		return "";
+	}
+
+	public boolean eligibleRouteStyle(int id, GuideState state, RouteStyle style)
+	{
+		return catalogue.inRouteStyle(id, state.contentGoal(), style) &&
+			(!state.automatic() || !state.deferFullRaids() ||
+				catalogue.rule(id, state.contentGoal()).get("raidLight").getAsBoolean());
 	}
 
 	/** Account access and temporary encounter availability for the advanced routes. */
 	public List<ItemRequirement> advancedAccessChecks(String key, List<Integer> ids, GuideState state, LiveSnapshot live)
 	{
 		List<ItemRequirement> checks = new ArrayList<>();
-		JsonArray kit = catalogue.kit(key, state.rewardGoal());
+		JsonArray kit = catalogue.kit(key, state.contentGoal());
 		for (int index = 0; index < kit.size(); index++)
 		{
 			JsonObject req = kit.get(index).getAsJsonObject();
@@ -538,8 +747,8 @@ public final class Planner
 	{
 		String key = catalogue.owner(id);
 		List<String> checks = new ArrayList<>();
-		boolean keyAccess = permanentKeyAccess(key, state);
-		JsonArray kit = catalogue.kit(key, state.rewardGoal());
+		boolean keyAccess = permanentKeyAccess(key, state, live);
+		JsonArray kit = catalogue.kit(key, state.contentGoal());
 		List<Integer> selected = List.of(id);
 		Instant at = live == null ? Instant.now() : live.at;
 		for (int i = 0; i < kit.size(); i++)
@@ -547,7 +756,7 @@ public final class Planner
 			JsonObject req = kit.get(i).getAsJsonObject();
 			String role = ReadinessEngine.str(req, "role", "");
 			if ((requiredKitRole(role) || role.equals("required_access")) && !coveredByKeyUnlock(req, keyAccess) &&
-				(!state.rewardGoal().advanced() || !ReadinessEngine.taskSetup(req)))
+				(!state.contentGoal().advanced() || !ReadinessEngine.taskSetup(req)))
 			{
 				ReadinessEngine.Check check = readiness.check(key, i, req, state, live, at, selected);
 				if (check.blocksPlanning(live) && !ReadinessEngine.UNUSED.equals(check.status))
@@ -582,14 +791,14 @@ public final class Planner
 
 	public List<String> access(String key, GuideState state, LiveSnapshot live)
 	{
-		return access(key, state, live, permanentKeyAccess(key, state));
+		return access(key, state, live, permanentKeyAccess(key, state, live));
 	}
 
 	private List<String> access(String key, GuideState state, LiveSnapshot live, boolean keyAccess)
 	{
 		List<String> gates = new ArrayList<>();
-		JsonObject req = catalogue.activity(key, state.rewardGoal()).getAsJsonObject("requirements");
-		if (!state.rewardGoal().advanced() && RiskPolicy.wilderness(key) && !state.wildernessEnabled())
+		JsonObject req = catalogue.activity(key, state.contentGoal()).getAsJsonObject("requirements");
+		if (!state.contentGoal().advanced() && RiskPolicy.wilderness(key) && !state.wildernessEnabled())
 		{
 			gates.add("Wilderness is excluded. Opt in only after reviewing the risk.");
 		}
@@ -631,7 +840,7 @@ public final class Planner
 					readiness.token(token, state, live, live == null ? java.time.Instant.now() : live.at);
 				if (!c.ready())
 				{
-					gates.add((state.rewardGoal().supportsRaidLight() && ReadinessEngine.UNKNOWN.equals(c.status)
+					gates.add((state.contentGoal().supportsRaidLight() && ReadinessEngine.UNKNOWN.equals(c.status)
 						? "Confirm " : "Prepare ") + c.label + ". " + c.detail);
 				}
 			}
@@ -642,7 +851,7 @@ public final class Planner
 	public List<String> strategy(String key, GuideState state, LiveSnapshot live)
 	{
 		List<String> checks = new ArrayList<>();
-		JsonObject activity = catalogue.activity(key, state.rewardGoal());
+		JsonObject activity = catalogue.activity(key, state.contentGoal());
 		JsonArray quests = strategyQuests(key, state);
 		if (quests != null)
 		{
@@ -690,24 +899,24 @@ public final class Planner
 	private JsonArray strategyQuests(String key, GuideState state)
 	{
 		return state.rewardGoal() == RewardGoal.HARD && key.equals("theatre") ?
-			null : catalogue.activity(key, state.rewardGoal()).getAsJsonArray("strategyQuests");
+			null : catalogue.activity(key, state.contentGoal()).getAsJsonArray("strategyQuests");
 	}
 
 	private JsonObject taskRequirements(int id, GuideState state)
 	{
-		JsonObject rule = catalogue.rule(id, state.rewardGoal());
+		JsonObject rule = catalogue.rule(id, state.contentGoal());
 		if (rule != null && rule.has("requirements"))
 		{
 			return rule.getAsJsonObject("requirements");
 		}
-		return state.rewardGoal().supportsRaidLight() ? null :
+		return state.contentGoal().supportsRaidLight() ? null :
 			catalogue.route().getAsJsonObject("extraReq").getAsJsonObject(String.valueOf(id));
 	}
 
 	public List<String> requirementSummary(int id, GuideState state)
 	{
 		String key = catalogue.owner(id);
-		JsonObject req = catalogue.activity(key, state.rewardGoal()).getAsJsonObject("requirements");
+		JsonObject req = catalogue.activity(key, state.contentGoal()).getAsJsonObject("requirements");
 		JsonObject task = taskRequirements(id, state);
 		Set<String> quests = new LinkedHashSet<>();
 		for (JsonArray source : new JsonArray[] {req.getAsJsonArray("quests"), strategyQuests(key, state),
@@ -781,7 +990,7 @@ public final class Planner
 				Boolean complete = ReadinessEngine.quest(quest, state, live);
 				if (!Boolean.TRUE.equals(complete))
 				{
-					String action = state.rewardGoal().supportsRaidLight() ?
+					String action = state.contentGoal().supportsRaidLight() ?
 						(complete == null ? "Confirm " : "Complete ") : "Complete or confirm ";
 					gates.add(action + quest + " for this task.");
 				}
@@ -808,8 +1017,8 @@ public final class Planner
 			return List.of();
 		}
 		Instant at = live == null ? Instant.now() : live.at;
-		boolean keyAccess = permanentKeyAccess(key, state);
-		JsonObject activity = catalogue.activity(key, state.rewardGoal());
+		boolean keyAccess = permanentKeyAccess(key, state, live);
+		JsonObject activity = catalogue.activity(key, state.contentGoal());
 		Map<String, Set<Integer>> resourceTasks = new LinkedHashMap<>();
 		for (String section : new String[] {"items", "strategyItems"})
 		{
@@ -830,7 +1039,7 @@ public final class Planner
 		JsonObject extras = catalogue.route().getAsJsonObject("extraReq");
 		for (int id : ids)
 		{
-			JsonObject extra = state.rewardGoal().advanced() ? taskRequirements(id, state) :
+			JsonObject extra = state.contentGoal().advanced() ? taskRequirements(id, state) :
 				extras.getAsJsonObject(String.valueOf(id));
 			if (extra != null && extra.has("item"))
 			{
@@ -848,7 +1057,7 @@ public final class Planner
 				definition, definition == null ? "items" : "", token));
 		});
 		List<ItemRequirement> kitRows = new ArrayList<>();
-		JsonArray kit = catalogue.kit(key, state.rewardGoal());
+		JsonArray kit = catalogue.kit(key, state.contentGoal());
 		for (int index = 0; index < kit.size(); index++)
 		{
 			JsonObject req = kit.get(index).getAsJsonObject();
@@ -938,6 +1147,56 @@ public final class Planner
 			this.correctionKey = correctionKey;
 		}
 
+		public boolean restockNeeded()
+		{
+			return !check.ready() && check.restock && definition != null &&
+				!"recommended".equals(ReadinessEngine.str(definition, "role", ""));
+		}
+
+		int minimum()
+		{
+			return definition.has("minimum") ? definition.get("minimum").getAsInt() : 1;
+		}
+
+		String supplyPool()
+		{
+			if (definition == null || !required)
+			{
+				return "";
+			}
+			if ("easy-giant-key-for-the-first-chest".equals(correctionKey) ||
+				"easy-giant-keys-for-five-chests".equals(correctionKey))
+			{
+				return "Giant keys";
+			}
+			if ("easy-mossy-key-for-the-first-chest".equals(correctionKey) ||
+				"easy-mossy-keys-for-five-chests".equals(correctionKey))
+			{
+				return "Mossy keys";
+			}
+			if (definition.has("spell") || definition.has("spells_any"))
+			{
+				return "Runes";
+			}
+			String unit = ReadinessEngine.str(definition, "unit", "");
+			if ("doses".equals(unit))
+			{
+				return check.label;
+			}
+			return "shots".equals(unit) ||
+				"ammo_compatible_with_selected_weapon".equals(ReadinessEngine.str(definition, "predicate", "")) ? "Ammunition" : "";
+		}
+
+		String supplyRecipe(String activity, String pool)
+		{
+			if ("Runes".equals(pool))
+			{
+				JsonElement spells = definition.has("spell") ? definition.get("spell") : definition.get("spells_any");
+				return ("titans".equals(activity) ? activity : "") + spells;
+			}
+			return "Ammunition".equals(pool) ? activity + correctionKey : pool;
+		}
+
 		public String quantity()
 		{
 			if (definition == null || !definition.has("minimum") || definition.get("minimum").getAsInt() <= 1)
@@ -972,8 +1231,8 @@ public final class Planner
 	{
 		Unlocks result = new Unlocks();
 		Map<String, Set<Integer>> byActivity = new LinkedHashMap<>();
-		List<Integer> pool = route.taskPool;
-		if (state.rewardGoal().advanced())
+		List<Integer> pool = state.automatic() ? tierPreparationTasks(route) : route.taskPool;
+		if (!state.automatic() && state.contentGoal().advanced())
 		{
 			pool = new ArrayList<>();
 			for (Entry entry : route.entries)
@@ -983,7 +1242,7 @@ public final class Planner
 		}
 		for (int id : pool)
 		{
-			if (route.blockedTasks.containsKey(id))
+			if (state.automatic() || route.blockedTasks.containsKey(id))
 			{
 				byActivity.computeIfAbsent(catalogue.owner(id), ignored -> new HashSet<>()).add(id);
 			}
@@ -991,7 +1250,7 @@ public final class Planner
 		for (Map.Entry<String, Set<Integer>> entry : byActivity.entrySet())
 		{
 			String key = entry.getKey(), label = catalogue.label(key);
-			JsonObject activity = catalogue.activity(key, state.rewardGoal());
+			JsonObject activity = catalogue.activity(key, state.contentGoal());
 			JsonObject access = activity.getAsJsonObject("requirements");
 			result.quests(access.getAsJsonArray("quests"), label, state, live, false);
 			result.quests(strategyQuests(key, state), label, state, live, true);
@@ -1012,7 +1271,7 @@ public final class Planner
 					result.level(level.get(0).getAsString(), level.get(1).getAsInt(), label, state, live);
 				}
 			}
-			JsonArray kit = catalogue.kit(key, state.rewardGoal());
+			JsonArray kit = catalogue.kit(key, state.contentGoal());
 			for (int i = 0; i < kit.size(); i++)
 			{
 				JsonObject req = kit.get(i).getAsJsonObject();
@@ -1080,8 +1339,13 @@ public final class Planner
 	}
 	public boolean permanentKeyAccess(String key, GuideState state)
 	{
+		return permanentKeyAccess(key, state, null);
+	}
+
+	public boolean permanentKeyAccess(String key, GuideState state, LiveSnapshot live)
+	{
 		return (key.equals("obor") || key.equals("bryophyta")) &&
-			permanentKeyAccess(key, progress.knownCompleted(state));
+			permanentKeyAccess(key, state.automatic() ? completedForGuide(state, live) : progress.knownCompleted(state));
 	}
 
 	private boolean permanentKeyAccess(String key, Set<Integer> completed)
@@ -1125,7 +1389,7 @@ public final class Planner
 		public final Map<Integer, String> blockedTasks;
 		public final Map<Integer, String> deferredTasks;
 		public final GrandmasterLedger grandmaster;
-		public final Set<Integer> uncheckedTasks, partyWaiting, attemptWaiting;
+		public final Set<Integer> uncheckedTasks, partyWaiting, attemptWaiting, restockTasks;
 		public final int availablePoints, preparedPoints, plannedPoints;
 
 		Route(List<Entry> entries, List<Integer> taskPool, Map<String, List<String>> groupChecks, Map<Integer, String> blockedTasks,
@@ -1148,9 +1412,19 @@ public final class Planner
 			Set<Integer> uncheckedTasks, Set<Integer> partyWaiting, Set<Integer> attemptWaiting,
 			GrandmasterLedger grandmaster, Map<Integer, String> deferredTasks)
 		{
+			this(entries, taskPool, groupChecks, blockedTasks, availablePoints, preparedPoints, plannedPoints,
+				uncheckedTasks, partyWaiting, attemptWaiting, grandmaster, deferredTasks, Set.of());
+		}
+
+		Route(List<Entry> entries, List<Integer> taskPool, Map<String, List<String>> groupChecks,
+			Map<Integer, String> blockedTasks, int availablePoints, int preparedPoints, int plannedPoints,
+			Set<Integer> uncheckedTasks, Set<Integer> partyWaiting, Set<Integer> attemptWaiting,
+			GrandmasterLedger grandmaster, Map<Integer, String> deferredTasks, Set<Integer> restockTasks)
+		{
 			this.uncheckedTasks = Set.copyOf(uncheckedTasks);
 			this.partyWaiting = Set.copyOf(partyWaiting);
 			this.attemptWaiting = Set.copyOf(attemptWaiting);
+			this.restockTasks = Set.copyOf(restockTasks);
 			this.entries = List.copyOf(entries);
 			this.taskPool = List.copyOf(taskPool);
 			Map<String, List<String>> checks = new LinkedHashMap<>();
@@ -1174,9 +1448,16 @@ public final class Planner
 		public final int gain;
 		public final double minutes, score;
 		public final boolean reserve;
+		public final String reason;
 
 		Entry(String key, List<Integer> ids, int gain, List<String> gates, List<String> kitChecks,
 			List<String> requiredKit, Map<Integer, String> kitBlockers, double minutes, double score, boolean reserve)
+		{
+			this(key, ids, gain, gates, kitChecks, requiredKit, kitBlockers, minutes, score, reserve, "");
+		}
+
+		Entry(String key, List<Integer> ids, int gain, List<String> gates, List<String> kitChecks,
+			List<String> requiredKit, Map<Integer, String> kitBlockers, double minutes, double score, boolean reserve, String reason)
 		{
 			this.key = key;
 			this.ids = List.copyOf(ids);
@@ -1188,6 +1469,7 @@ public final class Planner
 			this.minutes = minutes;
 			this.score = score;
 			this.reserve = reserve;
+			this.reason = reason;
 		}
 	}
 	public static final class Next

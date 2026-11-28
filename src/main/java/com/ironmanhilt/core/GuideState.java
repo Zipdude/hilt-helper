@@ -30,6 +30,7 @@ import com.google.gson.JsonObject;
 import java.math.BigDecimal;
 import java.time.Instant;
 import java.util.Collection;
+import java.util.HashMap;
 import java.util.LinkedHashSet;
 import java.util.Map;
 import java.util.Set;
@@ -38,6 +39,9 @@ import java.util.Set;
 public final class GuideState
 {
 	public final JsonObject data;
+	private Milestones milestones;
+	private String partySession = "";
+	private final Map<String, String> partyConfirmations = new HashMap<>();
 	public GuideState(JsonObject data)
 	{
 		validate(data);
@@ -82,10 +86,62 @@ public final class GuideState
 	}
 	public GuideState copy()
 	{
-		return new GuideState(data);
+		GuideState copy = new GuideState(data);
+		copy.milestones = milestones;
+		copy.partySession = partySession;
+		copy.partyConfirmations.putAll(partyConfirmations);
+		return copy;
+	}
+
+	GuideState automatic(Milestones route, String session)
+	{
+		GuideState copy = copy();
+		copy.milestones = route;
+		copy.partySession = session;
+		return copy;
+	}
+
+	public boolean automatic()
+	{
+		return milestones != null;
+	}
+
+	public Milestones milestones()
+	{
+		return milestones;
+	}
+
+	/** Automatic routes use the complete catalogue for methods and the derived milestone for rewards. */
+	public RewardGoal contentGoal()
+	{
+		return automatic() ? RewardGoal.GRANDMASTER : rewardGoal();
+	}
+
+	public boolean soloOnly()
+	{
+		return preference("soloOnly", RouteStyle.from(ReadinessEngine.str(data, "routeStyle", "")) == RouteStyle.SOLO ||
+			RouteStyle.from(ReadinessEngine.str(data, "masterRouteStyle", "")) == RouteStyle.SOLO ||
+			RouteStyle.from(ReadinessEngine.str(data, "grandmasterRouteStyle", "")) == RouteStyle.SOLO);
+	}
+
+	public boolean deferFullRaids()
+	{
+		return preference("deferFullRaids", RouteStyle.RAID_LIGHT.key.equals(ReadinessEngine.str(data, "masterRouteStyle", "")) ||
+			RouteStyle.RAID_LIGHT.key.equals(ReadinessEngine.str(data, "grandmasterRouteStyle", "")));
+	}
+
+	private boolean preference(String key, boolean fallback)
+	{
+		JsonElement choice = data.get(key);
+		return choice != null && choice.isJsonPrimitive() && choice.getAsJsonPrimitive().isBoolean() ?
+			choice.getAsBoolean() : fallback;
 	}
 	public RouteStyle routeChoice()
 	{
+		if (automatic())
+		{
+			return soloOnly() ? RouteStyle.SOLO : RouteStyle.GROUP;
+		}
 		RouteStyle shared = RouteStyle.from(ReadinessEngine.str(data, "routeStyle", ""));
 		RewardGoal goal = rewardGoal();
 		if (!goal.supportsRaidLight())
@@ -114,6 +170,10 @@ public final class GuideState
 	}
 	public RewardGoal rewardGoal()
 	{
+		if (automatic())
+		{
+			return milestones.next;
+		}
 		RewardGoal selected = selectedGuide();
 		return selected == null ? RewardGoal.MEDIUM : selected;
 	}
@@ -121,6 +181,29 @@ public final class GuideState
 	{
 		JsonObject sizes = data.getAsJsonObject("elitePartySizes");
 		return sizes != null && sizes.has(activity) ? sizes.get(activity).getAsInt() : 0;
+	}
+
+	int confirmedPartySize(String activity)
+	{
+		if (!automatic())
+		{
+			return elitePartySize(activity);
+		}
+		return !partySession.isEmpty() && partySession.equals(partyConfirmations.get(activity)) ?
+			elitePartySize(activity) : 0;
+	}
+
+	public void confirmParty(String activity, int size, String session)
+	{
+		elitePartySize(activity, size);
+		if (size > 0)
+		{
+			partyConfirmations.put(activity, session);
+		}
+		else
+		{
+			partyConfirmations.remove(activity);
+		}
 	}
 
 	public void elitePartySize(String activity, int size)
@@ -146,7 +229,7 @@ public final class GuideState
 	/** Diagnostic timestamps do not change a route or a saved correction. */
 	public boolean sameProgress(GuideState other)
 	{
-		if (other == null)
+		if (other == null || !partyConfirmations.equals(other.partyConfirmations))
 		{
 			return false;
 		}

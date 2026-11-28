@@ -1,0 +1,2964 @@
+{
+  "schema": 1,
+  "threshold": 41,
+  "verifiedDate": "2026-11-27",
+  "researchSha256": "7a62d2e066eeddfff9c0d0b68a412af7dcbbffcf410102b9c5ea88ca1062add0",
+  "activities": [
+    {
+      "key": "brutus",
+      "main": [
+        632,
+        635,
+        636,
+        633
+      ],
+      "extra": [],
+      "steps": [
+        "Quest from Cassius at the pond, talk to Gillie and collect the post-quest reward. Defeat repeatable Brutus after the quest for credit.",
+        "Move sideways at the charge and away from the follow-up stomp tiles. Use the south fence between the troughs for a ranged or Magic attempt and reposition at the growl or huff.",
+        "Try #632 and #636 on the first clean attack. Attempt #635 separately unless comfortable manually casting naked from the same position. Keep the cowbell unworn and avoid food or potions during #635.",
+        "Carry the ten post-quest kills through for #633 if planning to continue to Medium immediately."
+      ],
+      "requirements": {
+        "quests": [
+          "The Ides of Milk"
+        ]
+      },
+      "strategyLevels": {},
+      "strategyQuests": [],
+      "strategyItems": [],
+      "kitChecks": [
+        {
+          "label": "Runes for a naked cast",
+          "role": "recommended",
+          "task_ids": [
+            635
+          ],
+          "check_key": "easy-runes-for-a-naked-cast",
+          "minimum": 1,
+          "spells_any": [
+            "Earth Strike",
+            "Earth Bolt"
+          ],
+          "no_staff": true
+        }
+      ],
+      "omitLegacyChecks": [],
+      "legacySuggestedChecks": [
+        "Usable escape teleport"
+      ],
+      "sharedKitNotes": [
+        "Carry 12–18 cakes or cooked fish for early ordinary attempts, and 40–80 casts if using Magic. Banking or resupplying is fine. Ring the post-quest cowbell (33103/33104) to speed respawn."
+      ]
+    },
+    {
+      "key": "wintertodt",
+      "main": [
+        285,
+        282,
+        281,
+        283,
+        284,
+        286,
+        279,
+        280
+      ],
+      "extra": [],
+      "steps": [
+        "Use public Wintertodt for fast personal subdues. Start on time and earn 500+ points each. Repair your own broken brazier and heal a fallen pyromancer as opportunities appear.",
+        "Keep four warm slots on for a successful clear. Watch Warmth and dodge snow and brazier breaks. Refill before it falls low.",
+        "Get the intact pyromancer task in a separate clean round. Heal injured pyromancers before they fall.",
+        "For 3,000 points choose a quiet solo or small group world, sustain the round at low energy with one brazier and fletch while managing warmth. Verify personal score before finishing."
+      ],
+      "requirements": {
+        "levels": {
+          "firemaking": 50
+        }
+      },
+      "strategyLevels": {},
+      "strategyQuests": [],
+      "strategyItems": [],
+      "kitChecks": [],
+      "omitLegacyChecks": [],
+      "legacySuggestedChecks": [],
+      "sharedKitNotes": [
+        "Collect bruma herbs and unfinished rejuvenation potions on site. Brew’ma makes them if Druidic Ritual is unfinished. Start a long round with 8–10 four-dose potions if needed. In short rounds bring several doses or food that heals at least 4 HP per use."
+      ]
+    },
+    {
+      "key": "giants",
+      "main": [
+        398,
+        80,
+        120,
+        121
+      ],
+      "extra": [],
+      "steps": [
+        "At Giants’ Den, personally kill a hill giant, moss giant and fire giant. Finish the fire giant there to share credit with #80.",
+        "Take the nearby greater demon visit in Kourend. Weaken a regular greater demon, then finish with Silverlight for #120/#121 together. Skip the finisher if Demon Slayer or a verified substitute is unavailable."
+      ],
+      "requirements": {},
+      "strategyLevels": {},
+      "strategyQuests": [],
+      "strategyItems": [],
+      "kitChecks": [],
+      "omitLegacyChecks": [],
+      "legacySuggestedChecks": [],
+      "sharedKitNotes": [
+        "Bring 12–18 food or budget Magic/ranged ammunition. 43 Prayer is useful when leaving cover. Preserve a dropped applicable key for a later separate visit."
+      ]
+    },
+    {
+      "key": "tempoross",
+      "main": [
+        357,
+        356,
+        360,
+        359,
+        358,
+        353,
+        354
+      ],
+      "extra": [
+        355
+      ],
+      "steps": [
+        "On a public or low-population game first repair a broken tether point and personally put fish into all four cannons. Cross during the essence phase when the move is safer.",
+        "Bring enough water to claim five fires in one game. Public teammates can beat you to fires, so use a quiet game if none remain.",
+        "For #359 board solo, cook fish to limit storm exposure, tether before a wave and step clear of torrents and lit tiles. Subdue without being hit.",
+        "For #358 use the linked five-phase or firefighting plan and target at least 8,300 points for 10 permits from one victory. Use a normal harpoon in the five-phase plan. Begin with 17 cooked fish, preserve essence at about 50% and then 30% during the middle phases, and stage cooked fish by both cannons for the late reset. Follow the phase timing in the source. Use a separate clean solo win for #359 until comfortable."
+      ],
+      "requirements": {
+        "levels": {
+          "fishing": 35
+        }
+      },
+      "strategyLevels": {},
+      "strategyQuests": [],
+      "strategyItems": [],
+      "kitChecks": [],
+      "omitLegacyChecks": [],
+      "legacySuggestedChecks": [],
+      "sharedKitNotes": [
+        "Fill at a pump. Fish can be cooked on site. A fish barrel, special harpoon, outfit and Humidify are optional upgrades. Budget the 8,300-point achievement attempt separately from ordinary Fishing training."
+      ]
+    },
+    {
+      "key": "deranged",
+      "main": [
+        78,
+        79,
+        76
+      ],
+      "extra": [
+        77
+      ],
+      "steps": [
+        "Walk into the southern Tar Swamp, use Protect from Missiles at range and use magic alone.",
+        "At the book call, move off the initial and follow-on splash tiles. One clean magic kill can award #78 and #79.",
+        "Stay to ten personal kills for #76 on the combined route. Verify the counter and take an exit before re-supplying."
+      ],
+      "requirements": {
+        "quests": [
+          "Bone Voyage"
+        ]
+      },
+      "strategyLevels": {},
+      "strategyQuests": [],
+      "strategyItems": [],
+      "kitChecks": [
+        {
+          "label": "Usable combat spell",
+          "role": "required_task",
+          "task_ids": [
+            76,
+            77,
+            78,
+            79
+          ],
+          "check_key": "easy-usable-combat-spell",
+          "minimum": 1,
+          "spells_any": [
+            "Wind Bolt",
+            "Wind Blast"
+          ]
+        }
+      ],
+      "omitLegacyChecks": [
+        "Air-combat spell supplies"
+      ],
+      "legacySuggestedChecks": [],
+      "sharedKitNotes": [
+        "Start with about 80–150 casts, 12–18 food and 4–8 prayer restore doses for the first few kills, adjusting between attempts. Bring one exit teleport. Digsite pendant and island shortcuts speed travel if unlocked."
+      ]
+    },
+    {
+      "key": "scurrius",
+      "main": [],
+      "extra": [
+        521,
+        524,
+        523,
+        525,
+        522
+      ],
+      "steps": [
+        "Start with one public kill only if that is the ready point. Deal personal damage and confirm your KC/flag.",
+        "On a private attempt avoid falling bricks and tail swipe. Switch by projectile for Flying Fur and Bolts of Electricity. Use the normal weapon until a ratbone kit is ready.",
+        "Bring a usable ratbane weapon to a later private run and deal the final hit with it. Switch early enough that queued damage from a prior attack cannot finish the boss."
+      ],
+      "requirements": {},
+      "strategyLevels": {},
+      "strategyQuests": [],
+      "strategyItems": [],
+      "kitChecks": [
+        {
+          "label": "Usable ratbane weapon",
+          "role": "required_task",
+          "task_ids": [
+            523
+          ],
+          "check_key": "easy-usable-ratbane-weapon",
+          "minimum": 1,
+          "any_of_ids": [
+            28792,
+            28796
+          ],
+          "ammunition_alternative": {
+            "weapon_ammo_pairs": {
+              "28794": {
+                "allowed_base_ids": [
+                  882,
+                  884,
+                  886,
+                  888,
+                  890,
+                  892
+                ]
+              }
+            },
+            "minimum": 1
+          },
+          "notes": "Use a bone mace, bring arrows for a bone shortbow, or check your bone staff charges."
+        }
+      ],
+      "omitLegacyChecks": [
+        "Ratbane weapon"
+      ],
+      "legacySuggestedChecks": [],
+      "sharedKitNotes": [
+        "Bring 12–18 food, 4–8 prayer restore doses for early private bouts and one escape teleport. A private spine is 1/33 per kill. Craft from a rune mace, yew shortbow or battlestaff with the appropriate level-35 skill. For the staff also supply 1,000 chaos runes to charge it initially. Historian Aldo’s 50,000-coin service can replace the skill requirement."
+      ]
+    },
+    {
+      "key": "barrows",
+      "main": [],
+      "extra": [
+        28,
+        26,
+        27,
+        30,
+        29,
+        24,
+        25
+      ],
+      "steps": [
+        "Dig at a melee brother’s mound and use Magic alone for #28, with no recoil or other damage. Each brother is weak to wind.",
+        "For #26 stop melee attacks before they are attempted. For #27 finish all six and loot with no brother damage, use separate practice if only clearing #28. Protect against Ahrim or Karil and prevent Verac getting into range.",
+        "Loot the chest at the end of each qualifying run for #24/#25. Route through the tunnels and use the door puzzle. Use a separate zero-Prayer trip for #30.",
+        "Try #29 only with a proven special damage setup. Do not bundle a physical special-only Karil attempt with an all-magic Karil method."
+      ],
+      "requirements": {
+        "quests": [
+          "Priest in Peril"
+        ]
+      },
+      "strategyLevels": {},
+      "strategyQuests": [],
+      "strategyItems": [],
+      "kitChecks": [
+        {
+          "label": "Spade",
+          "role": "provided_on_site",
+          "task_ids": [
+            24,
+            25,
+            26,
+            27,
+            28,
+            29,
+            30
+          ],
+          "check_key": "easy-spade",
+          "notes": "Pick up the spade at the Barrows entrance."
+        },
+        {
+          "label": "Usable wind spell",
+          "role": "required_task",
+          "task_ids": [
+            28
+          ],
+          "check_key": "easy-usable-wind-spell",
+          "minimum": 1,
+          "spells_any": [
+            "Wind Bolt",
+            "Wind Blast"
+          ]
+        },
+        {
+          "label": "Wind spell supplies",
+          "role": "recommended",
+          "task_ids": [
+            24,
+            25,
+            26,
+            27,
+            30
+          ],
+          "check_key": "easy-wind-spell-supplies",
+          "minimum": 60,
+          "spells_any": [
+            "Wind Bolt",
+            "Wind Blast"
+          ]
+        }
+      ],
+      "omitLegacyChecks": [
+        "Spade",
+        "Air-combat spell supplies"
+      ],
+      "legacySuggestedChecks": [],
+      "sharedKitNotes": [
+        "Short early visit: 60–120 Wind Bolt/Blast casts, 12–18 food, 4–8 prayer restoration doses and an exit. Carry bind runes only for the freeze method. Ahrim can be handled with compatible ranged ammunition."
+      ]
+    },
+    {
+      "key": "obor",
+      "main": [],
+      "extra": [
+        134,
+        131,
+        132,
+        133,
+        129,
+        130
+      ],
+      "steps": [
+        "Unlock once, fight near a wall or from binding distance. Keep enough distance for a cast and a finishing hit while Obor remains immobilized.",
+        "On a standard F2P world earn #134. Use the wall and ranged protection plan for #132 and #133 if the setup is ready. Restart an execution miss without using a key on the chest until a qualifying kill.",
+        "After an eligible kill use the retained key on the chest for #129. Return for a five-chest total when spare keys are already available."
+      ],
+      "requirements": {},
+      "strategyLevels": {},
+      "strategyQuests": [],
+      "strategyItems": [],
+      "kitChecks": [
+        {
+          "label": "Giant key or permanent entrance",
+          "role": "required_access",
+          "task_ids": [
+            129,
+            130,
+            131,
+            132,
+            133,
+            134
+          ],
+          "check_key": "easy-giant-key-or-permanent-entrance",
+          "access_rule": "obor",
+          "unlock_ids": [
+            129,
+            130,
+            131,
+            132,
+            133,
+            134
+          ],
+          "access_item_ids": [
+            20754
+          ],
+          "access_item_note": "The initial entrance unlock keeps your key."
+        },
+        {
+          "label": "Giant key for the first chest",
+          "role": "required_task",
+          "task_ids": [
+            129
+          ],
+          "check_key": "easy-giant-key-for-the-first-chest",
+          "any_of_ids": [
+            20754
+          ]
+        },
+        {
+          "label": "Giant keys for five chests",
+          "role": "required_task",
+          "task_ids": [
+            130
+          ],
+          "check_key": "easy-giant-keys-for-five-chests",
+          "any_of_ids": [
+            20754
+          ],
+          "minimum": 5,
+          "minimum_after_task": {
+            "id": 129,
+            "amount": 4
+          },
+          "notes": "Allow one key per chest. Confirm your current chest count in game."
+        },
+        {
+          "label": "Immobilising spell",
+          "role": "required_task",
+          "task_ids": [
+            131
+          ],
+          "check_key": "easy-immobilising-spell",
+          "spells_any": [
+            "Bind",
+            "Snare",
+            "Entangle",
+            "Ice Rush",
+            "Ice Burst",
+            "Ice Blitz",
+            "Ice Barrage"
+          ]
+        }
+      ],
+      "omitLegacyChecks": [
+        "Giant key"
+      ],
+      "legacySuggestedChecks": [],
+      "sharedKitNotes": [
+        "Budget 8–15 binds plus about 50–120 attack casts and 12–18 food at starter stats. Use F2P-compatible staves, runes and food when hopping. Carry further food on repeat clears."
+      ]
+    },
+    {
+      "key": "bryophyta",
+      "main": [],
+      "extra": [
+        41,
+        39,
+        37,
+        38,
+        35,
+        40,
+        36
+      ],
+      "steps": [
+        "Hop to standard F2P with compatible gear for #41. It also awards #39 because there is no poison on that world. Keep Protect from Magic active until loot appears for #37.",
+        "Cluster growthlings adjacent, then cut them with an equipped axe or magic secateurs. Click each quickly for #38 and deal the finishing blow to Bryophyta after the growthlings.",
+        "Open the chest for #35 with the retained key. Make a separate members’ kill for #40, letting poison deliver the final damage."
+      ],
+      "requirements": {},
+      "strategyLevels": {},
+      "strategyQuests": [],
+      "strategyItems": [],
+      "kitChecks": [
+        {
+          "label": "Mossy key or permanent entrance",
+          "role": "required_access",
+          "task_ids": [
+            35,
+            36,
+            37,
+            38,
+            39,
+            40,
+            41
+          ],
+          "check_key": "easy-mossy-key-or-permanent-entrance",
+          "access_rule": "bryophyta",
+          "unlock_ids": [
+            35,
+            36,
+            37,
+            38,
+            39,
+            40,
+            41
+          ],
+          "access_item_ids": [
+            22374
+          ],
+          "access_item_note": "The initial entrance unlock keeps your key."
+        },
+        {
+          "label": "Mossy key for the first chest",
+          "role": "required_task",
+          "task_ids": [
+            35
+          ],
+          "check_key": "easy-mossy-key-for-the-first-chest",
+          "any_of_ids": [
+            22374
+          ]
+        },
+        {
+          "label": "Mossy keys for five chests",
+          "role": "required_task",
+          "task_ids": [
+            36
+          ],
+          "check_key": "easy-mossy-keys-for-five-chests",
+          "any_of_ids": [
+            22374
+          ],
+          "minimum": 5,
+          "minimum_after_task": {
+            "id": 35,
+            "amount": 4
+          },
+          "notes": "Allow one key per chest. Confirm your current chest count in game."
+        },
+        {
+          "label": "Axe or magic secateurs for growthlings",
+          "role": "provided_on_site",
+          "task_ids": [
+            35,
+            36,
+            37,
+            38,
+            39,
+            40,
+            41
+          ],
+          "check_key": "easy-axe-or-magic-secateurs-for-growthlings",
+          "notes": "Pick up and equip the bronze axe at the encounter, or bring a usable axe or magic secateurs."
+        },
+        {
+          "label": "Poison finisher",
+          "role": "required_task",
+          "task_ids": [
+            40
+          ],
+          "check_key": "easy-poison-finisher",
+          "manualCheck": "Confirm a usable poisoned weapon or venom source."
+        }
+      ],
+      "omitLegacyChecks": [
+        "Mossy key",
+        "Equippable axe or magic secateurs"
+      ],
+      "legacySuggestedChecks": [],
+      "sharedKitNotes": [
+        "Bring 12–18 food, compatible attack supplies and a knife or slash weapon for the sewer web. For a members’ attempt bring a dose of antipoison or another valid immunity option if going for #39."
+      ]
+    },
+    {
+      "key": "taverley",
+      "main": [],
+      "extra": [
+        122,
+        32
+      ],
+      "steps": [
+        "Kill one normal hellhound. For #32 take the dusty-key/access path or another proven location, position behind the ladder, and kill an adult black dragon.",
+        "If already doing a qualifying KBD or brutal black dragon kill, use it to earn #32 and leave the Taverley dragon for later."
+      ],
+      "requirements": {},
+      "strategyLevels": {},
+      "strategyQuests": [],
+      "strategyItems": [],
+      "kitChecks": [],
+      "omitLegacyChecks": [],
+      "legacySuggestedChecks": [],
+      "sharedKitNotes": [
+        "Pack 12–18 food and one exit teleport. One prepared kill of each is enough. Dragons can cover #32 elsewhere, so check the stop against your next trip."
+      ]
+    },
+    {
+      "key": "titans",
+      "main": [],
+      "extra": [
+        591,
+        594,
+        597,
+        588,
+        598,
+        589
+      ],
+      "steps": [
+        "Both players damage the same Titan before touching the other for #591. When only the second is alive, anticipate the stronger attacks. Personally qualify for loot/KC.",
+        "Leave elementals unhit for #594. Lure them to the opposing Titan’s area blast for #597, track ten and finish only after the requirement is met.",
+        "Treat #598 as a separate attempt from #591. Prepare both HP bars and kill both during one matching charge phase."
+      ],
+      "requirements": {},
+      "strategyLevels": {},
+      "strategyQuests": [],
+      "strategyItems": [],
+      "kitChecks": [],
+      "omitLegacyChecks": [],
+      "legacySuggestedChecks": [
+        "Fire Blast obstacle supplies",
+        "Water Blast obstacle supplies"
+      ],
+      "sharedKitNotes": [
+        "12–18 food, 8–16 prayer doses and roughly 20 casts of each elemental spell are planning budgets. Bring an exit route. Use stronger kit if the second Titan is enraged."
+      ]
+    },
+    {
+      "key": "huey",
+      "main": [],
+      "extra": [
+        568,
+        569,
+        574
+      ],
+      "steps": [
+        "Personally attack from the ground phase onwards. Follow the party through body, tail and head, using the appropriate prayer calls and ground hazards.",
+        "For #574 use only earth spell damage on your end. Turn off recoil and other personal damage sources for the run. Confirm a credited kill and task evidence."
+      ],
+      "requirements": {
+        "quests": [
+          "Children of the Sun"
+        ]
+      },
+      "strategyLevels": {},
+      "strategyQuests": [],
+      "strategyItems": [],
+      "kitChecks": [
+        {
+          "label": "Eligible dragon hunter weapon",
+          "role": "required_task",
+          "notes": "Use the dragon hunter weapon specified by the task.",
+          "task_ids": [
+            573
+          ],
+          "check_key": "elite-dragonbane",
+          "any_of_ids": [
+            21012,
+            22978,
+            25916,
+            25918,
+            30070
+          ]
+        }
+      ],
+      "omitLegacyChecks": [],
+      "legacySuggestedChecks": [],
+      "sharedKitNotes": [
+        "Carry 100–150 earth casts, food, prayer restoration and exit. Coordinate so the team gives you time to earn personal contribution in all phases."
+      ]
+    },
+    {
+      "key": "mole",
+      "main": [],
+      "extra": [
+        177,
+        178,
+        179,
+        181,
+        182
+      ],
+      "steps": [
+        "Use protection or a covered attack position for #182. Reposition promptly after a burrow. Track ten kills for #177.",
+        "Only attempt the fast-resurface task when you can locate and deliver the final hit immediately. A Falador shield speeds hunting and is a convenience."
+      ],
+      "requirements": {},
+      "strategyLevels": {},
+      "strategyQuests": [],
+      "strategyItems": [],
+      "kitChecks": [],
+      "omitLegacyChecks": [],
+      "legacySuggestedChecks": [],
+      "sharedKitNotes": [
+        "Bring melee/ranged supplies, food, protect-melee if trained and one teleport. Bring an unextinguishable light if owned or be ready to relight away from the Mole."
+      ]
+    },
+    {
+      "key": "sarachnis",
+      "main": [],
+      "extra": [
+        206,
+        207,
+        208,
+        209,
+        210
+      ],
+      "steps": [
+        "Stay in melee range under Melee protection. When webbed and the boss retreats, switch to Missiles protection, move back into melee promptly, and switch back.",
+        "Use the same early kill for #210, #208 and possibly #209 if every relevant boss hit is prevented. Clear spawns as needed to keep the long trip manageable.",
+        "Return to complete ten and 25 kills only if already doing a sustained loop."
+      ],
+      "requirements": {},
+      "strategyLevels": {},
+      "strategyQuests": [],
+      "strategyItems": [],
+      "kitChecks": [],
+      "omitLegacyChecks": [],
+      "legacySuggestedChecks": [],
+      "sharedKitNotes": [
+        "Bring 12–18 food, 8–16 prayer doses if planning multiple beginner kills, and an exit. 43 Prayer and around 50–60 combat skills are practical recommendations."
+      ]
+    },
+    {
+      "key": "shamans",
+      "main": [],
+      "extra": [
+        174,
+        175
+      ],
+      "steps": [
+        "Enter a clear Molch room, use Missiles protection and avoid jumps and acid. Circle away from exploding spawns.",
+        "Avoid damage dealt by the shaman to any player, then personally finish. Damage from spawns is excluded by #175's rule."
+      ],
+      "requirements": {},
+      "strategyLevels": {},
+      "strategyQuests": [],
+      "strategyItems": [],
+      "kitChecks": [],
+      "omitLegacyChecks": [],
+      "legacySuggestedChecks": [
+        "Full tier-five Shayzien armour",
+        "Ranged weapon",
+        "Compatible ammunition",
+        "Food",
+        "Poison cure"
+      ],
+      "sharedKitNotes": [
+        "Budget at least 50 compatible shots and one antipoison dose if available, food and one exit. Prepare 40 Ranged/Prayer or better before committing."
+      ]
+    },
+    {
+      "key": "slayer",
+      "main": [],
+      "extra": [
+        0,
+        33,
+        34,
+        287
+      ],
+      "steps": [
+        "Group a normal aberrant spectre and a suitable bloodveld in accessible areas of the Slayer Tower when Morytania is available. Do the wyrm when reaching the relevant Slayer level.",
+        "Use the correct variant for every flag. Check assignment-only areas and permit boosts where the creature accepts them."
+      ],
+      "requirements": {},
+      "strategyLevels": {},
+      "strategyQuests": [],
+      "strategyItems": [],
+      "kitChecks": [
+        {
+          "label": "Worn heat protection or Kourend Elite reward",
+          "role": "required_task",
+          "task_ids": [
+            287
+          ],
+          "check_key": "easy-worn-heat-protection-or-kourend-elite-reward",
+          "any_of_ids": [
+            23037,
+            22954,
+            21643
+          ],
+          "access_rule": "karuulm",
+          "access_item_ids": [
+            23037,
+            22954,
+            21643
+          ],
+          "access_item_equippable": true,
+          "access_item_note": "Wear the heat-safe boots before entering the lower dungeon."
+        },
+        {
+          "label": "62 Slayer or valid boost",
+          "role": "required_access",
+          "task_ids": [
+            287
+          ],
+          "check_key": "easy-62-slayer-or-valid-boost",
+          "effective_level": [
+            "Slayer",
+            62,
+            57
+          ],
+          "manualCheck": "Verify your effective Slayer level before entering."
+        },
+        {
+          "label": "Nose peg or Slayer helmet",
+          "role": "required_task",
+          "task_ids": [
+            0
+          ],
+          "check_key": "easy-nose-peg-or-slayer-helmet",
+          "must_equip": true,
+          "any_of_ids": [
+            4168
+          ]
+        }
+      ],
+      "omitLegacyChecks": [],
+      "legacySuggestedChecks": [],
+      "sharedKitNotes": [
+        "Pack basic food and suitable damage, prayer or defence for the monster. Catch incidental kill credit during Slayer progression."
+      ]
+    },
+    {
+      "key": "wild-kbd",
+      "main": [],
+      "extra": [
+        162
+      ],
+      "steps": [
+        "Scout the approach, enter and activate the lever quickly. Secure a qualifying unassisted kill and verify counter progress. One KBD kill can tick #32. Earn ten personal kills for #162."
+      ],
+      "requirements": {},
+      "strategyLevels": {},
+      "strategyQuests": [],
+      "strategyItems": [],
+      "kitChecks": [
+        {
+          "label": "Dragonfire protection",
+          "role": "recommended",
+          "task_ids": [
+            162
+          ],
+          "check_key": "easy-dragonfire-protection",
+          "any_of_ids": [
+            1540
+          ]
+        }
+      ],
+      "omitLegacyChecks": [],
+      "legacySuggestedChecks": [],
+      "sharedKitNotes": [
+        "Bring expendable gear, compact food, supplies and enough antifire doses for the actual kill duration. Use an appropriate private instance if needed for solo Ironman credit."
+      ]
+    },
+    {
+      "key": "shellbane",
+      "main": [],
+      "extra": [
+        625,
+        630
+      ],
+      "steps": [
+        "Use a post-quest solo encounter on assignment. For #630 allow the corrosive hit, remove all equipment with shield last, wait for the corrosion-clear message, re-equip shield first and finish.",
+        "Count 25 qualifying personal kills for #625. The elite clue step is an alternative for compatible isolated attempts. It is contingent and unsuitable as a planned path to a counter."
+      ],
+      "requirements": {
+        "quests": [
+          "Troubled Tortugans"
+        ],
+        "levels": {
+          "slayer": 51
+        }
+      },
+      "strategyLevels": {},
+      "strategyQuests": [],
+      "strategyItems": [],
+      "kitChecks": [
+        {
+          "label": "Eligible Gryphon assignment or one-kill Elite clue",
+          "role": "attempt_access",
+          "check_key": "master-shellbane-attempt",
+          "slayer_assignments": [
+            "shellbanegryphons",
+            "shellbanegryphon"
+          ],
+          "manualCheck": "Confirm that your Elite clue explicitly sends you to this fight.",
+          "manual_alternative": true,
+          "task_ids": [
+            625,
+            626,
+            627,
+            628,
+            630,
+            631
+          ]
+        },
+        {
+          "label": "Active Gryphon assignment for all 25 kills",
+          "role": "attempt_access",
+          "check_key": "master-shellbane-trip",
+          "slayer_assignments": [
+            "shellbanegryphons",
+            "shellbanegryphon"
+          ],
+          "task_ids": [
+            629
+          ]
+        },
+        {
+          "label": "Enough eligible assignment kills for this 25-kill visit",
+          "role": "attempt_access",
+          "check_key": "master-slayer-visit-629",
+          "assignment_remaining": 25,
+          "manualCheck": "Verify your eligible task can cover the entire visit, including any planned slaughter bracelet.",
+          "task_ids": [
+            629
+          ]
+        }
+      ],
+      "omitLegacyChecks": [],
+      "legacySuggestedChecks": [],
+      "sharedKitNotes": [
+        "Bring high-heal food, an exit, protection supplies and enough empty spaces. Check actual task remaining before banking for a long trip."
+      ]
+    }
+  ],
+  "taskUpdates": {
+    "632": {
+      "condition": "Defeat repeatable Brutus once after unlocking him.",
+      "tip": "Finish the quest first, then release normal Brutus and win. Use a clean attack for #636 if manageable.",
+      "kitNotes": [],
+      "plan": "F2P-compatible. Quest-phase kill is not used for route credit.",
+      "role": "default",
+      "world": "standard-f2p-or-members",
+      "effort": [
+        3.0,
+        9.0
+      ],
+      "sources": [
+        {
+          "label": "Task and strategy · OSRS Wiki",
+          "url": "https://oldschool.runescape.wiki/w/Brutus_Novice"
+        }
+      ],
+      "counter": {
+        "key": "Brutus",
+        "target": 1,
+        "observedKey": "kc:brutus"
+      }
+    },
+    "633": {
+      "condition": "Earn 10 post-quest Brutus kills.",
+      "tip": "Ring your returned cowbell during the respawn cycle and bank when required. Combine with naked and no-attack attempts across the ten.",
+      "kitNotes": [],
+      "plan": "",
+      "role": "default",
+      "world": "standard-f2p-or-members",
+      "effort": [
+        1.4,
+        3.4
+      ],
+      "sources": [
+        {
+          "label": "Task and strategy · OSRS Wiki",
+          "url": "https://oldschool.runescape.wiki/w/Brutus_Champion"
+        }
+      ],
+      "counter": {
+        "key": "Brutus",
+        "target": 10,
+        "observedKey": "kc:brutus"
+      }
+    },
+    "635": {
+      "condition": "Kill Brutus with no gear equipped and no consumption during combat.",
+      "tip": "Unequip every slot, manually cast from inventory or punch, and dodge specials. Prayers and spell runes are allowed. Eat or boost before the fight.",
+      "kitNotes": [
+        "If casting, Earth Strike at 9 Magic with 1 air/2 earth/1 mind per cast, or Earth Bolt at 29 with 2 air/3 earth/1 chaos. No staff substitution during the naked attempt."
+      ],
+      "plan": "",
+      "role": "default",
+      "world": "standard-f2p-or-members",
+      "effort": [
+        4,
+        13
+      ],
+      "sources": [
+        {
+          "label": "Task and strategy · OSRS Wiki",
+          "url": "https://oldschool.runescape.wiki/w/Beef_vs_Beef"
+        }
+      ]
+    },
+    "636": {
+      "condition": "Defeat Brutus before he successfully attacks you, including an attack that rolls zero.",
+      "tip": "Use the southern trough gap or actively kite from cover at a distance. Move with the charge and stomp tells and re-establish distance.",
+      "kitNotes": [],
+      "plan": "",
+      "role": "default",
+      "world": "standard-f2p-or-members",
+      "effort": [
+        4,
+        14
+      ],
+      "sources": [
+        {
+          "label": "Task and strategy · OSRS Wiki",
+          "url": "https://oldschool.runescape.wiki/w/Smarter_than_a_Cow"
+        }
+      ]
+    },
+    "279": {
+      "condition": "Complete five qualifying Wintertodt subdues.",
+      "tip": "Aim for a personal score of at least 500 on each win. Earn the early mechanics in those five runs.",
+      "kitNotes": [],
+      "plan": "",
+      "role": "default",
+      "world": "standard-members",
+      "effort": [
+        3.4,
+        7.6
+      ],
+      "sources": [
+        {
+          "label": "Task and strategy · OSRS Wiki",
+          "url": "https://oldschool.runescape.wiki/w/Wintertodt_Novice"
+        }
+      ],
+      "counter": {
+        "key": "Wintertodt",
+        "target": 5,
+        "observedKey": "kc:wintertodt"
+      }
+    },
+    "280": {
+      "condition": "Complete 10 qualifying Wintertodt subdues.",
+      "tip": "Continue from #279 or your current observed count. Count successful personal rounds.",
+      "kitNotes": [],
+      "plan": "",
+      "role": "default",
+      "world": "standard-members",
+      "effort": [
+        3.5,
+        7.4
+      ],
+      "sources": [
+        {
+          "label": "Task and strategy · OSRS Wiki",
+          "url": "https://oldschool.runescape.wiki/w/Wintertodt_Champion"
+        }
+      ],
+      "counter": {
+        "key": "Wintertodt",
+        "target": 10,
+        "observedKey": "kc:wintertodt"
+      }
+    },
+    "281": {
+      "condition": "Heal a pyromancer after they fall.",
+      "tip": "Use one rejuvenation dose on a fallen pyromancer. Heal proactively in a separate round for #284.",
+      "kitNotes": [
+        "1 usable rejuvenation dose on site"
+      ],
+      "plan": "",
+      "role": "default",
+      "world": "standard-members",
+      "effort": [
+        3,
+        20
+      ],
+      "sources": [
+        {
+          "label": "Task and strategy · OSRS Wiki",
+          "url": "https://oldschool.runescape.wiki/w/Mummy!"
+        }
+      ]
+    },
+    "282": {
+      "condition": "Personally repair a Wintertodt-destroyed brazier.",
+      "tip": "Click a broken brazier with a hammer available. Relighting alone is a different action.",
+      "kitNotes": [
+        "1 hammer, available on site"
+      ],
+      "plan": "",
+      "role": "default",
+      "world": "standard-members",
+      "effort": [
+        3,
+        12
+      ],
+      "sources": [
+        {
+          "label": "Task and strategy · OSRS Wiki",
+          "url": "https://oldschool.runescape.wiki/w/Handyman"
+        }
+      ]
+    },
+    "283": {
+      "condition": "Subdue Wintertodt without all four braziers ever being broken simultaneously.",
+      "tip": "Repair or keep at least one brazier from remaining broken as others break. Record a qualifying successful finish.",
+      "kitNotes": [],
+      "plan": "",
+      "role": "default",
+      "world": "standard-members",
+      "effort": [
+        4,
+        14
+      ],
+      "sources": [
+        {
+          "label": "Task and strategy · OSRS Wiki",
+          "url": "https://oldschool.runescape.wiki/w/Can_We_Fix_It%3F"
+        }
+      ]
+    },
+    "284": {
+      "condition": "Subdue Wintertodt with no pyromancer falling during the round and at least 500 personal points.",
+      "tip": "Use an active mass or coordinated group to heal before pyromancers fall. This is a different round from #281.",
+      "kitNotes": [],
+      "plan": "",
+      "role": "default",
+      "world": "standard-members",
+      "effort": [
+        4,
+        17
+      ],
+      "sources": [
+        {
+          "label": "Task and strategy · OSRS Wiki",
+          "url": "https://oldschool.runescape.wiki/w/Leaving_No_One_Behind"
+        }
+      ]
+    },
+    "285": {
+      "condition": "Subdue Wintertodt while wearing four warm pieces.",
+      "tip": "Equip four different slots and keep them on through a qualifying finish.",
+      "kitNotes": [
+        "4 recognized warm items in distinct wearable slots"
+      ],
+      "plan": "",
+      "role": "default",
+      "world": "standard-members",
+      "effort": [
+        4,
+        12
+      ],
+      "sources": [
+        {
+          "label": "Task and strategy · OSRS Wiki",
+          "url": "https://oldschool.runescape.wiki/w/Cosy"
+        }
+      ]
+    },
+    "286": {
+      "condition": "Score at least 3,000 personal points before a successful Wintertodt subdue.",
+      "tip": "Use solo or small group, maintain warmth and delay the finish until you have enough points.",
+      "kitNotes": [],
+      "plan": "",
+      "role": "default",
+      "world": "standard-members",
+      "effort": [
+        16,
+        38
+      ],
+      "sources": [
+        {
+          "label": "Task and strategy · OSRS Wiki",
+          "url": "https://oldschool.runescape.wiki/w/Why_Fletch%3F"
+        }
+      ]
+    },
+    "80": {
+      "condition": "Defeat one fire giant.",
+      "tip": "Make the Den’s fire giant your first when doing #398. No Slayer level is required for this ordinary monster.",
+      "kitNotes": [],
+      "plan": "",
+      "role": "default",
+      "world": "standard-members",
+      "effort": [
+        2,
+        6
+      ],
+      "sources": [
+        {
+          "label": "Task and strategy · OSRS Wiki",
+          "url": "https://oldschool.runescape.wiki/w/The_Walking_Volcano"
+        }
+      ]
+    },
+    "120": {
+      "condition": "Defeat a greater demon.",
+      "tip": "Use a regular greater demon and perform the demonbane final hit if also ready for #121.",
+      "kitNotes": [],
+      "plan": "The proposed Kourend visit is members-only. On F2P the verified greater demon location is the Demonic Ruins in the Wilderness.",
+      "role": "default",
+      "world": "standard-f2p-or-members",
+      "effort": [
+        3,
+        8
+      ],
+      "sources": [
+        {
+          "label": "Task and strategy · OSRS Wiki",
+          "url": "https://oldschool.runescape.wiki/w/A_Greater_Foe"
+        }
+      ]
+    },
+    "121": {
+      "condition": "Finish a qualifying greater demon with a demonbane weapon.",
+      "tip": "A regular greater demon weakened with your strongest weapon and finished with Silverlight is the starter method. Some greater-demon Slayer equivalents are supported in game.",
+      "kitNotes": [
+        "1 Silverlight (2402/6745), Darklight, charged Arclight, Emberlight or another verified demonbane weapon"
+      ],
+      "plan": "On F2P use Silverlight in the Wilderness if opting in. The proposed Kourend visit remains members-only.",
+      "role": "default",
+      "world": "standard-f2p-or-members",
+      "effort": [
+        3,
+        8
+      ],
+      "sources": [
+        {
+          "label": "Task and strategy · OSRS Wiki",
+          "url": "https://oldschool.runescape.wiki/w/Not_So_Great_After_All"
+        }
+      ]
+    },
+    "398": {
+      "condition": "Kill a hill giant, moss giant and fire giant inside the Giants’ Den in Shayzien.",
+      "tip": "Check the actual location for all three. Kill the fire giant inside the den for both relevant IDs.",
+      "kitNotes": [],
+      "plan": "",
+      "role": "default",
+      "world": "standard-members",
+      "effort": [
+        7,
+        17
+      ],
+      "sources": [
+        {
+          "label": "Task and strategy · OSRS Wiki",
+          "url": "https://oldschool.runescape.wiki/w/Into_the_Den_of_Giants"
+        }
+      ]
+    },
+    "353": {
+      "condition": "Successfully subdue Tempoross five times.",
+      "tip": "Earn personal successful encounter credit. Use mass rounds or count your successful targeted solo runs toward five.",
+      "kitNotes": [],
+      "plan": "",
+      "role": "default",
+      "world": "standard-members",
+      "effort": [
+        3.8,
+        8.0
+      ],
+      "sources": [
+        {
+          "label": "Task and strategy · OSRS Wiki",
+          "url": "https://oldschool.runescape.wiki/w/Tempoross_Novice"
+        }
+      ],
+      "counter": {
+        "key": "Tempoross",
+        "target": 5,
+        "observedKey": "kc:tempoross"
+      }
+    },
+    "354": {
+      "condition": "Successfully finish 10 personal Tempoross encounters.",
+      "tip": "Include the wins used for #353 and any successful specialist rounds.",
+      "kitNotes": [],
+      "plan": "",
+      "role": "default",
+      "world": "standard-members",
+      "effort": [
+        3.9,
+        8.2
+      ],
+      "sources": [
+        {
+          "label": "Task and strategy · OSRS Wiki",
+          "url": "https://oldschool.runescape.wiki/w/Tempoross_Champion"
+        }
+      ],
+      "counter": {
+        "key": "Tempoross",
+        "target": 10,
+        "observedKey": "kc:tempoross"
+      }
+    },
+    "355": {
+      "condition": "Subdue Tempoross while wearing all four pieces of qualifying Angler variants.",
+      "tip": "Use the owned Angler or Spirit Angler gear in different slots. Treat Fishing Trawler or pearl acquisition as optional work.",
+      "kitNotes": [
+        "4 Angler or Spirit Angler pieces, one per outfit slot"
+      ],
+      "plan": "",
+      "role": "reserve",
+      "world": "standard-members",
+      "effort": [
+        4,
+        12
+      ],
+      "sources": [
+        {
+          "label": "Task and strategy · OSRS Wiki",
+          "url": "https://oldschool.runescape.wiki/w/Dress_Like_You_Mean_It"
+        }
+      ]
+    },
+    "356": {
+      "condition": "Personally douse at least five fires in a single Tempoross fight.",
+      "tip": "Fill 4–5 buckets at once, refill if needed, and record five douses during the same game.",
+      "kitNotes": [
+        "At least five water-bucket uses across the round. Refill is allowed."
+      ],
+      "plan": "",
+      "role": "default",
+      "world": "standard-members",
+      "effort": [
+        4,
+        16
+      ],
+      "sources": [
+        {
+          "label": "Task and strategy · OSRS Wiki",
+          "url": "https://oldschool.runescape.wiki/w/Master_of_Buckets"
+        }
+      ]
+    },
+    "357": {
+      "condition": "Repair one damaged mast or totem pole at Tempoross.",
+      "tip": "Use the hammer just after a wave breaks a tether point before another player fixes it.",
+      "kitNotes": [
+        "1 on-site hammer"
+      ],
+      "plan": "",
+      "role": "default",
+      "world": "standard-members",
+      "effort": [
+        2,
+        9
+      ],
+      "sources": [
+        {
+          "label": "Task and strategy · OSRS Wiki",
+          "url": "https://oldschool.runescape.wiki/w/Calm_Before_the_Storm"
+        }
+      ]
+    },
+    "358": {
+      "condition": "Personally receive at least ten reward permits from one successful Tempoross fight.",
+      "tip": "Target 8,300 encounter points to remove the chance roll. A plain harpoon and a disciplined multi-phase game work. Leave the low-Fishing solo timing subject to practice.",
+      "kitNotes": [],
+      "plan": "",
+      "role": "default",
+      "world": "standard-members",
+      "effort": [
+        14,
+        40
+      ],
+      "sources": [
+        {
+          "label": "Task and strategy · OSRS Wiki",
+          "url": "https://oldschool.runescape.wiki/w/Why_Cook%3F"
+        }
+      ]
+    },
+    "359": {
+      "condition": "Finish a solo Tempoross kill with no hit from fires, torrents or waves.",
+      "tip": "Start and finish alone. Tether or clear the wave path and avoid fire/torrent tiles. Record separate attempts from the extended permit route unless comfortable with both.",
+      "kitNotes": [],
+      "plan": "",
+      "role": "default",
+      "world": "standard-members",
+      "effort": [
+        10,
+        30
+      ],
+      "sources": [
+        {
+          "label": "Task and strategy · OSRS Wiki",
+          "url": "https://oldschool.runescape.wiki/w/The_Lone_Angler"
+        }
+      ]
+    },
+    "360": {
+      "condition": "Personally load both cannons on each of the two ships to attack Tempoross.",
+      "tip": "Use cooked or raw harpoonfish, putting at least one into each cannon. Cross in a safe window before the game finishes.",
+      "kitNotes": [
+        "At least 4 usable harpoonfish from the encounter"
+      ],
+      "plan": "",
+      "role": "default",
+      "world": "standard-members",
+      "effort": [
+        4,
+        14
+      ],
+      "sources": [
+        {
+          "label": "Task and strategy · OSRS Wiki",
+          "url": "https://oldschool.runescape.wiki/w/Fire_in_the_Hole!"
+        }
+      ]
+    },
+    "76": {
+      "condition": "Earn 10 personal Deranged Archaeologist kills.",
+      "tip": "Get #78/#79 on a first clean kill, then add the remaining kills. Renew supplies between trips when needed.",
+      "kitNotes": [],
+      "plan": "",
+      "role": "default",
+      "world": "standard-members",
+      "effort": [
+        1.8,
+        4.4
+      ],
+      "sources": [
+        {
+          "label": "Task and strategy · OSRS Wiki",
+          "url": "https://oldschool.runescape.wiki/w/Deranged_Archaeologist_Novice"
+        }
+      ],
+      "counter": {
+        "key": "Deranged Archaeologist",
+        "target": 10,
+        "observedKey": "kc:deranged"
+      }
+    },
+    "77": {
+      "condition": "Earn 25 Deranged Archaeologist kills.",
+      "tip": "Continue from the actual counter and add only the remaining kills.",
+      "kitNotes": [],
+      "plan": "",
+      "role": "reserve",
+      "world": "standard-members",
+      "effort": [
+        1.68,
+        4.0
+      ],
+      "sources": [
+        {
+          "label": "Task and strategy · OSRS Wiki",
+          "url": "https://oldschool.runescape.wiki/w/Deranged_Archaeologist_Champion"
+        }
+      ],
+      "counter": {
+        "key": "Deranged Archaeologist",
+        "target": 25,
+        "observedKey": "kc:deranged"
+      }
+    },
+    "78": {
+      "condition": "Defeat Deranged Archaeologist using only magical attacks.",
+      "tip": "Stay at range using only Wind Bolt or another supported spell. Turn off recoil or other nonmagic damage.",
+      "kitNotes": [],
+      "plan": "",
+      "role": "default",
+      "world": "standard-members",
+      "effort": [
+        3,
+        8
+      ],
+      "sources": [
+        {
+          "label": "Task and strategy · OSRS Wiki",
+          "url": "https://oldschool.runescape.wiki/w/Mage_of_the_Swamp"
+        }
+      ],
+      "requirements": {}
+    },
+    "79": {
+      "condition": "Defeat Deranged Archaeologist with no player struck by his Learn to Read attack.",
+      "tip": "Use an uncontested kill, move off targeted and secondary book tiles and verify personal award.",
+      "kitNotes": [],
+      "plan": "",
+      "role": "default",
+      "world": "standard-members",
+      "effort": [
+        3,
+        8
+      ],
+      "sources": [
+        {
+          "label": "Task and strategy · OSRS Wiki",
+          "url": "https://oldschool.runescape.wiki/w/I%27d_Rather_Be_Illiterate"
+        }
+      ],
+      "requirements": {}
+    },
+    "521": {
+      "condition": "Earn one personal Scurrius kill.",
+      "tip": "Deal qualifying damage. Public KC can count, and a clean private kill can also earn #524.",
+      "kitNotes": [],
+      "plan": " Verify your own flag after a contributed kill.",
+      "role": "reserve",
+      "world": "standard-members",
+      "effort": [
+        4.0,
+        12.0
+      ],
+      "sources": [
+        {
+          "label": "Task and strategy · OSRS Wiki",
+          "url": "https://oldschool.runescape.wiki/w/Scurrius_Novice"
+        }
+      ],
+      "counter": {
+        "key": "Scurrius",
+        "target": 1,
+        "observedKey": "kc:scurrius"
+      }
+    },
+    "522": {
+      "condition": "Earn 10 personal Scurrius kills.",
+      "tip": "Continue ordinary kills when already training on the boss and verify personal KC.",
+      "kitNotes": [],
+      "plan": " Verify your own flag after a contributed kill.",
+      "role": "reserve",
+      "world": "standard-members",
+      "effort": [
+        2.4,
+        7.0
+      ],
+      "sources": [
+        {
+          "label": "Task and strategy · OSRS Wiki",
+          "url": "https://oldschool.runescape.wiki/w/Scurrius_Champion"
+        }
+      ],
+      "counter": {
+        "key": "Scurrius",
+        "target": 10,
+        "observedKey": "kc:scurrius"
+      }
+    },
+    "523": {
+      "condition": "Finish Scurrius with a ratbane weapon in a private instance.",
+      "tip": "Deal the actual finishing hit yourself with a usable bone weapon. Use a solo instance for deterministic personal attribution.",
+      "kitNotes": [
+        "1 usable Bone mace, Bone shortbow with compatible ammo or charged Bone staff"
+      ],
+      "plan": " Verify your own flag after a contributed kill.",
+      "role": "reserve",
+      "world": "standard-members",
+      "effort": [
+        5,
+        14
+      ],
+      "sources": [
+        {
+          "label": "Task and strategy · OSRS Wiki",
+          "url": "https://oldschool.runescape.wiki/w/Sit_Rat"
+        }
+      ]
+    },
+    "524": {
+      "condition": "Kill Scurrius in a private instance, avoiding damage from tail swipe and falling bricks and using the correct protection for Flying Fur and Bolts of Electricity.",
+      "tip": "Move on the floor markers and watch the projectile. Use a private trial where you can see every attack.",
+      "kitNotes": [],
+      "plan": " Verify your own flag after a contributed kill.",
+      "role": "reserve",
+      "world": "standard-members",
+      "effort": [
+        5,
+        15
+      ],
+      "sources": [
+        {
+          "label": "Task and strategy · OSRS Wiki",
+          "url": "https://oldschool.runescape.wiki/w/Perfect_Scurrius"
+        }
+      ]
+    },
+    "525": {
+      "condition": "Kill six giant rats in Scurrius’ lair within three seconds of the first kill.",
+      "tip": "Use the ratbane weapon's fast add attacks, with ranged/magic hits ordered from farther to nearer if needed. Consider two rune thrownaxe specials only if stocked.",
+      "kitNotes": [],
+      "plan": " Verify your own flag after a contributed kill.",
+      "role": "reserve",
+      "world": "standard-members",
+      "effort": [
+        5,
+        16
+      ],
+      "sources": [
+        {
+          "label": "Task and strategy · OSRS Wiki",
+          "url": "https://oldschool.runescape.wiki/w/Efficient_Pest_Control"
+        }
+      ]
+    },
+    "24": {
+      "condition": "Open the Barrows chest 10 times.",
+      "tip": "Collect from the chest after each eligible run and track the personal count.",
+      "kitNotes": [],
+      "plan": "",
+      "role": "reserve",
+      "world": "standard-members",
+      "effort": [
+        6.0,
+        13.0
+      ],
+      "sources": [
+        {
+          "label": "Task and strategy · OSRS Wiki",
+          "url": "https://oldschool.runescape.wiki/w/Barrows_Novice"
+        }
+      ],
+      "counter": {
+        "key": "Barrows",
+        "target": 10,
+        "observedKey": "kc:barrows"
+      }
+    },
+    "25": {
+      "condition": "Open the Barrows chest 25 times.",
+      "tip": "Apply the same personal chest counter after completing #24.",
+      "kitNotes": [],
+      "plan": "",
+      "role": "reserve",
+      "world": "standard-members",
+      "effort": [
+        5.2,
+        12.0
+      ],
+      "sources": [
+        {
+          "label": "Task and strategy · OSRS Wiki",
+          "url": "https://oldschool.runescape.wiki/w/Barrows_Champion"
+        }
+      ],
+      "counter": {
+        "key": "Barrows",
+        "target": 25,
+        "observedKey": "kc:barrows"
+      }
+    },
+    "26": {
+      "condition": "Defeat Dharok, Verac, Torag and Guthan without any of those brothers attempting a melee attack.",
+      "tip": "Use freezes or verified terrain before giving them adjacency. Magic damage on one also completes #28.",
+      "kitNotes": [],
+      "plan": "",
+      "role": "reserve",
+      "world": "standard-members",
+      "effort": [
+        7,
+        20
+      ],
+      "sources": [
+        {
+          "label": "Task and strategy · OSRS Wiki",
+          "url": "https://oldschool.runescape.wiki/w/Can%27t_Touch_Me"
+        }
+      ]
+    },
+    "27": {
+      "condition": "Defeat all six brothers and loot without taking damage from any of them.",
+      "tip": "Prevent melee attempts. Use appropriate overhead protection for Ahrim and Karil. Check Prayer after underground drains.",
+      "kitNotes": [],
+      "plan": "",
+      "role": "reserve",
+      "world": "standard-members",
+      "effort": [
+        8,
+        23
+      ],
+      "sources": [
+        {
+          "label": "Task and strategy · OSRS Wiki",
+          "url": "https://oldschool.runescape.wiki/w/Pray_for_Success"
+        }
+      ]
+    },
+    "28": {
+      "condition": "Defeat any one Barrows brother with Magic as the sole damage type.",
+      "tip": "Use a wind spell on a melee brother from safe position. Remove passive damage sources.",
+      "kitNotes": [
+        "Enough casts of a usable combat spell"
+      ],
+      "plan": "",
+      "role": "reserve",
+      "world": "standard-members",
+      "effort": [
+        3,
+        8
+      ],
+      "sources": [
+        {
+          "label": "Task and strategy · OSRS Wiki",
+          "url": "https://oldschool.runescape.wiki/w/Defence%3F_What_Defence%3F"
+        }
+      ]
+    },
+    "29": {
+      "condition": "Defeat Karil using only damage from special attacks.",
+      "tip": "Enter with a viable damaging special weapon and enough energy. Disable recoils and normal attacks. Build optional from tested special weapons.",
+      "kitNotes": [
+        "1 usable damaging special weapon and sufficient spec energy"
+      ],
+      "plan": "",
+      "role": "reserve",
+      "world": "standard-members",
+      "effort": [
+        5,
+        18
+      ],
+      "sources": [
+        {
+          "label": "Task and strategy · OSRS Wiki",
+          "url": "https://oldschool.runescape.wiki/w/Just_Like_That"
+        }
+      ]
+    },
+    "30": {
+      "condition": "Defeat all six and loot without ever exceeding zero Prayer points during the run.",
+      "tip": "Drain Prayer to zero before starting. Use food, bindings and positioning. Reserve a separate run from the protect-prayer plan.",
+      "kitNotes": [],
+      "plan": "",
+      "role": "reserve",
+      "world": "standard-members",
+      "effort": [
+        10,
+        25
+      ],
+      "sources": [
+        {
+          "label": "Task and strategy · OSRS Wiki",
+          "url": "https://oldschool.runescape.wiki/w/Faithless_Crypt_Run"
+        }
+      ]
+    },
+    "129": {
+      "condition": "Open Obor’s chest one time after defeating him.",
+      "tip": "Use the giant key retained on your first unlock or one already owned after a subsequent kill.",
+      "kitNotes": [
+        "1 giant key (20754)"
+      ],
+      "plan": "",
+      "role": "reserve",
+      "world": "standard-f2p-or-members",
+      "effort": [
+        3,
+        12
+      ],
+      "sources": [
+        {
+          "label": "Task and strategy · OSRS Wiki",
+          "url": "https://oldschool.runescape.wiki/w/Obor_Novice"
+        }
+      ]
+    },
+    "130": {
+      "condition": "Open Obor’s chest five times in total.",
+      "tip": "Bring the true remaining key quantity when the chest total is observed. Four are enough only when a prior opening is already established.",
+      "kitNotes": [],
+      "plan": "",
+      "role": "reserve",
+      "world": "standard-f2p-or-members",
+      "effort": [
+        16,
+        50
+      ],
+      "sources": [
+        {
+          "label": "Task and strategy · OSRS Wiki",
+          "url": "https://oldschool.runescape.wiki/w/Obor_Champion"
+        }
+      ]
+    },
+    "131": {
+      "condition": "Have an actual immobilizing effect on Obor when the final damage kills him.",
+      "tip": "Reduce HP, wait for any immunity to expire, cast Bind/Snare, then finish before the root expires. Zamorak godsword freeze is excluded by the current task guide.",
+      "kitNotes": [
+        "Standard Bind at 20 Magic: 2 nature, 3 earth, 3 water per cast, or Snare at 50: 3 nature, 4 earth, 4 water. Valid Ancient ice spells can be used in members."
+      ],
+      "plan": "",
+      "role": "reserve",
+      "world": "standard-f2p-or-members",
+      "effort": [
+        4,
+        14
+      ],
+      "sources": [
+        {
+          "label": "Task and strategy · OSRS Wiki",
+          "url": "https://oldschool.runescape.wiki/w/Sleeping_Giant"
+        }
+      ]
+    },
+    "132": {
+      "condition": "Defeat Obor without his knockback moving you more than one tile.",
+      "tip": "Anchor to a wall or keep him out of melee with binding. Verify each knockback event stays within the restriction.",
+      "kitNotes": [],
+      "plan": "",
+      "role": "reserve",
+      "world": "standard-f2p-or-members",
+      "effort": [
+        4,
+        14
+      ],
+      "sources": [
+        {
+          "label": "Task and strategy · OSRS Wiki",
+          "url": "https://oldschool.runescape.wiki/w/Back_to_the_Wall"
+        }
+      ]
+    },
+    "133": {
+      "condition": "Defeat Obor without taking damage while off the correct protection prayer.",
+      "tip": "With the proposed path, activate Protect from Missiles before descending and use a root to avoid his melee. On-prayer ranged damage can occur and still qualify.",
+      "kitNotes": [],
+      "plan": "",
+      "role": "reserve",
+      "world": "standard-f2p-or-members",
+      "effort": [
+        4,
+        14
+      ],
+      "sources": [
+        {
+          "label": "Task and strategy · OSRS Wiki",
+          "url": "https://oldschool.runescape.wiki/w/Squashing_the_Giant"
+        }
+      ]
+    },
+    "134": {
+      "condition": "Defeat Obor on a free-to-play world.",
+      "tip": "Use F2P gear. A second combat-only attempt is free after the gate unlock. The chest is a separate action.",
+      "kitNotes": [],
+      "plan": "F2P world required for the kill.",
+      "role": "reserve",
+      "world": "standard-f2p-required",
+      "effort": [
+        3,
+        12
+      ],
+      "sources": [
+        {
+          "label": "Task and strategy · OSRS Wiki",
+          "url": "https://oldschool.runescape.wiki/w/Fighting_as_Intended"
+        }
+      ]
+    },
+    "35": {
+      "condition": "Open Bryophyta’s chest one time after defeating her.",
+      "tip": "Use one mossy key on the chest after the kill. Unlocking the entrance keeps the key available for this.",
+      "kitNotes": [
+        "1 mossy key (22374) for the chest"
+      ],
+      "plan": "",
+      "role": "reserve",
+      "world": "standard-f2p-or-members",
+      "effort": [
+        3,
+        12
+      ],
+      "sources": [
+        {
+          "label": "Task and strategy · OSRS Wiki",
+          "url": "https://oldschool.runescape.wiki/w/Bryophyta_Novice"
+        }
+      ]
+    },
+    "36": {
+      "condition": "Open Bryophyta’s chest five times in total.",
+      "tip": "Track prior confirmed chest openings and spend a mossy key per remaining chest after killing Bryophyta. Leave long key farming optional.",
+      "kitNotes": [],
+      "plan": "",
+      "role": "reserve",
+      "world": "standard-f2p-or-members",
+      "effort": [
+        16,
+        50
+      ],
+      "sources": [
+        {
+          "label": "Task and strategy · OSRS Wiki",
+          "url": "https://oldschool.runescape.wiki/w/Bryophyta_Champion"
+        }
+      ]
+    },
+    "37": {
+      "condition": "Defeat Bryophyta with Protect from Magic active at the award.",
+      "tip": "Leave the prayer active through the death animation until her loot appears.",
+      "kitNotes": [],
+      "plan": "",
+      "role": "reserve",
+      "world": "standard-f2p-or-members",
+      "effort": [
+        3,
+        12
+      ],
+      "sources": [
+        {
+          "label": "Task and strategy · OSRS Wiki",
+          "url": "https://oldschool.runescape.wiki/w/Protection_from_Moss"
+        }
+      ]
+    },
+    "38": {
+      "condition": "Kill all three growthlings within three seconds of the first kill.",
+      "tip": "Cluster all three adjacent. Use a wielded axe or magic secateurs and click each in rapid succession.",
+      "kitNotes": [],
+      "plan": "",
+      "role": "reserve",
+      "world": "standard-f2p-or-members",
+      "effort": [
+        4,
+        14
+      ],
+      "sources": [
+        {
+          "label": "Task and strategy · OSRS Wiki",
+          "url": "https://oldschool.runescape.wiki/w/Quick_Cutter"
+        }
+      ]
+    },
+    "39": {
+      "condition": "Defeat Bryophyta without taking poison damage.",
+      "tip": "A F2P kill automatically meets the poison condition. In members use appropriate poison protection.",
+      "kitNotes": [],
+      "plan": "",
+      "role": "reserve",
+      "world": "standard-f2p-or-members",
+      "effort": [
+        3,
+        12
+      ],
+      "sources": [
+        {
+          "label": "Task and strategy · OSRS Wiki",
+          "url": "https://oldschool.runescape.wiki/w/Preparation_Is_Key"
+        }
+      ]
+    },
+    "40": {
+      "condition": "Let a poison or venom hit deal the last damage to Bryophyta.",
+      "tip": "Inflict poison with an accessible poisoned weapon, then stop direct attacks with low boss HP and wait for the damage tick. Keep your own poison protected for #39.",
+      "kitNotes": [
+        "1 usable poisoned weapon, such as a genuine steel dagger(p) or poisoned ammo with its compatible weapon. Mains can buy the variant and Ironmen can make/apply a poison or use a verified drop."
+      ],
+      "plan": "Members-only attempt. A plain weapon or burn effect does not satisfy the condition.",
+      "role": "reserve",
+      "world": "standard-members",
+      "effort": [
+        7,
+        20
+      ],
+      "sources": [
+        {
+          "label": "Task and strategy · OSRS Wiki",
+          "url": "https://oldschool.runescape.wiki/w/A_Slow_Death"
+        }
+      ]
+    },
+    "41": {
+      "condition": "Defeat Bryophyta on a free-to-play world.",
+      "tip": "Switch to F2P-compatible kit first. Slot in the guaranteed #39 and bring a mossy key for chest credit.",
+      "kitNotes": [],
+      "plan": "F2P world required for the kill, even as a member.",
+      "role": "reserve",
+      "world": "standard-f2p-required",
+      "effort": [
+        3,
+        12
+      ],
+      "sources": [
+        {
+          "label": "Task and strategy · OSRS Wiki",
+          "url": "https://oldschool.runescape.wiki/w/Fighting_as_Intended_II"
+        }
+      ]
+    },
+    "32": {
+      "condition": "Personally defeat a qualifying black dragon.",
+      "tip": "An adult black dragon, brutal black dragon or KBD counts. Baby black dragons do not. Prefer a verified safe approach.",
+      "kitNotes": [],
+      "plan": "Wilderness opt-in only if using KBD access or a Wilderness spawn",
+      "role": "reserve",
+      "world": "standard-members",
+      "effort": [
+        3,
+        10
+      ],
+      "sources": [
+        {
+          "label": "Task and strategy · OSRS Wiki",
+          "url": "https://oldschool.runescape.wiki/w/Big,_Black_and_Fiery"
+        }
+      ]
+    },
+    "122": {
+      "condition": "Defeat a hellhound.",
+      "tip": "Choose a regular hellhound at a reachable safe spawn. A Slayer assignment is optional in the named open areas.",
+      "kitNotes": [],
+      "plan": "",
+      "role": "reserve",
+      "world": "standard-members",
+      "effort": [
+        3,
+        8
+      ],
+      "sources": [
+        {
+          "label": "Task and strategy · OSRS Wiki",
+          "url": "https://oldschool.runescape.wiki/w/A_Demon%27s_Best_Friend"
+        }
+      ]
+    },
+    "588": {
+      "condition": "Finish Royal Titans without taking their avoidable damage.",
+      "tip": "Prevent melee, elemental explosions, spawned obstacle damage and blast damage. Group uses conservative all-player avoidance until live credit is verified.",
+      "kitNotes": [],
+      "plan": "",
+      "role": "reserve",
+      "world": "standard-members",
+      "effort": [
+        8,
+        22
+      ],
+      "sources": [
+        {
+          "label": "Task and strategy · OSRS Wiki",
+          "url": "https://oldschool.runescape.wiki/w/Perfect_Royal_Titans"
+        }
+      ],
+      "party": {
+        "eligibility": "solo or eligible group",
+        "min": 1,
+        "max": 2,
+        "credit": "personal award; observe this account’s flag",
+        "prestigeRestrictedToOwnGroup": true
+      }
+    },
+    "589": {
+      "condition": "Earn 10 personal Royal Titans victories.",
+      "tip": "Use personally credited wins and keep count while pursuing easy mechanics. A teammate's clear does not credit an absent member.",
+      "kitNotes": [],
+      "plan": "",
+      "role": "reserve",
+      "world": "standard-members",
+      "effort": [
+        6.5,
+        17.0
+      ],
+      "sources": [
+        {
+          "label": "Task and strategy · OSRS Wiki",
+          "url": "https://oldschool.runescape.wiki/w/Royal_Titan_Champion"
+        }
+      ],
+      "counter": {
+        "key": "Royal Titans",
+        "target": 10,
+        "observedKey": "kc:titans"
+      },
+      "party": {
+        "eligibility": "solo or eligible group",
+        "min": 1,
+        "max": 2,
+        "credit": "personal award; observe this account’s flag",
+        "prestigeRestrictedToOwnGroup": true
+      }
+    },
+    "591": {
+      "condition": "Defeat the Titans sequentially without attacking the second before the first dies.",
+      "tip": "The team should agree on first target and avoid multi-hit, recoil or other damage to the untouched Titan. Finish the enraged second Titan.",
+      "kitNotes": [],
+      "plan": " Verify your personal task flag after the attempt.",
+      "role": "reserve",
+      "world": "standard-members",
+      "effort": [
+        8,
+        23
+      ],
+      "sources": [
+        {
+          "label": "Task and strategy · OSRS Wiki",
+          "url": "https://oldschool.runescape.wiki/w/One_by_one"
+        }
+      ],
+      "party": {
+        "eligibility": "solo or eligible group",
+        "min": 1,
+        "max": 2,
+        "credit": "personal award; observe this account’s flag",
+        "prestigeRestrictedToOwnGroup": true
+      }
+    },
+    "594": {
+      "condition": "Beat the Royal Titans without attacking an elemental.",
+      "tip": "Both team members avoid attacking adds for the conservative combined attempt. Lure adds to Titan damage for #597 if staying longer.",
+      "kitNotes": [],
+      "plan": " Verify your personal task flag after the attempt.",
+      "role": "reserve",
+      "world": "standard-members",
+      "effort": [
+        8,
+        23
+      ],
+      "sources": [
+        {
+          "label": "Task and strategy · OSRS Wiki",
+          "url": "https://oldschool.runescape.wiki/w/Elemental_Company"
+        }
+      ],
+      "party": {
+        "eligibility": "solo or eligible group",
+        "min": 1,
+        "max": 2,
+        "credit": "personal award; observe this account’s flag",
+        "prestigeRestrictedToOwnGroup": true
+      }
+    },
+    "597": {
+      "condition": "Have the Titans themselves kill at least 10 elementals, then finish both bosses.",
+      "tip": "Use the opposing Titan’s area blast and count confirmed elemental deaths. Keep boss HP high enough to finish the adds first.",
+      "kitNotes": [],
+      "plan": " Verify your personal task flag after the attempt.",
+      "role": "reserve",
+      "world": "standard-members",
+      "effort": [
+        12,
+        28
+      ],
+      "sources": [
+        {
+          "label": "Task and strategy · OSRS Wiki",
+          "url": "https://oldschool.runescape.wiki/w/Let_them_fight"
+        }
+      ],
+      "party": {
+        "eligibility": "solo or eligible group",
+        "min": 1,
+        "max": 2,
+        "credit": "personal award; observe this account’s flag",
+        "prestigeRestrictedToOwnGroup": true
+      }
+    },
+    "598": {
+      "condition": "Defeat both Royal Titans during the same area-attack charging phase.",
+      "tip": "Set both HP bars low and time both kills before the phase ends. Use a separate run from the one-at-a-time requirement.",
+      "kitNotes": [],
+      "plan": "",
+      "role": "reserve",
+      "world": "standard-members",
+      "effort": [
+        8,
+        25
+      ],
+      "sources": [
+        {
+          "label": "Task and strategy · OSRS Wiki",
+          "url": "https://oldschool.runescape.wiki/w/It_takes_too_long"
+        }
+      ],
+      "party": {
+        "eligibility": "solo or eligible group",
+        "min": 1,
+        "max": 2,
+        "credit": "personal award; observe this account’s flag",
+        "prestigeRestrictedToOwnGroup": true
+      }
+    },
+    "568": {
+      "condition": "Get one personally credited Hueycoatl kill.",
+      "tip": "Meet encounter participation with real damage and check your own loot/KC and flag.",
+      "kitNotes": [],
+      "plan": " Verify your own flag after a contributed kill.",
+      "role": "reserve",
+      "world": "standard-members",
+      "effort": [
+        7.0,
+        22.0
+      ],
+      "sources": [
+        {
+          "label": "Task and strategy · OSRS Wiki",
+          "url": "https://oldschool.runescape.wiki/w/Hueycoatl_Champion"
+        }
+      ],
+      "counter": {
+        "key": "The Hueycoatl",
+        "target": 1,
+        "observedKey": "kc:huey"
+      }
+    },
+    "569": {
+      "condition": "Earn ten personal Hueycoatl kills.",
+      "tip": "Use accumulated credited kills. A booking need only be evaluated when this reserve is selected.",
+      "kitNotes": [],
+      "plan": " Verify your own flag after a contributed kill.",
+      "role": "reserve",
+      "world": "standard-members",
+      "effort": [
+        5.0,
+        14.5
+      ],
+      "sources": [
+        {
+          "label": "Task and strategy · OSRS Wiki",
+          "url": "https://oldschool.runescape.wiki/w/Hueycoatl_Adept"
+        }
+      ],
+      "counter": {
+        "key": "The Hueycoatl",
+        "target": 10,
+        "observedKey": "kc:huey"
+      }
+    },
+    "574": {
+      "condition": "Kill Hueycoatl using only earth spells for your own damage.",
+      "tip": "Use an eligible earth spell from body through head. Teammates may use their ordinary kit. Verify your contribution and task flag.",
+      "kitNotes": [
+        "Usable Earth Strike/Bolt/Blast or stronger valid earth spell and recipe"
+      ],
+      "plan": " Verify your own flag after a contributed kill.",
+      "role": "reserve",
+      "world": "standard-members",
+      "effort": [
+        7,
+        22
+      ],
+      "sources": [
+        {
+          "label": "Task and strategy · OSRS Wiki",
+          "url": "https://oldschool.runescape.wiki/w/You%27re_a_wizard"
+        }
+      ]
+    },
+    "177": {
+      "condition": "Earn 10 personal Giant Mole kills.",
+      "tip": "Complete the first kill with a suitable protected setup and keep count across trips.",
+      "kitNotes": [],
+      "plan": "",
+      "role": "reserve",
+      "world": "standard-members",
+      "effort": [
+        2.8,
+        8.0
+      ],
+      "sources": [
+        {
+          "label": "Task and strategy · OSRS Wiki",
+          "url": "https://oldschool.runescape.wiki/w/Giant_Mole_Novice"
+        }
+      ],
+      "counter": {
+        "key": "Giant Mole",
+        "target": 10,
+        "observedKey": "kc:mole"
+      }
+    },
+    "178": {
+      "condition": "Earn 25 personal Giant Mole kills.",
+      "tip": "Use the same qualifying counter and only plan the remaining kills.",
+      "kitNotes": [],
+      "plan": "",
+      "role": "reserve",
+      "world": "standard-members",
+      "effort": [
+        2.8,
+        7.4
+      ],
+      "sources": [
+        {
+          "label": "Task and strategy · OSRS Wiki",
+          "url": "https://oldschool.runescape.wiki/w/Giant_Mole_Champion"
+        }
+      ],
+      "counter": {
+        "key": "Giant Mole",
+        "target": 25,
+        "observedKey": "kc:mole"
+      }
+    },
+    "179": {
+      "condition": "Defeat Giant Mole with at most two burrows.",
+      "tip": "A strong finisher or high enough DPS can finish before the third burrow. Attempt during the ordinary counter.",
+      "kitNotes": [],
+      "plan": "",
+      "role": "reserve",
+      "world": "standard-members",
+      "effort": [
+        5,
+        20
+      ],
+      "sources": [
+        {
+          "label": "Task and strategy · OSRS Wiki",
+          "url": "https://oldschool.runescape.wiki/w/Why_Are_You_Running%3F"
+        }
+      ]
+    },
+    "181": {
+      "condition": "Defeat Giant Mole within 10 seconds of her resurfacing.",
+      "tip": "Find her quickly and time the final hit after the burrow. Diary shield is a tracking convenience.",
+      "kitNotes": [],
+      "plan": "",
+      "role": "reserve",
+      "world": "standard-members",
+      "effort": [
+        5,
+        20
+      ],
+      "sources": [
+        {
+          "label": "Task and strategy · OSRS Wiki",
+          "url": "https://oldschool.runescape.wiki/w/Whack-a-Mole"
+        }
+      ]
+    },
+    "182": {
+      "condition": "Defeat Giant Mole without her dealing damage to any player.",
+      "tip": "Use Protect from Melee or a clean safespot. An uncontested fight avoids unrelated damage flags.",
+      "kitNotes": [],
+      "plan": "",
+      "role": "reserve",
+      "world": "standard-members",
+      "effort": [
+        5,
+        15
+      ],
+      "sources": [
+        {
+          "label": "Task and strategy · OSRS Wiki",
+          "url": "https://oldschool.runescape.wiki/w/Avoiding_Those_Little_Arms"
+        }
+      ]
+    },
+    "206": {
+      "condition": "Earn 10 personal Sarachnis kills.",
+      "tip": "Bring a refill plan and complete the crush and timing mechanics along the way.",
+      "kitNotes": [],
+      "plan": "",
+      "role": "reserve",
+      "world": "standard-members",
+      "effort": [
+        2.5,
+        8.5
+      ],
+      "sources": [
+        {
+          "label": "Task and strategy · OSRS Wiki",
+          "url": "https://oldschool.runescape.wiki/w/Sarachnis_Novice"
+        }
+      ],
+      "counter": {
+        "key": "Sarachnis",
+        "target": 10,
+        "observedKey": "kc:sarachnis"
+      }
+    },
+    "207": {
+      "condition": "Earn 25 personal Sarachnis kills.",
+      "tip": "Replan from the known kill count. Keep as a reserve for accounts that already do this loop.",
+      "kitNotes": [],
+      "plan": "",
+      "role": "reserve",
+      "world": "standard-members",
+      "effort": [
+        2.8,
+        7.2
+      ],
+      "sources": [
+        {
+          "label": "Task and strategy · OSRS Wiki",
+          "url": "https://oldschool.runescape.wiki/w/Sarachnis_Champion"
+        }
+      ],
+      "counter": {
+        "key": "Sarachnis",
+        "target": 25,
+        "observedKey": "kc:sarachnis"
+      }
+    },
+    "208": {
+      "condition": "Kill Sarachnis without two consecutive ranged attacks from her.",
+      "tip": "Return to melee distance when released from the web before the second ranged attack.",
+      "kitNotes": [],
+      "plan": "",
+      "role": "reserve",
+      "world": "standard-members",
+      "effort": [
+        5,
+        17
+      ],
+      "sources": [
+        {
+          "label": "Task and strategy · OSRS Wiki",
+          "url": "https://oldschool.runescape.wiki/w/Ready_to_Pounce"
+        }
+      ]
+    },
+    "209": {
+      "condition": "Defeat Sarachnis without her dealing damage to any player.",
+      "tip": "Switch protection immediately as the boss changes range. Use an uncontested fight for control.",
+      "kitNotes": [],
+      "plan": "",
+      "role": "reserve",
+      "world": "standard-members",
+      "effort": [
+        5,
+        17
+      ],
+      "sources": [
+        {
+          "label": "Task and strategy · OSRS Wiki",
+          "url": "https://oldschool.runescape.wiki/w/Inspect_Repellent"
+        }
+      ]
+    },
+    "210": {
+      "condition": "Defeat Sarachnis using a crush weapon.",
+      "tip": "Use a weapon in crush style for the method, including the finishing hit. A rune mace is an accessible example.",
+      "kitNotes": [],
+      "plan": "",
+      "role": "reserve",
+      "world": "standard-members",
+      "effort": [
+        5,
+        17
+      ],
+      "sources": [
+        {
+          "label": "Task and strategy · OSRS Wiki",
+          "url": "https://oldschool.runescape.wiki/w/Newspaper_Enthusiast"
+        }
+      ]
+    },
+    "174": {
+      "condition": "Defeat one lizardman shaman.",
+      "tip": "Choose Molch to share #175 with the same kill. Other eligible shaman sites count for this task.",
+      "kitNotes": [],
+      "plan": "",
+      "role": "reserve",
+      "world": "standard-members",
+      "effort": [
+        3,
+        8
+      ],
+      "sources": [
+        {
+          "label": "Task and strategy · OSRS Wiki",
+          "url": "https://oldschool.runescape.wiki/w/A_Scaley_Encounter"
+        }
+      ]
+    },
+    "175": {
+      "condition": "Defeat a Molch shaman that has dealt no damage to any player, excluding damage from its spawns.",
+      "tip": "Use an uncontested room, protect against its main attack, avoid jumps and poison and finish personally.",
+      "kitNotes": [],
+      "plan": "Molch temple location. A friend's damage can compromise the Ironman's own credit or the attempt condition.",
+      "role": "reserve",
+      "world": "standard-members",
+      "effort": [
+        4,
+        14
+      ],
+      "sources": [
+        {
+          "label": "Task and strategy · OSRS Wiki",
+          "url": "https://oldschool.runescape.wiki/w/Shayzien_Protector"
+        }
+      ]
+    },
+    "0": {
+      "condition": "Personally defeat a normal aberrant spectre.",
+      "tip": "Choose Slayer Tower off-task after Priest in Peril, or a valid open spawn. A deviant spectre does not count.",
+      "kitNotes": [
+        "1 nose peg or wearable Slayer helm"
+      ],
+      "plan": "",
+      "role": "reserve",
+      "world": "standard-members",
+      "effort": [
+        2,
+        6
+      ],
+      "sources": [
+        {
+          "label": "Task and strategy · OSRS Wiki",
+          "url": "https://oldschool.runescape.wiki/w/Noxious_Foe"
+        }
+      ],
+      "requirements": {
+        "levels": {
+          "slayer": 60
+        }
+      }
+    },
+    "33": {
+      "condition": "Defeat one bloodveld or mutated bloodveld.",
+      "tip": "Use a suitable Slayer Tower floor off-task or another eligible spawn. The Stronghold cave and Tower basement have assignment restrictions.",
+      "kitNotes": [],
+      "plan": "",
+      "role": "reserve",
+      "world": "standard-members",
+      "effort": [
+        2,
+        7
+      ],
+      "sources": [
+        {
+          "label": "Task and strategy · OSRS Wiki",
+          "url": "https://oldschool.runescape.wiki/w/The_Demonic_Punching_Bag"
+        }
+      ],
+      "requirements": {
+        "levels": {
+          "slayer": 50
+        }
+      }
+    },
+    "34": {
+      "condition": "Defeat a brutal black dragon.",
+      "tip": "At 77 Slayer use a usable method at a brutal spawn such as the Catacombs and combine with the ordinary black dragon CA.",
+      "kitNotes": [],
+      "plan": "",
+      "role": "reserve",
+      "world": "standard-members",
+      "effort": [
+        4,
+        14
+      ],
+      "sources": [
+        {
+          "label": "Task and strategy · OSRS Wiki",
+          "url": "https://oldschool.runescape.wiki/w/Brutal,_Big,_Black_and_Firey"
+        }
+      ],
+      "requirements": {
+        "levels": {
+          "slayer": 77
+        }
+      }
+    },
+    "287": {
+      "condition": "Defeat one regular wyrm.",
+      "tip": "Use the Karuulm dungeon and bring heat protection. 62 Slayer, with a valid Slayer boost where permitted.",
+      "kitNotes": [
+        "Boots of stone (23037), boots of brimstone (22954) or granite boots (21643), unless the claimed Kourend & Kebos Elite reward covers the floor. Check equip requirements."
+      ],
+      "plan": "",
+      "role": "reserve",
+      "world": "standard-members",
+      "effort": [
+        3,
+        9
+      ],
+      "sources": [
+        {
+          "label": "Task and strategy · OSRS Wiki",
+          "url": "https://oldschool.runescape.wiki/w/A_Slithery_Encounter"
+        }
+      ],
+      "requirements": {}
+    },
+    "162": {
+      "condition": "Earn 10 personal King Black Dragon kills.",
+      "tip": "Do one qualifying adult dragon credit during the KBD run. Time includes multiple short protected encounters, plus separate Wilderness travel.",
+      "kitNotes": [],
+      "plan": "Wilderness access opt-in and personal Ironman eligibility Choose a safe non-Wilderness adult black dragon for #32 and leave #162 for the all-Easy checklist.",
+      "role": "catalogue_only",
+      "world": "standard-members",
+      "effort": [
+        2.4,
+        7.5
+      ],
+      "sources": [
+        {
+          "label": "Task and strategy · OSRS Wiki",
+          "url": "https://oldschool.runescape.wiki/w/King_Black_Dragon_Novice"
+        }
+      ],
+      "counter": {
+        "key": "King Black Dragon",
+        "target": 10,
+        "observedKey": "kc:kbd"
+      }
+    },
+    "625": {
+      "condition": "Earn 25 qualifying Shellbane Gryphon kills.",
+      "tip": "Use an available repeat assignment over one or more trips. Take a separate clean-source check for the solo instance and counters after the quest.",
+      "kitNotes": [],
+      "plan": "Defer both entries to the optional Easy-ranked checklist. Rely on the main path for points until Sailing and Slayer access are already in place.",
+      "role": "catalogue_only",
+      "world": "standard-members",
+      "effort": [
+        1.92,
+        5.0
+      ],
+      "sources": [
+        {
+          "label": "Task and strategy · OSRS Wiki",
+          "url": "https://oldschool.runescape.wiki/w/Shellbane_Adept"
+        }
+      ],
+      "counter": {
+        "key": "Shellbane gryphon",
+        "target": 25,
+        "observedKey": "kc:shellbane"
+      }
+    },
+    "630": {
+      "condition": "Clear the corrosion applied by the Shellbane Gryphon’s spit, then kill it.",
+      "tip": "After being hit, empty every equipment slot until the corrosion-clear message. Re-equip shield first and finish. Unfilter game messages if needed.",
+      "kitNotes": [
+        "1 Tortugan shield for the safe method, room to unequip the full worn loadout"
+      ],
+      "plan": "Defer both entries to the optional Easy-ranked checklist. Rely on the main path for points until Sailing and Slayer access are already in place.",
+      "role": "catalogue_only",
+      "world": "standard-members",
+      "effort": [
+        5,
+        18
+      ],
+      "sources": [
+        {
+          "label": "Task and strategy · OSRS Wiki",
+          "url": "https://oldschool.runescape.wiki/w/Dry_Cleaning"
+        }
+      ]
+    }
+  },
+  "trips": [
+    {
+      "activity": "brutus",
+      "ids": [
+        632,
+        635,
+        636,
+        633
+      ],
+      "profile": "brutus",
+      "phase": 1,
+      "role": "default",
+      "unlockMinutes": 10,
+      "regions": [
+        12851
+      ]
+    },
+    {
+      "activity": "wintertodt",
+      "ids": [
+        285,
+        282,
+        281,
+        283,
+        284,
+        286,
+        279,
+        280
+      ],
+      "profile": "wintertodt",
+      "phase": 2,
+      "role": "default",
+      "unlockMinutes": 10,
+      "regions": []
+    },
+    {
+      "activity": "giants",
+      "ids": [
+        398,
+        80,
+        120,
+        121
+      ],
+      "profile": "giants",
+      "phase": 3,
+      "role": "default",
+      "unlockMinutes": 10,
+      "regions": []
+    },
+    {
+      "activity": "tempoross",
+      "ids": [
+        357,
+        356,
+        360,
+        359,
+        358,
+        353,
+        354
+      ],
+      "profile": "tempoross",
+      "phase": 4,
+      "role": "default",
+      "unlockMinutes": 10,
+      "regions": []
+    },
+    {
+      "activity": "tempoross",
+      "ids": [
+        355
+      ],
+      "profile": "tempoross",
+      "phase": 4,
+      "role": "reserve",
+      "unlockMinutes": 10,
+      "regions": []
+    },
+    {
+      "activity": "deranged",
+      "ids": [
+        78,
+        79,
+        76
+      ],
+      "profile": "deranged",
+      "phase": 5,
+      "role": "default",
+      "unlockMinutes": 10,
+      "regions": [
+        14649
+      ]
+    },
+    {
+      "activity": "deranged",
+      "ids": [
+        77
+      ],
+      "profile": "deranged",
+      "phase": 5,
+      "role": "reserve",
+      "unlockMinutes": 10,
+      "regions": [
+        14649
+      ]
+    },
+    {
+      "activity": "scurrius",
+      "ids": [
+        521,
+        524,
+        523,
+        525,
+        522
+      ],
+      "profile": "scurrius",
+      "phase": 6,
+      "role": "reserve",
+      "unlockMinutes": 10,
+      "regions": [
+        12854,
+        13110,
+        13210
+      ]
+    },
+    {
+      "activity": "barrows",
+      "ids": [
+        28,
+        26,
+        27,
+        30,
+        29,
+        24,
+        25
+      ],
+      "profile": "barrows",
+      "phase": 7,
+      "role": "reserve",
+      "unlockMinutes": 10,
+      "regions": []
+    },
+    {
+      "activity": "obor",
+      "ids": [
+        134,
+        131,
+        132,
+        133,
+        129,
+        130
+      ],
+      "profile": "obor",
+      "phase": 8,
+      "role": "reserve",
+      "unlockMinutes": 10,
+      "regions": []
+    },
+    {
+      "activity": "bryophyta",
+      "ids": [
+        41,
+        39,
+        37,
+        38,
+        35,
+        40,
+        36
+      ],
+      "profile": "bryophyta",
+      "phase": 9,
+      "role": "reserve",
+      "unlockMinutes": 10,
+      "regions": []
+    },
+    {
+      "activity": "taverley",
+      "ids": [
+        122,
+        32
+      ],
+      "profile": "taverley",
+      "phase": 10,
+      "role": "reserve",
+      "unlockMinutes": 10,
+      "regions": []
+    },
+    {
+      "activity": "titans",
+      "ids": [
+        591,
+        594,
+        597,
+        588,
+        598,
+        589
+      ],
+      "profile": "titans",
+      "phase": 11,
+      "role": "reserve",
+      "unlockMinutes": 10,
+      "regions": []
+    },
+    {
+      "activity": "huey",
+      "ids": [
+        568,
+        569,
+        574
+      ],
+      "profile": "huey",
+      "phase": 12,
+      "role": "reserve",
+      "unlockMinutes": 10,
+      "regions": []
+    },
+    {
+      "activity": "mole",
+      "ids": [
+        177,
+        178,
+        179,
+        181,
+        182
+      ],
+      "profile": "mole",
+      "phase": 13,
+      "role": "reserve",
+      "unlockMinutes": 10,
+      "regions": []
+    },
+    {
+      "activity": "sarachnis",
+      "ids": [
+        206,
+        207,
+        208,
+        209,
+        210
+      ],
+      "profile": "sarachnis",
+      "phase": 14,
+      "role": "reserve",
+      "unlockMinutes": 10,
+      "regions": []
+    },
+    {
+      "activity": "shamans",
+      "ids": [
+        174,
+        175
+      ],
+      "profile": "shamans",
+      "phase": 15,
+      "role": "reserve",
+      "unlockMinutes": 10,
+      "regions": []
+    },
+    {
+      "activity": "slayer",
+      "ids": [
+        0,
+        33,
+        34,
+        287
+      ],
+      "profile": "slayer",
+      "phase": 16,
+      "role": "reserve",
+      "unlockMinutes": 10,
+      "regions": []
+    }
+  ],
+  "itemEntries": {
+    "23037": {
+      "id": 23037,
+      "name": "Boots of stone",
+      "equipment_slot": 10,
+      "equipable": true,
+      "wear_requirements": {
+        "Slayer": 44
+      },
+      "requirements_verified": true,
+      "sources": [
+        "https://oldschool.runescape.wiki/w/Boots_of_stone"
+      ]
+    },
+    "22954": {
+      "id": 22954,
+      "name": "Boots of brimstone",
+      "equipment_slot": 10,
+      "equipable": true,
+      "wear_requirements": {
+        "Slayer": 44,
+        "Defence": 70,
+        "Magic": 70,
+        "Ranged": 70
+      },
+      "requirements_verified": true,
+      "sources": [
+        "https://oldschool.runescape.wiki/w/Boots_of_brimstone"
+      ]
+    },
+    "21643": {
+      "id": 21643,
+      "name": "Granite boots",
+      "equipment_slot": 10,
+      "equipable": true,
+      "wear_requirements": {
+        "Strength": 50,
+        "Defence": 50
+      },
+      "requirements_verified": true,
+      "sources": [
+        "https://oldschool.runescape.wiki/w/Granite_boots"
+      ]
+    },
+    "4168": {
+      "id": 4168,
+      "name": "Nose peg",
+      "equipment_slot": 0,
+      "equipable": true,
+      "wear_requirements": {
+        "Slayer": 60
+      },
+      "requirements_verified": true,
+      "sources": [
+        "https://oldschool.runescape.wiki/w/Nose_peg"
+      ]
+    }
+  },
+  "spellEntries": {
+    "Wind Bolt": {
+      "magic": 17,
+      "spellbook": "standard",
+      "runes_per_cast": {
+        "556": 2,
+        "562": 1
+      },
+      "source": "https://oldschool.runescape.wiki/w/Wind_Bolt"
+    }
+  },
+  "preparation": [
+    {
+      "text": "Start in Lumbridge with The Ides of Milk. Return to the cow pen for your first repeatable Brutus kill.",
+      "sources": []
+    },
+    {
+      "text": "Use 50 Firemaking at Wintertodt and 35 Fishing at Tempoross. Pick up tools inside each activity.",
+      "sources": []
+    },
+    {
+      "text": "Complete Demon Slayer for Silverlight and Bone Voyage for Fossil Island. Use open reserves if these are pending.",
+      "sources": []
+    },
+    {
+      "text": "Claim the Easy reward outside the Warriors’ Guild on a members’ world. Bring two free inventory spaces.",
+      "sources": []
+    },
+    {
+      "text": "Continue into Medium with your earned points and keep your progress toward the remaining tasks.",
+      "sources": []
+    }
+  ]
+}

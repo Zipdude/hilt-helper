@@ -101,6 +101,19 @@ public final class RuneLiteCollector
 													VarbitID.RUNE_POUCH_QUANTITY_6};
 	// Local game counters and flags used for readiness. They never award achievement points.
 	private static final Map<Integer, String> ACCESS_VARPS = Map.ofEntries(
+		Map.entry(VarPlayerID.TOTAL_COWBOSS_KILLS, "kc:brutus"),
+		Map.entry(VarPlayerID.TOTAL_WINTERTODT_KILLS, "kc:wintertodt"),
+		Map.entry(VarPlayerID.TOTAL_TEMPOROSS_KILLS, "kc:tempoross"),
+		Map.entry(VarPlayerID.TOTAL_DERANGEDARCHAEOLOGIST_KILLS, "kc:deranged"),
+		Map.entry(VarPlayerID.TOTAL_HILLGIANT_BOSS_KILLS, "kc:obor"),
+		Map.entry(VarPlayerID.TOTAL_BRYOPHYTA_KILLS, "kc:bryophyta"),
+		Map.entry(VarPlayerID.TOTAL_RAT_BOSS_KILLS, "kc:scurrius"),
+		Map.entry(VarPlayerID.TOTAL_BARROWS_CHESTS, "kc:barrows"),
+		Map.entry(VarPlayerID.TOTAL_HUEY_KILLS, "kc:huey"),
+		Map.entry(VarPlayerID.TOTAL_ROYAL_TITAN_KILLS, "kc:titans"),
+		Map.entry(VarPlayerID.TOTAL_MOLE_KILLS, "kc:mole"),
+		Map.entry(VarPlayerID.TOTAL_SARACHNIS_KILLS, "kc:sarachnis"),
+		Map.entry(VarPlayerID.TOTAL_KBD_KILLS, "kc:kbd"),
 		Map.entry(VarPlayerID.TOTAL_ARMADYL_KILLS, "kc:kree-arra"),
 		Map.entry(VarPlayerID.TOTAL_BANDOS_KILLS, "kc:general-graardor"),
 		Map.entry(VarPlayerID.TOTAL_SARADOMIN_KILLS, "kc:commander-zilyana"),
@@ -134,6 +147,16 @@ public final class RuneLiteCollector
 		Map.entry(VarbitID.INFERNO_SACRIFICED_FIRECAPE, "infernoAccess"),
 		Map.entry(VarbitID.GARGBOSS_UNLOCKED_ROOF, "guardianRoof"),
 		Map.entry(VarbitID.CA_THRESHOLD_EASY, "caEasyThreshold"),
+		Map.entry(VarbitID.CA_TIER_STATUS_MEDIUM, "caMediumStatus"),
+		Map.entry(VarbitID.CA_TIER_STATUS_HARD, "caHardStatus"),
+		Map.entry(VarbitID.CA_TIER_STATUS_ELITE, "caEliteStatus"),
+		Map.entry(VarbitID.CA_TIER_STATUS_MASTER, "caMasterStatus"),
+		Map.entry(VarbitID.CA_THRESHOLD_MEDIUM, "caMediumThreshold"),
+		Map.entry(VarbitID.CA_THRESHOLD_HARD, "caHardThreshold"),
+		Map.entry(VarbitID.CA_THRESHOLD_ELITE, "caEliteThreshold"),
+		Map.entry(VarbitID.CA_THRESHOLD_MASTER, "caMasterThreshold"),
+		Map.entry(VarbitID.CA_TIER_STATUS_EASY, "caEasyStatus"),
+		Map.entry(VarbitID.KOUREND_ELITE_REWARD, "kourendEliteReward"),
 		Map.entry(VarbitID.CA_THRESHOLD_GRANDMASTER, "caGrandmasterThreshold"),
 		Map.entry(VarbitID.CA_TIER_STATUS_GRANDMASTER, "caGrandmasterStatus"),
 		Map.entry(VarbitID.GIM_GROUPSIZE, "caGroupSize"),
@@ -340,6 +363,11 @@ public final class RuneLiteCollector
 																				container(InventoryID.WORN, now);
 		Map<String, Integer> context = new HashMap<>();
 		context.put("membersWorld", client.getWorldType().contains(WorldType.MEMBERS) ? 1 : 0);
+		WorldPoint location = client.getLocalPlayer().getWorldLocation();
+		if (location != null)
+		{
+			context.put("region", location.getRegionID());
+		}
 		try
 		{
 			context.put("spellbook", client.getVarbitValue(VarbitID.SPELLBOOK));
@@ -372,9 +400,7 @@ public final class RuneLiteCollector
 		if (mode.supported())
 		{
 			observeAccess(context);
-			observeGrandmasterContext(context, mode);
-			observeRewardThreshold(context, "caEliteThreshold", VarbitID.CA_THRESHOLD_ELITE);
-			observeRewardThreshold(context, "caMasterThreshold", VarbitID.CA_THRESHOLD_MASTER);
+			observeRewardContext(context, mode);
 			try
 			{
 				int revision = context.get("caGameBuild");
@@ -389,8 +415,8 @@ public final class RuneLiteCollector
 				{
 					words[i] = client.getServerVarpValue(CA_VARPS[i]);
 				}
-				int threshold = client.getServerVarbitValue(VarbitID.CA_THRESHOLD_MEDIUM),
-					hardThreshold = client.getServerVarbitValue(VarbitID.CA_THRESHOLD_HARD),
+				int threshold = context.getOrDefault("caMediumThreshold", 0),
+					hardThreshold = context.getOrDefault("caHardThreshold", 0),
 					points = client.getServerVarbitValue(VarbitID.CA_POINTS);
 				context.put("caMediumThreshold", threshold);
 				context.put("caHardThreshold", hardThreshold);
@@ -404,7 +430,7 @@ public final class RuneLiteCollector
 				}
 				else
 				{
-					ca = decoder.decode(cacheTasks, words, threshold, hardThreshold, points, mode.groupIronman());
+					ca = decoder.decodeSnapshot(cacheTasks, words, threshold, hardThreshold, points);
 				}
 				lastCa = ca;
 				lastWords = words;
@@ -426,16 +452,19 @@ public final class RuneLiteCollector
 		return new LiveSnapshot(key, name, session, mode, now, levelCache, questCache, containers, ca, context);
 	}
 
-	private void observeGrandmasterContext(Map<String, Integer> context, AccountMode mode)
+	private void observeRewardContext(Map<String, Integer> context, AccountMode mode)
 	{
 		int revision = client.getRevision();
 		context.put("caGameBuild", revision);
-		int target = context.getOrDefault("caGrandmasterThreshold", 0);
-		List<Integer> scope = List.of(revision, mode.ordinal(), target, context.getOrDefault("caGroupSize", 0),
-			context.getOrDefault("caGroupMember", 0), context.getOrDefault("caGroupPrestige", 0),
-			context.getOrDefault("membersWorld", 0));
+		List<Integer> scope = new ArrayList<>(List.of(revision, client.getWorld(), mode.ordinal(),
+			context.getOrDefault("caGroupSize", 0), context.getOrDefault("caGroupMember", 0),
+			context.getOrDefault("caGroupPrestige", 0), context.getOrDefault("membersWorld", 0)));
+		for (RewardGoal goal : RewardGoal.values())
+		{
+			scope.add(context.getOrDefault("ca" + goal.label + "Threshold", 0));
+		}
 		Widget rewards = client.getWidget(InterfaceID.CaRewards.FRAME);
-		if (target > 0 && rewards != null && !rewards.isHidden())
+		if (rewards != null && !rewards.isHidden())
 		{
 			rewardsObserved = scope;
 		}
@@ -443,25 +472,19 @@ public final class RuneLiteCollector
 		{
 			rewardsObserved = List.of();
 		}
-		context.put("caRewardsObserved", scope.equals(rewardsObserved) ? 1 : 0);
+		boolean observed = scope.equals(rewardsObserved);
+		context.put("caRewardsObserved", observed && context.getOrDefault("caGrandmasterThreshold", 0) > 0 ? 1 : 0);
+		for (RewardGoal goal : RewardGoal.values())
+		{
+			String key = "ca" + goal.label;
+			context.put(key + "RewardsObserved", observed && context.getOrDefault(key + "Threshold", 0) > 0 ? 1 : 0);
+		}
 		// The lower bound remains safe on clients whose first counter already includes the variant.
 		context.put("kc:chambers-combined", Math.max(context.getOrDefault("kc:chambers", 0),
 			context.getOrDefault("kc:chambers-cm", 0)));
 		context.put("kc:theatre-combined", Math.max(context.getOrDefault("kc:theatre-normal", 0),
 			context.getOrDefault("kc:theatre-hard", 0)));
 	}
-	private void observeRewardThreshold(Map<String, Integer> context, String key, int id)
-	{
-		try
-		{
-			context.put(key, client.getServerVarbitValue(id));
-		}
-		catch (RuntimeException ex)
-		{
-			// The individual target can be unavailable even when the task flags match.
-		}
-	}
-
 	private void observeAccess(Map<String, Integer> context)
 	{
 		ACCESS_VARPS.forEach((id, key) ->

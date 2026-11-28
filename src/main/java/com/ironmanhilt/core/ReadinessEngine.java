@@ -142,6 +142,15 @@ public final class ReadinessEngine
 		{
 			live = preparationEvidence(state, live);
 		}
+		if (req.has("minimum_after_task") && live != null && live.ca.verifiedFor(state.contentGoal()))
+		{
+			JsonObject previous = req.getAsJsonObject("minimum_after_task");
+			if (live.ca.completed.contains(previous.get("id").getAsInt()))
+			{
+				req = req.deepCopy();
+				req.add("minimum", previous.get("amount"));
+			}
+		}
 		Check automatic = req.has("resource_token") ?
 			token(req.get("resource_token").getAsString(), state, live, now) : automatic(activity, req, state, live, now);
 		if (!automatic.ready() && req.has("on_site"))
@@ -169,6 +178,10 @@ public final class ReadinessEngine
 				return automatic;
 			}
 			automatic = new Check(label, UNKNOWN, str(req, "manualCheck", automatic.detail), 0);
+		}
+		if ((state.automatic() || state.rewardGoal() == RewardGoal.EASY) && !UNKNOWN.equals(automatic.status))
+		{
+			return automatic;
 		}
 		JsonObject overrides = state.object("overrides");
 		JsonElement entry = overrides.get(checkKey(activity, index, req));
@@ -232,7 +245,7 @@ public final class ReadinessEngine
 		{
 			return new Check(label, UNKNOWN, "Log in on a standard-world account", 0);
 		}
-		if (req.has("unlock_ids") && live.ca.verifiedFor(state.rewardGoal()) &&
+		if (req.has("unlock_ids") && live.ca.verifiedFor(state.contentGoal()) &&
 			!Collections.disjoint(ints(req.getAsJsonArray("unlock_ids")), live.ca.completed))
 		{
 			return new Check(label, READY, "A verified game completion establishes access.", 1);
@@ -245,10 +258,12 @@ public final class ReadinessEngine
 				JsonObject key = new JsonObject();
 				key.addProperty("label", label);
 				key.add("any_of_ids", req.getAsJsonArray("access_item_ids"));
+				key.addProperty("must_equip", yes(req, "access_item_equippable"));
 				Check owned = automatic(activity, key, state, live, now);
 				if (owned.ready())
 				{
-					return new Check(label, ALTERNATIVE, "Bring your brittle key to unlock the rooftop.", 1, owned.fromBank);
+					return new Check(label, ALTERNATIVE, str(req, "access_item_note",
+						"Bring your brittle key to unlock the rooftop."), 1, owned.fromBank);
 				}
 				if (MISSING.equals(owned.status))
 				{
@@ -321,6 +336,28 @@ public final class ReadinessEngine
 		if (str(req, "predicate", "").equals(AMMUNITION))
 		{
 			return ammunition(activity, req, state, live, now);
+		}
+		if (req.has("ammunition_alternative"))
+		{
+			JsonObject weapon = req.deepCopy();
+			JsonObject ammo = weapon.remove("ammunition_alternative").getAsJsonObject();
+			ammo.addProperty("label", label);
+			Check meleeOrMagic = automatic(activity, weapon, state, live, now);
+			if (meleeOrMagic.ready() && !meleeOrMagic.fromBank)
+			{
+				return meleeOrMagic;
+			}
+			Check ranged = ammunition(activity, ammo, state, live, now);
+			if (ranged.ready() && (!ranged.fromBank || !meleeOrMagic.ready()))
+			{
+				return ranged;
+			}
+			if (meleeOrMagic.ready())
+			{
+				return meleeOrMagic;
+			}
+			String status = UNKNOWN.equals(meleeOrMagic.status) || UNKNOWN.equals(ranged.status) ? UNKNOWN : MISSING;
+			return new Check(label, status, str(req, "notes", "Check which weapon can be used for this task."), 0);
 		}
 		Set<Integer> ids = wanted(req);
 		if (ids.isEmpty())
@@ -698,6 +735,10 @@ public final class ReadinessEngine
 				}
 				if (elementalStaffIds.contains(id))
 				{
+					if (yes(req, "no_staff"))
+					{
+						continue;
+					}
 					JsonObject staff = item(id);
 					if (staff != null && gate(staff, new JsonObject(), state, live) == null)
 					{
@@ -1031,7 +1072,7 @@ public final class ReadinessEngine
 			}
 			return result;
 		}
-		if (req.has("alternatives"))
+		if (req.has("alternatives") || req.has("ammunition_alternative"))
 		{
 			return result;
 		}

@@ -1,7 +1,9 @@
 Guide text and adapted Wiki reference data: CC BY-NC-SA 3.0.
 Attribution: Old School RuneScape Wiki contributors; source URLs are attached to each task, activity and item.
-Adapted into Combat Achievement route guidance from Medium through Grandmaster and local readiness data.
+Adapted into Combat Achievement route guidance from Easy through Grandmaster and local readiness data.
 Licence: https://creativecommons.org/licenses/by-nc-sa/3.0/
 Licensing policy: https://meta.weirdgloop.org/w/Licensing
-Jagex owns game content and trademarks. The Ghommal's hilt 2 icons use Jagex artwork under its Fan Content Policy.
+Jagex owns game content and trademarks. The Ghommal's hilt 6 icons use the Jagex item 25936 sprite under the Fan Content Policy.
+Sprite source: https://github.com/osrsbox/osrsbox-db/blob/master/docs/items-icons/25936.png
+Checklist portraits are resized Old School RuneScape Wiki images of Jagex artwork. Each source and original checksum is listed in checklist-portraits.json.
 Plugin code is separately licensed under BSD-2-Clause.

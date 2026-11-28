@@ -1,0 +1,968 @@
+{
+  "tileSize": 28,
+  "columns": 12,
+  "sheetSha256": "f2a8efddf6255f24c65ed9f809cfa0a6a2e042abd73e482bfc3568a1b13fdccb",
+  "portraits": [
+    {
+      "key": "aberrant-spectre",
+      "name": "Aberrant spectre",
+      "filePage": "https://oldschool.runescape.wiki/w/File:Aberrant_spectre.png",
+      "source": "https://oldschool.runescape.wiki/images/Aberrant_spectre.png?65d6f",
+      "originalSha256": "0ef6db7f697900974819f7989ce543287de0288e001af1876de38918b588f57f"
+    },
+    {
+      "key": "abyssal-sire",
+      "name": "Abyssal Sire",
+      "filePage": "https://oldschool.runescape.wiki/w/File:Abyssal_Sire_%28phase_1%29.png",
+      "source": "https://oldschool.runescape.wiki/images/Abyssal_Sire_%28phase_1%29.png?0db8f",
+      "originalSha256": "920e4c3533864977633c932aa1b9efe582d72602c6dffa62dad98bf2f63b297f"
+    },
+    {
+      "key": "akkha",
+      "name": "Akkha",
+      "filePage": "https://oldschool.runescape.wiki/w/File:Akkha.png",
+      "source": "https://oldschool.runescape.wiki/images/Akkha.png?09042",
+      "originalSha256": "3ae1aab2986de6f084e1d9d34173e52bd41634ff0ce8752c7a44f898c32e10d2"
+    },
+    {
+      "key": "alchemical-hydra",
+      "name": "Alchemical Hydra",
+      "filePage": "https://oldschool.runescape.wiki/w/File:Alchemical_Hydra_%28serpentine%29.png",
+      "source": "https://oldschool.runescape.wiki/images/Alchemical_Hydra_%28serpentine%29.png?925dd",
+      "originalSha256": "a01a6e5d435630a640a32b87f4bc863f0ae0942336ea41fb5ea5020524d131ee"
+    },
+    {
+      "key": "amoxliatl",
+      "name": "Amoxliatl",
+      "filePage": "https://oldschool.runescape.wiki/w/File:Amoxliatl.png",
+      "source": "https://oldschool.runescape.wiki/images/Amoxliatl.png?01b12",
+      "originalSha256": "20e93ea68c0b361aac9ecfe4708c22a65e4ecc0b88b809303b5b1f052bdbf6f7"
+    },
+    {
+      "key": "araxxor",
+      "name": "Araxxor",
+      "filePage": "https://oldschool.runescape.wiki/w/File:Araxxor.png",
+      "source": "https://oldschool.runescape.wiki/images/Araxxor.png?35d2e",
+      "originalSha256": "fdfd18f30f419d1b086f2732fbeff8e48b28e3263ba0caac39910af693024d60"
+    },
+    {
+      "key": "ba-ba",
+      "name": "Ba-Ba",
+      "filePage": "https://oldschool.runescape.wiki/w/File:Ba-Ba.png",
+      "source": "https://oldschool.runescape.wiki/images/Ba-Ba.png?648d9",
+      "originalSha256": "54f0f40a1d89a1413f62fdbb76e56ca7299af8eac258a0b543137a960685a974"
+    },
+    {
+      "key": "basilisk-knight",
+      "name": "Basilisk Knight",
+      "filePage": "https://oldschool.runescape.wiki/w/File:Basilisk_Knight.png",
+      "source": "https://oldschool.runescape.wiki/images/Basilisk_Knight.png?a21ef",
+      "originalSha256": "fbcc75a61d36eeb33214904ab883403c0acc3e3901d46c01adfff92716e75afa"
+    },
+    {
+      "key": "black-demon",
+      "name": "Black demon",
+      "filePage": "https://oldschool.runescape.wiki/w/File:Black_demon.png",
+      "source": "https://oldschool.runescape.wiki/images/Black_demon.png?5ecf8",
+      "originalSha256": "6863c8aea1c215054db4d46fd619bf2623a72475efbef5d5a177526203218413"
+    },
+    {
+      "key": "black-dragon",
+      "name": "Black dragon",
+      "filePage": "https://oldschool.runescape.wiki/w/File:Black_dragon.png",
+      "source": "https://oldschool.runescape.wiki/images/Black_dragon.png?b8574",
+      "originalSha256": "f73281b99d70959e968325ccdf45e1146df66146d1a6376d1d13bffbb564ba1f"
+    },
+    {
+      "key": "bloodveld",
+      "name": "Bloodveld",
+      "filePage": "https://oldschool.runescape.wiki/w/File:Bloodveld.png",
+      "source": "https://oldschool.runescape.wiki/images/Bloodveld.png?adc61",
+      "originalSha256": "ab12919b406ff3ac12f013fdcc267fd4c9c18887c34900e7d158e80ea7692914"
+    },
+    {
+      "key": "branda-the-fire-queen",
+      "name": "Branda the Fire Queen",
+      "filePage": "https://oldschool.runescape.wiki/w/File:Branda_the_Fire_Queen.png",
+      "source": "https://oldschool.runescape.wiki/images/Branda_the_Fire_Queen.png?0687c",
+      "originalSha256": "89c3acac8b48326b2e9e82263e5fb22760a46b2244397a7038dd5ea1d7e7add9"
+    },
+    {
+      "key": "brutal-black-dragon",
+      "name": "Brutal black dragon",
+      "filePage": "https://oldschool.runescape.wiki/w/File:Brutal_black_dragon.png",
+      "source": "https://oldschool.runescape.wiki/images/Brutal_black_dragon.png?24f54",
+      "originalSha256": "07bc06dea7693c7c5a52e3b0b446f0e3a72436fc83ecb831f6ce7d0d30c13684"
+    },
+    {
+      "key": "brutus",
+      "name": "Brutus",
+      "filePage": "https://oldschool.runescape.wiki/w/File:Brutus.png",
+      "source": "https://oldschool.runescape.wiki/images/Brutus.png?eda9e",
+      "originalSha256": "ffe21eb24767c870f4e92b7202bb820fa5dad22047193d21be346884a58cd53c"
+    },
+    {
+      "key": "bryophyta",
+      "name": "Bryophyta",
+      "filePage": "https://oldschool.runescape.wiki/w/File:Bryophyta.png",
+      "source": "https://oldschool.runescape.wiki/images/Bryophyta.png?08bc8",
+      "originalSha256": "26446c860a9eb24e2315ce7c437b3c8e4a7ca145cd848a164ff14a8c307b4dec"
+    },
+    {
+      "key": "callisto",
+      "name": "Callisto",
+      "filePage": "https://oldschool.runescape.wiki/w/File:Callisto.png",
+      "source": "https://oldschool.runescape.wiki/images/Callisto.png?bfba7",
+      "originalSha256": "79c676b2158db91a4be81548010e5cd068a211cd2b4f2dd9b5afc565a8453e08"
+    },
+    {
+      "key": "cerberus",
+      "name": "Cerberus",
+      "filePage": "https://oldschool.runescape.wiki/w/File:Cerberus.png",
+      "source": "https://oldschool.runescape.wiki/images/Cerberus.png?47f4c",
+      "originalSha256": "e528a78d0385d199959d94f56a29ed1879f7fd7c6a5e8b25f84221e872027bf4"
+    },
+    {
+      "key": "chaos-elemental",
+      "name": "Chaos Elemental",
+      "filePage": "https://oldschool.runescape.wiki/w/File:Chaos_Elemental.png",
+      "source": "https://oldschool.runescape.wiki/images/Chaos_Elemental.png?c170c",
+      "originalSha256": "95dd7e57e90a67c838db2c47d5670e0b182f8ab654cc541f64133a04407ca872"
+    },
+    {
+      "key": "chaos-fanatic",
+      "name": "Chaos Fanatic",
+      "filePage": "https://oldschool.runescape.wiki/w/File:Chaos_Fanatic.png",
+      "source": "https://oldschool.runescape.wiki/images/Chaos_Fanatic.png?8871d",
+      "originalSha256": "660d3b8285fe5a685a108e3392b4d012aeea4c429fe90c36736c572b8e91ac36"
+    },
+    {
+      "key": "commander-zilyana",
+      "name": "Commander Zilyana",
+      "filePage": "https://oldschool.runescape.wiki/w/File:Commander_Zilyana.png",
+      "source": "https://oldschool.runescape.wiki/images/Commander_Zilyana.png?c5eaa",
+      "originalSha256": "3ba9d928e50e82ed31f47962a178427212b2aad2196fd8835ce1fd2958989c66"
+    },
+    {
+      "key": "corporeal-beast",
+      "name": "Corporeal Beast",
+      "filePage": "https://oldschool.runescape.wiki/w/File:Corporeal_Beast.png",
+      "source": "https://oldschool.runescape.wiki/images/Corporeal_Beast.png?52ebb",
+      "originalSha256": "60ad5b186141554ce806db9df09c2f7f36b0cf42e687198a1929df350e0f81b7"
+    },
+    {
+      "key": "corrupted-hunllef",
+      "name": "Corrupted Hunllef",
+      "filePage": "https://oldschool.runescape.wiki/w/File:Corrupted_Hunllef.png",
+      "source": "https://oldschool.runescape.wiki/images/Corrupted_Hunllef.png?0cd55",
+      "originalSha256": "7cc6b135a806e54e2880e3cf6f568cc63caa980faef9783fa0b1eebbc97b69e6"
+    },
+    {
+      "key": "crazy-archaeologist",
+      "name": "Crazy archaeologist",
+      "filePage": "https://oldschool.runescape.wiki/w/File:Crazy_archaeologist.png",
+      "source": "https://oldschool.runescape.wiki/images/Crazy_archaeologist.png?78fa1",
+      "originalSha256": "a9db47ecef2fde366b6275ff281e62ee1ba0c3dd90b39f88b9f6c22a8c16f8f1"
+    },
+    {
+      "key": "crystalline-hunllef",
+      "name": "Crystalline Hunllef",
+      "filePage": "https://oldschool.runescape.wiki/w/File:Crystalline_Hunllef.png",
+      "source": "https://oldschool.runescape.wiki/images/Crystalline_Hunllef.png?7737a",
+      "originalSha256": "97441307b5ae14e7f50ee61f0c613416371e8390a3fb28728f0081215d5e83c0"
+    },
+    {
+      "key": "dagannoth-prime",
+      "name": "Dagannoth Prime",
+      "filePage": "https://oldschool.runescape.wiki/w/File:Dagannoth_Prime.png",
+      "source": "https://oldschool.runescape.wiki/images/Dagannoth_Prime.png?945b1",
+      "originalSha256": "7fd17fdb0ab0623fd973617c968ee9328807b117b7b2586677350b7a76fa8d5a"
+    },
+    {
+      "key": "dagannoth-rex",
+      "name": "Dagannoth Rex",
+      "filePage": "https://oldschool.runescape.wiki/w/File:Dagannoth_Rex.png",
+      "source": "https://oldschool.runescape.wiki/images/Dagannoth_Rex.png?a99a9",
+      "originalSha256": "9074a5b56ff1f65038d449fe2ffe0268b5e1a76f4f4c2b352a2349593fe7a908"
+    },
+    {
+      "key": "dagannoth-supreme",
+      "name": "Dagannoth Supreme",
+      "filePage": "https://oldschool.runescape.wiki/w/File:Dagannoth_Supreme.png",
+      "source": "https://oldschool.runescape.wiki/images/Dagannoth_Supreme.png?81f00",
+      "originalSha256": "39fa465e7844c79ebcbc49cafc36e55ed61dab3a383db9783df2e2f37e611d3c"
+    },
+    {
+      "key": "dawn",
+      "name": "Dawn",
+      "filePage": "https://oldschool.runescape.wiki/w/File:Dawn.png",
+      "source": "https://oldschool.runescape.wiki/images/Dawn.png?8b8ea",
+      "originalSha256": "5a7dadcb0e532bea922bb0b3948650372737c26c6dcb29f41b6a5f905d767f4d"
+    },
+    {
+      "key": "deathly-mage",
+      "name": "Deathly mage",
+      "filePage": "https://oldschool.runescape.wiki/w/File:Deathly_mage.png",
+      "source": "https://oldschool.runescape.wiki/images/Deathly_mage.png?28249",
+      "originalSha256": "5757608531629f6d9195db929cdf6e9c0e39634ed111851ef66960f8d5c147c5"
+    },
+    {
+      "key": "demonic-gorilla",
+      "name": "Demonic gorilla",
+      "filePage": "https://oldschool.runescape.wiki/w/File:Demonic_gorilla.png",
+      "source": "https://oldschool.runescape.wiki/images/Demonic_gorilla.png?26536",
+      "originalSha256": "cea7e4d1281c5bf52388294ce92b4566841b2d1316ebcc2070c9727259ab4e10"
+    },
+    {
+      "key": "deranged-archaeologist",
+      "name": "Deranged archaeologist",
+      "filePage": "https://oldschool.runescape.wiki/w/File:Deranged_archaeologist.png",
+      "source": "https://oldschool.runescape.wiki/images/Deranged_archaeologist.png?32c7e",
+      "originalSha256": "6a2f96ea7629ddad70f24c23e54947e0767d0a76a5190bb78523a70330e5031e"
+    },
+    {
+      "key": "dharok-the-wretched",
+      "name": "Dharok the Wretched",
+      "filePage": "https://oldschool.runescape.wiki/w/File:Dharok_the_Wretched.png",
+      "source": "https://oldschool.runescape.wiki/images/Dharok_the_Wretched.png?33092",
+      "originalSha256": "166148dcb1e43760d63db5d0e47f1423f3f642e711acf31384f3be3f932fc468"
+    },
+    {
+      "key": "doom-of-mokhaiotl",
+      "name": "Doom of Mokhaiotl",
+      "filePage": "https://oldschool.runescape.wiki/w/File:Doom_of_Mokhaiotl.png",
+      "source": "https://oldschool.runescape.wiki/images/Doom_of_Mokhaiotl.png?e5edb",
+      "originalSha256": "9a162bc9d908fa882fa7fca319f58dba29dc3f48c9a3392ca321adc02f48b30f"
+    },
+    {
+      "key": "duke-sucellus",
+      "name": "Duke Sucellus",
+      "filePage": "https://oldschool.runescape.wiki/w/File:Duke_Sucellus.png",
+      "source": "https://oldschool.runescape.wiki/images/Duke_Sucellus.png?d588a",
+      "originalSha256": "d52b5424118154372b3d80b0ddaa6d169940de59fd5ba476b75b2eff46d66765"
+    },
+    {
+      "key": "dusk",
+      "name": "Dusk",
+      "filePage": "https://oldschool.runescape.wiki/w/File:Dusk.png",
+      "source": "https://oldschool.runescape.wiki/images/Dusk.png?2d6f0",
+      "originalSha256": "a40901b32bb6a87aa49d0034f48ded3e7e1921bc2a7f26ada322598d9ddb48b5"
+    },
+    {
+      "key": "eclipse-moon",
+      "name": "Eclipse Moon",
+      "filePage": "https://oldschool.runescape.wiki/w/File:Eclipse_Moon.png",
+      "source": "https://oldschool.runescape.wiki/images/Eclipse_Moon.png?c3e72",
+      "originalSha256": "3278f6955ad67550bcb2ad6a5789d78d36aafc57befb2f09c8231d2e3de7db52"
+    },
+    {
+      "key": "elidinis-warden",
+      "name": "Elidinis' Warden",
+      "filePage": "https://oldschool.runescape.wiki/w/File:Elidinis%27_Warden.png",
+      "source": "https://oldschool.runescape.wiki/images/Elidinis%27_Warden.png?c9f68",
+      "originalSha256": "a140990b5b79e2fa860def521e467f778fa937a2c7f5f47aade574ffe2ee0b5f"
+    },
+    {
+      "key": "fire-giant",
+      "name": "Fire giant",
+      "filePage": "https://oldschool.runescape.wiki/w/File:Fire_giant.png",
+      "source": "https://oldschool.runescape.wiki/images/Fire_giant.png?30592",
+      "originalSha256": "abab56df85fc0634f0e0ecbae7608e1ed0e29751f6381cf24a716092ed4ec898"
+    },
+    {
+      "key": "fragment-of-seren",
+      "name": "Fragment of Seren",
+      "filePage": "https://oldschool.runescape.wiki/w/File:Fragment_of_Seren.png",
+      "source": "https://oldschool.runescape.wiki/images/Fragment_of_Seren.png?34a92",
+      "originalSha256": "bf7de85ebe906620b68a72f5806597db0609347bbb1d3eac7d1624075d85b1ae"
+    },
+    {
+      "key": "galvek",
+      "name": "Galvek",
+      "filePage": "https://oldschool.runescape.wiki/w/File:Galvek.png",
+      "source": "https://oldschool.runescape.wiki/images/Galvek.png?5cca4",
+      "originalSha256": "fb3ef1817d0834f5d0f01bfeb4db21f99fe1293d829e6d3a52c5e32108a1b304"
+    },
+    {
+      "key": "gargoyle",
+      "name": "Gargoyle",
+      "filePage": "https://oldschool.runescape.wiki/w/File:Gargoyle.png",
+      "source": "https://oldschool.runescape.wiki/images/Gargoyle.png?b7dd7",
+      "originalSha256": "aecd3c766c1035a841e6ab0bab6d7ab90fa4a5019084d525c723e23a3564a744"
+    },
+    {
+      "key": "general-graardor",
+      "name": "General Graardor",
+      "filePage": "https://oldschool.runescape.wiki/w/File:General_Graardor.png",
+      "source": "https://oldschool.runescape.wiki/images/General_Graardor.png?4dd90",
+      "originalSha256": "a42f98aacc6a43a4514c17dc33a8a01b1b7db56403de8b7cb0aa9e4b92a46673"
+    },
+    {
+      "key": "giant-mole",
+      "name": "Giant Mole",
+      "filePage": "https://oldschool.runescape.wiki/w/File:Giant_Mole.png",
+      "source": "https://oldschool.runescape.wiki/images/Giant_Mole.png?3f58a",
+      "originalSha256": "988404369f3f55a9c470b85e30fb65bccb8de1d674f73227e1a6757207b93992"
+    },
+    {
+      "key": "glough",
+      "name": "Glough",
+      "filePage": "https://oldschool.runescape.wiki/w/File:Glough.png",
+      "source": "https://oldschool.runescape.wiki/images/Glough.png?ec759",
+      "originalSha256": "e1aeb07ca581eeccdf4fd39540349340ecbfcde6faee15dbf9d6929e1488193e"
+    },
+    {
+      "key": "great-olm",
+      "name": "Great Olm",
+      "filePage": "https://oldschool.runescape.wiki/w/File:Great_Olm.png",
+      "source": "https://oldschool.runescape.wiki/images/Great_Olm.png?f1081",
+      "originalSha256": "5e86bc136b5050ca22c1ee7e7515a02414f406683fdebc3fa6b7471c8c4204f6"
+    },
+    {
+      "key": "greater-demon",
+      "name": "Greater demon",
+      "filePage": "https://oldschool.runescape.wiki/w/File:Greater_demon.png",
+      "source": "https://oldschool.runescape.wiki/images/Greater_demon.png?f293e",
+      "originalSha256": "fb4f19722896bdfc993399693510a4c0a769b75bddff98afe2fc5432a2f5da1a"
+    },
+    {
+      "key": "greater-skeletal-thrall",
+      "name": "Greater skeletal thrall",
+      "filePage": "https://oldschool.runescape.wiki/w/File:Greater_skeletal_thrall.png",
+      "source": "https://oldschool.runescape.wiki/images/Greater_skeletal_thrall.png?0b5a6",
+      "originalSha256": "10bb320c8f3f8450e0c1d8186a3acadb2b0e26fd921655efad9718d593e740a3"
+    },
+    {
+      "key": "guardian-chambers-of-xeric",
+      "name": "Chambers Guardian",
+      "filePage": "https://oldschool.runescape.wiki/w/File:Guardian_%28Chambers_of_Xeric%2C_female%29.png",
+      "source": "https://oldschool.runescape.wiki/images/Guardian_%28Chambers_of_Xeric%2C_female%29.png?43d7f",
+      "originalSha256": "63094d31e13a4d35b9318c5ab57b046bb2ac29bb42422f2c80dbb5907af00e05"
+    },
+    {
+      "key": "hespori",
+      "name": "Hespori",
+      "filePage": "https://oldschool.runescape.wiki/w/File:Hespori.png",
+      "source": "https://oldschool.runescape.wiki/images/Hespori.png?83c72",
+      "originalSha256": "7fe10ff4d189734313521b1c1f868a8883fafe3bfa0a0b7a8c00cd5151c585e0"
+    },
+    {
+      "key": "hill-giant",
+      "name": "Hill Giant",
+      "filePage": "https://oldschool.runescape.wiki/w/File:Hill_Giant.png",
+      "source": "https://oldschool.runescape.wiki/images/Hill_Giant.png?d162a",
+      "originalSha256": "761fa33e38f178a06cbdd16ec28656ee067aa8ffc0b25d3e6c344dddd520debf"
+    },
+    {
+      "key": "ice-demon",
+      "name": "Ice demon",
+      "filePage": "https://oldschool.runescape.wiki/w/File:Ice_demon.png",
+      "source": "https://oldschool.runescape.wiki/images/Ice_demon.png?c9bce",
+      "originalSha256": "67a83cd45a23785de1d594a57f742c260608f32b43fa13c960fb5a52294797e9"
+    },
+    {
+      "key": "jaguar-warrior",
+      "name": "Jaguar warrior",
+      "filePage": "https://oldschool.runescape.wiki/w/File:Jaguar_warrior.png",
+      "source": "https://oldschool.runescape.wiki/images/Jaguar_warrior.png?86fe1",
+      "originalSha256": "5ef68d835ff91ffddd89e08cb46deb2cf0867cdcf2afdf8e9b5c1a98f4143d70"
+    },
+    {
+      "key": "jal-imkot",
+      "name": "Jal-ImKot",
+      "filePage": "https://oldschool.runescape.wiki/w/File:Jal-ImKot.png",
+      "source": "https://oldschool.runescape.wiki/images/Jal-ImKot.png?5b7f9",
+      "originalSha256": "f96cbe3e705c20b7b83a79d088e9cf778aa6232b67c4e8ab2b9aef7fab9cdcb7"
+    },
+    {
+      "key": "jal-nib",
+      "name": "Jal-Nib",
+      "filePage": "https://oldschool.runescape.wiki/w/File:Jal-Nib.png",
+      "source": "https://oldschool.runescape.wiki/images/Jal-Nib.png?6d25b",
+      "originalSha256": "5d84c94e9550645064c8f282c66da43ba126cdb262c3dfe2b17f40d8af56debc"
+    },
+    {
+      "key": "jaltok-jad",
+      "name": "JalTok-Jad",
+      "filePage": "https://oldschool.runescape.wiki/w/File:JalTok-Jad.png",
+      "source": "https://oldschool.runescape.wiki/images/JalTok-Jad.png?7e369",
+      "originalSha256": "5d75165e39ebff17dd54b6a2c807a2de19ab27408ecb6473b548c5151b4f67c4"
+    },
+    {
+      "key": "jewelled-crab",
+      "name": "Jewelled Crab",
+      "filePage": "https://oldschool.runescape.wiki/w/File:Jewelled_Crab.png",
+      "source": "https://oldschool.runescape.wiki/images/Jewelled_Crab.png?5c8ba",
+      "originalSha256": "8beb2a9d7064ad3b975dee588c72980d05608c52aa03c34621c80ab396e77ce3"
+    },
+    {
+      "key": "k-ril-tsutsaroth",
+      "name": "K'ril Tsutsaroth",
+      "filePage": "https://oldschool.runescape.wiki/w/File:K%27ril_Tsutsaroth.png",
+      "source": "https://oldschool.runescape.wiki/images/K%27ril_Tsutsaroth.png?73bda",
+      "originalSha256": "74ec0a9f2d055ea59bf3dd59f4850db0382d5fd58c98075ea244c565465c5735"
+    },
+    {
+      "key": "kalphite-queen",
+      "name": "Kalphite Queen",
+      "filePage": "https://oldschool.runescape.wiki/w/File:Kalphite_Queen.png",
+      "source": "https://oldschool.runescape.wiki/images/Kalphite_Queen.png?a4955",
+      "originalSha256": "2a591c22d28490e8ae61d798e0d28dbe3073094ef190587242d4e6167559d9ad"
+    },
+    {
+      "key": "kephri",
+      "name": "Kephri",
+      "filePage": "https://oldschool.runescape.wiki/w/File:Kephri.png",
+      "source": "https://oldschool.runescape.wiki/images/Kephri.png?4c3cd",
+      "originalSha256": "c9471a6937763771dc41d2916088de9c288c1b72605d7bf17b116a0b262c3d77"
+    },
+    {
+      "key": "king-black-dragon",
+      "name": "King Black Dragon",
+      "filePage": "https://oldschool.runescape.wiki/w/File:King_Black_Dragon.png",
+      "source": "https://oldschool.runescape.wiki/images/King_Black_Dragon.png?d25f0",
+      "originalSha256": "7ed6f535e5a1cdf5ee1465b919aa82a4d021cb04ffbafeacc8d0e3791528085b"
+    },
+    {
+      "key": "kraken",
+      "name": "Kraken",
+      "filePage": "https://oldschool.runescape.wiki/w/File:Kraken.png",
+      "source": "https://oldschool.runescape.wiki/images/Kraken.png?a4955",
+      "originalSha256": "d7c88545ac6f943d3e5a373403cc9b7536aee3b50dfb22bf03b1ebe9dca594ba"
+    },
+    {
+      "key": "kree-arra",
+      "name": "Kree'arra",
+      "filePage": "https://oldschool.runescape.wiki/w/File:Kree%27arra.png",
+      "source": "https://oldschool.runescape.wiki/images/Kree%27arra.png?ba75c",
+      "originalSha256": "fce02db9a46601cc643c2a0e2a0d1a7c8ca40220bf975924f9dee3b7fe740594"
+    },
+    {
+      "key": "kurask",
+      "name": "Kurask",
+      "filePage": "https://oldschool.runescape.wiki/w/File:Kurask.png",
+      "source": "https://oldschool.runescape.wiki/images/Kurask.png?e9f94",
+      "originalSha256": "bd4865aa20ec9d91024ef2639650805e5198c8158c76028fc428f99f1093cd87"
+    },
+    {
+      "key": "lizardman-shaman",
+      "name": "Lizardman shaman",
+      "filePage": "https://oldschool.runescape.wiki/w/File:Lizardman_shaman_%281%29.png",
+      "source": "https://oldschool.runescape.wiki/images/Lizardman_shaman_%281%29.png?f127d",
+      "originalSha256": "b472dfd839052aa56aff2cae4361156a9563910879b4b16d6ff1d4d9c75905c4"
+    },
+    {
+      "key": "mad-angel",
+      "name": "Mad Angel",
+      "filePage": "https://oldschool.runescape.wiki/w/File:Mad_Angel.webp",
+      "source": "https://oldschool.runescape.wiki/images/Mad_Angel.webp?c7990",
+      "originalSha256": "d99a31e689a5e15750aa0fa5164f3148e13a7df234bd97c3f3500ad99799134d"
+    },
+    {
+      "key": "maggot-king",
+      "name": "Maggot King",
+      "filePage": "https://oldschool.runescape.wiki/w/File:Maggot_King.png",
+      "source": "https://oldschool.runescape.wiki/images/Maggot_King.png?a6790",
+      "originalSha256": "4197cccf5ac366ee58cfcbb937f82df4c57d2d649517a55266743f6db325a849"
+    },
+    {
+      "key": "manticore",
+      "name": "Manticore",
+      "filePage": "https://oldschool.runescape.wiki/w/File:Manticore.png",
+      "source": "https://oldschool.runescape.wiki/images/Manticore.png?1607d",
+      "originalSha256": "5b1c006365bfb0a04136c14c50740352d09ab04eee7e49e0f8bc676c73362af2"
+    },
+    {
+      "key": "minotaur-fortis-colosseum",
+      "name": "Minotaur",
+      "filePage": "https://oldschool.runescape.wiki/w/File:Minotaur_%28Fortis_Colosseum%29.png",
+      "source": "https://oldschool.runescape.wiki/images/Minotaur_%28Fortis_Colosseum%29.png?dc546",
+      "originalSha256": "33c29c2f0a2f0ae2a06eceeb58a893a7e17c2e903da66afa42185621a6748a02"
+    },
+    {
+      "key": "muttadile",
+      "name": "Muttadile",
+      "filePage": "https://oldschool.runescape.wiki/w/File:Muttadile.png",
+      "source": "https://oldschool.runescape.wiki/images/Muttadile.png?55798",
+      "originalSha256": "63f0be93cc72262fbb8c00e1300c7030a9c58f72ec6b080523b8080073d3cb8d"
+    },
+    {
+      "key": "nex",
+      "name": "Nex",
+      "filePage": "https://oldschool.runescape.wiki/w/File:Nex.png",
+      "source": "https://oldschool.runescape.wiki/images/Nex.png?2a1b3",
+      "originalSha256": "35a5fd3407a6937f5f6316f5f7fa86bd8bcf8bb432e87bf5c27dde5c49b82dba"
+    },
+    {
+      "key": "nylocas-vasilias",
+      "name": "Nylocas Vasilias",
+      "filePage": "https://oldschool.runescape.wiki/w/File:Nylocas_Vasilias_%28melee%29.png",
+      "source": "https://oldschool.runescape.wiki/images/Nylocas_Vasilias_%28melee%29.png?52075",
+      "originalSha256": "2c28ab9d440299953acd3ec1d0171c28b595b9257061fbc32fb5d4e5dbc3298b"
+    },
+    {
+      "key": "obor",
+      "name": "Obor",
+      "filePage": "https://oldschool.runescape.wiki/w/File:Obor.png",
+      "source": "https://oldschool.runescape.wiki/images/Obor.png?08bc8",
+      "originalSha256": "80422f1c36350360392ea708c66474b64f950c80bf93ea8c135caf24c16a9bfa"
+    },
+    {
+      "key": "pestilent-bloat",
+      "name": "Pestilent Bloat",
+      "filePage": "https://oldschool.runescape.wiki/w/File:Pestilent_Bloat.png",
+      "source": "https://oldschool.runescape.wiki/images/Pestilent_Bloat.png?b1ab7",
+      "originalSha256": "d7c66b8d3e75bfc3dec9d74415fe3ab309319e223e37450b37e0b2b3e5efe2b3"
+    },
+    {
+      "key": "phantom-muspah",
+      "name": "Phantom Muspah",
+      "filePage": "https://oldschool.runescape.wiki/w/File:Phantom_Muspah_%28ranged%29.png",
+      "source": "https://oldschool.runescape.wiki/images/Phantom_Muspah_%28ranged%29.png?9cf6a",
+      "originalSha256": "c2330d3166c7106e6be71a2f576ccff01866323ddf09ffdb1204876214cd782b"
+    },
+    {
+      "key": "phosani-s-nightmare",
+      "name": "Phosani's Nightmare",
+      "filePage": "https://oldschool.runescape.wiki/w/File:The_Nightmare.png",
+      "source": "https://oldschool.runescape.wiki/images/The_Nightmare.png?0128a",
+      "originalSha256": "b24d7379b74b8ee469699175a1c76654e0f78e148e15092de8ab5c9cb0c5d60e"
+    },
+    {
+      "key": "pyromancer",
+      "name": "Wintertodt pyromancer",
+      "filePage": "https://oldschool.runescape.wiki/w/File:Pyromancer.png",
+      "source": "https://oldschool.runescape.wiki/images/Pyromancer.png?43de9",
+      "originalSha256": "bb121abe6e2ca6954a87fc1a6367a606a7cf4eabbbf69b44c8bbef4084280030"
+    },
+    {
+      "key": "sarachnis",
+      "name": "Sarachnis",
+      "filePage": "https://oldschool.runescape.wiki/w/File:Sarachnis.png",
+      "source": "https://oldschool.runescape.wiki/images/Sarachnis.png?8f040",
+      "originalSha256": "7d77a1fbb19680828585191f287d5bf59f0e9888f8f9c15c915df3954223114d"
+    },
+    {
+      "key": "scorpia",
+      "name": "Scorpia",
+      "filePage": "https://oldschool.runescape.wiki/w/File:Scorpia.png",
+      "source": "https://oldschool.runescape.wiki/images/Scorpia.png?517c9",
+      "originalSha256": "da0bb2553c715c9422d1a810e3ddfe9776494f45eaa444d27147c81d7a877c38"
+    },
+    {
+      "key": "scurrius",
+      "name": "Scurrius",
+      "filePage": "https://oldschool.runescape.wiki/w/File:Scurrius.png",
+      "source": "https://oldschool.runescape.wiki/images/Scurrius.png?e66a5",
+      "originalSha256": "13c6bba8cb57e80fca4d835442794a39d81281bab2703e10ea4450f90a893459"
+    },
+    {
+      "key": "shellbane-gryphon",
+      "name": "Shellbane Gryphon",
+      "filePage": "https://oldschool.runescape.wiki/w/File:Shellbane_gryphon.png",
+      "source": "https://oldschool.runescape.wiki/images/Shellbane_gryphon.png?bc76e",
+      "originalSha256": "6283127c81fa0592dd250e1d628b00c8308b3dd2bb12c6a4f14fe4df123fa96e"
+    },
+    {
+      "key": "skeletal-wyvern",
+      "name": "Skeletal Wyvern",
+      "filePage": "https://oldschool.runescape.wiki/w/File:Skeletal_Wyvern.png",
+      "source": "https://oldschool.runescape.wiki/images/Skeletal_Wyvern.png?6d52e",
+      "originalSha256": "6c99fa2aac67013633a1d435a99abc790188cd6a58b3786cee3a8c55d05fa7bd"
+    },
+    {
+      "key": "skotizo",
+      "name": "Skotizo",
+      "filePage": "https://oldschool.runescape.wiki/w/File:Skotizo.png",
+      "source": "https://oldschool.runescape.wiki/images/Skotizo.png?dc8b8",
+      "originalSha256": "46eb1b871312ac17d339c75531a08540cc9da537322900c875b4a093e21a8268"
+    },
+    {
+      "key": "sol-heredit",
+      "name": "Sol Heredit",
+      "filePage": "https://oldschool.runescape.wiki/w/File:Sol_Heredit.png",
+      "source": "https://oldschool.runescape.wiki/images/Sol_Heredit.png?91250",
+      "originalSha256": "88e66a0c055061c30cd1b089819cd6f87a8e4585bcec1670d3e48c62982c3b4c"
+    },
+    {
+      "key": "sotetseg",
+      "name": "Sotetseg",
+      "filePage": "https://oldschool.runescape.wiki/w/File:Sotetseg.png",
+      "source": "https://oldschool.runescape.wiki/images/Sotetseg.png?61151",
+      "originalSha256": "b7352b5a9476d2be5f9539d4f6acd3e00c567e019538bb4e06bf20f2bf7d135b"
+    },
+    {
+      "key": "tekton",
+      "name": "Tekton",
+      "filePage": "https://oldschool.runescape.wiki/w/File:Tekton.png",
+      "source": "https://oldschool.runescape.wiki/images/Tekton.png?a32ab",
+      "originalSha256": "41e32b4d6012a8a8748761ac4d6a3d6d92820ac73df9fa99e8637205fdba24cd"
+    },
+    {
+      "key": "tempoross",
+      "name": "Tempoross",
+      "filePage": "https://oldschool.runescape.wiki/w/File:Tempoross.png",
+      "source": "https://oldschool.runescape.wiki/images/Tempoross.png?12042",
+      "originalSha256": "4b33896637295add6e6a14df1deb4ea29a934d0d3d81482fdbbb754b9da6fdfb"
+    },
+    {
+      "key": "the-hueycoatl",
+      "name": "The Hueycoatl",
+      "filePage": "https://oldschool.runescape.wiki/w/File:The_Hueycoatl.png",
+      "source": "https://oldschool.runescape.wiki/images/The_Hueycoatl.png?7b216",
+      "originalSha256": "99b275c04b9635480be587b6567b9af16bf66999b24ba9e98eada8b155ccb145"
+    },
+    {
+      "key": "the-leviathan",
+      "name": "The Leviathan",
+      "filePage": "https://oldschool.runescape.wiki/w/File:The_Leviathan.png",
+      "source": "https://oldschool.runescape.wiki/images/The_Leviathan.png?d588a",
+      "originalSha256": "0077560407a6721a4b10c82513524edf46b1648fb58149a6659c115ada4d61cc"
+    },
+    {
+      "key": "the-maiden-of-sugadinti",
+      "name": "The Maiden of Sugadinti",
+      "filePage": "https://oldschool.runescape.wiki/w/File:The_Maiden_of_Sugadinti.png",
+      "source": "https://oldschool.runescape.wiki/images/The_Maiden_of_Sugadinti.png?c69d5",
+      "originalSha256": "e26b8875c66f0c0b64fddce43006719b3a061058dd4b1f53caacabe6217b943b"
+    },
+    {
+      "key": "the-mimic",
+      "name": "The Mimic",
+      "filePage": "https://oldschool.runescape.wiki/w/File:The_Mimic.png",
+      "source": "https://oldschool.runescape.wiki/images/The_Mimic.png?b45f4",
+      "originalSha256": "17878c828061f8c008baf6e4bc129ae8a12bc6e56bbb798f3c0b30690cff5e6e"
+    },
+    {
+      "key": "the-nightmare",
+      "name": "The Nightmare",
+      "filePage": "https://oldschool.runescape.wiki/w/File:The_Nightmare.png",
+      "source": "https://oldschool.runescape.wiki/images/The_Nightmare.png?0128a",
+      "originalSha256": "b24d7379b74b8ee469699175a1c76654e0f78e148e15092de8ab5c9cb0c5d60e"
+    },
+    {
+      "key": "the-whisperer",
+      "name": "The Whisperer",
+      "filePage": "https://oldschool.runescape.wiki/w/File:The_Whisperer.png",
+      "source": "https://oldschool.runescape.wiki/images/The_Whisperer.png?aedab",
+      "originalSha256": "9bba7f1e39fc2ac320d561d6f85d7fb39e5f8f7e733126404293217edf2c1b8d"
+    },
+    {
+      "key": "thermonuclear-smoke-devil",
+      "name": "Thermonuclear smoke devil",
+      "filePage": "https://oldschool.runescape.wiki/w/File:Thermonuclear_smoke_devil.png",
+      "source": "https://oldschool.runescape.wiki/images/Thermonuclear_smoke_devil.png?de858",
+      "originalSha256": "820e404852718534abd9c554ee2b595c8785cde9bad59730cbebe6ce7a1f9083"
+    },
+    {
+      "key": "tormented-demon",
+      "name": "Tormented Demon",
+      "filePage": "https://oldschool.runescape.wiki/w/File:Tormented_Demon_%281%29.png",
+      "source": "https://oldschool.runescape.wiki/images/Tormented_Demon_%281%29.png?6c099",
+      "originalSha256": "1615214797b72fce876386c644d7d2268191edcff928468203d832132d646045"
+    },
+    {
+      "key": "tz-kih",
+      "name": "Tz-Kih",
+      "filePage": "https://oldschool.runescape.wiki/w/File:Tz-Kih.png",
+      "source": "https://oldschool.runescape.wiki/images/Tz-Kih.png?31e87",
+      "originalSha256": "b8684e409f9ce026f1213edcf07128f74e8311d8bbba8e4af4d86dedc9c22fe1"
+    },
+    {
+      "key": "tzkal-zuk",
+      "name": "TzKal-Zuk",
+      "filePage": "https://oldschool.runescape.wiki/w/File:TzKal-Zuk.png",
+      "source": "https://oldschool.runescape.wiki/images/TzKal-Zuk.png?2d222",
+      "originalSha256": "7d2596b550e83481f3a231c1b38b0a2e2f28f0d95b9c53dd2158f66c764856b7"
+    },
+    {
+      "key": "tztok-jad",
+      "name": "TzTok-Jad",
+      "filePage": "https://oldschool.runescape.wiki/w/File:TzTok-Jad.png",
+      "source": "https://oldschool.runescape.wiki/images/TzTok-Jad.png?df681",
+      "originalSha256": "5285792dc883eb3422a8766850a5644c97fd9a853c6fd2042c9960e91389b1b3"
+    },
+    {
+      "key": "vanguard",
+      "name": "Vanguard",
+      "filePage": "https://oldschool.runescape.wiki/w/File:Vanguard_%28magic%29.png",
+      "source": "https://oldschool.runescape.wiki/images/Vanguard_%28magic%29.png?db160",
+      "originalSha256": "3d6dc5afb510d88a8e36463705ab8a654ca64233beca3c727684a30f370dcc46"
+    },
+    {
+      "key": "vardorvis",
+      "name": "Vardorvis",
+      "filePage": "https://oldschool.runescape.wiki/w/File:Vardorvis.png",
+      "source": "https://oldschool.runescape.wiki/images/Vardorvis.png?48af8",
+      "originalSha256": "4549788366824846144c42ff9db40b7d8f4e030acbd09d18d92018e832ea423a"
+    },
+    {
+      "key": "vasa-nistirio",
+      "name": "Vasa Nistirio",
+      "filePage": "https://oldschool.runescape.wiki/w/File:Vasa_Nistirio.png",
+      "source": "https://oldschool.runescape.wiki/images/Vasa_Nistirio.png?64087",
+      "originalSha256": "d4fa92ecc7c42cb0c590dd80dcf77e6f1976b665d54f2e98c8fd842977e7a0b8"
+    },
+    {
+      "key": "venenatis",
+      "name": "Venenatis",
+      "filePage": "https://oldschool.runescape.wiki/w/File:Venenatis.png",
+      "source": "https://oldschool.runescape.wiki/images/Venenatis.png?13693",
+      "originalSha256": "c14b1674aa02925de95685a4591576d44ea6c3407cd7e541e6015da630bf33ae"
+    },
+    {
+      "key": "verzik-vitur",
+      "name": "Verzik Vitur",
+      "filePage": "https://oldschool.runescape.wiki/w/File:Verzik_Vitur_%28final_form%29.png",
+      "source": "https://oldschool.runescape.wiki/images/Verzik_Vitur_%28final_form%29.png?f9733",
+      "originalSha256": "6a91377765c851f378084505cd74efb25f40a0d4fd5d76ce4091d2a8a1d75b59"
+    },
+    {
+      "key": "vespula",
+      "name": "Vespula",
+      "filePage": "https://oldschool.runescape.wiki/w/File:Vespula.png",
+      "source": "https://oldschool.runescape.wiki/images/Vespula.png?09658",
+      "originalSha256": "22e2853fc66a8903edb59ca85b03849b791cfe52f8e33dffbf622eeedfdf6564"
+    },
+    {
+      "key": "vet-ion",
+      "name": "Vet'ion",
+      "filePage": "https://oldschool.runescape.wiki/w/File:Vet%27ion.png",
+      "source": "https://oldschool.runescape.wiki/images/Vet%27ion.png?8695f",
+      "originalSha256": "3049f1d010a4d5f103c917989600ec772fbec10b3bde369e713a213bc770c0a2"
+    },
+    {
+      "key": "vorkath",
+      "name": "Vorkath",
+      "filePage": "https://oldschool.runescape.wiki/w/File:Vorkath.png",
+      "source": "https://oldschool.runescape.wiki/images/Vorkath.png?1ce3f",
+      "originalSha256": "03110de8c40218e00329b32311d5cbf430f57442f06ce55f212eacd69006d346"
+    },
+    {
+      "key": "wyrm",
+      "name": "Wyrm",
+      "filePage": "https://oldschool.runescape.wiki/w/File:Wyrm.png",
+      "source": "https://oldschool.runescape.wiki/images/Wyrm.png?1d696",
+      "originalSha256": "1104c720bac0c186a851db8a19aecc5e73f19e37f8c9de95fc6945716f8c9137"
+    },
+    {
+      "key": "xarpus",
+      "name": "Xarpus",
+      "filePage": "https://oldschool.runescape.wiki/w/File:Xarpus_%28phase_1%29.png",
+      "source": "https://oldschool.runescape.wiki/images/Xarpus_%28phase_1%29.png?81ca6",
+      "originalSha256": "1624ef9623d1173a8293e078bf88623ed8611ead3d0676e5e6597114c3d77343"
+    },
+    {
+      "key": "yama",
+      "name": "Yama",
+      "filePage": "https://oldschool.runescape.wiki/w/File:Yama.png",
+      "source": "https://oldschool.runescape.wiki/images/Yama.png?7653a",
+      "originalSha256": "0b101b7387aaffa53288e6cc512ebec96ce14928e9fd196acf73f1f64cbc75ac"
+    },
+    {
+      "key": "yt-hurkot",
+      "name": "Yt-HurKot",
+      "filePage": "https://oldschool.runescape.wiki/w/File:Yt-HurKot.png",
+      "source": "https://oldschool.runescape.wiki/images/Yt-HurKot.png?18fed",
+      "originalSha256": "38a95f96f793e1ad3f0ed92ad5f45026590a811b84f13d5695bb64ec725ee434"
+    },
+    {
+      "key": "yt-mejkot",
+      "name": "Yt-MejKot",
+      "filePage": "https://oldschool.runescape.wiki/w/File:Yt-MejKot_%281%29.png",
+      "source": "https://oldschool.runescape.wiki/images/Yt-MejKot_%281%29.png?cb21d",
+      "originalSha256": "5dae3ca2886d0ce9f85fe01f476057a7437abf8002f02a45894a7235078d6512"
+    },
+    {
+      "key": "zalcano",
+      "name": "Zalcano",
+      "filePage": "https://oldschool.runescape.wiki/w/File:Zalcano_%28weakened%29.png",
+      "source": "https://oldschool.runescape.wiki/images/Zalcano_%28weakened%29.png?fa423",
+      "originalSha256": "e1c9b7c8b5be2d1d0de1837e5d235fecf6d639beab6acea3222a1606f6fc537d"
+    },
+    {
+      "key": "zebak",
+      "name": "Zebak",
+      "filePage": "https://oldschool.runescape.wiki/w/File:Zebak.png",
+      "source": "https://oldschool.runescape.wiki/images/Zebak.png?23978",
+      "originalSha256": "d29788f10ef85a8f1227a6e7c91975fe8ec6b7b77b1e9b568dc7c4c61a31b615"
+    },
+    {
+      "key": "zulrah",
+      "name": "Zulrah",
+      "filePage": "https://oldschool.runescape.wiki/w/File:Zulrah_%28serpentine%29.png",
+      "source": "https://oldschool.runescape.wiki/images/Zulrah_%28serpentine%29.png?29a54",
+      "originalSha256": "4221499c2881777dc41b3c740f1c6437bee8c3df9a3450d11b6817692dbf3d6b"
+    }
+  ],
+  "activities": {
+    "alchemical-hydra": "alchemical-hydra",
+    "amoxliatl": "amoxliatl",
+    "araxxor": "araxxor",
+    "barrows": "dharok-the-wretched",
+    "brutus": "brutus",
+    "bryophyta": "bryophyta",
+    "cerberus": "cerberus",
+    "chambers": "great-olm",
+    "chambers-cm": "great-olm",
+    "commander-zilyana": "commander-zilyana",
+    "corporeal-beast": "corporeal-beast",
+    "corrupted-gauntlet": "corrupted-hunllef",
+    "demonic": "demonic-gorilla",
+    "deranged": "deranged-archaeologist",
+    "doom-of-mokhaiotl": "doom-of-mokhaiotl",
+    "duke-sucellus": "duke-sucellus",
+    "fightcaves": "tztok-jad",
+    "fortis-colosseum": "sol-heredit",
+    "fragment-of-seren": "fragment-of-seren",
+    "galvek": "galvek",
+    "gauntlet": "crystalline-hunllef",
+    "general-graardor": "general-graardor",
+    "giants": "fire-giant",
+    "glough": "glough",
+    "guardian": "dusk",
+    "hespori": "hespori",
+    "huey": "the-hueycoatl",
+    "k-ril-tsutsaroth": "k-ril-tsutsaroth",
+    "ket-rak": "jaltok-jad",
+    "kq": "kalphite-queen",
+    "kraken": "kraken",
+    "kree-arra": "kree-arra",
+    "leviathan": "the-leviathan",
+    "mad-angel": "mad-angel",
+    "maggot-king": "maggot-king",
+    "mimic": "the-mimic",
+    "mole": "giant-mole",
+    "moons": "eclipse-moon",
+    "muspah": "phantom-muspah",
+    "nex": "nex",
+    "nightmare": "the-nightmare",
+    "obor": "obor",
+    "phosani": "phosani-s-nightmare",
+    "prime": "dagannoth-prime",
+    "rex": "dagannoth-rex",
+    "sarachnis": "sarachnis",
+    "scurrius": "scurrius",
+    "shamans": "lizardman-shaman",
+    "shellbane": "shellbane-gryphon",
+    "sire": "abyssal-sire",
+    "skotizo": "skotizo",
+    "slayer": "aberrant-spectre",
+    "supreme": "dagannoth-supreme",
+    "taverley": "black-dragon",
+    "tempoross": "tempoross",
+    "theatre": "verzik-vitur",
+    "theatre-hard": "verzik-vitur",
+    "theatre-normal": "verzik-vitur",
+    "thermonuclear-smoke-devil": "thermonuclear-smoke-devil",
+    "thralls": "greater-skeletal-thrall",
+    "titans": "branda-the-fire-queen",
+    "toa": "elidinis-warden",
+    "tormented": "tormented-demon",
+    "tzkal-zuk": "tzkal-zuk",
+    "vardorvis": "vardorvis",
+    "vorkath": "vorkath",
+    "whisperer": "the-whisperer",
+    "wild-callisto": "callisto",
+    "wild-chaos": "chaos-elemental",
+    "wild-crazy": "crazy-archaeologist",
+    "wild-fanatic": "chaos-fanatic",
+    "wild-kbd": "king-black-dragon",
+    "wild-scorpia": "scorpia",
+    "wild-venenatis": "venenatis",
+    "wild-vetion": "vet-ion",
+    "wintertodt": "pyromancer",
+    "yama": "yama",
+    "zalcano": "zalcano",
+    "zulrah": "zulrah"
+  },
+  "taskOverrides": {
+    "0": "aberrant-spectre",
+    "31": "basilisk-knight",
+    "32": "black-dragon",
+    "33": "bloodveld",
+    "34": "brutal-black-dragon",
+    "80": "fire-giant",
+    "84": "dusk",
+    "85": "dusk",
+    "87": "dawn",
+    "89": "dusk",
+    "97": "gargoyle",
+    "120": "greater-demon",
+    "121": "greater-demon",
+    "122": "black-demon",
+    "150": "yt-mejkot",
+    "151": "yt-hurkot",
+    "152": "tz-kih",
+    "173": "kurask",
+    "174": "lizardman-shaman",
+    "175": "lizardman-shaman",
+    "223": "skeletal-wyvern",
+    "240": "pestilent-bloat",
+    "242": "sotetseg",
+    "244": "the-maiden-of-sugadinti",
+    "245": "pestilent-bloat",
+    "246": "nylocas-vasilias",
+    "247": "sotetseg",
+    "248": "xarpus",
+    "250": "the-maiden-of-sugadinti",
+    "251": "xarpus",
+    "287": "wyrm",
+    "302": "vanguard",
+    "303": "vanguard",
+    "304": "deathly-mage",
+    "307": "muttadile",
+    "308": "vespula",
+    "309": "vasa-nistirio",
+    "310": "tekton",
+    "311": "guardian-chambers-of-xeric",
+    "314": "lizardman-shaman",
+    "315": "jewelled-crab",
+    "316": "ice-demon",
+    "319": "tekton",
+    "320": "ice-demon",
+    "321": "ice-demon",
+    "343": "jal-imkot",
+    "344": "jaltok-jad",
+    "346": "jal-nib",
+    "349": "jal-nib",
+    "372": "the-maiden-of-sugadinti",
+    "373": "pestilent-bloat",
+    "374": "nylocas-vasilias",
+    "375": "sotetseg",
+    "376": "xarpus",
+    "386": "the-maiden-of-sugadinti",
+    "387": "pestilent-bloat",
+    "388": "pestilent-bloat",
+    "389": "pestilent-bloat",
+    "390": "nylocas-vasilias",
+    "391": "sotetseg",
+    "392": "xarpus",
+    "398": "hill-giant",
+    "428": "zebak",
+    "432": "akkha",
+    "433": "akkha",
+    "434": "akkha",
+    "435": "ba-ba",
+    "436": "ba-ba",
+    "437": "ba-ba",
+    "438": "zebak",
+    "439": "zebak",
+    "440": "zebak",
+    "441": "kephri",
+    "442": "kephri",
+    "443": "kephri",
+    "449": "akkha",
+    "450": "akkha",
+    "451": "ba-ba",
+    "452": "ba-ba",
+    "453": "ba-ba",
+    "454": "zebak",
+    "455": "zebak",
+    "456": "kephri",
+    "457": "kephri",
+    "542": "manticore",
+    "545": "minotaur-fortis-colosseum",
+    "548": "jaguar-warrior"
+  }
+}

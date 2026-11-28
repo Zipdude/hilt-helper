@@ -53,6 +53,13 @@ final class UnlockChecks
 					nexAccess(label, state, live);
 			case "wilderness-diary":
 				return wilderness(activity, label, live);
+			case "obor":
+			case "bryophyta":
+				return killed(live, rule) ? ready(label, "An observed kill establishes permanent entrance access.") :
+					unknown(label, "Bring the matching key to unlock the entrance once.");
+			case "karuulm":
+				return positive(live, "kourendEliteReward") ? ready(label, "The claimed Kourend Elite reward protects you.") :
+					unknown(label, "Wear heat-safe boots before entering the lower dungeon.");
 			case "yama":
 				if (killed(live, "yama") || ca(state.rewardGoal(), live, 599, 600, 601, 602, 604, 605, 606, 607))
 				{
