@@ -23,17 +23,15 @@
 	*/
 package com.ironmanhilt.ui;
 
-import com.google.gson.Gson;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
+import com.ironmanhilt.core.GuideCatalog;
 import java.awt.Color;
 import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.nio.charset.StandardCharsets;
 import java.util.HashMap;
 import java.util.Map;
 import javax.imageio.ImageIO;
@@ -46,9 +44,9 @@ final class ChecklistPortraits
 {
 	static final int SIZE = 28;
 	private static final Color BACKDROP = new Color(54, 53, 51);
-	private static final String RESOURCE = "/com/ironmanhilt/checklist-portraits";
+	private static final String ARTWORK = GuideCatalog.RESOURCE + "checklist-portraits.png";
 	private static final Logger LOG = LoggerFactory.getLogger(ChecklistPortraits.class);
-	static final ChecklistPortraits INSTANCE = load();
+	private static ChecklistPortraits instance;
 
 	private final Map<String, ImageIcon> activities;
 	private final Map<String, ImageIcon> tasks;
@@ -64,16 +62,24 @@ final class ChecklistPortraits
 		return tasks.getOrDefault(Integer.toString(task), activities.get(activity));
 	}
 
-	private static ChecklistPortraits load()
+	static synchronized ChecklistPortraits shared(GuideCatalog catalogue)
 	{
-		try (InputStream index = ChecklistPortraits.class.getResourceAsStream(RESOURCE + ".json");
-			InputStream art = ChecklistPortraits.class.getResourceAsStream(RESOURCE + ".png"))
+		if (instance == null)
 		{
-			if (index == null || art == null)
+			instance = load(catalogue);
+		}
+		return instance;
+	}
+
+	private static ChecklistPortraits load(GuideCatalog catalogue)
+	{
+		try (InputStream art = ChecklistPortraits.class.getResourceAsStream(ARTWORK))
+		{
+			if (art == null)
 			{
-				throw new IOException("Missing checklist portrait resources");
+				throw new IOException("Missing checklist portrait artwork");
 			}
-			JsonObject data = new Gson().fromJson(new InputStreamReader(index, StandardCharsets.UTF_8), JsonObject.class);
+			JsonObject data = catalogue.checklistPortraitIndex();
 			BufferedImage sheet = ImageIO.read(art);
 			int columns = data.get("columns").getAsInt();
 			JsonArray portraits = data.getAsJsonArray("portraits");

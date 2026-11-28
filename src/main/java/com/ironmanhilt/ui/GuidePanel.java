@@ -168,6 +168,7 @@ public final class GuidePanel extends PluginPanel
 	private static final ImageIcon SEARCH_ICON = new ImageIcon(
 		IconTextField.class.getResource(IconTextField.Icon.SEARCH.getFile()));
 	private final GuideCatalog catalogue;
+	private final ChecklistPortraits portraits;
 	private final ProgressEngine progress;
 	private final ReadinessEngine readiness;
 	private final Planner planner;
@@ -254,6 +255,7 @@ public final class GuidePanel extends PluginPanel
 	{
 		super();
 		catalogue = c;
+		portraits = ChecklistPortraits.shared(catalogue);
 		progress = p;
 		readiness = r;
 		this.planner = planner;
@@ -2661,7 +2663,7 @@ public final class GuidePanel extends PluginPanel
 			title.setText(catalogue.tasks.get(id).name);
 			String owner = catalogue.owner(id);
 			String blocker = shownRoute.blockedTasks.get(id);
-			ImageIcon portrait = blocked ? null : ChecklistPortraits.INSTANCE.icon(owner, id);
+			ImageIcon portrait = blocked ? null : portraits.icon(owner, id);
 			marker.setIcon(portrait);
 			marker.setText(portrait == null ? "›" : "");
 			String subject = portrait == null ? null : portrait.getDescription();

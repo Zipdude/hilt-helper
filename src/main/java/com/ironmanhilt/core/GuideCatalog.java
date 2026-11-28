@@ -51,6 +51,7 @@ public final class GuideCatalog
 	public final SortedMap<Integer, Task> tasks = new TreeMap<>();
 	public final List<JsonObject> activities = new ArrayList<>();
 	public final JsonObject guide, items;
+	private final Gson gson;
 	private final JsonObject hardGuide;
 	private final Map<RewardGoal, AdvancedGuide> advancedGuides = new EnumMap<>(RewardGoal.class);
 	private final JsonArray automaticTrips = new JsonArray();
@@ -70,6 +71,7 @@ public final class GuideCatalog
 
 	public GuideCatalog(Gson gson) throws IOException
 	{
+		this.gson = gson;
 		JsonObject catalogue = resource(gson, "combat_achievements.json");
 		easyThreshold = catalogue.get("easy_threshold").getAsInt();
 		threshold = catalogue.get("medium_threshold").getAsInt();
@@ -820,6 +822,11 @@ public final class GuideCatalog
 		}
 		return ids;
 	}
+	public JsonObject checklistPortraitIndex() throws IOException
+	{
+		return resource(gson, "checklist-portraits.json");
+	}
+
 	private static JsonObject resource(Gson gson, String path) throws IOException
 	{
 		InputStream stream = GuideCatalog.class.getResourceAsStream(RESOURCE + path);
